@@ -5,8 +5,8 @@
     <div class="nav-container">
       <nav id="main-menu-navigation" class="navigation-main">
           <div class="nav-lavel">Umum</div>
-          <div class="nav-item <?php if($pagenow == "/ProjectAkuntan") {echo "active";} else {echo "";}?>">
-              <a href="http://localhost/ProjectAkuntan/index.php"><i class="ik ik-home"></i><span>Dasbor</span></a>
+          <div class="nav-item {{ Request::is('dasbor') ? 'active' : ''}}">
+              <a href="{{ route('dasbor.index') }}"><i class="ik ik-home"></i><span>Dasbor</span></a>
           </div>
           <div class="nav-item <?php if($pagenow == "/ProjectAkuntan/views/pages/laporan" || $pagenow == "/ProjectAkuntan/views/reports/neraca") {echo "active";} else {echo "";}?>">
               <a href="http://localhost/ProjectAkuntan/views/pages/laporan"><i class="ik ik-trending-up"></i><span>Laporan</span></a>

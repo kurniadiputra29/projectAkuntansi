@@ -20,3 +20,4 @@ Route::get('/coba', function () {
 Route::get('/jijal', function () {
     return view('pages.dasbor.index');
 });
+Route::resource('dasbor', 'DasborController');
