@@ -17,3 +17,6 @@ Route::get('/', function () {
 Route::get('/coba', function () {
     return "Hello Word !";
 });
+Route::get('/jijal', function () {
+    return view('pages.dasbor.index');
+});
