@@ -15,10 +15,10 @@
           <div class="nav-item {{ Request::is('akun') ? 'active' : '' }}">
               <a href="{{ route('akun.index') }}"><i class="ik ik-menu"></i><span>Daftar Akun</span></a>
           </div>
-          <div class="nav-item has-sub <?php if($pagenow === "/ProjectAkuntan/views/pages/customer" || $pagenow === "/ProjectAkuntan/views/pages/supplier") {echo "active open";} else {echo "";}?>">
+          <div class="nav-item has-sub {{ Request::is('customer') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-phone"></i><span>Kontak</span></a>
               <div class="submenu-content">
-                  <a href="http://localhost/ProjectAkuntan/views/pages/customer" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/customer") {echo "active";} else {echo "";}?>">Customer</a>
+                  <a href="{{ route('customer.index') }}" class="menu-item {{ Request::is('customer') ? 'active' : '' }}">Customer</a>
                   <a href="http://localhost/ProjectAkuntan/views/pages/supplier" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/supplier") {echo "active";} else {echo "";}?>">Supplier</a>
               </div>
           </div>
