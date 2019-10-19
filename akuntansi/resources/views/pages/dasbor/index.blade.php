@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Simple Accountant Admin')
+@section('title', 'AccountMin - Dasbor')
 
 @section('content')
 

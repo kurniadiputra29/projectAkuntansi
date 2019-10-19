@@ -12,8 +12,8 @@
               <a href="http://localhost/ProjectAkuntan/views/pages/laporan"><i class="ik ik-trending-up"></i><span>Laporan</span></a>
           </div>
           <div class="nav-lavel">Master Data</div>
-          <div class="nav-item <?php if($pagenow == "/ProjectAkuntan/views/pages/akun") {echo "active";} else {echo "";}?>">
-              <a href="http://localhost/ProjectAkuntan/views/pages/akun"><i class="ik ik-menu"></i><span>Daftar Akun</span></a>
+          <div class="nav-item {{ Request::is('akun') ? 'active' : '' }}">
+              <a href="{{ route('akun.index') }}"><i class="ik ik-menu"></i><span>Daftar Akun</span></a>
           </div>
           <div class="nav-item has-sub <?php if($pagenow === "/ProjectAkuntan/views/pages/customer" || $pagenow === "/ProjectAkuntan/views/pages/supplier") {echo "active open";} else {echo "";}?>">
               <a href="#"><i class="ik ik-phone"></i><span>Kontak</span></a>
