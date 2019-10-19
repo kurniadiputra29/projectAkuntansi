@@ -21,3 +21,8 @@ Route::get('/jijal', function () {
     return view('pages.dasbor.index');
 });
 Route::resource('dasbor', 'DasborController');
+Route::resource('akun', 'AkunController');
+Route::resource('cpj', 'CpjController');
+Route::resource('crj', 'CrjController');
+Route::resource('customer', 'CustomerController');
+Route::resource('item', 'ItemController');
