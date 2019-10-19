@@ -55,8 +55,8 @@
               <a href="http://localhost/ProjectAkuntan/views/pages/jurnal_penyesuaian"><i class="ik ik-activity"></i><span>Jurnal Penyesuaian</span></a>
           </div>
           <div class="nav-lavel">Inventory</div>
-          <div class="nav-item <?php if($pagenow == "/ProjectAkuntan/views/pages/item") {echo "active";} else {echo "";}?>">
-              <a href="http://localhost/ProjectAkuntan/views/pages/item"><i class="ik ik-box"></i><span>Item</span></a>
+          <div class="nav-item {{ Request::is('item') ? 'active' : '' }}">
+              <a href="{{ route('item.index') }}"><i class="ik ik-box"></i><span>Item</span></a>
           </div>
           <div class="nav-item <?php if($pagenow == "/ProjectAkuntan/views/pages/stock_opname") {echo "active";} else {echo "";}?>">
               <a href="http://localhost/ProjectAkuntan/views/pages/stock_opname"><i class="ik ik-truck"></i><span>Stock Opname</span></a>
