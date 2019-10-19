@@ -38,10 +38,10 @@
                   <a href="http://localhost/ProjectAkuntan/views/pages/sales_journal" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/sales_journal") {echo "active";} else {echo "";}?>">Sales Journal</a>
               </div>
           </div>
-          <div class="nav-item has-sub <?php if($pagenow === "/ProjectAkuntan/views/pages/cpj" || $pagenow === "/ProjectAkuntan/views/pages/payments_journal") {echo "active open";} else {echo "";}?>">
+          <div class="nav-item has-sub {{ Request::is('cpj') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-shopping-cart"></i><span>Pembelian</span></a>
               <div class="submenu-content">
-                  <a href="http://localhost/ProjectAkuntan/views/pages/cpj" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/cpj") {echo "active";} else {echo "";}?>">Cash Payment Journal</a>
+                  <a href="{{ route('cpj.index') }}" class="menu-item {{ Request::is('cpj') ? 'active' : '' }}">Cash Payment Journal</a>
                   <a href="http://localhost/ProjectAkuntan/views/pages/payments_journal" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/payments_journal") {echo "active";} else {echo "";}?>">Payments Journal</a>
               </div>
           </div>
