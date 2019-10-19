@@ -23,3 +23,4 @@ Route::get('/jijal', function () {
 Route::resource('dasbor', 'DasborController');
 Route::resource('akun', 'AkunController');
 Route::resource('cpj', 'CpjController');
+Route::resource('crj', 'CrjController');

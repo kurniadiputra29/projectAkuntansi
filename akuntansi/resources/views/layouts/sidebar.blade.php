@@ -31,10 +31,10 @@
               </div>
           </div>
           <div class="nav-lavel">Transaksi</div>
-          <div class="nav-item has-sub <?php if($pagenow === "/ProjectAkuntan/views/pages/crj" || $pagenow === "/ProjectAkuntan/views/pages/sales_journal") {echo "active open";} else {echo "";}?>">
+          <div class="nav-item has-sub {{ Request::is('crj') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-package"></i><span>Penjualan</span></a>
               <div class="submenu-content">
-                  <a href="http://localhost/ProjectAkuntan/views/pages/crj" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/crj") {echo "active";} else {echo "";}?>">Cash Receipt Journal</a>
+                  <a href="{{ route('crj.index') }}" class="menu-item {{ Request::is('crj') ? 'active' : '' }}">Cash Receipt Journal</a>
                   <a href="http://localhost/ProjectAkuntan/views/pages/sales_journal" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/sales_journal") {echo "active";} else {echo "";}?>">Sales Journal</a>
               </div>
           </div>
