@@ -27,3 +27,4 @@ Route::resource('crj', 'CrjController');
 Route::resource('customer', 'CustomerController');
 Route::resource('item', 'ItemController');
 Route::resource('jp', 'JpController');
+Route::resource('ju', 'JuController');
