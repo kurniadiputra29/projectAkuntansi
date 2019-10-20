@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateCrjsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('crjs', function (Blueprint $table) {
             $table->Increments('id');
-            $table->string('nama');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('foto')->null();
-            $table->rememberToken();
+            $table->date('tanggal');
+            $table->string('kode');
+            $table->text('description');
+            $table->string('nomor_akun');
+            $table->integer('debet');
+            $table->integer('kredit');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('crjs');
     }
 }
