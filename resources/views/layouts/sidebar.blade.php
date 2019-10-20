@@ -48,8 +48,8 @@
           <div class="nav-item {{ Request::is('ju') ? 'active' : '' }}">
               <a href="{{ route('ju.index') }}"><i class="ik ik-book"></i><span>Jurnal Umum</span></a>
           </div>
-          <div class="nav-item <?php if($pagenow == "/ProjectAkuntan/views/pages/kas_kecil") {echo "active";} else {echo "";}?>">
-              <a href="http://localhost/ProjectAkuntan/views/pages/kas_kecil"><i class="ik ik-briefcase"></i><span>Kas Kecil</span></a>
+          <div class="nav-item {{ Request::is('kas_kecil') ? 'active' : '' }}">
+              <a href="{{ route('kas_kecil.index') }}"><i class="ik ik-briefcase"></i><span>Kas Kecil</span></a>
           </div>
           <div class="nav-item {{ Request::is('jp') ? 'active' : '' }}">
               <a href="{{ route('jp.index') }}"><i class="ik ik-activity"></i><span>Jurnal Penyesuaian</span></a>
