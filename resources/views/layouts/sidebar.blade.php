@@ -45,8 +45,8 @@
                   <a href="http://localhost/ProjectAkuntan/views/pages/payments_journal" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/payments_journal") {echo "active";} else {echo "";}?>">Payments Journal</a>
               </div>
           </div>
-          <div class="nav-item <?php if($pagenow == "/ProjectAkuntan/views/pages/jurnal_umum") {echo "active";} else {echo "";}?>">
-              <a href="http://localhost/ProjectAkuntan/views/pages/jurnal_umum"><i class="ik ik-book"></i><span>Jurnal Umum</span></a>
+          <div class="nav-item {{ Request::is('ju') ? 'active' : '' }}">
+              <a href="{{ route('ju.index') }}"><i class="ik ik-book"></i><span>Jurnal Umum</span></a>
           </div>
           <div class="nav-item <?php if($pagenow == "/ProjectAkuntan/views/pages/kas_kecil") {echo "active";} else {echo "";}?>">
               <a href="http://localhost/ProjectAkuntan/views/pages/kas_kecil"><i class="ik ik-briefcase"></i><span>Kas Kecil</span></a>
