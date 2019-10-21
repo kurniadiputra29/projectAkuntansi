@@ -31,11 +31,11 @@
               </div>
           </div>
           <div class="nav-lavel">Transaksi</div>
-          <div class="nav-item has-sub {{ Request::is('crj') ? 'active open' : '' }}">
+          <div class="nav-item has-sub {{ Request::is('crj') || Request::is('sales_journal') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-package"></i><span>Penjualan</span></a>
               <div class="submenu-content">
                   <a href="{{ route('crj.index') }}" class="menu-item {{ Request::is('crj') ? 'active' : '' }}">Cash Receipt Journal</a>
-                  <a href="http://localhost/ProjectAkuntan/views/pages/sales_journal" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/sales_journal") {echo "active";} else {echo "";}?>">Sales Journal</a>
+                  <a href="{{ route('sales_journal.index') }}" class="menu-item {{Request::is('sales_journal')?'active':''}}">Sales Journal</a>
               </div>
           </div>
           <div class="nav-item has-sub {{ Request::is('cpj') || Request::is('payments_journal') ? 'active open' : '' }}">
