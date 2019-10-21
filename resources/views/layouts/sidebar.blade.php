@@ -58,8 +58,8 @@
           <div class="nav-item {{ Request::is('item') ? 'active' : '' }}">
               <a href="{{ route('item.index') }}"><i class="ik ik-box"></i><span>Item</span></a>
           </div>
-          <div class="nav-item <?php if($pagenow == "/ProjectAkuntan/views/pages/stock_opname") {echo "active";} else {echo "";}?>">
-              <a href="http://localhost/ProjectAkuntan/views/pages/stock_opname"><i class="ik ik-truck"></i><span>Stock Opname</span></a>
+          <div class="nav-item {{ Request::is('stock_opname') ? 'active' : '' }}">
+              <a href="{{ route('stock_opname.index') }}"><i class="ik ik-truck"></i><span>Stock Opname</span></a>
           </div>
       </nav>
     </div>
