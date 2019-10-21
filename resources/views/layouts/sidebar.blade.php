@@ -22,10 +22,10 @@
                   <a href="http://localhost/ProjectAkuntan/views/pages/supplier" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/supplier") {echo "active";} else {echo "";}?>">Supplier</a>
               </div>
           </div>
-          <div class="nav-item has-sub <?php if($pagenow === "/ProjectAkuntan/views/pages/saldo_awal" || $pagenow === "/ProjectAkuntan/views/pages/saldo_piutang" || $pagenow === "/ProjectAkuntan/views/pages/saldo_hutang") {echo "active open";} else {echo "";}?>">
+          <div class="nav-item has-sub {{ Request::is('saldo_awal')?'active open':'' }}">
               <a href="#"><i class="ik ik-database"></i><span>Saldo Awal</span></a>
               <div class="submenu-content">
-                  <a href="http://localhost/ProjectAkuntan/views/pages/saldo_awal" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/saldo_awal") {echo "active";} else {echo "";}?>">Saldo Awal</a>
+                  <a href="{{route('saldo_awal.index')}}" class="menu-item {{ Request::is('saldo_awal')?'active':'' }}">Saldo Awal</a>
                   <a href="http://localhost/ProjectAkuntan/views/pages/saldo_piutang" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/saldo_piutang") {echo "active";} else {echo "";}?>">Saldo Piutang</a>
                   <a href="http://localhost/ProjectAkuntan/views/pages/saldo_hutang" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/saldo_hutang") {echo "active";} else {echo "";}?>">Saldo Hutang</a>
               </div>
