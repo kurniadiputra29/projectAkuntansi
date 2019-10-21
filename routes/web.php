@@ -30,3 +30,4 @@ Route::resource('jp', 'JpController');
 Route::resource('ju', 'JuController');
 Route::resource('kas_kecil', 'KasKecilController');
 Route::resource('laporan', 'LaporanController');
+Route::resource('payments_journal', 'PaymentJournalController');
