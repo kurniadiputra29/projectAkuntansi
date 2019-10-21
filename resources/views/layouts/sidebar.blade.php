@@ -8,8 +8,8 @@
           <div class="nav-item {{ Request::is('dasbor') ? 'active' : ''}}">
               <a href="{{ route('dasbor.index') }}"><i class="ik ik-home"></i><span>Dasbor</span></a>
           </div>
-          <div class="nav-item <?php if($pagenow == "/ProjectAkuntan/views/pages/laporan" || $pagenow == "/ProjectAkuntan/views/reports/neraca") {echo "active";} else {echo "";}?>">
-              <a href="http://localhost/ProjectAkuntan/views/pages/laporan"><i class="ik ik-trending-up"></i><span>Laporan</span></a>
+          <div class="nav-item {{ Request::is('laporan') ? 'active' : '' }}">
+              <a href="{{ route('laporan.index') }}"><i class="ik ik-trending-up"></i><span>Laporan</span></a>
           </div>
           <div class="nav-lavel">Master Data</div>
           <div class="nav-item {{ Request::is('akun') ? 'active' : '' }}">
