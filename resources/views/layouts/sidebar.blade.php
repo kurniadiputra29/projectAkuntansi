@@ -38,11 +38,11 @@
                   <a href="http://localhost/ProjectAkuntan/views/pages/sales_journal" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/sales_journal") {echo "active";} else {echo "";}?>">Sales Journal</a>
               </div>
           </div>
-          <div class="nav-item has-sub {{ Request::is('cpj') ? 'active open' : '' }}">
+          <div class="nav-item has-sub {{ Request::is('cpj') || Request::is('payments_journal') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-shopping-cart"></i><span>Pembelian</span></a>
               <div class="submenu-content">
                   <a href="{{ route('cpj.index') }}" class="menu-item {{ Request::is('cpj') ? 'active' : '' }}">Cash Payment Journal</a>
-                  <a href="http://localhost/ProjectAkuntan/views/pages/payments_journal" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/payments_journal") {echo "active";} else {echo "";}?>">Payments Journal</a>
+                  <a href="{{ route('payments_journal.index') }}" class="menu-item {{ Request::is('payments_journal') ? 'active' : '' }}">Payments Journal</a>
               </div>
           </div>
           <div class="nav-item {{ Request::is('ju') ? 'active' : '' }}">
