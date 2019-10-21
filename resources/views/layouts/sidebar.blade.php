@@ -15,11 +15,11 @@
           <div class="nav-item {{ Request::is('akun') ? 'active' : '' }}">
               <a href="{{ route('akun.index') }}"><i class="ik ik-menu"></i><span>Daftar Akun</span></a>
           </div>
-          <div class="nav-item has-sub {{ Request::is('customer') ? 'active open' : '' }}">
+          <div class="nav-item has-sub {{ Request::is('customer') || Request::is('supplier') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-phone"></i><span>Kontak</span></a>
               <div class="submenu-content">
                   <a href="{{ route('customer.index') }}" class="menu-item {{ Request::is('customer') ? 'active' : '' }}">Customer</a>
-                  <a href="http://localhost/ProjectAkuntan/views/pages/supplier" class="menu-item <?php if($pagenow == "/ProjectAkuntan/views/pages/supplier") {echo "active";} else {echo "";}?>">Supplier</a>
+                  <a href="{{ route('supplier.index') }}" class="menu-item {{ Request::is('supplier') ? 'active' : '' }}">Supplier</a>
               </div>
           </div>
           <div class="nav-item has-sub {{ Request::is('saldo_awal') || Request::is('saldo_hutang') || Request::is('saldo_piutang') ?'active open':'' }}">
