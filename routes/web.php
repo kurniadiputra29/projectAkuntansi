@@ -37,3 +37,5 @@ Route::resource('saldo_piutang', 'SaldoPiutangController');
 Route::resource('sales_journal', 'SalesJournalController');
 Route::resource('stock_opname', 'StockOpnameController');
 Route::resource('supplier', 'SupplierController');
+
+Route::get('auth/login', 'AuthController@login');
