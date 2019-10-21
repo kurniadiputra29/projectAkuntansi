@@ -34,3 +34,4 @@ Route::resource('payments_journal', 'PaymentJournalController');
 Route::resource('saldo_awal', 'SaldoAwalController');
 Route::resource('saldo_hutang', 'SaldoHutangController');
 Route::resource('saldo_piutang', 'SaldoPiutangController');
+Route::resource('sales_journal', 'SalesJournalController');
