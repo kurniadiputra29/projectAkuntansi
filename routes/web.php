@@ -41,3 +41,5 @@ Route::resource('supplier', 'SupplierController');
 Route::get('auth/login', 'AuthController@login');
 Route::get('auth/register', 'AuthController@register');
 Route::get('addcompany', 'AddCompanyController@form');
+
+Route::resource('profile', 'ProfileController');
