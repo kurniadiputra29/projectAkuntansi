@@ -32,3 +32,4 @@ Route::resource('kas_kecil', 'KasKecilController');
 Route::resource('laporan', 'LaporanController');
 Route::resource('payments_journal', 'PaymentJournalController');
 Route::resource('saldo_awal', 'SaldoAwalController');
+Route::resource('saldo_hutang', 'SaldoHutangController');
