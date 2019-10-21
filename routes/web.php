@@ -39,3 +39,4 @@ Route::resource('stock_opname', 'StockOpnameController');
 Route::resource('supplier', 'SupplierController');
 
 Route::get('auth/login', 'AuthController@login');
+Route::get('auth/register', 'AuthController@register');
