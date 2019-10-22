@@ -43,8 +43,8 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-hover">
+              <div class="dt-responsive">
+                <table id="order-table" class="table table-striped table-bordered nowrap">
                   <thead>
                     <tr>
                       <th>Nomor</th>
