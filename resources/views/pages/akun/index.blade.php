@@ -39,7 +39,7 @@
                 <span>use class <code>table-hover</code> inside table element</span>
               </div>
               <div class="right-container">
-                <button type="button" class="btn btn-outline-primary btn-rounded" data-toggle="modal" data-target="#exampleModalCenter">Create</button>
+                <button type="button" class="btn btn-outline-primary btn-rounded" data-toggle="modal" data-target="#createModal">Create</button>
               </div>
             </div>
             <div class="card-body">
@@ -55,7 +55,21 @@
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach ($data as $key)
+                      <tr>
+                        <td>{{ $key->nomor }}</td>
+                        <td>{{ $key->nama }}</td>
+                        <td>{{ $key->keterangan }}</td>
+                        <td><span class="badge badge-pill badge-success mb-1">Aktif</span></td>
+                        <td>
+                          <div class="table-actions">
+                            <a data-toggle="modal" data-target="#editModal_{{ $key->id }}"><i class="ik ik-edit-2"></i></a>
+                            <a href="#"><i class="ik ik-trash-2"></i></a>
+                          </div>
+                        </td>
                     <tr>
+                      @include('pages.akun.edit')
+                    @endforeach
                       <td>1-1110</td>
                       <td>Cash in Bank</td>
                       <td>Kas di bank</td>

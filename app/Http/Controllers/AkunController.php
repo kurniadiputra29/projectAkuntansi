@@ -15,7 +15,9 @@ class AkunController extends Controller
      */
     public function index()
     {
-        return view('pages.akun.index');
+        $data = Account::orderBy('created_at', 'desc')->get();
+
+        return view('pages.akun.index', compact('data'));
     }
 
     /**
@@ -70,9 +72,11 @@ class AkunController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AkunStoreRequest $request, $id)
     {
-        //
+        Account::find($id)->update($request->all());
+
+        return redirect('akun');
     }
 
     /**
