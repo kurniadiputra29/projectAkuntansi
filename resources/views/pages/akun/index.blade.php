@@ -50,7 +50,7 @@
                       <th>Nomor</th>
                       <th>Nama</th>
                       <th>Keterangan</th>
-                      <th>Status</th>
+                      {{-- <th>Status</th> --}}
                       <th class="text-right">Aksi</th>
                     </tr>
                   </thead>
@@ -60,51 +60,22 @@
                         <td>{{ $key->nomor }}</td>
                         <td>{{ $key->nama }}</td>
                         <td>{{ $key->keterangan }}</td>
-                        <td><span class="badge badge-pill badge-success mb-1">Aktif</span></td>
-                        <td>
-                          <div class="table-actions">
-                            <a data-toggle="modal" data-target="#editModal_{{ $key->id }}"><i class="ik ik-edit-2"></i></a>
-                            <a href="#"><i class="ik ik-trash-2"></i></a>
+                        {{-- <td><span class="badge badge-pill badge-success mb-1">Aktif</span></td> --}}
+                        <td class="text-right">
+                          <div class="dropdown">
+                              <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
+                              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="aksiDropdown">
+                                  <button class="dropdown-item" data-toggle="modal" data-target="#editModal_{{ $key->id }}"><i class="ik ik-edit-2"></i> Edit</button>
+                                  <form method="post" action="{{ route('akun.destroy', $key->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="dropdown-item" type="submit"><i class="ik ik-trash-2"></i> Delete</button>
+                                  </form>
+                              </div>
                           </div>
                         </td>
-                    <tr>
                       @include('pages.akun.edit')
                     @endforeach
-                      <td>1-1110</td>
-                      <td>Cash in Bank</td>
-                      <td>Kas di bank</td>
-                      <td><span class="badge badge-pill badge-success mb-1">Aktif</span></td>
-                      <td>
-                        <div class="table-actions">
-                          <a href="#"><i class="ik ik-edit-2"></i></a>
-                          <a href="#"><i class="ik ik-trash-2"></i></a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1-1120</td>
-                      <td>Petty Cash</td>
-                      <td>Kas kecil</td>
-                      <td><span class="badge badge-pill badge-success mb-1">Aktif</span></td>
-                      <td>
-                        <div class="table-actions">
-                          <a href="#"><i class="ik ik-edit-2"></i></a>
-                          <a href="#"><i class="ik ik-trash-2"></i></a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1-2100</td>
-                      <td>Stock Invesment</td>
-                      <td>Investasi dalam saham</td>
-                      <td><span class="badge badge-pill badge-success mb-1">Aktif</span></td>
-                      <td>
-                        <div class="table-actions">
-                          <a href="#"><i class="ik ik-edit-2"></i></a>
-                          <a href="#"><i class="ik ik-trash-2"></i></a>
-                        </div>
-                      </td>
-                    </tr>
                   </tbody>
                 </table>
               </div>

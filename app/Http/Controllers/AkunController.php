@@ -87,6 +87,8 @@ class AkunController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Account::find($id)->delete();
+
+        return redirect('akun');
     }
 }
