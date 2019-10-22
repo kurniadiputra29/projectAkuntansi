@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\Account;
+use App\Http\Requests\AkunStoreRequest;
 
 class AkunController extends Controller
 {
@@ -32,9 +34,11 @@ class AkunController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AkunStoreRequest $request)
     {
-        //
+        Account::create($request->all());
+
+        return redirect('akun');
     }
 
     /**

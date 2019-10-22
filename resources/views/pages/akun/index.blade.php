@@ -39,19 +39,19 @@
                 <span>use class <code>table-hover</code> inside table element</span>
               </div>
               <div class="right-container">
-                <button type="button" class="btn btn-outline-primary btn-rounded">Create</button>
+                <button type="button" class="btn btn-outline-primary btn-rounded" data-toggle="modal" data-target="#exampleModalCenter">Create</button>
               </div>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-hover">
                   <thead>
-                    <tr class="row" style="display: contents;">
-                      <th class="col-2">Nomor</th>
-                      <th class="col-3">Nama</th>
-                      <th class="col-5">Keterangan</th>
-                      <th class="col-1">Status</th>
-                      <th class="col-1">Aksi</th>
+                    <tr>
+                      <th>Nomor</th>
+                      <th>Nama</th>
+                      <th>Keterangan</th>
+                      <th>Status</th>
+                      <th class="text-right">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
