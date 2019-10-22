@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\Account;
+use App\Http\Requests\AkunStoreRequest;
 
 class AkunController extends Controller
 {
@@ -13,7 +15,9 @@ class AkunController extends Controller
      */
     public function index()
     {
-        return view('pages.akun.index');
+        $data = Account::orderBy('created_at', 'desc')->get();
+
+        return view('pages.akun.index', compact('data'));
     }
 
     /**
@@ -32,9 +36,11 @@ class AkunController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AkunStoreRequest $request)
     {
-        //
+        Account::create($request->all());
+
+        return redirect('akun');
     }
 
     /**
@@ -66,9 +72,11 @@ class AkunController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AkunStoreRequest $request, $id)
     {
-        //
+        Account::find($id)->update($request->all());
+
+        return redirect('akun');
     }
 
     /**
@@ -79,6 +87,8 @@ class AkunController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Account::find($id)->delete();
+
+        return redirect('akun');
     }
 }

@@ -44,7 +44,7 @@
         </div>
 
 
-
+        @include('pages.akun.create')
 
         @include('layouts.modal')
 

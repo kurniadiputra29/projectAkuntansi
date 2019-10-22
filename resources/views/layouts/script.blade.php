@@ -35,7 +35,7 @@
 <script src="/ProjectAkuntan/js/widget-chart.js"></script>
 <script src="/ProjectAkuntan/js/widget-statistic.js"></script>
 
-<!-- <script src="/ProjectAkuntan/js/alerts.js"></script>
+<script src="/ProjectAkuntan/js/alerts.js"></script>
 <script src="/ProjectAkuntan/js/calendar.js"></script>
 <script src="/ProjectAkuntan/js/carousel.js"></script>
 <script src="/ProjectAkuntan/js/chart-amcharts.js"></script>
@@ -56,7 +56,7 @@
 <script src="/ProjectAkuntan/js/widget-chart.js"></script>
 <script src="/ProjectAkuntan/js/widget-data.js"></script>
 <script src="/ProjectAkuntan/js/widget-statistic.js"></script>
-<script src="/ProjectAkuntan/dist/js/theme.min.js"></script> -->
+<script src="/ProjectAkuntan/dist/js/theme.min.js"></script>
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
