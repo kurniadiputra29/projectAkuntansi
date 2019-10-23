@@ -11,12 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/coba', function () {
-    return "Hello Word !";
-});
+Route::get('/login', 'AuthController@login')->name('login.form');
+Route::post('/enter', 'AuthController@enter')->name('login.enter');
+Route::post('/logout', 'AuthController@logout')->name('login.logout');
+Route::get('/register', 'AuthController@register');
+Route::post('/inputregister', 'AuthController@inputregister')->name('input.register');
+Route::get('addcompany', 'AddCompanyController@form');
+
 Route::get('/jijal', function () {
     return view('pages.dasbor.index');
 });
@@ -38,8 +39,6 @@ Route::resource('sales_journal', 'SalesJournalController');
 Route::resource('stock_opname', 'StockOpnameController');
 Route::resource('supplier', 'SupplierController');
 
-Route::get('auth/login', 'AuthController@login');
-Route::get('auth/register', 'AuthController@register');
-Route::get('addcompany', 'AddCompanyController@form');
+
 
 Route::resource('profile', 'ProfileController');
