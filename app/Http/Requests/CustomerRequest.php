@@ -13,7 +13,7 @@ class CustomerRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class CustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'kode' => 'required',
+            'nama' => 'required',
+            'npwp' => 'required',
+            'alamat' => 'required',
         ];
     }
 }

@@ -3,7 +3,7 @@
 @section('edit-modal-content')
 
   <div class="modal-content">
-    <form class="forms-sample" action="{{route('akun.update', $key->id)}}" method="post">
+    <form class="forms-sample" action="{{route('customer.update', $key->id)}}" method="post">
       @csrf
       @method('PUT')
       <div class="modal-header">
@@ -14,16 +14,24 @@
         <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                  <label for="nomor">Nomor Akun</label>
-                  <input type="text" class="form-control" name="nomor" id="nomor" value="{{ $key->nomor }}">
+                  <label for="kode">Kode Customer</label>
+                  <input type="text" class="form-control" name="kode" id="kode" value="{{ $key->kode }}">
               </div>
               <div class="form-group">
-                  <label for="nama">Nama Akun</label>
+                  <label for="nama">Nama Customer</label>
                   <input type="text" class="form-control" name="nama" id="nama" value="{{ $key->nama }}">
               </div>
               <div class="form-group">
-                  <label for="keterangan">Keterangan</label>
-                  <input type="text" class="form-control" name="keterangan" id="keterangan" value="{{ $key->keterangan }}">
+                  <label for="npwp">NPWP</label>
+                  <input type="text" class="form-control" name="npwp" id="npwp" value="{{ $key->npwp }}">
+              </div>
+              <div class="form-group">
+                  <label for="alamat">Alamat Customer</label>
+                  <input type="text" class="form-control" name="alamat" id="alamat" value="{{ $key->alamat }}">
+              </div>
+              <div class="form-group">
+                  <label for="termin">Termin</label>
+                  <input type="text" class="form-control" name="termin" id="termin" value="{{ $key->termin }}">
               </div>
             </div>
         </div>

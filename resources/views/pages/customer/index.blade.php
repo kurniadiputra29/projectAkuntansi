@@ -67,7 +67,7 @@
                                 <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="aksiDropdown">
                                     <button class="dropdown-item" data-toggle="modal" data-target="#editModal_{{ $key->id }}"><i class="ik ik-edit-2"></i> Edit</button>
-                                    <form method="post" action="{{ route('akun.destroy', $key->id) }}">
+                                    <form method="post" action="{{ route('customer.destroy', $key->id) }}">
                                       @csrf
                                       @method('DELETE')
                                       <button class="dropdown-item" type="submit"><i class="ik ik-trash-2"></i> Delete</button>
