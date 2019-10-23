@@ -18,6 +18,11 @@ Route::get('/register', 'AuthController@register');
 Route::post('/inputregister', 'AuthController@inputregister')->name('input.register');
 Route::get('addcompany', 'AddCompanyController@form');
 
+Route::group(['prefix' => 'social-media', 'namespace' => 'Auth'], function(){
+    Route::get('register/{provider}', 'SocialiteController@register');
+    Route::get('registered/{provider}', 'SocialiteController@registered');
+});
+
 Route::get('/jijal', function () {
     return view('pages.dasbor.index');
 });
@@ -38,7 +43,5 @@ Route::resource('saldo_piutang', 'SaldoPiutangController');
 Route::resource('sales_journal', 'SalesJournalController');
 Route::resource('stock_opname', 'StockOpnameController');
 Route::resource('supplier', 'SupplierController');
-
-
 
 Route::resource('profile', 'ProfileController');
