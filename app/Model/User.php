@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'nama', 'email', 'password', 'foto'
     ];
 
     /**
@@ -29,6 +29,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function socialAccount()
+    {
+        return $this->hasMany(SocialAccount::class);
+    }
     /**
      * The attributes that should be cast to native types.
      *
