@@ -85,7 +85,7 @@
 						</div>
 					</form>
 					<div class="register">
-						<p>Already have an account? <a href="/ProjectAkuntan/views/auth/login">Sign In</a></p>
+						<p>Already have an account? <a href="/login">Sign In</a></p>
 					</div>
 				</div>
 			</div>
@@ -103,7 +103,7 @@
       if (password != retri) {
         alert("Passwords do not match !!");
         return false;
-      } 
+      }
       return true;
     });
   })
