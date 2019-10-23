@@ -1,6 +1,6 @@
-<?php
+@php
   $pagenow    = dirname($_SERVER['PHP_SELF']);
-?>
+@endphp
 <div class="sidebar-content">
     <div class="nav-container">
       <nav id="main-menu-navigation" class="navigation-main">

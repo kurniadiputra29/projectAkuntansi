@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\DataCustomer;
+use App\Http\Requests\CustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -17,7 +19,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('pages.customer.index');
+        $data = DataCustomer::orderBy('created_at', 'desc')->get();
+
+        return view('pages.customer.index', compact('data'));
     }
 
     /**
@@ -36,9 +40,11 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
-        //
+        DataCustomer::create($request->all());
+
+        return redirect('customer');
     }
 
     /**
@@ -72,7 +78,9 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DataCustomer::find($id)->update($request->all());
+
+        return redirect('customer');
     }
 
     /**
@@ -83,6 +91,8 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DataCustomer::find($id)->delete();
+
+        return redirect('customer');
     }
 }
