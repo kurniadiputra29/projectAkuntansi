@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\DataCustomer;
+use App\Requests\CustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -13,7 +15,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('pages.customer.index');
+        $data = DataCustomer::orderBy('created_at', 'desc')->get();
+
+        return view('pages.customer.index', compact('data'));
     }
 
     /**
