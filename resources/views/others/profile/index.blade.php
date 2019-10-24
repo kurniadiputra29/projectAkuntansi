@@ -80,7 +80,7 @@
                           <div class="card-body">
                               <form class="form-horizontal">
                                   <div class="form-group">
-                                      <label for="example-name">Full Name</label>
+                                      <label for="example-name">Name</label>
                                       <input type="text" placeholder="Santri Developer" class="form-control" name="example-name" id="example-name">
                                   </div>
                                   <div class="form-group">
