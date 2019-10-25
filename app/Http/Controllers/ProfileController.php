@@ -19,7 +19,10 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('others.profile.index');
+        $userData = User::all();
+        $perusahaanData = DataPerusahaan::all();
+
+        return view('others.profile.index', compact('userData', 'perusahaanData'));
     }
 
     /**

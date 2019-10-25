@@ -31,12 +31,16 @@
 
         <div class="row">
             <div class="col-lg-4 col-md-5">
+              @foreach ($userData as $key)
+                {{-- array_combine($courses, $sections) as $course => $section --}}
                 <div class="card">
                     <div class="card-body">
                         <div class="text-center">
-                            <img src="http://localhost/ProjectAkuntan/img/user.jpg" class="rounded-circle" width="150" />
-                            <h4 class="card-title mt-10">OEMAR TECH Corporation, Ltd</h4>
-                            <p class="card-subtitle">Santri Developer</p>
+                            <img src="{{Storage::url(auth()->user()->foto)}}" class="rounded-circle" width="150" />
+                            @foreach ($perusahaanData as $yek)                              
+                              <h4 class="card-title mt-10">{{ $yek->name }}</h4>
+                            @endforeach
+                            <p class="card-subtitle">{{$key->nama}}</p>
                             <div class="row text-center justify-content-md-center">
                                 <div class="col-4"><a href="javascript:void(0)" class="link"><i class="ik ik-user"></i> <font class="font-medium">254</font></a></div>
                                 <div class="col-4"><a href="javascript:void(0)" class="link"><i class="ik ik-image"></i> <font class="font-medium">54</font></a></div>
@@ -46,7 +50,7 @@
                     <hr class="mb-0">
                     <div class="card-body">
                         <small class="text-muted d-block">Email address </small>
-                        <h6>oemar@admin.com</h6>
+                        <h6>{{$key->email}}</h6>
                         <small class="text-muted d-block pt-10">Phone</small>
                         <h6>(123) 456 7890</h6>
                         <small class="text-muted d-block pt-10">Address</small>
@@ -61,6 +65,7 @@
                         <button class="btn btn-icon btn-instagram"><i class="fab fa-instagram"></i></button>
                     </div>
                 </div>
+                @endforeach
             </div>
             <div class="col-lg-8 col-md-7">
                 <div class="card">
@@ -70,9 +75,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="pills-company-tab" data-toggle="pill" href="#last-month" role="tab" aria-controls="pills-company" aria-selected="false">Company</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-setting-tab" data-toggle="pill" href="#previous-month" role="tab" aria-controls="pills-setting" aria-selected="false">Setting</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
@@ -113,33 +115,7 @@
                               </form>
                           </div>
                         </div>
-                        <div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="pills-company-tab">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-3 col-6"> <strong>Full Name</strong>
-                                        <br>
-                                        <p class="text-muted">Johnathan Deo</p>
-                                    </div>
-                                    <div class="col-md-3 col-6"> <strong>Mobile</strong>
-                                        <br>
-                                        <p class="text-muted">(123) 456 7890</p>
-                                    </div>
-                                    <div class="col-md-3 col-6"> <strong>Email</strong>
-                                        <br>
-                                        <p class="text-muted">johnathan@admin.com</p>
-                                    </div>
-                                    <div class="col-md-3 col-6"> <strong>Location</strong>
-                                        <br>
-                                        <p class="text-muted">London</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <p class="mt-30">Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries </p>
-                                <p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="previous-month" role="tabpanel" aria-labelledby="pills-setting-tab">
+                        <div class="tab-pane fade" id="previous-month" role="tabpanel" aria-labelledby="pills-company-tab">
                             <div class="card-body">
                                 <form class="form-horizontal">
                                     <div class="form-group">

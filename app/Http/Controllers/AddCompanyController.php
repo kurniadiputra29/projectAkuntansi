@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\DataPerusahaan;
+use App\Http\Requests\DataPerusahaanRequest;
 
 class AddCompanyController extends Controller
 {
@@ -14,4 +16,10 @@ class AddCompanyController extends Controller
     {
       return view('others.addcompany.index');
     }
+		public function store(DataPerusahaanRequest $request)
+		{
+			DataPerusahaan::create($request->all());
+
+			return redirect('dasbor');
+		}
 }

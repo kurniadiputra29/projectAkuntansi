@@ -32,7 +32,7 @@
 			<div class="col-xl-4 col-lg-6 col-md-7 mx-auto my-auto p-0 bg-white" style="opacity: 0.9">
 				<div class="authentication-form mx-auto">
 					<div class="logo-centered">
-						<a href="/ProjectAkuntan/index.html"><img src="/ProjectAkuntan/src/img/brand.svg" alt=""></a>
+						<a href="/ProjectAkuntan/index.html"><img src="/ProjectAkuntan/src/img/am.svg" alt=""></a>
 					</div>
 					<h3>New to AccountMin</h3>
 					<p>Join us today! It takes only few steps</p>

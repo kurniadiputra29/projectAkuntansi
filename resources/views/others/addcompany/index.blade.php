@@ -32,30 +32,40 @@
                     <div class="col-xl-4 col-lg-6 col-md-7 mx-auto my-auto p-0 bg-white" style="opacity: 0.9">
                         <div class="authentication-form mx-auto">
                             <div class="logo-centered">
-                                <a href="/ProjectAkuntan/index.html"><img src="/ProjectAkuntan/src/img/brand.svg" alt=""></a>
+                                <a href="/ProjectAkuntan/index.html"><img src="/ProjectAkuntan/src/img/am.svg" alt=""></a>
                             </div>
                             <h3>Add Your Company</h3>
-                            <form action="/ProjectAkuntan/">
-                                <p>Masukkan Nama Perusahaan</p>
+                            <form action="{{route('co.store')}}" method="post">
+                              @csrf
+                                <label for="nama">Nama Perusahaan</label>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Nama Perusahaan" required="">
+                                    <input type="text" id="nama" name="name" class="form-control" placeholder="Nama Perusahaan" required="">
                                     <i class="ik ik-server"></i>
                                 </div>
-                                <p>Masukkan Nama Perusahaan</p>
+                                <label for="alamat">Alamat Perusahaan</label>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Nama Perusahaan" required="">
-                                    <i class="ik ik-server"></i>
+                                    <input type="text" id="alamat" name="alamat" class="form-control" placeholder="Alamat Perusahaan" required="">
+                                    <i class="ik ik-map-pin"></i>
                                 </div>
-                                <p>Pekerjaan</p>
+                                <label for="telepon">Telepon Perusahaan</label>
                                 <div class="form-group">
-                                    <select class="form-control select2">
+                                    <input type="text" id="telepon" name="telepon" class="form-control" placeholder="Telepon Perusahaan" required="">
+                                    <i class="ik ik-phone"></i>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleTextarea1">Deskripsi</label>
+                                    <textarea class="form-control" id="exampleTextarea1" name="discription" rows="2"></textarea>
+                                </div>
+                                {{-- <label for="pekerjaan">Pekerjaan</label>
+                                <div class="form-group">
+                                    <select class="form-control select2" id="pekerjaan">
                                         <option value="cheese">Pemilik Perusahaan</option>
                                         <option value="tomatoes">Akuntan</option>
                                     </select>
                                     <i class="ik ik-briefcase"></i>
-                                </div>
+                                </div> --}}
                                 <div class="sign-btn text-center">
-                                    <button class="btn btn-theme">Finish</button>
+                                    <button class="btn btn-theme" type="submit">Submit</button>
                                 </div>
                             </form>
                         </div>
