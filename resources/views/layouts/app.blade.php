@@ -24,7 +24,7 @@
                   <div class="sidebar-header">
                       <a class="header-brand" href="index.html">
                           <div class="logo-img">
-                             <img src="/ProjectAkuntan/src/img/brand-white.svg" class="header-brand-img" alt="lavalite">
+                             <img src="/ProjectAkuntan/src/img/am-white.svg" class="header-brand-img" alt="lavalite">
                           </div>
                           <span class="text">AccountMin</span>
                       </a>

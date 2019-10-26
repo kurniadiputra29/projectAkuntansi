@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\User;
+use App\Model\DataPerusahaan;
 
 class ProfileController extends Controller
 {
@@ -17,7 +19,10 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('others.profile.index');
+        $userData = User::all();
+        $perusahaanData = DataPerusahaan::all();
+
+        return view('others.profile.index', compact('userData', 'perusahaanData'));
     }
 
     /**
