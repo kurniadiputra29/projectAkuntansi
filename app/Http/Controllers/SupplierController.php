@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\DataSupplier;
+use App\Http\Requests\SupplierRequest;
 
 class SupplierController extends Controller
 {
@@ -17,7 +19,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return view('pages.supplier.index');
+      $data = DataSupplier::orderBy('created_at', 'desc')->get();
+        return view('pages.supplier.index', compact('data'));
     }
 
     /**
@@ -36,9 +39,10 @@ class SupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SupplierRequest $request)
     {
-        //
+        DataSupplier::create($request->all());
+        return redirect('supplier');
     }
 
     /**
@@ -72,7 +76,8 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DataSupplier::find($id)->update($request->all());
+        return redirect('supplier');
     }
 
     /**
@@ -83,6 +88,7 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DataSupplier::find($id)->delete();
+        return redirect('supplier');
     }
 }
