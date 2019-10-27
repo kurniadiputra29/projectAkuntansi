@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Login | AccountMin - Simple Accountant Admin</title>
+	<title>Forgot Password | AccountMin - Simple Accountant Admin</title>
 	<meta name="description" content="">
 	<meta name="keywords" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,20 +27,20 @@
 <![endif]-->
 
 <div class="auth-wrapper">
-	<div class="container-fluid h-100 lavalite-bg" style="background-image: url('/ProjectAkuntan/img/auth/login-unsplash.jpg')">
-		<div class="row flex-row h-100">
-			{{-- <div class="col-xl-8 col-lg-6 col-md-5 p-0 d-md-block d-lg-block d-sm-none d-none">
-				<div class="lavalite-bg" style="background-image: url('/ProjectAkuntan/img/auth/login-unsplash.jpg')">
+	<div class="container-fluid h-100">
+		<div class="row flex-row h-100 bg-white">
+			<div class="col-xl-8 col-lg-6 col-md-5 p-0 d-md-block d-lg-block d-sm-none d-none">
+				<div class="lavalite-bg" style="background-image: url('/ProjectAkuntan/img/auth/login-bg.jpg')">
 					<div class="lavalite-overlay"></div>
 				</div>
-			</div> --}}
-			<div class="col-xl-4 col-lg-6 col-md-7 mx-auto my-auto p-0 bg-white" style="opacity: 0.9">
+			</div>
+			<div class="col-xl-4 col-lg-6 col-md-7 my-auto p-0">
 				<div class="authentication-form mx-auto">
 					<div class="logo-centered">
-						<a href="/ProjectAkuntan/index.html"><img src="/ProjectAkuntan/src/img/am.svg" alt=""></a>
+						<a href="/ProjectAkuntan/index.html"><img src="/ProjectAkuntan/src/img/brand.svg" alt=""></a>
 					</div>
-					<h3>Sign In to AccountMin</h3>
-					<p>Happy to see you again!</p>
+					<h3>Forgot Password</h3>
+					<p>We will send you a link to reset password.</p>
 					@if (session('Success'))
 					<div class="alert alert-success">
 						{{ session('Success') }}
@@ -51,40 +51,18 @@
 						{{ session('Gagal') }}
 					</div>
 					@endif
-					<form action="{{route('login.enter')}}" method="post">
+					<form method="POST" action="{{route('reset.pass')}}">
 						@csrf
 						<div class="form-group">
-							<input type="email" name="email" class="form-control" placeholder="Email" required="">
-							<i class="ik ik-user"></i>
-						</div>
-						<div class="form-group">
-							<input type="password" name="password" class="form-control" placeholder="Password" required="">
-							<i class="ik ik-lock"></i>
-						</div>
-						<div class="row">
-							<div class="col text-left">
-								<label class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input" id="item_checkbox" name="item_checkbox" value="option1">
-									<span class="custom-control-label">&nbsp;Remember Me</span>
-								</label>
-							</div>
-							<div class="col text-right">
-								<a href="{{route('resetpassword')}}">Forgot Password ?</a>
-							</div>
+							<input type="email" name="email" class="form-control" placeholder="Your email address" required="">
+							<i class="ik ik-mail"></i>
 						</div>
 						<div class="sign-btn text-center">
-							<button class="btn btn-theme">Sign In</button>
-						</div>
-						<div class="social-auth-links text-center">
-						  <p></p>
-						  <a href="{{ URL('social-media/register/facebook') }}" class="btn btn-block btn-social btn-facebook btn-flat"><i class="ik ik-facebook"></i> Sign in using
-						  Facebook</a>
-						  <a href="{{ URL('social-media/register/google') }}" class="btn btn-block btn-social btn-google btn-flat"><i class="ik ik-mail"></i> Sign in using
-						  Google+</a>
+							<button class="btn btn-theme">Submit</button>
 						</div>
 					</form>
 					<div class="register">
-						<p>Don't have an account? <a href="/register">Create an account</a></p>
+						<p>Not a member? <a href="/register">Create an account</a></p>
 					</div>
 				</div>
 			</div>

@@ -24,6 +24,12 @@ Route::group(['prefix' => 'social-media', 'namespace' => 'Auth'], function(){
     Route::get('registered/{provider}', 'SocialiteController@registered');
 });
 
+Route::get('/resetpassword', 'AuthController@resetpassword')->name('resetpassword');
+Route::post('resetpassword', 'AuthController@resetpass')->name('reset.pass');
+Route::get('confirmasipassword', 'AuthController@confirmasipassword')->name('confirm');
+Route::post('confirmasipassword', 'AuthController@confirmpass')->name('confirm.pass');
+Route::put('reset', 'AuthController@update')->name('reset.update');
+
 Route::get('/jijal', function () {
     return view('pages.dasbor.index');
 });

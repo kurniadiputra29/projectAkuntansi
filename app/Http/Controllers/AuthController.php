@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ResetMail;
 
 class AuthController extends Controller
 {
@@ -27,7 +29,7 @@ class AuthController extends Controller
     	if ($check) {
     		return redirect()->intended('/dasbor');
     	} else {
-    		return redirect('/login');
+    		return redirect('/login')->with('Gagal', 'Email Atau Password Anda Tidak Terdaftar !!');
     	}
     }
     public function logout()
@@ -63,5 +65,45 @@ class AuthController extends Controller
         $data->foto = $path;
         $data->save();
         return redirect('/login')->with('Success', 'Data anda telah berhasil di input !');
+    }
+
+    public function resetpassword()
+    {
+        return view('auth.forgotpass.email');
+    }
+    public function resetpass(Request $request)
+    {
+        $resetpass = $request->email;
+        
+        // $coba = User::all('email');
+        $users = User::where('email', $resetpass)->get();
+        $users_count = User::where('email', $resetpass)->count();
+        
+        if ($users_count > 0 ) {
+            Mail::to('kurniadiputra29@gmail.com')->send(new ResetMail($resetpass));
+            return redirect('/resetpassword')->with('Success', 'Email telah berhasil dikirim, cek email Anda !');
+
+            // return view('ubah.sendmail', compact('users'));
+        } else {
+            return back()->with('Gagal', 'Email Anda Tidak Terdaftar !!');
+        }
+    }
+    public function confirmasipassword()
+    {
+        return view('auth.forgotpass.confirmasi');
+    }
+    public function confirmpass(Request $request)
+    {
+        $id = $request->id;
+        $users = User::find($id);
+        return view('auth.forgotpass.confirmasi', compact('users'));
+    }
+    public function update(Request $request)
+    {
+        $id = $request->id;
+        $data = User::find($id);
+        $data->password = bcrypt($request->password);
+        $data->save(); 
+        return redirect('/login')->with('Success', 'Password anda telah berhasil di reset !');
     }
 }
