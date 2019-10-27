@@ -17,6 +17,7 @@ Route::post('/logout', 'AuthController@logout')->name('login.logout');
 Route::get('/register', 'AuthController@register');
 Route::post('/inputregister', 'AuthController@inputregister')->name('input.register');
 Route::get('addcompany', 'AddCompanyController@form');
+Route::post('/postcompany', 'AddCompanyController@store')->name('co.store');
 
 Route::group(['prefix' => 'social-media', 'namespace' => 'Auth'], function(){
     Route::get('register/{provider}', 'SocialiteController@register');

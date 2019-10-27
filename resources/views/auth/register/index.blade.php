@@ -27,17 +27,12 @@
 <![endif]-->
 
 <div class="auth-wrapper">
-	<div class="container-fluid h-100">
-		<div class="row flex-row h-100 bg-white">
-			<div class="col-xl-8 col-lg-6 col-md-5 p-0 d-md-block d-lg-block d-sm-none d-none">
-				<div class="lavalite-bg" style="background-image: url('/ProjectAkuntan/img/auth/reg-unsplash.jpg')">
-					<div class="lavalite-overlay"></div>
-				</div>
-			</div>
-			<div class="col-xl-4 col-lg-6 col-md-7 my-auto p-0">
+	<div class="container-fluid h-100 lavalite-bg" style="background-image: url('/ProjectAkuntan/img/auth/reg-unsplash.jpg')">
+		<div class="row flex-row h-100">
+			<div class="col-xl-4 col-lg-6 col-md-7 mx-auto my-auto p-0 bg-white" style="opacity: 0.9">
 				<div class="authentication-form mx-auto">
 					<div class="logo-centered">
-						<a href="/ProjectAkuntan/index.html"><img src="/ProjectAkuntan/src/img/brand.svg" alt=""></a>
+						<a href="/ProjectAkuntan/index.html"><img src="/ProjectAkuntan/src/img/am.svg" alt=""></a>
 					</div>
 					<h3>New to AccountMin</h3>
 					<p>Join us today! It takes only few steps</p>
@@ -68,9 +63,19 @@
 							<input type="password" class="form-control" id="retri" placeholder="Confirm Password" required="">
 							<i class="ik ik-eye-off"></i>
 						</div>
-						<div class="form-group">
+						{{-- <div class="form-group">
 							<input type="file" name="foto" class="form-control" >
 							<i class="ik ik-camera"></i>
+						</div> --}}
+						<div class="form-group">
+								<input type="file" name="foto" class="file-upload-default">
+								<div class="input-group col-xs-12">
+										<input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+										<span class="input-group-append">
+										<button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+										</span>
+										<i class="ik ik-camera"></i>
+								</div>
 						</div>
 						<div class="row">
 							<div class="col-12 text-left">
@@ -113,6 +118,7 @@
 <script src="/ProjectAkuntan/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
 <script src="/ProjectAkuntan/plugins/screenfull/dist/screenfull.js"></script>
 <script src="/ProjectAkuntan/dist/js/theme.js"></script>
+<script src="/ProjectAkuntan/js/form-components.js"></script>
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
 	(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
