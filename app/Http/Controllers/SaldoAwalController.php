@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\Account;
+use App\Model\SaldoAwal;
+use App\Http\Requests\SaldoAwalRequest;
 
 class SaldoAwalController extends Controller
 {
@@ -17,7 +20,9 @@ class SaldoAwalController extends Controller
      */
     public function index()
     {
-        return view('pages.saldo_awal.index');
+      $dataAkun = Account::all();
+      $dataSaldoAwal = SaldoAwal::orderBy('created_at', 'desc')->get();
+        return view('pages.saldo_awal.index', compact('dataAkun', 'dataSaldoAwal'));
     }
 
     /**
@@ -36,9 +41,10 @@ class SaldoAwalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaldoAwalRequest $request)
     {
-        //
+        SaldoAwal::create($request->all());
+        return redirect('saldo_awal');
     }
 
     /**
@@ -70,9 +76,10 @@ class SaldoAwalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SaldoAwalRequest $request, $id)
     {
-        //
+        SaldoAwal::find($id)->update($request->all());
+        return redirect('saldo_awal');
     }
 
     /**
@@ -83,6 +90,7 @@ class SaldoAwalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        SaldoAwal::find($id)->delete();
+        return redirect('saldo_awal');
     }
 }

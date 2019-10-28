@@ -35,6 +35,7 @@
 <script src="/ProjectAkuntan/js/widget-chart.js"></script>
 <script src="/ProjectAkuntan/js/widget-statistic.js"></script>
 <script src="/ProjectAkuntan/js/datatables.js"></script>
+<script src="/ProjectAkuntan/js/form-advanced.js"></script>
 
 {{-- <script src="/ProjectAkuntan/js/alerts.js"></script>
 <script src="/ProjectAkuntan/js/calendar.js"></script>
@@ -45,7 +46,6 @@
 <script src="/ProjectAkuntan/js/chart-knob.js"></script>
 <script src="/ProjectAkuntan/js/charts.js"></script>
 
-<script src="/ProjectAkuntan/js/form-advanced.js"></script>
 <script src="/ProjectAkuntan/js/form-components.js"></script>
 <script src="/ProjectAkuntan/js/form-picker.js"></script>
 <script src="/ProjectAkuntan/js/forms.js"></script>
