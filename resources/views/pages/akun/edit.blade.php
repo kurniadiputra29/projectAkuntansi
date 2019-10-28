@@ -15,6 +15,10 @@
             <div class="col-md-12">
               <div class="form-group">
                   <label for="nomor">Nomor Akun</label>
+                  <input type="text" class="form-control" name="nomor" id="nomor" value="{{ $key->id }}">
+              </div>
+              <div class="form-group">
+                  <label for="nomor">Nomor Akun</label>
                   <input type="text" class="form-control" name="nomor" id="nomor" value="{{ $key->nomor }}">
               </div>
               <div class="form-group">
