@@ -1,7 +1,7 @@
 <div class="modal fade" id="editModal_{{ $key->id }}" tabindex="-1" role="dialog" aria-labelledby="@yield('aria-labelledby-2')" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">  <div class="modal-content">
-      <form class="forms-sample" action="{{route('saldo_awal.update', $key->id)}}" method="post">
+      <form class="forms-sample" action="{{route('saldo_hutang.update', $key->id)}}" method="post">
         @csrf
         @method('PUT')
         <div class="modal-header">
@@ -14,15 +14,19 @@
               <div class="form-group">
                 <label for="kode">Pilih Akun</label>
                 <select class="form-control" name="account_id">
-                  @foreach($dataAkun as $item)
+                  @foreach($dataSupplier as $item)
                     <option
                     value="{{ $item->id }}"
-                    {{ $key->account_id == $item->id ? 'selected' : '' }}
+                    {{ $key->supplier_id == $item->id ? 'selected' : '' }}
                     >
-                    {{ $item->nomor.' - '. $item->nama }}
+                    {{ $item->kode.' - '. $item->nama }}
                   </option>
                 @endforeach
               </select>
+            </div>
+            <div class="form-group">
+              <label for="keterangan">Keterangan</label>
+              <input type="number" class="form-control" name="keterangan" id="keterangan" value="{{ $key->keterangan }}">
             </div>
             <div class="form-group">
               <label for="debet">Debet</label>
