@@ -11,4 +11,9 @@ class DataCustomer extends Model
     protected $fillable = [
       'id', 'kode', 'nama', 'npwp', 'alamat', 'termin', 'created_at', 'update_at'
     ];
+
+    public function saldo_piutang()
+    {
+      return $this->hasMany(SaldoPiutang::class);
+    }
 }

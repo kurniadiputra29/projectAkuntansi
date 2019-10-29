@@ -21,7 +21,7 @@
                     <nav class="breadcrumb-container" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="http://localhost/ProjectAkuntan/index.php"><i class="ik ik-home"></i></a>
+                                <a href="/dasbor"><i class="ik ik-home"></i></a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">Saldo Piutang</li>
                         </ol>
@@ -39,58 +39,52 @@
                   <span>use class <code>table-hover</code> inside table element</span>
                 </div>
                 <div class="right-container">
-                  <button type="button" class="btn btn-outline-primary btn-rounded">Save</button>
+                  <button type="button" class="btn btn-outline-primary btn-rounded" data-toggle="modal" data-target="#createModal">Create</button>
                 </div>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
+                <div class="dt-responsive">
+                  <table id="order-table" class="table table-striped table-bordered nowrap">
                     <thead>
-                      <tr class="row" style="display: contents;">
-                        <th class="col-2">Kode</th>
-                        <th class="col-3">Nama</th>
-                        <th class="col-3">Keterangan</th>
-                        <th class="col-3">Saldo</th>
-                        <th class="col-1">Aksi</th>
+                      <tr>
+                        <th>Kode</th>
+                        <th>Nama</th>
+                        <th>Keterangan</th>
+                        <th>Debet</th>
+                        <th>Kredit</th>
+                        <th class="text-right">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>C0001</td>
-                        <td>Toko Sanex</td>
-                        <td></td>
-                        <td><input type="text" class="form-control form-control-sm" value="0"></td>
-                        <td>
-                          <div class="table-actions">
-                            <a href="#"><i class="ik ik-edit-2"></i></a>
-                            <a href="#"><i class="ik ik-trash-2"></i></a>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>C0002</td>
-                        <td>Toko Niaga</td>
-                        <td></td>
-                        <td><input type="text" class="form-control form-control-sm" value="0"></td>
-                        <td>
-                          <div class="table-actions">
-                            <a href="#"><i class="ik ik-edit-2"></i></a>
-                            <a href="#"><i class="ik ik-trash-2"></i></a>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>C0003</td>
-                        <td>Toko Contoh</td>
-                        <td></td>
-                        <td><input type="text" class="form-control form-control-sm" value="0"></td>
-                        <td>
-                          <div class="table-actions">
-                            <a href="#"><i class="ik ik-edit-2"></i></a>
-                            <a href="#"><i class="ik ik-trash-2"></i></a>
-                          </div>
-                        </td>
-                      </tr>
+                      @php
+                      function format_uang($angka){
+                        $hasil =  number_format($angka,2, ',' , '.');
+                        return $hasil;
+                      }
+                      @endphp
+                      @foreach ($dataSaldoPiutang as $key)
+                        <tr>
+                          <td>{{ $key->customers->kode }}</td>
+                          <td>{{ $key->customers->nama }}</td>
+                          <td>{{ $key->keterangan }}</td>
+                          <td>Rp{{ format_uang($key->debet) }}</td>
+                          <td>Rp{{ format_uang($key->kredit) }}</td>
+                          <td class="text-right">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="aksiDropdown">
+                                    <button class="dropdown-item" data-toggle="modal" data-target="#editModal_{{ $key->id }}"><i class="ik ik-edit-2"></i> Edit</button>
+                                    <form method="post" action="{{ route('saldo_piutang.destroy', $key->id) }}">
+                                      @csrf
+                                      @method('DELETE')
+                                      <button class="dropdown-item" type="submit"><i class="ik ik-trash-2"></i> Delete</button>
+                                    </form>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        @include('pages.saldo_piutang.edit')
+                      @endforeach
                     </tbody>
                   </table>
                 </div>
@@ -100,5 +94,6 @@
         </div>
       </div>
   </div>
+  @include('pages.saldo_piutang.create')
 
 @endsection
