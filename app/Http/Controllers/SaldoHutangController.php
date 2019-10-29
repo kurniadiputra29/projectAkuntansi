@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\SaldoHutang;
+use App\Model\DataSupplier;
 
 class SaldoHutangController extends Controller
 {
@@ -17,7 +19,9 @@ class SaldoHutangController extends Controller
      */
     public function index()
     {
-        return view('pages.saldo_hutang.index');
+      $dataSaldoHutang = SaldoHutang::orderBy('created_at', 'desc')->get();
+      $dataSupplier = DataSupplier::all();
+        return view('pages.saldo_hutang.index', compact('dataSaldoHutang','dataSupplier'));
     }
 
     /**
@@ -38,7 +42,8 @@ class SaldoHutangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        SaldoHutang::create($request->all());
+        return redirect('saldo_hutang');
     }
 
     /**
@@ -72,7 +77,8 @@ class SaldoHutangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        SaldoHutang::find($id)->update($request->all());
+        return redirect('saldo_hutang');
     }
 
     /**
@@ -83,6 +89,7 @@ class SaldoHutangController extends Controller
      */
     public function destroy($id)
     {
-        //
+        SaldoHutang::find($id)->delete();
+        return redirect('saldo_awal');
     }
 }

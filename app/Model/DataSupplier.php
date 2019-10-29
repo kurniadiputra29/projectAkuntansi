@@ -11,4 +11,9 @@ class DataSupplier extends Model
     protected $fillable = [
       'id', 'kode', 'nama', 'npwp', 'alamat', 'termin', 'created_at', 'update_at'
     ];
+
+    public function saldo_hutang()
+    {
+      return $this->hasMany(SaldoHutang::class);
+    }
 }
