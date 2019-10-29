@@ -15,7 +15,8 @@ class UsersTableSeeder extends Seeder
 						'nama'          => 'Coba',
 						'email'         => 'coba@gmail.com',
 						'password'      => bcrypt('12345'),
-						'foto'      => '',
+						'foto'      	=> 'public/foto/wuLMJ1CEOorGeCf7yUNDQ0K31oZh2Eeev5SNp4IF.jpeg',
+						'role'			=> 'admin',
 						'created_at'    => now(),
 						'updated_at'    => now(),
 				];

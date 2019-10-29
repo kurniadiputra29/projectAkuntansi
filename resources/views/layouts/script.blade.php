@@ -46,7 +46,7 @@
 <script src="/ProjectAkuntan/js/charts.js"></script>
 
 <script src="/ProjectAkuntan/js/form-advanced.js"></script>
-<script src="/ProjectAkuntan/js/form-components.js"></script>
+
 <script src="/ProjectAkuntan/js/form-picker.js"></script>
 <script src="/ProjectAkuntan/js/forms.js"></script>
 <script src="/ProjectAkuntan/js/layout.js"></script>
@@ -58,6 +58,9 @@
 <script src="/ProjectAkuntan/js/widget-data.js"></script>
 <script src="/ProjectAkuntan/js/widget-statistic.js"></script>
 <script src="/ProjectAkuntan/dist/js/theme.min.js"></script> --}}
+
+<script src="/ProjectAkuntan/js/form-components.js"></script>
+<!-- <script src="/ProjectAkuntan/dist/js/theme.js"></script> -->
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
@@ -67,3 +70,22 @@
     r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
     ga('create','UA-XXXXX-X','auto');ga('send','pageview');
 </script>
+<script>
+  $(function () {
+    $("#submit").click( function() {
+      var password = $("#password").val();
+      var retri = $("#retri").val();
+      if (password != retri) {
+        alert("Passwords do not match !!");
+        return false;
+      }
+      return true;
+    });
+  })
+</script>
+
+
+
+
+
+

@@ -61,6 +61,13 @@
           <div class="nav-item {{ Request::is('stock_opname') ? 'active' : '' }}">
               <a href="{{ route('stock_opname.index') }}"><i class="ik ik-truck"></i><span>Stock Opname</span></a>
           </div>
+
+          @if( auth()->user()->role  == 'admin')
+            <div class="nav-lavel">Users</div>
+            <div class="nav-item {{ Request::is('users') ? 'active' : '' }}">
+                <a href="{{ route('users.index') }}"><i class="ik ik-user"></i><span>Users</span></a>
+            </div>            
+          @endif
       </nav>
     </div>
 </div>
