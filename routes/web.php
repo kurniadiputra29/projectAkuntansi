@@ -52,3 +52,6 @@ Route::resource('stock_opname', 'StockOpnameController');
 Route::resource('supplier', 'SupplierController');
 
 Route::resource('profile', 'ProfileController');
+
+Route::resource('users', 'UserController');
+
