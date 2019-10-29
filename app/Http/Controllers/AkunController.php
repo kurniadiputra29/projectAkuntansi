@@ -20,8 +20,9 @@ class AkunController extends Controller
     public function index()
     {
         $data = Account::orderBy('created_at', 'desc')->get();
+        $datas = Account::orderBy('id')->get();
 
-        return view('pages.akun.index', compact('data'));
+        return view('pages.akun.index', compact('data','datas'));
     }
 
     /**
@@ -66,7 +67,8 @@ class AkunController extends Controller
      */
     public function edit($id)
     {
-        //
+      $data = Account::find($id);
+      return view('pages.akun.edit-2', compact('data'));
     }
 
     /**
