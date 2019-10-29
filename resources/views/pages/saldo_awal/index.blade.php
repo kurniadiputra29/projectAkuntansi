@@ -21,7 +21,7 @@
                     <nav class="breadcrumb-container" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="http://localhost/ProjectAkuntan/index.php"><i class="ik ik-home"></i></a>
+                                <a href="/dasbor"><i class="ik ik-home"></i></a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">Saldo Awal</li>
                         </ol>
@@ -39,58 +39,50 @@
                   <span>use class <code>table-hover</code> inside table element</span>
                 </div>
                 <div class="right-container">
-                  <button type="button" class="btn btn-outline-primary btn-rounded">Save</button>
+                  <button type="button" class="btn btn-outline-primary btn-rounded" data-toggle="modal" data-target="#createModal">Create</button>
                 </div>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
+                <div class="dt-responsive">
+                  <table id="order-table" class="table table-striped table-bordered nowrap">
                     <thead>
-                      <tr class="row" style="display: contents;">
-                        <th class="col-2">Nomor</th>
-                        <th class="col-3">Nama</th>
-                        <th class="col-3">Debet</th>
-                        <th class="col-3">Kredit</th>
-                        <th class="col-1">Aksi</th>
+                      <tr>
+                        <th>Nomor</th>
+                        <th>Nama</th>
+                        <th>Debet</th>
+                        <th>Kredit</th>
+                        <th class="text-right">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1-1110</td>
-                        <td>Cash in Bank</td>
-                        <td><input type="text" class="form-control form-control-sm" value="0"></td>
-                        <td><input type="text" class="form-control form-control-sm" value="0"></td>
-                        <td>
-                          <div class="table-actions">
-                            <a href="#"><i class="ik ik-edit-2"></i></a>
-                            <a href="#"><i class="ik ik-trash-2"></i></a>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>1-1120</td>
-                        <td>Petty Cash</td>
-                        <td><input type="text" class="form-control form-control-sm" value="0"></td>
-                        <td><input type="text" class="form-control form-control-sm" value="0"></td>
-                        <td>
-                          <div class="table-actions">
-                            <a href="#"><i class="ik ik-edit-2"></i></a>
-                            <a href="#"><i class="ik ik-trash-2"></i></a>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>1-2100</td>
-                        <td>Stock Invesment</td>
-                        <td><input type="text" class="form-control form-control-sm" value="0"></td>
-                        <td><input type="text" class="form-control form-control-sm" value="0"></td>
-                        <td>
-                          <div class="table-actions">
-                            <a href="#"><i class="ik ik-edit-2"></i></a>
-                            <a href="#"><i class="ik ik-trash-2"></i></a>
-                          </div>
-                        </td>
-                      </tr>
+                      @php
+                      function format_uang($angka){
+                        $hasil =  number_format($angka,2, ',' , '.');
+                        return $hasil;
+                      }
+                      @endphp
+                      @foreach ($dataSaldoAwal as $key)
+                        <tr>
+                          <td>{{ $key->account->nomor }}</td>
+                          <td>{{ $key->account->nama }}</td>
+                          <td>Rp{{ format_uang($key->debet) }}</td>
+                          <td>Rp{{ format_uang($key->kredit) }}</td>
+                          <td class="text-right">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="aksiDropdown">
+                                    <button class="dropdown-item" data-toggle="modal" data-target="#editModal_{{ $key->id }}"><i class="ik ik-edit-2"></i> Edit</button>
+                                    <form method="post" action="{{ route('supplier.destroy', $key->id) }}">
+                                      @csrf
+                                      @method('DELETE')
+                                      <button class="dropdown-item" type="submit"><i class="ik ik-trash-2"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                          </td>
+                        </tr>
+                        @include('pages.saldo_awal.edit')
+                      @endforeach
                     </tbody>
                   </table>
                 </div>
@@ -100,5 +92,6 @@
         </div>
       </div>
   </div>
+  @include('pages.saldo_awal.create')
 
 @endsection
