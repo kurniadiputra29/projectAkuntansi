@@ -65,7 +65,9 @@
                           <div class="dropdown">
                               <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
                               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="aksiDropdown">
-                                  <button class="dropdown-item" data-toggle="modal" data-target="#editModal_{{ $key->id }}"><i class="ik ik-edit-2"></i> Edit</button>
+                                  {{-- <button class="dropdown-item" data-toggle="modal" data-target="#{{ $key->id }}"><i class="ik ik-edit-2"></i> Edit</button> --}}
+                                  <button class="dropdown-item open_modal" value="{{$key->id}}"><i class="ik ik-edit-2"></i> Edit</button>
+                                  <a class="dropdown-item" href="{{route('akun.edit', $key->id)}}"><i class="ik ik-edit-2"></i> Edit 2</a>
                                   <form method="post" action="{{ route('akun.destroy', $key->id) }}">
                                     @csrf
                                     @method('DELETE')
@@ -87,5 +89,6 @@
   </div>
 
   @include('pages.akun.create')
+  @include('layouts.edit-script')
 
 @endsection

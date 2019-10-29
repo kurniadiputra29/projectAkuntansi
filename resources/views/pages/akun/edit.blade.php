@@ -12,24 +12,22 @@
       </div>
       <div class="modal-body">
         <div class="row">
+          @foreach($datas as $value)
             <div class="col-md-12">
               <div class="form-group">
                   <label for="nomor">Nomor Akun</label>
-                  <input type="text" class="form-control" name="nomor" id="nomor" value="{{ $key->id }}">
-              </div>
-              <div class="form-group">
-                  <label for="nomor">Nomor Akun</label>
-                  <input type="text" class="form-control" name="nomor" id="nomor" value="{{ $key->nomor }}">
+                  <input type="text" class="form-control" name="nomor" id="nomor" value="{{ $value->nomor }}">
               </div>
               <div class="form-group">
                   <label for="nama">Nama Akun</label>
-                  <input type="text" class="form-control" name="nama" id="nama" value="{{ $key->nama }}">
+                  <input type="text" class="form-control" name="nama" id="nama" value="{{ $value->nama }}">
               </div>
               <div class="form-group">
                   <label for="keterangan">Keterangan</label>
-                  <input type="text" class="form-control" name="keterangan" id="keterangan" value="{{ $key->keterangan }}">
+                  <input type="text" class="form-control" name="keterangan" id="keterangan" value="{{ $value->keterangan }}">
               </div>
             </div>
+          @endforeach
         </div>
       </div>
       <div class="modal-footer">
