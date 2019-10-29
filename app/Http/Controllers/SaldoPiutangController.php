@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\DataCustomer;
+use App\Model\SaldoPiutang;
 
 class SaldoPiutangController extends Controller
 {
@@ -17,7 +19,9 @@ class SaldoPiutangController extends Controller
      */
     public function index()
     {
-        return view('pages.saldo_piutang.index');
+      $dataSaldoPiutang = SaldoPiutang::orderBy('created_at', 'desc')->get();
+      $dataCustomer = DataCustomer::all();
+        return view('pages.saldo_piutang.index', compact('dataSaldoPiutang','dataCustomer'));
     }
 
     /**
@@ -38,7 +42,8 @@ class SaldoPiutangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        SaldoPiutang::create($request->all());
+        return redirect('saldo_piutang');
     }
 
     /**
@@ -72,7 +77,8 @@ class SaldoPiutangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        SaldoPiutang::find($id)->update($request->all());
+        return redirect('saldo_piutang');
     }
 
     /**
@@ -83,6 +89,7 @@ class SaldoPiutangController extends Controller
      */
     public function destroy($id)
     {
-        //
+        SaldoPiutang::find($id)->delete();
+        return redirect('saldo_piutang');
     }
 }
