@@ -12,8 +12,8 @@
         <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                  <label for="account_id">Pilih Akun</label>
-                  <select class="form-control" name="account_id" id="account_id">
+                  <label>Pilih Akun</label>
+                  <select class="form-control" name="account_id">
                     @foreach ($dataAkun as $key)
                       <option value="{{$key->id}}">{{$key->nama}}</option>
                     @endforeach

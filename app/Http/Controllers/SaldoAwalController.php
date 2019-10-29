@@ -44,6 +44,7 @@ class SaldoAwalController extends Controller
     public function store(SaldoAwalRequest $request)
     {
         SaldoAwal::create($request->all());
+
         return redirect('saldo_awal');
     }
 

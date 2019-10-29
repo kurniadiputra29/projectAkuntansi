@@ -14,6 +14,6 @@ class Account extends Model
 
     public function saldo_awal()
     {
-      return $this->belongsTo(SaldoAwal::class);
+      return $this->hasMany(SaldoAwal::class);
     }
 }

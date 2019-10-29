@@ -19,6 +19,8 @@ class CreateSaldoAwalsTable extends Migration
             $table->integer('debet');
             $table->integer('kredit');
             $table->timestamps();
+
+            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
         });
     }
 

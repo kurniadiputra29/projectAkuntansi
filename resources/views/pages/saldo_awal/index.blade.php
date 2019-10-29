@@ -21,7 +21,7 @@
                     <nav class="breadcrumb-container" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="http://localhost/ProjectAkuntan/index.php"><i class="ik ik-home"></i></a>
+                                <a href="/dasbor"><i class="ik ik-home"></i></a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">Saldo Awal</li>
                         </ol>
@@ -55,12 +55,18 @@
                       </tr>
                     </thead>
                     <tbody>
+                      @php
+                      function format_uang($angka){
+                        $hasil =  number_format($angka,2, ',' , '.');
+                        return $hasil;
+                      }
+                      @endphp
                       @foreach ($dataSaldoAwal as $key)
                         <tr>
-                          <td>{{ $key->account_id }}</td>
-                          <td>{{ $key->account_id }}</td>
-                          <td>{{ $key->debet }}</td>
-                          <td>{{ $key->kredit }}</td>
+                          <td>{{ $key->account->nomor }}</td>
+                          <td>{{ $key->account->nama }}</td>
+                          <td>Rp{{ format_uang($key->debet) }}</td>
+                          <td>Rp{{ format_uang($key->kredit) }}</td>
                           <td class="text-right">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
