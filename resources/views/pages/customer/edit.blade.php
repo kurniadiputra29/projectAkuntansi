@@ -1,9 +1,7 @@
-@extends('layouts.edit-modal')
-
-@section('edit-modal-content')
-
-  <div class="modal-content">
-    <form class="forms-sample" action="{{route('customer.update', $key->id)}}" method="post">
+<div class="modal fade" id="editModal_{{ $key->id }}" tabindex="-1" role="dialog" aria-labelledby="@yield('aria-labelledby-2')" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form class="forms-sample" action="{{route('customer.update', $key->id)}}" method="post">
       @csrf
       @method('PUT')
       <div class="modal-header">
@@ -41,6 +39,6 @@
         <button class="btn btn-light" data-dismiss="modal">Cancel</button>
       </div>
     </form>
+    </div>
   </div>
-
-@endsection
+</div>

@@ -1,9 +1,7 @@
-@extends('layouts.edit-modal')
-
-@section('edit-modal-content')
-
-  <div class="modal-content">
-    <form class="forms-sample" action="{{route('akun.update', $key->id)}}" method="post">
+<div class="modal fade" id="editModal_{{ $key->id }}" tabindex="-1" role="dialog" aria-labelledby="@yield('aria-labelledby-2')" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form class="forms-sample" action="{{route('akun.update', $key->id)}}" method="post">
       @csrf
       @method('PUT')
       <div class="modal-header">
@@ -12,22 +10,20 @@
       </div>
       <div class="modal-body">
         <div class="row">
-          @foreach($datas as $value)
             <div class="col-md-12">
               <div class="form-group">
                   <label for="nomor">Nomor Akun</label>
-                  <input type="text" class="form-control" name="nomor" id="nomor" value="{{ $value->nomor }}">
+                  <input type="text" class="form-control" name="nomor" id="nomor" value="{{ $key->nomor }}">
               </div>
               <div class="form-group">
                   <label for="nama">Nama Akun</label>
-                  <input type="text" class="form-control" name="nama" id="nama" value="{{ $value->nama }}">
+                  <input type="text" class="form-control" name="nama" id="nama" value="{{ $key->nama }}">
               </div>
               <div class="form-group">
                   <label for="keterangan">Keterangan</label>
-                  <input type="text" class="form-control" name="keterangan" id="keterangan" value="{{ $value->keterangan }}">
+                  <input type="text" class="form-control" name="keterangan" id="keterangan" value="{{ $key->keterangan }}">
               </div>
             </div>
-          @endforeach
         </div>
       </div>
       <div class="modal-footer">
@@ -35,6 +31,6 @@
         <button class="btn btn-light" data-dismiss="modal">Cancel</button>
       </div>
     </form>
+    </div>
   </div>
-
-@endsection
+</div>

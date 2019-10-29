@@ -14,7 +14,7 @@
               <div class="form-group">
                 <label for="nomor">Nama User</label>
                 <input type="text" name="nama" class="form-control" value="{{ $key->nama }}">
-              </div>              
+              </div>
               <div class="form-group">
                 <label for="nama">Email User</label>
                 <input type="email" name="email" class="form-control" value="{{ $key->email }}">
