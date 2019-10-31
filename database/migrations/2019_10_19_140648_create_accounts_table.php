@@ -15,7 +15,7 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->Increments('id');
-            $table->string('nomor');
+            $table->string('nomor')->unique();
             $table->string('nama');
             $table->string('keterangan');
             $table->timestamps();
