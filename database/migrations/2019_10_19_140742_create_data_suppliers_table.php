@@ -19,6 +19,7 @@ class CreateDataSuppliersTable extends Migration
             $table->string('nama');
             $table->string('npwp')->nullable();
             $table->string('alamat');
+            $table->string('telepon');
             $table->string('termin');
             $table->timestamps();
         });
