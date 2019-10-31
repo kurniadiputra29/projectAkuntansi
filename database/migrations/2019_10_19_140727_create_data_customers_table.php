@@ -17,7 +17,7 @@ class CreateDataCustomersTable extends Migration
             $table->Increments('id');
             $table->string('kode');
             $table->string('nama');
-            $table->string('npwp')->null();
+            $table->string('npwp')->nullable();
             $table->string('alamat');
             $table->string('termin');
             $table->timestamps();
