@@ -42,14 +42,34 @@
                 </div>
               </div>
               <div class="card-body">
+                @if (count($errors) > 0)
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <i class="ik ik-x"></i>
+                      </button>
+                  </div>
+                  @endif
+                  @if (session('Success'))
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      {{ session('Success') }}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <i class="ik ik-x"></i>
+                      </button>
+                  </div>
+                  @endif
                 <div class="dt-responsive">
                   <table id="order-table" class="table table-striped table-bordered nowrap">
                     <thead>
                       <tr>
                         <th>Kode</th>
                         <th>Nama</th>
-                        <th>NPWP</th>
                         <th>Alamat</th>
+                        <th>Telepon</th>
                         <th>Termin</th>
                         <th class="text-right">Aksi</th>
                       </tr>
@@ -59,8 +79,8 @@
                         <tr>
                           <td>{{ $key->kode }}</td>
                           <td>{{ $key->nama }}</td>
-                          <td>{{ $key->npwp }}</td>
                           <td>{{ $key->alamat }}</td>
+                          <td>{{ $key->telepon }}</td>
                           <td>{{ $key->termin }}</td>
                           <td class="text-right">
                             <div class="dropdown">

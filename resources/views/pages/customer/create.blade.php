@@ -28,6 +28,10 @@
                   <input type="text" class="form-control" name="alamat" id="alamat">
               </div>
               <div class="form-group">
+                  <label for="telepon">Telepon Customer</label>
+                  <input type="text" class="form-control" name="telepon" id="telepon">
+              </div>
+              <div class="form-group">
                   <label for="termin">Termin</label>
                   <input type="text" class="form-control" name="termin" id="termin" placeholder="x x/x">
               </div>
