@@ -45,6 +45,10 @@
 <script src="/ProjectAkuntan/js/form-components.js"></script>
 {{-- akhir script untuk form --}}
 
+{{-- script untuk form repeater --}}
+<script src="/ProjectAkuntan/plugins/jquery.repeater/jquery.repeater.min.js"></script>
+{{-- akhir script untuk form repeater --}}
+
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

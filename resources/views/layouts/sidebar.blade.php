@@ -48,6 +48,9 @@
           <div class="nav-item {{ Request::is('ju') ? 'active' : '' }}">
               <a href="{{ route('ju.index') }}"><i class="ik ik-book"></i><span>Jurnal Umum</span></a>
           </div>
+          <div class="nav-item {{ Request::is('cashbank') || Request::is('cashbank/*') ? 'active' : '' }}">
+              <a href="{{ route('cashbank.index') }}"><i class="ik ik-credit-card"></i><span>Cash & Bank</span></a>
+          </div>
           <div class="nav-item {{ Request::is('kas_kecil') ? 'active' : '' }}">
               <a href="{{ route('kas_kecil.index') }}"><i class="ik ik-briefcase"></i><span>Kas Kecil</span></a>
           </div>
@@ -66,7 +69,7 @@
             <div class="nav-lavel">Users</div>
             <div class="nav-item {{ Request::is('users') ? 'active' : '' }}">
                 <a href="{{ route('users.index') }}"><i class="ik ik-user"></i><span>Users</span></a>
-            </div>            
+            </div>
           @endif
       </nav>
     </div>

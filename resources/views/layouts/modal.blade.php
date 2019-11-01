@@ -62,6 +62,9 @@
                             <a href="{{route('ju.index')}}"><i class="ik ik-book"></i><span>Jurnal Umum</span></a>
                         </div>
                         <div class="app-item">
+                            <a href="{{route('cashbank.index')}}"><i class="ik ik-credit-card"></i><span>Cash & Bank</span></a>
+                        </div>
+                        <div class="app-item">
                             <a href="{{route('kas_kecil.index')}}"><i class="ik ik-briefcase"></i><span>Kas Kecil</span></a>
                         </div>
                         <div class="app-item">

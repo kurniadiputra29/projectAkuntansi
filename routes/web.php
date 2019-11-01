@@ -50,8 +50,8 @@ Route::resource('saldo_piutang', 'SaldoPiutangController');
 Route::resource('sales_journal', 'SalesJournalController');
 Route::resource('stock_opname', 'StockOpnameController');
 Route::resource('supplier', 'SupplierController');
+Route::resource('cashbank', 'CashBankController');
 
 Route::resource('profile', 'ProfileController');
 
 Route::resource('users', 'UserController');
-
