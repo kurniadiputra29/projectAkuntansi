@@ -193,11 +193,14 @@
 				},
 			},
 			computed: {
-				total() {
-					return this.cashbanks
-					.map( cashbank => cashbank.jumlah )
-					.reduce( (prev, next) => prev + next, 0);
-				},
+        total: function(){
+          let sum = 0;
+          this.cashbanks.forEach(function(cashbank) {
+             sum += (parseFloat(cashbank.jumlah));
+          });
+
+         return sum;
+        },
 			},
 		});
 	</script>
