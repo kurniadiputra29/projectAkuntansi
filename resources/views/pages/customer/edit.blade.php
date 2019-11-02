@@ -28,6 +28,10 @@
                   <input type="text" class="form-control" name="alamat" id="alamat" value="{{ $key->alamat }}">
               </div>
               <div class="form-group">
+                  <label for="telepon">Telepon Customer</label>
+                  <input type="text" class="form-control" name="telepon" id="telepon" value="{{ $key->telepon }}">
+              </div>
+              <div class="form-group">
                   <label for="termin">Termin</label>
                   <input type="text" class="form-control" name="termin" id="termin" value="{{ $key->termin }}">
               </div>

@@ -45,7 +45,7 @@ class AkunController extends Controller
     {
         Account::create($request->all());
 
-        return redirect('akun');
+        return redirect('akun')->with('Success', 'Data anda telah berhasil di input !');
     }
 
     /**
@@ -82,7 +82,7 @@ class AkunController extends Controller
     {
         Account::find($id)->update($request->all());
 
-        return redirect('akun');
+        return redirect('akun')->with('Success', 'Data anda telah berhasil di edit !');
     }
 
     /**
@@ -95,6 +95,6 @@ class AkunController extends Controller
     {
         Account::find($id)->delete();
 
-        return redirect('akun');
+        return redirect('akun')->with('Success', 'Data anda telah berhasil di delete !');
     }
 }

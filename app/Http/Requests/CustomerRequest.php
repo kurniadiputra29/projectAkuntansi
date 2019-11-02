@@ -26,7 +26,6 @@ class CustomerRequest extends FormRequest
         return [
             'kode' => 'required',
             'nama' => 'required',
-            'npwp' => 'required',
             'alamat' => 'required',
         ];
     }

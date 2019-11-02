@@ -44,7 +44,7 @@ class CustomerController extends Controller
     {
         DataCustomer::create($request->all());
 
-        return redirect('customer');
+        return redirect('customer')->with('Success', 'Data anda telah berhasil di input !');
     }
 
     /**
@@ -80,7 +80,7 @@ class CustomerController extends Controller
     {
         DataCustomer::find($id)->update($request->all());
 
-        return redirect('customer');
+        return redirect('customer')->with('Success', 'Data anda telah berhasil di edit !');
     }
 
     /**
@@ -93,6 +93,6 @@ class CustomerController extends Controller
     {
         DataCustomer::find($id)->delete();
 
-        return redirect('customer');
+        return redirect('customer')->with('Success', 'Data anda telah berhasil di delete !');
     }
 }
