@@ -42,51 +42,62 @@
                 </div>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
+                @if (count($errors) > 0)
+                  <div class="alert alert-dismissible fade show" role="alert">
+                      <ul class="alert-danger list-group">
+                          @foreach ($errors->all() as $error)
+                              <li class="list-group-item">{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <i class="ik ik-x"></i>
+                      </button>
+                  </div>
+                  @endif
+                  @if (session('Success'))
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      {{ session('Success') }}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <i class="ik ik-x"></i>
+                      </button>
+                  </div>
+                  @endif
+                <div class="dt-responsive">
+                  <table id="order-table" class="table table-striped table-bordered nowrap">
                     <thead>
-                      <tr class="row" style="display: contents;">
-                        <th class="col-1">Tanggal</th>
-                        <th class="col-1">Kode</th>
-                        <th class="col-2">Deskripsi</th>
-                        <th class="col-1">No Akun</th>
-                        <th class="col-2">Nama Akun</th>
-                        <th class="col-2">Debet</th>
-                        <th class="col-2">Kredit</th>
-                        <th class="col-1">Aksi</th>
+                      <tr>
+                        <th>Tanggal</th>
+                        <th>Kode</th>
+                        <th>No Akun</th>
+                        <th>Nama Akun</th>
+                        <th>Debet</th>
+                        <th>Kredit</th>
+                        <th class="text-right">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>13-10-2019</td>
-                        <td>CPJ002</td>
-                        <td>Maintenance</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                          <div class="table-actions">
-                            <a href="#"><i class="ik ik-edit-2"></i></a>
-                            <a href="#"><i class="ik ik-trash-2"></i></a>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>12-10-2019</td>
-                        <td>CPJ001</td>
-                        <td>Ganti Genteng</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                          <div class="table-actions">
-                            <a href="#"><i class="ik ik-edit-2"></i></a>
-                            <a href="#"><i class="ik ik-trash-2"></i></a>
-                          </div>
-                        </td>
-                      </tr>
+                      @foreach ($data as $key)
+                        <tr>
+                          <td>{{ $key->tanggal }}</td>
+                          <td>{{ $key->kode }}</td>
+                          <td>{{ $key->nomor_akun }}</td>
+                          <td>{{ $key->debet }}</td>
+                          <td>{{ $key->kredit }}</td>
+                          <td class="text-right">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="aksiDropdown">
+                                    <button class="dropdown-item" data-toggle="modal" data-target="#editModal_{{ $key->id }}"><i class="ik ik-edit-2"></i> Edit</button>
+                                    <form method="post" action="{{ route('akun.destroy', $key->id) }}">
+                                      @csrf
+                                      @method('DELETE')
+                                      <button class="dropdown-item" type="submit"><i class="ik ik-trash-2"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                          </td>
+                        </tr>
+                      @endforeach
                     </tbody>
                   </table>
                 </div>
