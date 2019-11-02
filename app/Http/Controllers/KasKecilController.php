@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\Pettycash;
 
 class KasKecilController extends Controller
 {
@@ -17,7 +18,8 @@ class KasKecilController extends Controller
      */
     public function index()
     {
-        return view('pages.kas_kecil.index');
+      $data = Pettycash::orderBy('created_at', 'desc')->get();
+        return view('pages.kas_kecil.index', compact('data'));
     }
 
     /**

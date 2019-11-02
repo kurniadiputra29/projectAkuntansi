@@ -49,6 +49,11 @@
 <script src="/ProjectAkuntan/plugins/jquery.repeater/jquery.repeater.min.js"></script>
 {{-- akhir script untuk form repeater --}}
 
+{{-- vue script --}}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+{{-- end vue script   --}}
+</script>
+
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

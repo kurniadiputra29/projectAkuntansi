@@ -46,5 +46,7 @@
         @include('layouts.modal')
 
         @include('layouts.script')
+
+        @yield('vue')
     </body>
 </html>
