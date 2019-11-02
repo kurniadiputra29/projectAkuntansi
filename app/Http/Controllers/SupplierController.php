@@ -42,7 +42,7 @@ class SupplierController extends Controller
     public function store(SupplierRequest $request)
     {
         DataSupplier::create($request->all());
-        return redirect('supplier');
+        return redirect('supplier')->with('Success', 'Data anda telah berhasil di input !');
     }
 
     /**
@@ -74,10 +74,10 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SupplierRequest $request, $id)
     {
         DataSupplier::find($id)->update($request->all());
-        return redirect('supplier');
+        return redirect('supplier')->with('Success', 'Data anda telah berhasil di edit !');
     }
 
     /**
@@ -89,6 +89,6 @@ class SupplierController extends Controller
     public function destroy($id)
     {
         DataSupplier::find($id)->delete();
-        return redirect('supplier');
+        return redirect('supplier')->with('Success', 'Data anda telah berhasil di delete !');
     }
 }

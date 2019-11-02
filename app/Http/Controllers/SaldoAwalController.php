@@ -45,7 +45,7 @@ class SaldoAwalController extends Controller
     {
         SaldoAwal::create($request->all());
 
-        return redirect('saldo_awal');
+        return redirect('saldo_awal')->with('Success', 'Data anda telah berhasil di input !');
     }
 
     /**
@@ -80,7 +80,7 @@ class SaldoAwalController extends Controller
     public function update(SaldoAwalRequest $request, $id)
     {
         SaldoAwal::find($id)->update($request->all());
-        return redirect('saldo_awal');
+        return redirect('saldo_awal')->with('Success', 'Data anda telah berhasil di edit !');
     }
 
     /**
@@ -92,6 +92,6 @@ class SaldoAwalController extends Controller
     public function destroy($id)
     {
         SaldoAwal::find($id)->delete();
-        return redirect('saldo_awal');
+        return redirect('saldo_awal')->with('Success', 'Data anda telah berhasil di delete !');
     }
 }

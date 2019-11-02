@@ -25,6 +25,8 @@ class SaldoAwalRequest extends FormRequest
     {
         return [
             'account_id' => 'required',
+            'debet' => 'required',
+            'kredit' => 'required',
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\SaldoHutang;
 use App\Model\DataSupplier;
+use App\Http\Requests\SaldoHutangRequest;
 
 class SaldoHutangController extends Controller
 {
@@ -40,10 +41,10 @@ class SaldoHutangController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaldoHutangRequest $request)
     {
         SaldoHutang::create($request->all());
-        return redirect('saldo_hutang');
+        return redirect('saldo_hutang')->with('Success', 'Data anda telah berhasil di input !');
     }
 
     /**
@@ -75,10 +76,10 @@ class SaldoHutangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SaldoHutangRequest $request, $id)
     {
         SaldoHutang::find($id)->update($request->all());
-        return redirect('saldo_hutang');
+        return redirect('saldo_hutang')->with('Success', 'Data anda telah berhasil di edit !');
     }
 
     /**
@@ -90,6 +91,6 @@ class SaldoHutangController extends Controller
     public function destroy($id)
     {
         SaldoHutang::find($id)->delete();
-        return redirect('saldo_awal');
+        return redirect('saldo_awal')->with('Success', 'Data anda telah berhasil di delete !');
     }
 }

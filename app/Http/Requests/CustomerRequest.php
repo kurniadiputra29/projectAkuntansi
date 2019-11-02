@@ -27,7 +27,6 @@ class CustomerRequest extends FormRequest
             'kode' => 'required',
             'nama' => 'required',
             'alamat' => 'required',
-            'telepon' => 'required',
         ];
     }
 }

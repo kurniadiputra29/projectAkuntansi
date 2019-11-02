@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SupplierRequest extends FormRequest
+class SaldoHutangRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,9 @@ class SupplierRequest extends FormRequest
     public function rules()
     {
         return [
-          'kode' => 'required',
-          'nama' => 'required',
-          'alamat' => 'required',
+          'supplier_id' => 'required',
+          'debet' => 'required',
+          'kredit' => 'required',
         ];
     }
 }
