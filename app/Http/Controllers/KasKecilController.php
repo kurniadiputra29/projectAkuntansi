@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Pettycash;
+use App\Model\Account;
 
 class KasKecilController extends Controller
 {
@@ -29,7 +30,8 @@ class KasKecilController extends Controller
      */
     public function create()
     {
-        //
+      $akun = Account::all();
+        return view('pages.kas_kecil.create', compact('akun'));
     }
 
     /**
