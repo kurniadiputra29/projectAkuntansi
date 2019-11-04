@@ -21,7 +21,7 @@
                     <nav class="breadcrumb-container" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="http://localhost/ProjectAkuntan/index.php"><i class="ik ik-home"></i></a>
+                                <a href="/dasbor"><i class="ik ik-home"></i></a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">Kas Kecil</li>
                         </ol>
@@ -38,7 +38,7 @@
                   <span>use class <code>table-hover</code> inside table element</span>
                 </div>
                 <div class="right-container">
-                  <button type="button" class="btn btn-outline-primary btn-rounded">Create</button>
+                  <a class="btn btn-outline-primary btn-rounded" href="{{ route('kas_kecil.create') }}">Create</a>
                 </div>
               </div>
               <div class="card-body">
@@ -69,7 +69,7 @@
                         <th>Tanggal</th>
                         <th>Kode</th>
                         <th>No Akun</th>
-                        <th>Nama Akun</th>
+                        {{-- <th>Nama Akun</th> --}}
                         <th>Debet</th>
                         <th>Kredit</th>
                         <th class="text-right">Aksi</th>
@@ -81,6 +81,7 @@
                           <td>{{ $key->tanggal }}</td>
                           <td>{{ $key->kode }}</td>
                           <td>{{ $key->nomor_akun }}</td>
+                          {{-- <td>{{ $key->nomor_akun }}</td> --}}
                           <td>{{ $key->debet }}</td>
                           <td>{{ $key->kredit }}</td>
                           <td class="text-right">
@@ -88,7 +89,7 @@
                                 <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="aksiDropdown">
                                     <button class="dropdown-item" data-toggle="modal" data-target="#editModal_{{ $key->id }}"><i class="ik ik-edit-2"></i> Edit</button>
-                                    <form method="post" action="{{ route('akun.destroy', $key->id) }}">
+                                    <form method="post" action="{{ route('kas_kecil.destroy', $key->id) }}">
                                       @csrf
                                       @method('DELETE')
                                       <button class="dropdown-item" type="submit"><i class="ik ik-trash-2"></i> Delete</button>
