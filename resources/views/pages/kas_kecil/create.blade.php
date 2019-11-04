@@ -48,14 +48,14 @@
                     <div class="row input-group-primary">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="tanggal_transaksi">Tanggal Transaksi</label>
-                          <input class="form-control" type="date" id="tanggal_transaksi">
+                          <label for="tanggal">Tanggal Transaksi</label>
+                          <input class="form-control" type="date" id="tanggal" name="tanggal">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="no_transaksi">Nomor Transaksi</label>
-                          <input class="form-control" type="text" id="no_transaksi">
+                          <label for="kode">Nomor Transaksi</label>
+                          <input class="form-control" type="text" id="kode" name="kode">
                         </div>
                       </div>
                     </div>
@@ -69,7 +69,7 @@
                           <label for="nomor_akun">Dari Akun</label>
                           <select class="form-control" id="nomor_akun" name="nomor_akun[]">
                             @foreach ($akun as $key)
-                              <option value="{{$key->nama}}">{{$key->nomor}} - {{$key->nama}}</option>
+                              <option value="{{$key->nomor}}">{{$key->nomor}} - {{$key->nama}}</option>
                             @endforeach
                           </select>
                         </div>

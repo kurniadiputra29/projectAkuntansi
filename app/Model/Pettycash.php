@@ -11,4 +11,9 @@ class Pettycash extends Model
     protected $fillable = [
       'id', 'tanggal', 'kode', 'description', 'nomor_akun', 'debet', 'kredit'
     ];
+
+    public function account()
+    {
+      return $this->belongsTo(Account::class);
+    }
 }
