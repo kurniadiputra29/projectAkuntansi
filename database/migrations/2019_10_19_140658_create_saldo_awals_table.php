@@ -16,8 +16,8 @@ class CreateSaldoAwalsTable extends Migration
         Schema::create('saldo_awals', function (Blueprint $table) {
             $table->Increments('id');
             $table->unsignedInteger('account_id');
-            $table->integer('debet');
-            $table->integer('kredit');
+            $table->integer('debet')->nullable();
+            $table->integer('kredit')->nullable();
             $table->timestamps();
 
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
