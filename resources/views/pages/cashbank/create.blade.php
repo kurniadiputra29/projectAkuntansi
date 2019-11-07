@@ -184,6 +184,7 @@
                 </div>
               </div>
 
+
               <div
                 class="row"
                 v-for="(cashbank, index) in cashbanks"
@@ -191,8 +192,8 @@
                 >
                 <div class="col-md-5">
                   <div class="form-group">
-                    <label for="description">Akun</label>
-                    <select class="form-control" id="description" name="description[]">
+                    <label for="nomor_akun">Akun</label>
+                    <select class="form-control" id="nomor_akun" name="nomor_akun[]">
                       <option class="col-sm-10" value=""> ~~ Pilih Akun ~~ </option>
                       @foreach ($akun as $key)
                       <option>{{$key->nomor}} - {{$key->nama}}</option>
