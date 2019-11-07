@@ -42,7 +42,21 @@ class KasKecilController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $dataKasKecil = $request->only('tanggal', 'kode', 'description', 'nomor_akun', 'debet', 'kredit');
+      $countKasKecil = count($dataKasKecil['nomor_akun']);
+      for ($i=0; $i < $countKasKecil; $i++) {
+
+          $detail             = new Pettycash();
+          $detail->tanggal    = $dataKasKecil['tanggal'];
+          $detail->kode       = $dataKasKecil['kode'];
+          $detail->description= $dataKasKecil['description'][$i];
+          $detail->nomor_akun = $dataKasKecil['nomor_akun'][$i];
+          $detail->debet      = $dataKasKecil['debet'][$i];
+          $detail->kredit     = $dataKasKecil['kredit'][$i];
+          $detail->save();
+      }
+
+        return redirect('kas_kecil')->with('Success', 'Data anda telah berhasil di input !');
     }
 
     /**
@@ -87,6 +101,7 @@ class KasKecilController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Pettycash::find($id)->delete();
+        return redirect('kas_kecil')->with('Success', 'Data anda telah berhasil di delete !');
     }
 }

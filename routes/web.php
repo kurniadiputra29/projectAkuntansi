@@ -50,7 +50,13 @@ Route::resource('saldo_piutang', 'SaldoPiutangController');
 Route::resource('sales_journal', 'SalesJournalController');
 Route::resource('stock_opname', 'StockOpnameController');
 Route::resource('supplier', 'SupplierController');
-Route::resource('cashbank', 'CashBankController');
+
+Route::get('cashbank', 'CashBankController@index')->name('cashbank.index');
+Route::get('cashbank/create', 'CashBankController@create')->name('cashbank.create');
+Route::post('cashbank', 'CashBankController@store')->name('cashbank.store');
+Route::get('cashbank/{id}/edit', 'CashBankController@edit')->name('cashbank.edit');
+Route::put('cashbank/{id}', 'CashBankController@update')->name('cashbank.update');
+Route::delete('cashbank/{id}', 'CashBankController@destroy')->name('cashbank.destroy');
 
 Route::resource('profile', 'ProfileController');
 

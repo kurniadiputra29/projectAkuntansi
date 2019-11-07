@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Account;
+use App\Model\Cashinbank;
 
 class CashBankController extends Controller
 {
@@ -24,7 +25,7 @@ class CashBankController extends Controller
      */
     public function create()
     {
-      $akun = Account::all();
+        $akun = Account::all();
         return view('pages.cashbank.create', compact('akun'));
     }
 
@@ -36,7 +37,15 @@ class CashBankController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $dataOrder      = $request->only('tanggal', 'kode', 'description');
+        $order          = Cashinbank::create($dataOrder);
+
+        
+        $dataDetail     = $request->only('no_akun','debet', 'kredit');
+        $order          = Cashinbank::create($dataDetail);
+        
+        return redirect('/cashbank');
     }
 
     /**

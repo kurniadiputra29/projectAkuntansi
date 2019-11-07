@@ -16,4 +16,9 @@ class Account extends Model
     {
       return $this->hasMany(SaldoAwal::class);
     }
+
+    public function pettycash()
+    {
+      return $this->hasMany(Pettycash::class);
+    }
 }

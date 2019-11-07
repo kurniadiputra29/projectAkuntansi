@@ -19,8 +19,8 @@ class CreateSelesJournalsTable extends Migration
             $table->string('kode');
             $table->text('description');
             $table->string('nomor_akun');
-            $table->integer('debet');
-            $table->integer('kredit');
+            $table->integer('debet')->nullable();
+            $table->integer('kredit')->nullable();
             $table->timestamps();
         });
     }
