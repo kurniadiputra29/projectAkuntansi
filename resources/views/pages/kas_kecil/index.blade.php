@@ -21,7 +21,7 @@
                     <nav class="breadcrumb-container" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="http://localhost/ProjectAkuntan/index.php"><i class="ik ik-home"></i></a>
+                                <a href="/dasbor"><i class="ik ik-home"></i></a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">Kas Kecil</li>
                         </ol>
@@ -38,7 +38,7 @@
                   <span>use class <code>table-hover</code> inside table element</span>
                 </div>
                 <div class="right-container">
-                  <button type="button" class="btn btn-outline-primary btn-rounded">Create</button>
+                  <a class="btn btn-outline-primary btn-rounded" href="{{ route('kas_kecil.create') }}">Create</a>
                 </div>
               </div>
               <div class="card-body">

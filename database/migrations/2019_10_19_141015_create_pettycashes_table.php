@@ -17,10 +17,8 @@ class CreatePettycashesTable extends Migration
             $table->Increments('id');
             $table->date('tanggal');
             $table->string('kode');
-            $table->text('description');
-            $table->string('nomor_akun');
-            $table->integer('debet');
-            $table->integer('kredit');
+            $table->text('description')->nullable();
+            $table->boolean('status')->nullable();
             $table->timestamps();
         });
     }

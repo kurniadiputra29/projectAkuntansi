@@ -9,6 +9,11 @@ class Pettycash extends Model
     protected $table = 'pettycashes';
 
     protected $fillable = [
-      'id', 'tanggal', 'kode', 'description', 'nomor_akun', 'debet', 'kredit'
+      'id', 'tanggal', 'kode', 'description', 'status'
     ];
+
+    public function pettycash_detail()
+    {
+      return $this->hasMany(PettycashDetail::class);
+    }
 }

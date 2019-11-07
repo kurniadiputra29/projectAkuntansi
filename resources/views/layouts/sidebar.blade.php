@@ -51,7 +51,7 @@
           <div class="nav-item {{ Request::is('cashbank') || Request::is('cashbank/*') ? 'active' : '' }}">
               <a href="{{ route('cashbank.index') }}"><i class="ik ik-credit-card"></i><span>Cash & Bank</span></a>
           </div>
-          <div class="nav-item {{ Request::is('kas_kecil') ? 'active' : '' }}">
+          <div class="nav-item {{ Request::is('kas_kecil') || Request::is('kas_kecil/*') ? 'active' : '' }}">
               <a href="{{ route('kas_kecil.index') }}"><i class="ik ik-briefcase"></i><span>Kas Kecil</span></a>
           </div>
           <div class="nav-item {{ Request::is('jp') ? 'active' : '' }}">
