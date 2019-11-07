@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Pettycash;
 use App\Model\Account;
+use App\Model\PettycashDetail;
 
 class KasKecilController extends Controller
 {
@@ -42,17 +43,21 @@ class KasKecilController extends Controller
      */
     public function store(Request $request)
     {
-      $dataKasKecil = $request->only('tanggal', 'kode', 'description', 'nomor_akun', 'debet', 'kredit');
-      $countKasKecil = count($dataKasKecil['nomor_akun']);
+      //insert data pettycash
+      $dataKasKecil = $request->only('tanggal', 'kode', 'description');
+      $pettycash = Pettycash::create($dataKasKecil);
+
+      //insert data pettycash detail
+      $detailKasKecil = $request->only('pettycash_id', 'nomor_akun', 'nama_akun', 'jumlah');
+      $countKasKecil = count($detailKasKecil['nomor_akun']);
       for ($i=0; $i < $countKasKecil; $i++) {
 
-          $detail             = new Pettycash();
-          $detail->tanggal    = $dataKasKecil['tanggal'];
-          $detail->kode       = $dataKasKecil['kode'];
-          $detail->description= $dataKasKecil['description'][$i];
-          $detail->nomor_akun = $dataKasKecil['nomor_akun'][$i];
-          $detail->debet      = $dataKasKecil['debet'][$i];
-          $detail->kredit     = $dataKasKecil['kredit'][$i];
+          $detail               = new PettycashDetail();
+          $detail->pettycash_id = $pettycash->id;
+          $detail->nomor_akun   = $dataKasKecil['nomor_akun'][$i];
+          $detail->nama_akun    = $dataKasKecil['nama_akun'][$i];
+          $detail->debet        = $dataKasKecil['jumlah'][$i];
+          $detail->kredit       = $dataKasKecil['jumlah'][$i];
           $detail->save();
       }
 
