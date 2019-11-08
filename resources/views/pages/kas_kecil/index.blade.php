@@ -68,10 +68,7 @@
                       <tr>
                         <th>Tanggal</th>
                         <th>Kode</th>
-                        <th>No Akun</th>
-                        {{-- <th>Nama Akun</th> --}}
-                        <th>Debet</th>
-                        <th>Kredit</th>
+                        <th>Deskripsi</th>
                         <th class="text-right">Aksi</th>
                       </tr>
                     </thead>
@@ -80,10 +77,7 @@
                         <tr>
                           <td>{{ $key->tanggal }}</td>
                           <td>{{ $key->kode }}</td>
-                          <td>{{ $key->nomor_akun }}</td>
-                          {{-- <td>{{ $key->nomor_akun }}</td> --}}
-                          <td>{{ $key->debet }}</td>
-                          <td>{{ $key->kredit }}</td>
+                          <td>{{ $key->description }}</td>
                           <td class="text-right">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>

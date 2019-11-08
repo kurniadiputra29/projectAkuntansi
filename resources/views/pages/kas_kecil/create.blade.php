@@ -89,16 +89,16 @@
                     <select class="form-control" id="id_akun" name="id_akun[]" v-model="pettycash.id_akun">
                       <option class="col-sm-10" value=""> ~~ Pilih Akun ~~ </option>
                       @foreach ($akun as $key)
-                        <option>{{$key->nomor}} - {{$key->nama}}</option>
+                        <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
                       @endforeach
                     </select>
                   </div>
                 </div>
                   <input type="hidden" name="nomor_akun[]"
-                    :value="nomor(pettycash.id_akun, index)"
+                    :value="nomor_akun(pettycash.id_akun, index)"
                   >
                   <input type="hidden" name="nama_akun[]"
-                    :value="nama(pettycash.id_akun, index)"
+                    :value="nama_akun(pettycash.id_akun, index)"
                   >
                 <div class="col-md-6">
                   <div class="form-group">
@@ -164,13 +164,13 @@
           this.pettycashs.splice(index, 1);
         }
       },
-      nomor(id_akun, index) {
+      nomor_akun(id_akun, index) {
         var nomor_akun = this.nomor_akuns[id_akun];
         this.pettycashs[index].nomor_akun = nomor_akun;
         return nomor_akun;
       },
-      nama(id_akun, index) {
-        var nama_akun = this.names[id_akun];
+      nama_akun(id_akun, index) {
+        var nama_akun = this.nama_akuns[id_akun];
         this.pettycashs[index].nama_akun = nama_akun;
         return nama_akun;
       }
@@ -179,16 +179,16 @@
       nomor_akuns() {
         var akun = [];
         akun[0] = 0;
-        @foreach($akun as $item)
-        akun[ {{ $item->id }} ] = {{ $item->nomor }}
+        @foreach($akun as $key)
+          akun[ {{ $key->id }} ] = "{{ $key->nomor }}"
         @endforeach
         return akun;
       },
-      names() {
+      nama_akuns() {
         var akun = [];
         akun[0] = 0;
-        @foreach($akun as $item)
-        akun[ {{ $item->id }} ] = "{{ $item->nama }}"
+        @foreach($akun as $key)
+          akun[ {{ $key->id }} ] = "{{ $key->nama }}"
         @endforeach
         return akun;
       },

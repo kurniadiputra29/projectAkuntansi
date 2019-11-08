@@ -44,20 +44,21 @@ class KasKecilController extends Controller
     public function store(Request $request)
     {
       //insert data pettycash
-      $dataKasKecil = $request->only('tanggal', 'kode', 'description');
+      $dataKasKecil = $request->only('id', 'tanggal', 'kode', 'description');
       $pettycash = Pettycash::create($dataKasKecil);
 
       //insert data pettycash detail
-      $detailKasKecil = $request->only('pettycash_id', 'nomor_akun', 'nama_akun', 'jumlah');
+      $detailKasKecil = $request->only('nomor_akun', 'nama_akun', 'jumlah');
       $countKasKecil = count($detailKasKecil['nomor_akun']);
+
       for ($i=0; $i < $countKasKecil; $i++) {
 
           $detail               = new PettycashDetail();
           $detail->pettycash_id = $pettycash->id;
-          $detail->nomor_akun   = $dataKasKecil['nomor_akun'][$i];
-          $detail->nama_akun    = $dataKasKecil['nama_akun'][$i];
-          $detail->debet        = $dataKasKecil['jumlah'][$i];
-          $detail->kredit       = $dataKasKecil['jumlah'][$i];
+          $detail->nomor_akun   = $detailKasKecil['nomor_akun'][$i];
+          $detail->nama_akun    = $detailKasKecil['nama_akun'][$i];
+          $detail->debet        = $detailKasKecil['jumlah'][$i];
+          $detail->kredit       = $detailKasKecil['jumlah'][$i];
           $detail->save();
       }
 
