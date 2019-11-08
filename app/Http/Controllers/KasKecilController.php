@@ -73,7 +73,8 @@ class KasKecilController extends Controller
      */
     public function show($id)
     {
-        //
+      $detail = PettycashDetail::where('pettycash_id', $id)->get();
+        return view('pages.kas_kecil.show', compact('detail'));
     }
 
     /**
