@@ -18,7 +18,6 @@ class CreatePettycashesTable extends Migration
             $table->date('tanggal');
             $table->string('kode');
             $table->text('description')->nullable();
-            $table->boolean('status')->nullable();
             $table->timestamps();
         });
     }

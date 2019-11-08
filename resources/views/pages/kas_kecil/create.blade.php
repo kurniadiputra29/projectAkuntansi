@@ -73,7 +73,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="description">Deskripsi</label>
-                      <textarea class="form-control" name="diskription" type="text" id="description" rows="3"></textarea>
+                      <textarea class="form-control" name="description" type="text" id="description" rows="3"></textarea>
                     </div>
                   </div>
                 </div>
@@ -85,15 +85,21 @@
                 >
                 <div class="col-md-5">
                   <div class="form-group">
-                    <label for="nomor_akun">Akun</label>
-                    <select class="form-control" id="nomor_akun" name="nomor_akun[]">
+                    <label for="id_akun">Akun</label>
+                    <select class="form-control" id="id_akun" name="id_akun[]" v-model="pettycash.id_akun">
                       <option class="col-sm-10" value=""> ~~ Pilih Akun ~~ </option>
                       @foreach ($akun as $key)
-                        <option>{{$key->nomor}} - {{$key->nama}}</option>
+                        <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
                       @endforeach
                     </select>
                   </div>
                 </div>
+                  <input type="hidden" name="nomor_akun[]"
+                    :value="nomor_akun(pettycash.id_akun, index)"
+                  >
+                  <input type="hidden" name="nama_akun[]"
+                    :value="nama_akun(pettycash.id_akun, index)"
+                  >
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="jumlah">Jumlah</label>
@@ -140,35 +146,61 @@
 @endsection
 
 @section('vue')
-<script type="text/javascript">
+  <script type="text/javascript">
   new Vue({
-   el: '#app',
-   data: {
-    pettycashs: [
-    {terima_dari:"", description:"", jumlah: 0},
-    ]
-  },
-  methods: {
-    add() {
-     var pettycashs = {terima_dari:"", description:"", jumlah: 0};
-     this.pettycashs.push(pettycashs);
-   },
-   del(index) {
-     if (index > 0) {
-      this.pettycashs.splice(index, 1);
-    }
-  },
-},
-computed: {
-  total: function(){
-    let sum = 0;
-    this.pettycashs.forEach(function(pettycash) {
-     sum += (parseFloat(pettycash.jumlah));
-   });
-    return sum;
-  },
-},
-});
+    el: '#app',
+    data: {
+      pettycashs: [
+        {id_akun: 0, nomor_akun:"", nama_akun:"", description:"", jumlah: 0},
+      ]
+    },
+    methods: {
+      add() {
+        var pettycashs = {id_akun: 0, nomor_akun:"", nama_akun:"", description:"", jumlah: 0};
+        this.pettycashs.push(pettycashs);
+      },
+      del(index) {
+        if (index > 0) {
+          this.pettycashs.splice(index, 1);
+        }
+      },
+      nomor_akun(id_akun, index) {
+        var nomor_akun = this.nomor_akuns[id_akun];
+        this.pettycashs[index].nomor_akun = nomor_akun;
+        return nomor_akun;
+      },
+      nama_akun(id_akun, index) {
+        var nama_akun = this.nama_akuns[id_akun];
+        this.pettycashs[index].nama_akun = nama_akun;
+        return nama_akun;
+      }
+    },
+    computed: {
+      nomor_akuns() {
+        var akun = [];
+        akun[0] = 0;
+        @foreach($akun as $key)
+          akun[ {{ $key->id }} ] = "{{ $key->nomor }}"
+        @endforeach
+        return akun;
+      },
+      nama_akuns() {
+        var akun = [];
+        akun[0] = 0;
+        @foreach($akun as $key)
+          akun[ {{ $key->id }} ] = "{{ $key->nama }}"
+        @endforeach
+        return akun;
+      },
+      total: function(){
+        let sum = 0;
+        this.pettycashs.forEach(function(pettycash) {
+          sum += (parseFloat(pettycash.jumlah));
+        });
+        return sum;
+      },
+    },
+  });
 </script>
 
 <script type="text/javascript">

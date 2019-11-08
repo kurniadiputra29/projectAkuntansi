@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,8 +9,8 @@ class PettycashDetail extends Model
     protected $table = 'pettycash_details';
 
     protected $fillable = [
-      'id', 'pettycash_id', 'nomor_akun', 'nama', 'debet', 'kredit'
-    ]
+      'id', 'pettycash_id', 'nomor_akun', 'nama_akun', 'debet', 'kredit'
+    ];
 
     public function pettycash()
     {

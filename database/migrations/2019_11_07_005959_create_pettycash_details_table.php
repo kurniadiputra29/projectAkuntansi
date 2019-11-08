@@ -17,7 +17,7 @@ class CreatePettycashDetailsTable extends Migration
             $table->Increments('id');
             $table->unsignedInteger('pettycash_id');
             $table->string('nomor_akun');
-            $table->string('nama');
+            $table->string('nama_akun');
             $table->integer('debet')->nullable();
             $table->integer('kredit')->nullable();
             $table->timestamps();
