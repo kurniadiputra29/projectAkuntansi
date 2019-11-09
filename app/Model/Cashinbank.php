@@ -9,6 +9,10 @@ class Cashinbank extends Model
     protected $table = 'cashinbanks';
 
     protected $fillable = [
-      'id','tanggal','kode','discription','nomor_akun', 'debet', 'credit', 'created_at','update_at'
+      'id','tanggal','kode','penerima_diterima', 'description','status', 'created_at','update_at'
     ];
+    public function orderDetail()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 }

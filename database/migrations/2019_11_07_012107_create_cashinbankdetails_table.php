@@ -14,10 +14,10 @@ class CreateCashinbankdetailsTable extends Migration
     public function up()
     {
         Schema::create('cashinbankdetails', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->Increments('id');
             $table->unsignedInteger('cashinbank_id');
-            $table->string('nomor_akun');
-            $table->string('nama');
+            $table->string('nomor_akun')->nullable();
+            $table->string('nama')->nullable();
             $table->integer('debet')->nullable();
             $table->integer('kredit')->nullable();
             $table->timestamps();
