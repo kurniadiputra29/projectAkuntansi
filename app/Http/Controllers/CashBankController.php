@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Account;
 use App\Model\Cashinbank;
+use App\Model\Cashinbankdetail;
 
 class CashBankController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -37,15 +42,48 @@ class CashBankController extends Controller
      */
     public function store(Request $request)
     {
+        if (empty($request->kredit)) {
 
-        $dataOrder      = $request->only('tanggal', 'kode', 'description');
-        $order          = Cashinbank::create($dataOrder);
+			//insert data pettycash
+            $dataCashInBank          = $request->only('id','tanggal', 'kode', 'penerima_diterima', 'description','status');
+            $cashinbank              = Cashinbank::create($dataCashInBank);
 
+            //insert data pettycash detail
+            $detailcashinbank                 = $request->only('nomor_akun', 'nama_akun', 'debet', 'jumlah', 'index');
+            $countKasKecil = count($detailcashinbank['nomor_akun']);
+
+            for ($i=0; $i < $countKasKecil; $i++) { 
+                $detail                      = new Cashinbankdetail();
+                $detail->cashinbank_id       = $cashinbank->id;
+                $detail->nomor_akun          = $detailcashinbank['nomor_akun'][$i];
+                $detail->nama          		= $detailcashinbank['nama_akun'][$i];
+                $detail->debet              = $detailcashinbank['jumlah'][$i];
+                $detail->kredit             = $detailcashinbank['jumlah'][$i];
+                $detail->save();
+            }            
+            return redirect('/cashbank')->with('Success', 'Data anda telah berhasil di Input !');
+
+        } else {
+
+            $dataOrder          = $request->only('tanggal', 'kode', 'description','status');
+            $order              = Cashinbank::create($dataOrder);
+
+            
+            $dataDetail                 = $request->only('nomor_akun','nomor_akun', 'setor', 'jumlah');
+            $countDetail                = count($dataDetail['jumlah']);
+
+            for ($i=0; $i < $countDetail; $i++) { 
+                $detail                             = new Cashinbankdetail();
+                $detail->cashinbank_id           = $order->id;
+                $detail->nomor_akun          = $dataDetail['nomor_akun'][$i];
+                $detail->nama               = $dataDetail['nomor_akun'][$i];
+                $detail->debet              = $dataDetail['setor'][$i];
+                $detail->kredit             = $dataDetail['jumlah'][$i];
+                $detail->save();
+            }            
+            return redirect('/cashbank')->with('Success', 'Data anda telah berhasil di Input !');
+        }
         
-        $dataDetail     = $request->only('no_akun','debet', 'kredit');
-        $order          = Cashinbank::create($dataDetail);
-        
-        return redirect('/cashbank');
     }
 
     /**
