@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Create Kas Kecil')
+@section('title', 'AccountMin - Edit Kas Kecil')
 
 @section('content')
 
@@ -12,7 +12,7 @@
             <div class="page-header-title">
               <i class="ik ik-menu bg-blue"></i>
               <div class="d-inline">
-                <h5>Create Kas Kecil</h5>
+                <h5>Edit Kas Kecil</h5>
                 <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
               </div>
             </div>
@@ -24,7 +24,7 @@
                   <a href="/dasbor"><i class="ik ik-home"></i></a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Pettycash</li>
-                <li class="breadcrumb-item active" aria-current="page">Create</li>
+                <li class="breadcrumb-item active" aria-current="page">Edit</li>
               </ol>
             </nav>
           </div>
@@ -33,8 +33,8 @@
 
       <div class="row" id="app">
         <div class="col-md-12">
-          <form class="forms-sample" id="a" action="{{route('kas_kecil.store')}}" method="post">
-            @csrf
+          <form class="forms-sample" id="a" action="{{route('kas_kecil.update', $kas_kecil->id)}}" method="post">
+            @csrf @method('PUT')
             <div class="card">
               <div class="card-header d-flex justify-content-between flex-row bg-primary">
                 <div class="left-container">
@@ -67,35 +67,40 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="tanggal_transaksi">Tanggal Transaksi</label>
-                      <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi">
+                      <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{$kas_kecil->tanggal}}">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="no_transaksi">Nomor Transaksi</label>
-                      <input class="form-control" name="kode" type="text" id="no_transaksi">
+                      <input class="form-control" name="kode" type="text" id="no_transaksi" value="{{$kas_kecil->kode}}">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="description">Deskripsi</label>
-                      <textarea class="form-control" name="description" type="text" id="description" rows="3"></textarea>
+                      <textarea class="form-control" name="description" type="text" id="description" rows="3">{{$kas_kecil->description}}</textarea>
                     </div>
                   </div>
                 </div>
 
-                <div
-                class="row"
-                v-for="(pettycash, index) in pettycashs"
-                :key="index"
-                >
+              <div
+              class="row"
+              v-for="(pettycash, index) in pettycashs"
+              :key="index"
+              >
                 <div class="col-md-5">
                   <div class="form-group">
                     <label for="id_akun">Akun</label>
                     <select class="form-control" id="id_akun" name="id_akun[]" v-model="pettycash.id_akun">
                       <option class="col-sm-10" value=""> ~~ Pilih Akun ~~ </option>
                       @foreach ($akun as $key)
-                        <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
+                        <option
+                          value="{{$key->id}}"
+                          {{ $kas_kecil->id == $key->id ? 'selected' : '' }}
+                        >
+                          {{$key->nomor}} - {{$key->nama}}
+                        </option>
                       @endforeach
                     </select>
                   </div>
@@ -109,7 +114,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="jumlah">Jumlah</label>
-                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" v-model="pettycash.jumlah">
+                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" v-model="pettycash.jumlah" value="">
                   </div>
                 </div>
                 <div class="col-md-1">
@@ -139,7 +144,7 @@
 
               <div class="forms-sample" style="margin-bottom: 10px; margin-top: 10px; justify-content: space-between; display: flex;">
                 <a class="btn btn-secondary btn-rounded" href="/kas_kecil"><i class="ik ik-arrow-left"></i> Back</a>
-                <button class="btn btn-success btn-rounded" type="submit"><i class="ik ik-plus-circle"></i> Create</button>
+                <button class="btn btn-success btn-rounded" type="submit"><i class="ik ik-plus-circle"></i> Edit</button>
               </div>
             </div>
           </div>

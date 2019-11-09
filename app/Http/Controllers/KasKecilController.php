@@ -85,7 +85,10 @@ class KasKecilController extends Controller
      */
     public function edit($id)
     {
-        //
+      $akun = Account::all();
+      $kas_kecil = Pettycash::find($id);
+      $detail = PettycashDetail::where('pettycash_id', $id)->get();
+        return view('pages.kas_kecil.edit', compact('akun', 'kas_kecil', 'detail'));
     }
 
     /**
@@ -109,6 +112,7 @@ class KasKecilController extends Controller
     public function destroy($id)
     {
         Pettycash::find($id)->delete();
+        //PettycashDetail::where('pettycash_id', $id)->delete();
         return redirect('kas_kecil')->with('Success', 'Data anda telah berhasil di delete !');
     }
 }
