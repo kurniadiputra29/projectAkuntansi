@@ -89,6 +89,7 @@
               v-for="(pettycash, index) in pettycashs"
               :key="index"
               >
+              @foreach($detail as $data)
                 <div class="col-md-5">
                   <div class="form-group">
                     <label for="id_akun">Akun</label>
@@ -97,7 +98,7 @@
                       @foreach ($akun as $key)
                         <option
                           value="{{$key->id}}"
-                          {{ $kas_kecil->id == $key->id ? 'selected' : '' }}
+                          {{ $key->nomor == $data->nomor_akun ? 'selected' : '' }}
                         >
                           {{$key->nomor}} - {{$key->nama}}
                         </option>
@@ -114,9 +115,10 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="jumlah">Jumlah</label>
-                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" v-model="pettycash.jumlah" value="">
+                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" v-model="pettycash.jumlah" value="{{$data->kredit}}">
                   </div>
                 </div>
+              @endforeach
                 <div class="col-md-1">
                   <div class="form-group">
                     <label for="jumlah">Delete</label>
@@ -137,14 +139,14 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>Total : Rp</label>
-                    <input class="form-control" type="number" name="total" :value="total" readonly>
+                    <input class="form-control" type="number" name="total" :value="total2" readonly>
                   </div>
                 </div>
               </div>
 
               <div class="forms-sample" style="margin-bottom: 10px; margin-top: 10px; justify-content: space-between; display: flex;">
                 <a class="btn btn-secondary btn-rounded" href="/kas_kecil"><i class="ik ik-arrow-left"></i> Back</a>
-                <button class="btn btn-success btn-rounded" type="submit"><i class="ik ik-plus-circle"></i> Edit</button>
+                <button class="btn btn-success btn-rounded" type="submit"><i class="ik ik-edit-2"></i> Edit</button>
               </div>
             </div>
           </div>
@@ -210,6 +212,23 @@
         });
         return sum;
       },
+      total2() {
+        return this.pettycashs
+        .map( pettycash => pettycash.jumlah )
+        .reduce( (prev, next) => prev + next );
+      },
+    },
+    created() {
+      var pettycashs = [];
+      @foreach($kas_kecil->pettycash_detail as $index => $detail)
+      pettycashs[ {{$index}} ] = {
+        id_akun: {{ $detail->id_akun }},
+        nama_akun: {{ $detail->nama_akun }},
+        nomor_akun: {{ $detail->nomor_akun }},
+        description: {{ $detail->description }},
+      };
+      @endforeach
+      this.pettycashs = orders;
     },
   });
 </script>
