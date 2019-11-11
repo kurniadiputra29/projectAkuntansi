@@ -17,6 +17,7 @@ class CreatePettycashesTable extends Migration
             $table->Increments('id');
             $table->date('tanggal');
             $table->string('kode');
+            $table->string('penerima')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });
