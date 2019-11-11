@@ -43,24 +43,31 @@ class KasKecilController extends Controller
      */
     public function store(Request $request)
     {
-      //insert data pettycash
-      $dataKasKecil = $request->only('id', 'tanggal', 'kode', 'description');
-      $pettycash = Pettycash::create($dataKasKecil);
+        //insert data pettycash
+        $dataKasKecil = $request->only('id', 'tanggal', 'kode', 'penerima', 'description');
+        $pettycash = Pettycash::create($dataKasKecil);
 
-      //insert data pettycash detail
-      $detailKasKecil = $request->only('nomor_akun', 'nama_akun', 'jumlah');
-      $countKasKecil = count($detailKasKecil['nomor_akun']);
+        //insert data pettycash detail
+        $detailKasKecil = $request->only('nomor_akun', 'nama_akun', 'nomor_akun2', 'nama_akun2', 'jumlah', 'total');
+        $countKasKecil = count($detailKasKecil['nomor_akun']);
+        $countKasKecil2 = count($detailKasKecil['total']);
 
-      for ($i=0; $i < $countKasKecil; $i++) {
-
-          $detail               = new PettycashDetail();
-          $detail->pettycash_id = $pettycash->id;
-          $detail->nomor_akun   = $detailKasKecil['nomor_akun'][$i];
-          $detail->nama_akun    = $detailKasKecil['nama_akun'][$i];
-          $detail->debet        = $detailKasKecil['jumlah'][$i];
-          $detail->kredit       = $detailKasKecil['jumlah'][$i];
-          $detail->save();
-      }
+        for ($a=0; $a < $countKasKecil2; $a++) { 
+            $detail                     = new PettycashDetail();
+            $detail->pettycash_id       = $pettycash->id;
+            $detail->nomor_akun         = $detailKasKecil['nomor_akun2'][$a];
+            $detail->nama_akun          = $detailKasKecil['nama_akun2'][$a];
+            $detail->kredit              = $detailKasKecil['total'][$a];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasKecil; $i++) { 
+            $detail                     = new PettycashDetail();
+            $detail->pettycash_id       = $pettycash->id;
+            $detail->nomor_akun         = $detailKasKecil['nomor_akun'][$i];
+            $detail->nama_akun          = $detailKasKecil['nama_akun'][$i];
+            $detail->debet             = $detailKasKecil['jumlah'][$i];
+            $detail->save();
+        }
 
         return redirect('kas_kecil')->with('Success', 'Data anda telah berhasil di input !');
     }

@@ -68,6 +68,7 @@
                       <tr>
                         <th>Tanggal</th>
                         <th>Kode</th>
+                        <th>Penerima</th>
                         <th>Deskripsi</th>
                         <th class="text-right">Aksi</th>
                       </tr>
@@ -77,6 +78,7 @@
                         <tr>
                           <td>{{ $key->tanggal }}</td>
                           <td>{{ $key->kode }}</td>
+                          <td>{{ $key->penerima }}</td>
                           <td>{{ $key->description }}</td>
                           <td class="text-right">
                             <div class="dropdown">

@@ -9,7 +9,7 @@ class Pettycash extends Model
     protected $table = 'pettycashes';
 
     protected $fillable = [
-      'id', 'tanggal', 'kode', 'description', 'status'
+      'id', 'tanggal', 'kode', 'penerima', 'description', 'status'
     ];
 
     public function pettycash_detail()

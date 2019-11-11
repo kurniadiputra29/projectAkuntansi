@@ -67,47 +67,47 @@
                 <table id="order-table" class="table table-striped table-bordered nowrap">
                   <thead>
                     <tr>
-                      <th>Nomor</th>
-                      <th>Nama</th>
-                      <th>Keterangan</th>
-                      {{-- <th>Status</th> --}}
+                      <th>Tanggal</th>
+                      <th>Kode</th>
+                      <th>Penerima/ Diterima</th>
+                      <th>Deskripsi</th>
+                      <th>Status</th>
                       <th class="text-right">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1-1110</td>
-                      <td>Cash in Bank</td>
-                      <td>Kas di bank</td>
-                      <td>
-                        <div class="table-actions">
-                          <a href="#"><i class="ik ik-edit-2"></i></a>
-                          <a href="#"><i class="ik ik-trash-2"></i></a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1-1120</td>
-                      <td>Petty Cash</td>
-                      <td>Kas kecil</td>
-                      <td>
-                        <div class="table-actions">
-                          <a href="#"><i class="ik ik-edit-2"></i></a>
-                          <a href="#"><i class="ik ik-trash-2"></i></a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1-2100</td>
-                      <td>Stock Invesment</td>
-                      <td>Investasi dalam saham</td>
-                      <td>
-                        <div class="table-actions">
-                          <a href="#"><i class="ik ik-edit-2"></i></a>
-                          <a href="#"><i class="ik ik-trash-2"></i></a>
-                        </div>
-                      </td>
-                    </tr>
+                    @foreach ($data as $key)
+                        <tr>
+                          <td>{{ $key->tanggal }}</td>
+                          <td>{{ $key->kode }}</td>
+                          <td>{{ $key->penerima_diterima }}</td>
+                          <td>{{ $key->description }}</td>
+                          <td>@if ($key->status == 0)
+                              <span class="badge badge-pill badge-success mb-1">Penerimaan Kas</span>
+                              @else
+                              <span class="badge badge-pill badge-warning mb-1">Pengeluaran Kas</span>
+                              @endif
+                          </td>
+                          <td class="text-right">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="aksiDropdown">
+                                    <button class="dropdown-item" data-toggle="modal" data-target="#editModal_{{ $key->id }}"><i class="ik ik-edit-2"></i> Edit</button>
+                                    <form method="get" action="{{ route('cashbank.show', $key->id) }}">
+                                      @csrf
+                                      @method('GET')
+                                      <button class="dropdown-item" type="submit"><i class="ik ik-eye"></i> Detail</button>
+                                    </form>
+                                    <form method="post" action="{{ route('cashbank.destroy', $key->id) }}">
+                                      @csrf
+                                      @method('DELETE')
+                                      <button class="dropdown-item" type="submit"><i class="ik ik-trash-2"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                          </td>
+                        </tr>
+                      @endforeach
                   </tbody>
                 </table>
               </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Kas Kecil')
+@section('title', 'AccountMin - CashBank')
 
 @section('content')
 
@@ -39,7 +39,7 @@
                   <span>use class <code>table-hover</code> inside table element</span>
                 </div>
                 <div class="right-container">
-                  <a class="btn btn-outline-secondary btn-rounded" href="{{ route('kas_kecil.index') }}"><i class="ik ik-arrow-left"></i> Back</a>
+                  <a class="btn btn-outline-secondary btn-rounded" href="{{ route('cashbank.index') }}"><i class="ik ik-arrow-left"></i> Back</a>
                 </div>
               </div>
               <div class="card-body">
@@ -57,7 +57,7 @@
                       @foreach ($detail as $key)
                         <tr>
                           <td>{{ $key->nomor_akun }}</td>
-                          <td>{{ $key->nama_akun }}</td>
+                          <td>{{ $key->nama }}</td>
                           <td>Rp {{ number_format($key->debet, 0, " ", ".")}}</td>
                           <td>Rp {{ number_format($key->kredit, 0, " ", ".")}}</td>
                         </tr>
