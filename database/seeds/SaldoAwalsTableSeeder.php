@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class SaldoAwalSeeder extends Seeder
+class SaldoAwalsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -279,6 +279,6 @@ class SaldoAwalSeeder extends Seeder
           ],
         ];
         DB::table('saldo_awals')->truncate();
-    		DB::table('saldo_awals')->insert($data);
+    	DB::table('saldo_awals')->insert($data);
     }
 }
