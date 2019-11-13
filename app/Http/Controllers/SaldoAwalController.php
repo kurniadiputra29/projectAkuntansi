@@ -20,7 +20,7 @@ class SaldoAwalController extends Controller
      */
     public function index()
     {
-      $dataSaldoAwal = SaldoAwal::orderBy('created_at', 'desc')->get();
+      $dataSaldoAwal = SaldoAwal::orderBy('account_id', 'asc')->get();
       $dataAkun = Account::all();
         return view('pages.saldo_awal.index', compact('dataSaldoAwal','dataAkun'));
     }

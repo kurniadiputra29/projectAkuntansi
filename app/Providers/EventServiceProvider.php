@@ -20,6 +20,12 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
+    protected $addSaldoAwal = [
+      'App\Events\SaldoAwalBertambah' => [
+        'App\Listeners\TambahSaldoAwal',
+      ],
+    ];
+
     /**
      * Register any events for your application.
      *
@@ -29,6 +35,18 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        Event::listen('event.SaldoAwalBertambah', function () {
+
+        });
+    }
+
+    /**
+     * Determine if events and listeners should be automatically discovered.
+     *
+     * @return bool
+     */
+    public function shouldDiscoverEvents()
+    {
+        return true;
     }
 }
