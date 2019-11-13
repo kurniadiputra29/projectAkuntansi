@@ -52,21 +52,17 @@ class KasKecilController extends Controller
         $pettycash = Pettycash::create($dataKasKecil);
 
         //insert data pettycash detail
-        $detailKasKecil = $request->only('nomor_akun', 'nama_akun', 'nomor_akun2', 'nama_akun2', 'jumlah', 'total');
-        $countKasKecil = count($detailKasKecil['nomor_akun']);
-        $countKasKecil2 = count($detailKasKecil['total']);
-
         // versi adib
         $detailKasKecil2 = $request->only('nomor_akun', 'nama_akun', 'akun_id', 'jumlah', 'total');
-        $countKasKecil3 = count($detailKasKecil['nomor_akun']);
-        $countKasKecil4 = count($detailKasKecil['total']);
+        $nomorAkun = count($detailKasKecil['nomor_akun']);
+        $total = count($detailKasKecil['total']);
         $account = Account::where('id', $detailKasKecil2['akun_id'])->get();
         foreach ($account as $key) {
           $nomor = $key->nomor;
           $nama = $key->nama;
         }
 
-        for ($i=0; $i < $countKasKecil4 ; $i++) {
+        for ($i=0; $i < $total ; $i++) {
           // code...
           $total = $detailKasKecil2['total'][$i];
 
@@ -86,15 +82,7 @@ class KasKecilController extends Controller
         $data = ['kredit' => $kredit_tertera + $total];
         $updateSaldoAwal = SaldoAwal::where('id', $detailKasKecil2['akun_id'])->update($data);
 
-        // for ($a=0; $a < $countKasKecil2; $a++) {
-        //     $detail                     = new PettycashDetail();
-        //     $detail->pettycash_id       = $pettycash->id;
-        //     $detail->nomor_akun         = $detailKasKecil['nomor_akun2'][$a];
-        //     $detail->nama_akun          = $detailKasKecil['nama_akun2'][$a];
-        //     $detail->kredit              = $detailKasKecil['total'][$a];
-        //     $detail->save();
-        // }
-        for ($i=0; $i < $countKasKecil3; $i++) {
+        for ($i=0; $i < $nomorAkun; $i++) {
             $detail                     = new PettycashDetail();
             $detail->pettycash_id       = $pettycash->id;
             $detail->nomor_akun         = $detailKasKecil2['nomor_akun'][$i];
