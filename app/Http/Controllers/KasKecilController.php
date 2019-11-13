@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Pettycash;
 use App\Model\Account;
 use App\Model\PettycashDetail;
+use App\Model\SaldoAwal;
 
 class KasKecilController extends Controller
 {
@@ -43,6 +44,9 @@ class KasKecilController extends Controller
      */
     public function store(Request $request)
     {
+      // ngecheck data yang mau dimasukkan
+      $checkDataMasukNggak = $request->all();
+      // dd($checkDataMasukNggak);
         //insert data pettycash
         $dataKasKecil = $request->only('id', 'tanggal', 'kode', 'penerima', 'description');
         $pettycash = Pettycash::create($dataKasKecil);
@@ -52,20 +56,50 @@ class KasKecilController extends Controller
         $countKasKecil = count($detailKasKecil['nomor_akun']);
         $countKasKecil2 = count($detailKasKecil['total']);
 
-        for ($a=0; $a < $countKasKecil2; $a++) { 
-            $detail                     = new PettycashDetail();
-            $detail->pettycash_id       = $pettycash->id;
-            $detail->nomor_akun         = $detailKasKecil['nomor_akun2'][$a];
-            $detail->nama_akun          = $detailKasKecil['nama_akun2'][$a];
-            $detail->kredit              = $detailKasKecil['total'][$a];
-            $detail->save();
+        // versi adib
+        $detailKasKecil2 = $request->only('nomor_akun', 'nama_akun', 'akun_id', 'jumlah', 'total');
+        $countKasKecil3 = count($detailKasKecil['nomor_akun']);
+        $countKasKecil4 = count($detailKasKecil['total']);
+        $account = Account::where('id', $detailKasKecil2['akun_id'])->get();
+        foreach ($account as $key) {
+          $nomor = $key->nomor;
+          $nama = $key->nama;
         }
-        for ($i=0; $i < $countKasKecil; $i++) { 
+
+        for ($i=0; $i < $countKasKecil4 ; $i++) {
+          // code...
+          $total = $detailKasKecil2['total'][$i];
+
+          $detail                     = new PettycashDetail();
+          $detail->pettycash_id       = $pettycash->id;
+          $detail->nomor_akun         = $nomor;
+          $detail->nama_akun          = $nama;
+          $detail->kredit             = $detailKasKecil2['total'][$i];
+          $detail->save();
+        }
+
+        $saldo_awal = SaldoAwal::where('id', $detailKasKecil2['akun_id'])->get();
+        foreach ($saldo_awal as $key) {
+          $kredit_tertera = $key->kredit;
+        }
+
+        $data = ['kredit' => $kredit_tertera + $total];
+        $updateSaldoAwal = SaldoAwal::where('id', $detailKasKecil2['akun_id'])->update($data);
+
+        // for ($a=0; $a < $countKasKecil2; $a++) {
+        //     $detail                     = new PettycashDetail();
+        //     $detail->pettycash_id       = $pettycash->id;
+        //     $detail->nomor_akun         = $detailKasKecil['nomor_akun2'][$a];
+        //     $detail->nama_akun          = $detailKasKecil['nama_akun2'][$a];
+        //     $detail->kredit              = $detailKasKecil['total'][$a];
+        //     $detail->save();
+        // }
+        for ($i=0; $i < $countKasKecil3; $i++) {
             $detail                     = new PettycashDetail();
             $detail->pettycash_id       = $pettycash->id;
-            $detail->nomor_akun         = $detailKasKecil['nomor_akun'][$i];
-            $detail->nama_akun          = $detailKasKecil['nama_akun'][$i];
-            $detail->debet             = $detailKasKecil['jumlah'][$i];
+            $detail->nomor_akun         = $detailKasKecil2['nomor_akun'][$i];
+            $detail->nama_akun          = $detailKasKecil2['nama_akun'][$i];
+            $detail->debet              = $detailKasKecil2['jumlah'][$i];
             $detail->save();
         }
 

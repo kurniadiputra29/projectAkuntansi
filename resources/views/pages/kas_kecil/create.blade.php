@@ -45,11 +45,23 @@
                 </div>
               </div>
               <div class="card-body">
+                <div class="row input-group-primary">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="setor_ke">Di Bayar Dari</label>
+                      <select class="form-control" id="setor_ke" name="akun_id">
+                        @foreach ($akun as $key)
+                        <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                </div>
                 <div
                 v-for="(pettycash, index) in pettycashs"
                 :key="index"
                 >
-                  <div class="row input-group-primary">
+                  {{-- <div class="row input-group-primary">
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="setor_ke">Di Bayar Dari</label>
@@ -66,7 +78,7 @@
                     >
                   <input type="hidden" name="nama_akun2[]"
                       :value="nama_akun(pettycash.id_akun2, index)"
-                  >
+                  > --}}
                 </div>
                 <div class="row">
                   <div class="col-md-4">
