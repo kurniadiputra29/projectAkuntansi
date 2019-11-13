@@ -55,7 +55,7 @@
                             <a href="#" class="dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><a href="#"><i class="ik ik-shopping-cart"></i><span>Pembelian</span></a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" href="{{route('cpj.index')}}">Cash Payment Journal</a>
-                                <a class="dropdown-item" href="{{route('payments_journal.index')}}">Payments Journal</a>
+                                <a class="dropdown-item" href="{{route('purchase_journal.index')}}">Payments Journal</a>
                             </div>
                         </div>
                         <div class="app-item">

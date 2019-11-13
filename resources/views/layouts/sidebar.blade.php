@@ -31,18 +31,18 @@
               </div>
           </div>
           <div class="nav-lavel">Transaksi</div>
-          <div class="nav-item has-sub {{ Request::is('crj') || Request::is('sales_journal') ? 'active open' : '' }}">
+          <div class="nav-item has-sub {{ Request::is('crj') || Request::is('sales_journal') || Request::is('crj/create') || Request::is('sales_journal/create') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-package"></i><span>Penjualan</span></a>
               <div class="submenu-content">
-                  <a href="{{ route('crj.index') }}" class="menu-item {{ Request::is('crj') ? 'active' : '' }}">Cash Receipt Journal</a>
-                  <a href="{{ route('sales_journal.index') }}" class="menu-item {{Request::is('sales_journal')?'active':''}}">Sales Journal</a>
+                  <a href="{{ route('crj.index') }}" class="menu-item {{ Request::is('crj') || Request::is('crj/create') ? 'active' : '' }}">Cash Receipt Journal</a>
+                  <a href="{{ route('sales_journal.index') }}" class="menu-item {{Request::is('sales_journal') || Request::is('sales_journal/create') ?'active':''}}">Sales Journal</a>
               </div>
           </div>
-          <div class="nav-item has-sub {{ Request::is('cpj') || Request::is('payments_journal') ? 'active open' : '' }}">
+          <div class="nav-item has-sub {{ Request::is('cpj') || Request::is('purchase_journal') || Request::is('cpj/create') || Request::is('purchase_journal/create') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-shopping-cart"></i><span>Pembelian</span></a>
               <div class="submenu-content">
-                  <a href="{{ route('cpj.index') }}" class="menu-item {{ Request::is('cpj') ? 'active' : '' }}">Cash Payment Journal</a>
-                  <a href="{{ route('payments_journal.index') }}" class="menu-item {{ Request::is('payments_journal') ? 'active' : '' }}">Payments Journal</a>
+                  <a href="{{ route('cpj.index') }}" class="menu-item {{ Request::is('cpj') || Request::is('cpj/create') ? 'active' : '' }}">Cash Payment Journal</a>
+                  <a href="{{ route('purchase_journal.index') }}" class="menu-item {{ Request::is('purchase_journal') || Request::is('purchase_journal/create') ? 'active' : '' }}">Purchase Journal</a>
               </div>
           </div>
           <div class="nav-item {{ Request::is('ju') ? 'active' : '' }}">

@@ -17,11 +17,11 @@ class CreateCpjsTable extends Migration
             $table->Increments('id');
             $table->date('tanggal');
             $table->string('kode');
-            $table->text('description');
-            $table->string('nomor_akun');
-            $table->integer('debet')->nullable();
-            $table->integer('kredit')->nullable();
+            $table->unsignedInteger('suppliers_id');
+            $table->text('description')->nullable();
             $table->timestamps();
+
+            $table->foreign('suppliers_id')->references('id')->on('data_suppliers')->onDelete('cascade');
         });
     }
 

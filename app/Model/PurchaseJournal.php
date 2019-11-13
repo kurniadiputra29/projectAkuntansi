@@ -4,9 +4,9 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class cpj extends Model
+class PurchaseJournal extends Model
 {
-    protected $table = 'cpjs';
+    protected $table = 'purchase_journals';
 
     protected $fillable = [
       'id','tanggal','kode','suppliers_id', 'description', 'created_at','update_at'

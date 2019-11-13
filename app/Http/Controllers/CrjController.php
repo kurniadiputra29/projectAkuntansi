@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\crj;
+use App\Model\Account;
+use App\Model\DataCustomer;
+use App\Model\Item;
 
 class CrjController extends Controller
 {
@@ -27,7 +31,10 @@ class CrjController extends Controller
      */
     public function create()
     {
-        //
+        $akun = Account::all();
+        $customers = DataCustomer::all();
+        $items = Item::all();
+        return view('pages.crj.create', compact('akun', 'customers', 'items'));
     }
 
     /**

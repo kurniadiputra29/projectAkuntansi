@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\SaldoJournal;
+use App\Model\Account;
+use App\Model\DataCustomer;
+use App\Model\Item;
 
 class SalesJournalController extends Controller
 {
@@ -27,7 +31,10 @@ class SalesJournalController extends Controller
      */
     public function create()
     {
-        //
+        $akun = Account::all();
+        $customers = DataCustomer::all();
+        $items = Item::all();
+        return view('pages.sales_journal.create', compact('akun', 'customers', 'items'));
     }
 
     /**

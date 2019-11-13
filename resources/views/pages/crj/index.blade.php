@@ -38,7 +38,7 @@
                   <span>use class <code>table-hover</code> inside table element</span>
                 </div>
                 <div class="right-container">
-                  <button type="button" class="btn btn-outline-primary btn-rounded">Create</button>
+                  <a class="btn btn-outline-primary btn-rounded" href="{{ route('crj.create') }}">Create</a>
                 </div>
               </div>
               <div class="card-body">
