@@ -60,8 +60,8 @@
                           <td>{{ $key->kode }}</td>
                           <td>{{ $key->nama }}</td>
                           <td>{{ $key->unit }}</td>
-                          <td>{{ $key->harga }}</td>
-                          <td>{{ $key->nilai_persediaan }}</td>
+                          <td>Rp {{ number_format($key->harga, 0, " ", ".")}}</td>
+                          <td>Rp {{ number_format($key->nilai_persediaan, 0, " ", ".")}}</td>
                           {{-- <td><span class="badge badge-pill badge-success mb-1">Aktif</span></td> --}}
                           <td class="text-right">
                             <div class="dropdown">
@@ -71,7 +71,7 @@
                                     <form method="post" action="{{ route('item.destroy', $key->id) }}">
                                       @csrf
                                       @method('DELETE')
-                                      <button class="dropdown-item" type="submit"><i class="ik ik-trash-2"></i> Delete</button>
+                                      <button class="dropdown-item" type="submit" onclick='javascript:return confirm("Apakah anda yakin ingin menghapus data ini?")'><i class="ik ik-trash-2"></i> Delete</button>
                                     </form>
                                 </div>
                             </div>

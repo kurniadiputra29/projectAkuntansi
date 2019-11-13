@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\PurchaseJournal;
+use App\Model\Account;
+use App\Model\DataSupplier;
+use App\Model\Item;
 
-class PaymentJournalController extends Controller
+class PurchaseJournalController extends Controller
 {
     public function __construct()
     {
@@ -17,7 +21,7 @@ class PaymentJournalController extends Controller
      */
     public function index()
     {
-        return view('pages.payments_journal.index');
+        return view('pages.purchase_journal.index');
     }
 
     /**
@@ -27,7 +31,10 @@ class PaymentJournalController extends Controller
      */
     public function create()
     {
-        //
+        $akun = Account::all();
+        $suppliers = DataSupplier::all();
+        $items = Item::all();
+        return view('pages.purchase_journal.create', compact('akun', 'suppliers', 'items'));
     }
 
     /**

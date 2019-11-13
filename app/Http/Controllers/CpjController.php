@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\cpj;
+use App\Model\Account;
+use App\Model\DataSupplier;
+use App\Model\Item;
 
 class CpjController extends Controller
 {
@@ -27,7 +31,10 @@ class CpjController extends Controller
      */
     public function create()
     {
-        //
+        $akun = Account::all();
+        $suppliers = DataSupplier::all();
+        $items = Item::all();
+        return view('pages.cpj.create', compact('akun', 'suppliers', 'items'));
     }
 
     /**

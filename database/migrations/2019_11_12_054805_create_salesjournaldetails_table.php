@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentJournalsTable extends Migration
+class CreateSalesjournaldetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreatePaymentJournalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment_journals', function (Blueprint $table) {
+        Schema::create('salesjournaldetails', function (Blueprint $table) {
             $table->Increments('id');
-            $table->date('tanggal');
-            $table->string('kode');
-            $table->text('description');
+            $table->unsignedInteger('salesjournal_id');
             $table->string('nomor_akun');
+            $table->string('nama_akun');
             $table->integer('debet')->nullable();
             $table->integer('kredit')->nullable();
             $table->timestamps();
+
+            $table->foreign('salesjournal_id')->references('id')->on('sales_journals')->onDelete('cascade');
         });
     }
 
@@ -32,6 +33,6 @@ class CreatePaymentJournalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_journals');
+        Schema::dropIfExists('salesjournaldetails');
     }
 }

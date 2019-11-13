@@ -43,7 +43,7 @@ Route::resource('jp', 'JpController');
 Route::resource('ju', 'JuController');
 Route::resource('kas_kecil', 'KasKecilController');
 Route::resource('laporan', 'LaporanController');
-Route::resource('payments_journal', 'PaymentJournalController');
+Route::resource('purchase_journal', 'PurchaseJournalController');
 Route::resource('saldo_awal', 'SaldoAwalController');
 Route::resource('saldo_hutang', 'SaldoHutangController');
 Route::resource('saldo_piutang', 'SaldoPiutangController');

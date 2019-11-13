@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Payment Journal')
+@section('title', 'AccountMin - Purchase Journal')
 
 @section('content')
 
@@ -12,7 +12,7 @@
                     <div class="page-header-title">
                         <i class="ik ik-shopping-cart bg-blue"></i>
                         <div class="d-inline">
-                            <h5>Payments Journal</h5>
+                            <h5>Purchase Journal</h5>
                             <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                             <li class="breadcrumb-item">
                                 <a href="http://localhost/ProjectAkuntan/index.php"><i class="ik ik-home"></i></a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Payments Journal</li>
+                            <li class="breadcrumb-item active" aria-current="page">Purchase Journal</li>
                         </ol>
                     </nav>
                 </div>
@@ -34,11 +34,11 @@
             <div class="card">
               <div class="card-header d-flex justify-content-between flex-row">
                 <div class="left-container">
-                  <h3>Cash Payment Journal</h3>
+                  <h3>Cash Purchase Journal</h3>
                   <span>use class <code>table-hover</code> inside table element</span>
                 </div>
                 <div class="right-container">
-                  <button type="button" class="btn btn-outline-primary btn-rounded">Create</button>
+                  <a class="btn btn-outline-primary btn-rounded" href="{{route('purchase_journal.create') }}">Create</a>
                 </div>
               </div>
               <div class="card-body">

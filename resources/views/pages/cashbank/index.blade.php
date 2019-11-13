@@ -101,7 +101,7 @@
                                     <form method="post" action="{{ route('cashbank.destroy', $key->id) }}">
                                       @csrf
                                       @method('DELETE')
-                                      <button class="dropdown-item" type="submit"><i class="ik ik-trash-2"></i> Delete</button>
+                                      <button class="dropdown-item" type="submit" onclick='javascript:return confirm("Apakah anda yakin ingin menghapus data ini?")'><i class="ik ik-trash-2"></i> Delete</button>
                                     </form>
                                 </div>
                             </div>

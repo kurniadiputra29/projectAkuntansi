@@ -46,7 +46,7 @@
             </div>
             <div class="card-body">
               <div
-                v-for="(cashbank, index) in cashbanks"
+                v-for="(cashbank, index) in cashbanks2"
                 :key="index"
                 >
                 <div class="row input-group-primary">
@@ -167,7 +167,7 @@
             <div class="card-body">
 
               <div
-                v-for="(cashbank, index) in cashbanks"
+                v-for="(cashbank, index) in cashbanks2"
                 :key="index"
                 >
                 <div class="row input-group-primary">
@@ -293,7 +293,10 @@
    data: {
     cashbanks: [
     {terima_dari:"", description:"", jumlah: 0},
-    ]
+    ],
+    cashbanks2: [
+    {terima_dari:"", description:"", jumlah: 0},
+    ],
   },
   methods: {
     add() {
@@ -317,12 +320,12 @@
       },
       nomor_akun2(id_akun2, index) {
         var nomor_akun = this.nomor_akuns[id_akun2];
-        this.cashbanks[index].nomor_akun = nomor_akun;
+        this.cashbanks2[index].nomor_akun = nomor_akun;
         return nomor_akun;
       },
       nama_akun2(id_akun2, index) {
         var nama_akun = this.nama_akuns[id_akun2];
-        this.cashbanks[index].nama_akun = nama_akun;
+        this.cashbanks2[index].nama_akun = nama_akun;
         return nama_akun;
       },
   },
