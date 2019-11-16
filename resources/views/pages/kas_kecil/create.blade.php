@@ -46,7 +46,7 @@
               </div>
               <div class="card-body">
                 <div class="row input-group-primary">
-                  <div class="col-md-4">
+                  <div class="col-md-5">
                     <div class="form-group">
                       <label for="setor_ke">Di Bayar Dari</label>
                       <select class="form-control" id="setor_ke" name="akun_id">
@@ -56,29 +56,6 @@
                       </select>
                     </div>
                   </div>
-                </div>
-                <div
-                v-for="(pettycash, index) in pettycashs"
-                :key="index"
-                >
-                  {{-- <div class="row input-group-primary">
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="setor_ke">Di Bayar Dari</label>
-                        <select class="form-control" id="setor_ke" v-model="pettycash.id_akun2">
-                          @foreach ($akun as $key)
-                          <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <input type="hidden" name="nomor_akun2[]"
-                      :value="nomor_akun(pettycash.id_akun2, index)"
-                    >
-                  <input type="hidden" name="nama_akun2[]"
-                      :value="nama_akun(pettycash.id_akun2, index)"
-                  > --}}
                 </div>
                 <div class="row">
                   <div class="col-md-4">
@@ -106,7 +83,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div
                 class="row"
                 v-for="(pettycash, index) in pettycashs"
@@ -123,16 +99,16 @@
                     </select>
                   </div>
                 </div>
-                  <input type="hidden" name="nomor_akun[]"
-                    :value="nomor_akun(pettycash.id_akun, index)"
-                  >
-                  <input type="hidden" name="nama_akun[]"
-                    :value="nama_akun(pettycash.id_akun, index)"
-                  >
+                <input type="hidden" name="nomor_akun[]"
+                :value="nomor_akun(pettycash.id_akun, index)"
+                >
+                <input type="hidden" name="nama_akun[]"
+                :value="nama_akun(pettycash.id_akun, index)"
+                >
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="jumlah">Jumlah</label>
-                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" v-model="pettycash.jumlah">
+                    <input class="form-control uang" type="number" id="jumlah" name="jumlah[]" v-model="pettycash.jumlah">
                   </div>
                 </div>
                 <div class="col-md-1">
@@ -155,7 +131,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>Total : Rp</label>
-                    <input class="form-control" type="number" name="total[]" :value="total" readonly>
+                    <input class="form-control" type="number" name="total" :value="total" readonly>
                   </div>
                 </div>
               </div>
@@ -203,16 +179,6 @@
         this.pettycashs[index].nama_akun = nama_akun;
         return nama_akun;
       },
-      nomor_akun2(id_akun2, index) {
-        var nomor_akun = this.nomor_akuns[id_akun2];
-        this.cashbanks[index].nomor_akun = nomor_akun;
-        return nomor_akun;
-      },
-      nama_akun2(id_akun2, index) {
-        var nama_akun = this.nama_akuns[id_akun2];
-        this.cashbanks[index].nama_akun = nama_akun;
-        return nama_akun;
-      },
     },
     computed: {
       nomor_akuns() {
@@ -242,16 +208,4 @@
   });
 </script>
 
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("#sembunyikan").click(function(){
-      $("#a").show();
-      $("#b").hide();
-    });
-    $("#muncul").click(function(){
-      $("#a").hide();
-      $("#b").show();
-    });
-  });
-</script>
 @endsection

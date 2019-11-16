@@ -46,22 +46,29 @@
               </div>
               <div class="card-body">
                 <div class="row input-group-primary">
-                  <div class="col-md-4">
+                  @foreach($kredit as $dadit)
+                  <div class="col-md-5">
                     <div class="form-group">
-                      <label for="setor_ke">Setor Ke</label>
-                      <select class="form-control" id="setor_ke">
+                      <label for="setor_ke">Di Bayar Dari</label>
+                      <select class="form-control" id="setor_ke" name="akun_id">
                         @foreach ($akun as $key)
-                          <option>{{$key->nomor}} - {{$key->nama}}</option>
+                        <option
+                          value="{{$key->id}}"
+                          {{ $key->nomor == $dadit->nomor_akun ? 'selected' : '' }}
+                        >
+                          {{$key->nomor}} - {{$key->nama}}
+                        </option>
                         @endforeach
                       </select>
                     </div>
                   </div>
+                  @endforeach
                 </div>
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="yang_membayar">Diterima Dari</label>
-                      <input class="form-control" type="text" id="yang_membayar" disabled>
+                      <input class="form-control" type="text" id="yang_membayar" name="penerima" value="{{$kas_kecil->penerima}}">
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -89,7 +96,7 @@
               v-for="(pettycash, index) in pettycashs"
               :key="index"
               >
-              @foreach($detail as $data)
+              @foreach($debet as $data)
                 <div class="col-md-5">
                   <div class="form-group">
                     <label for="id_akun">Akun</label>
@@ -115,7 +122,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="jumlah">Jumlah</label>
-                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" v-model="pettycash.jumlah" value="{{$data->kredit}}">
+                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" v-model="pettycash.jumlah" value="{{$data->debet}}">
                   </div>
                 </div>
               @endforeach
@@ -139,7 +146,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>Total : Rp</label>
-                    <input class="form-control" type="number" name="total" :value="total2" readonly>
+                    <input class="form-control" type="number" name="total" :value="total" readonly>
                   </div>
                 </div>
               </div>
@@ -223,26 +230,17 @@
       @foreach($kas_kecil->pettycash_detail as $index => $detail)
       pettycashs[ {{$index}} ] = {
         id_akun: {{ $detail->id_akun }},
+        pettycash_id: {{ $detail->pettycash_id }},
         nama_akun: {{ $detail->nama_akun }},
         nomor_akun: {{ $detail->nomor_akun }},
         description: {{ $detail->description }},
+        kredit: {{ $detail->kredit }},
+        debet: {{ $detail->debet }},
       };
       @endforeach
-      this.pettycashs = orders;
+      this.pettycashs = pettycashs;
     },
   });
 </script>
 
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("#sembunyikan").click(function(){
-      $("#a").show();
-      $("#b").hide();
-    });
-    $("#muncul").click(function(){
-      $("#a").hide();
-      $("#b").show();
-    });
-  });
-</script>
 @endsection
