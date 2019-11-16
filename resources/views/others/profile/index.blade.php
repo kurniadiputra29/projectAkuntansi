@@ -63,62 +63,68 @@
                 </div>
             </div>
             <div class="col-lg-8 col-md-7">
-                <div class="card">
-                    <ul class="nav nav-pills custom-pills" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="pills-user-tab-{{auth()->user()->id}}" data-toggle="pill" href="#current-month" role="tab" aria-controls="pills-user" aria-selected="true">User</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-company-tab" data-toggle="pill" href="#last-month" role="tab" aria-controls="pills-company" aria-selected="false">Company</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="current-month" role="tabpanel" aria-labelledby="pills-user-tab-{{auth()->user()->id}}">
+              <div class="card">
+                  <ul class="nav nav-pills custom-pills" id="pills-tab" role="tablist">
+                      <li class="nav-item">
+                          <a class="nav-link active" id="pills-company-tab" data-toggle="pill" href="#last-month" role="tab" aria-controls="pills-company" aria-selected="false">Company</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" id="pills-user-tab" data-toggle="pill" href="#previous-month" role="tab" aria-controls="pills-user" aria-selected="false">User</a>
+                      </li>
+                  </ul>
+                  <div class="tab-content" id="pills-tabContent">
+                      <div class="tab-pane fade show active" id="last-month" role="tabpanel" aria-labelledby="pills-company-tab">
                           <div class="card-body">
-                            @foreach($perusahaanData as $key)
+                            @foreach ($perusahaanData as $key)
                               <form class="form-horizontal">
                                   <div class="form-group">
-                                      <label for="example-name">Nama</label>
-                                      <input type="text" class="form-control" name="example-name" id="example-name" value="{{$key->nama}}">
+                                      <label for="example-name">Name</label>
+                                      <input type="text" class="form-control" name="example-name" id="example-name">
                                   </div>
                                   <div class="form-group">
                                       <label for="example-email">Email</label>
-                                      <input type="email" class="form-control" name="example-email" id="example-email" value="{{$key->email}}">
+                                      <input type="email" class="form-control" name="example-email" id="example-email">
                                   </div>
                                   <div class="form-group">
                                       <label for="example-password">Password</label>
                                       <input type="password" class="form-control" name="example-password" id="example-password">
                                   </div>
-                                  <button class="btn btn-success" type="submit">Update</button>
+                                  <button class="btn btn-success" type="submit">Update Profile</button>
                               </form>
                             @endforeach
                           </div>
-                        </div>
-                        <div class="tab-pane fade" id="previous-month" role="tabpanel" aria-labelledby="pills-company-tab">
-                            <div class="card-body">
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <label for="example-name">Nama</label>
-                                        <input type="text" placeholder="Johnathan Doe" class="form-control" name="example-name" id="example-name">
+                      </div>
+                      <div class="tab-pane fade" id="previous-month" role="tabpanel" aria-labelledby="pills-user-tab">
+                          <div class="card-body">
+                              <form class="form-horizontal">
+                                  <div class="form-group">
+                                      <label for="example-name">Name</label>
+                                      <input type="text" class="form-control" name="example-name" id="example-name" value="{{auth()->user()->nama}}">
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="example-email">Email</label>
+                                      <input type="email" class="form-control" name="example-email" id="example-email" value="{{auth()->user()->email}}">
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="example-password">Password</label>
+                                      <input type="password" class="form-control" name="example-password" id="example-password">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="keterangan">Foto User</label>
+                                    <input type="file" name="foto" class="file-upload-default">
+                                    <div class="input-group col-xs-12">
+                                        <input type="text" value="{{auth()->user()->foto}}" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                                        <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                                        </span>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="example-email">Alamat</label>
-                                        <input type="email" placeholder="johnathan@admin.com" class="form-control" name="example-email" id="example-email">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="example-password">Telepon</label>
-                                        <input type="password" value="password" class="form-control" name="example-password" id="example-password">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="example-message">Deskripsi</label>
-                                        <textarea name="example-message" name="example-message" rows="5" class="form-control"></textarea>
-                                    </div>
-                                    <button class="btn btn-success" type="submit">Update Profile</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                  </div>
+                                  <button class="btn btn-success" type="submit">Update Profile</button>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </div>
             </div>
         </div>
     </div>
