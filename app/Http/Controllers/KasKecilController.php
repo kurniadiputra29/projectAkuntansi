@@ -53,7 +53,7 @@ class KasKecilController extends Controller
 
         //insert data pettycash detail
         // versi adib
-        $detailKasKecil2 = $request->only('nomor_akun', 'nama_akun', 'akun_id', 'jumlah', 'total');
+        $detailKasKecil2 = $request->only('id_akun', 'nomor_akun', 'nama_akun', 'akun_id', 'jumlah', 'total');
         $nomorAkun = count($detailKasKecil2['nomor_akun']);
 
         // untuk memilih baris pertama si petty cash
@@ -81,14 +81,25 @@ class KasKecilController extends Controller
 
         $total = $detailKasKecil2['total'];
 
-        $saldo_awal = SaldoAwal::where('id', $detailKasKecil2['akun_id'])->get();
-        foreach ($saldo_awal as $key) {
+        $saldo_awal_kredit = SaldoAwal::where('id', $detailKasKecil2['akun_id'])->get();
+        foreach ($saldo_awal_kredit as $key) {
           $kredit_tertera = $key->kredit;
         }
 
-        $data = ['kredit' => $kredit_tertera + $total[0]];
-        $updateSaldoAwal = SaldoAwal::where('id', $detailKasKecil2['akun_id'])->update($data);
+        $dataKredit = ['kredit' => $kredit_tertera + $total];
+        $updateSaldoAwal = SaldoAwal::where('id', $detailKasKecil2['akun_id'])->update($dataKredit);
 
+        $saldo_awal_debet = SaldoAwal::where('id', $detailKasKecil2['id_akun'])->get();
+        foreach ($saldo_awal_debet as $key) {
+          $debet_tertera = $key->debet;
+        }
+
+        $detailDebet = $detailKasKecil2['jumlah'];
+        // $dataDebet[] = ['debet' => $debet_tertera + $detailDebet[]];
+        for ($i=0; $i < $nomorAkun ; $i++) {
+          $dataDebet[$i] = ['debet' => $debet_tertera + $detailDebet[$i]];
+          SaldoAwal::where('id', $detailKasKecil2['id_akun'])->update($dataDebet[$i]);
+        }
 
         return redirect('kas_kecil')->with('Success', 'Data anda telah berhasil di input !');
     }
