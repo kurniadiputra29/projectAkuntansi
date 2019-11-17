@@ -16,10 +16,9 @@ class CreateCrjsTable extends Migration
         Schema::create('crjs', function (Blueprint $table) {
             $table->Increments('id');
             $table->date('tanggal');
-            $table->string('kode');
+            $table->string('kode')->unique();
             $table->unsignedInteger('customers_id');
             $table->text('description')->nullable();
-            $table->boolean('status')->nullable();
             $table->timestamps();
 
             $table->foreign('customers_id')->references('id')->on('data_customers')->onDelete('cascade');

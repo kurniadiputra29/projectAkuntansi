@@ -7,6 +7,7 @@ use App\Model\crj;
 use App\Model\Account;
 use App\Model\DataCustomer;
 use App\Model\Item;
+use App\Model\crjdetail;
 
 class CrjController extends Controller
 {
@@ -21,7 +22,8 @@ class CrjController extends Controller
      */
     public function index()
     {
-        return view('pages.crj.index');
+        $data = crj::orderBy('created_at', 'desc')->get();
+        return view('pages.crj.index', compact('data'));
     }
 
     /**
@@ -45,7 +47,51 @@ class CrjController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //insert data crj
+        $dataCRJ          = $request->only('id','tanggal', 'kode', 'customers_id', 'description');
+        $crj              = crj::create($dataCRJ);
+
+        //insert data crj detail
+        $detailcrj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+        $countKasBank1 = count($detailcrj['total']);
+        $countKasBank2 = count($detailcrj['subtotal']);
+        $countKasBank3 = count($detailcrj['PPN']);
+        $countKasBank4 = count($detailcrj['jasa_pengiriman']);
+
+        for ($a=0; $a < $countKasBank1; $a++) { 
+            $detail                     = new crjdetail();
+            $detail->crj_id             = $crj->id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun2'][$a];
+            $detail->nama_akun          = $detailcrj['nama_akun2'][$a];
+            $detail->debet              = $detailcrj['total'][$a];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank2; $i++) { 
+            $detail                     = new crjdetail();
+            $detail->crj_id             = $crj->id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_sales'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_sales'][$i];
+            $detail->kredit             = $detailcrj['subtotal'][$i];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank3; $i++) { 
+            $detail                     = new crjdetail();
+            $detail->crj_id             = $crj->id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_ppn'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_ppn'][$i];
+            $detail->kredit             = $detailcrj['PPN'][$i];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank4; $i++) { 
+            $detail                     = new crjdetail();
+            $detail->crj_id             = $crj->id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_jasa'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_jasa'][$i];
+            $detail->kredit             = $detailcrj['jasa_pengiriman'][$i];
+            $detail->save();
+        }
+
+        return redirect('/crj')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
     /**
@@ -56,7 +102,8 @@ class CrjController extends Controller
      */
     public function show($id)
     {
-        //
+        $detail = crjdetail::where('crj_id', $id)->get();
+        return view('pages.crj.show', compact('detail'));
     }
 
     /**
@@ -90,6 +137,7 @@ class CrjController extends Controller
      */
     public function destroy($id)
     {
-        //
+        crj::find($id)->delete();
+        return redirect('/crj');
     }
 }

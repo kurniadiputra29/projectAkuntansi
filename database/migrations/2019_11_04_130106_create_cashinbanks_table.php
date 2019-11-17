@@ -16,7 +16,7 @@ class CreateCashinbanksTable extends Migration
         Schema::create('cashinbanks', function (Blueprint $table) {
             $table->Increments('id');
             $table->date('tanggal');
-            $table->string('kode');
+            $table->string('kode')->unique();
             $table->string('penerima_diterima');
             $table->text('description')->nullable();
             $table->boolean('status')->nullable();

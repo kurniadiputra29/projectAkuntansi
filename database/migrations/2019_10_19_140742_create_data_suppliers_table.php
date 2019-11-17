@@ -15,7 +15,7 @@ class CreateDataSuppliersTable extends Migration
     {
         Schema::create('data_suppliers', function (Blueprint $table) {
             $table->Increments('id');
-            $table->string('kode');
+            $table->string('kode')->unique();
             $table->string('nama');
             $table->string('npwp')->nullable();
             $table->string('alamat');

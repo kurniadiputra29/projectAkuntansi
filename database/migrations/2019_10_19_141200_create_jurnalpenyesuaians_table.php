@@ -16,7 +16,7 @@ class CreateJurnalpenyesuaiansTable extends Migration
         Schema::create('jurnalpenyesuaians', function (Blueprint $table) {
             $table->Increments('id');
             $table->date('tanggal');
-            $table->string('kode');
+            $table->string('kode')->unique();
             $table->text('description');
             $table->string('nomor_akun');
             $table->integer('debet')->nullable();

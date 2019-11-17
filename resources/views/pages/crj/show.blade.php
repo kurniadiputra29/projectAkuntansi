@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - CashBank')
+@section('title', 'AccountMin - Cash Receipt Journal')
 
 @section('content')
 
@@ -12,7 +12,7 @@
                     <div class="page-header-title">
                         <i class="ik ik-briefcase bg-blue"></i>
                         <div class="d-inline">
-                            <h5>Kas Bank</h5>
+                            <h5>Cash Receipt Journal</h5>
                             <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                             <li class="breadcrumb-item">
                                 <a href="/dasbor"><i class="ik ik-home"></i></a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Kas Bank</li>
+                            <li class="breadcrumb-item active" aria-current="page">Cash Receipt Journal</li>
                             <li class="breadcrumb-item active" aria-current="page">Detail</li>
                         </ol>
                     </nav>
@@ -39,7 +39,7 @@
                   <span>use class <code>table-hover</code> inside table element</span>
                 </div>
                 <div class="right-container">
-                  <a class="btn btn-outline-secondary btn-rounded" href="{{ route('cashbank.index') }}"><i class="ik ik-arrow-left"></i> Back</a>
+                  <a class="btn btn-outline-secondary btn-rounded" href="{{ route('crj.index') }}"><i class="ik ik-arrow-left"></i> Back</a>
                 </div>
               </div>
               <div class="card-body">
@@ -57,7 +57,7 @@
                       @foreach ($detail as $key)
                         <tr>
                           <td>{{ $key->nomor_akun }}</td>
-                          <td>{{ $key->nama }}</td>
+                          <td>{{ $key->nama_akun }}</td>
                           <td>Rp {{ number_format($key->debet, 0, " ", ".")}}</td>
                           <td>Rp {{ number_format($key->kredit, 0, " ", ".")}}</td>
                         </tr>
