@@ -20,6 +20,6 @@ class AddCompanyController extends Controller
 		{
 			DataPerusahaan::create($request->all());
 
-			return redirect('dasbor');
+			return redirect('others.profile.index');
 		}
 }

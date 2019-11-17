@@ -75,23 +75,53 @@
                   <div class="tab-content" id="pills-tabContent">
                       <div class="tab-pane fade show active" id="last-month" role="tabpanel" aria-labelledby="pills-company-tab">
                           <div class="card-body">
-                            @foreach ($perusahaanData as $key)
-                              <form class="form-horizontal">
-                                  <div class="form-group">
-                                      <label for="example-name">Name</label>
-                                      <input type="text" class="form-control" name="example-name" id="example-name">
-                                  </div>
-                                  <div class="form-group">
-                                      <label for="example-email">Email</label>
-                                      <input type="email" class="form-control" name="example-email" id="example-email">
-                                  </div>
-                                  <div class="form-group">
-                                      <label for="example-password">Password</label>
-                                      <input type="password" class="form-control" name="example-password" id="example-password">
-                                  </div>
-                                  <button class="btn btn-success" type="submit">Update Profile</button>
+                            @if ( collect($perusahaanData)->isEmpty() )
+                              <p>Antum Belum Punya Data Perusahaan</p>
+                              <button type="button" class="btn btn-outline-primary btn-rounded" data-toggle="modal" data-target="#createModal">Add Company</button>
+                            @else
+                              @if (count($errors) > 0)
+                                <div class="alert alert-dismissible fade show" role="alert">
+                                  <ul class="alert-danger list-group">
+                                    @foreach ($errors->all() as $error)
+                                      <li class="list-group-item">{{ $error }}</li>
+                                    @endforeach
+                                  </ul>
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <i class="ik ik-x"></i>
+                                  </button>
+                                </div>
+                              @endif
+                              @if (session('Success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                  {{ session('Success') }}
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <i class="ik ik-x"></i>
+                                  </button>
+                                </div>
+                              @endif
+                              @foreach ($perusahaanData as $data)
+                              <form class="form-horizontal" action="{{route('profile.update', $data->id)}}" method="post">
+                                @csrf @method('PUT')
+                                <div class="form-group">
+                                  <label for="example-name">Nama</label>
+                                  <input type="text" class="form-control" name="name" id="example-name" value="{{$data->name}}">
+                                </div>
+                                <div class="form-group">
+                                  <label for="example-alamat">Alamat</label>
+                                  <input type="text" class="form-control" name="alamat" id="example-alamat" value="{{$data->alamat}}">
+                                </div>
+                                <div class="form-group">
+                                  <label for="example-telepon">Telepon</label>
+                                  <input type="text" class="form-control" name="telepon" id="example-telepon" value="{{$data->telepon}}">
+                                </div>
+                                <div class="form-group">
+                                  <label for="exampleTextarea1">Deskripsi</label>
+                                  <textarea class="form-control" id="exampleTextarea1" name="discription" rows="2">{{$data->discription}}</textarea>
+                                </div>
+                                <button class="btn btn-success" type="submit">Update Company Data</button>
                               </form>
                             @endforeach
+                            @endif
                           </div>
                       </div>
                       <div class="tab-pane fade" id="previous-month" role="tabpanel" aria-labelledby="pills-user-tab">
@@ -129,5 +159,7 @@
         </div>
     </div>
   </div>
+
+  @include('others.profile.create')
 
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\User;
 use App\Model\DataPerusahaan;
+use App\Http\Requests\DataPerusahaanRequest;
 
 class ProfileController extends Controller
 {
@@ -21,6 +22,7 @@ class ProfileController extends Controller
     {
         $userData = User::all();
         $perusahaanData = DataPerusahaan::all();
+        // dd($perusahaanData);
 
         return view('others.profile.index', compact('userData', 'perusahaanData'));
     }
@@ -41,9 +43,11 @@ class ProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DataPerusahaanRequest $request)
     {
-        //
+      DataPerusahaan::create($request->all());
+
+      return redirect('profile')->with('Success', 'Data anda telah berhasil di tambah !');
     }
 
     /**
@@ -75,9 +79,11 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DataPerusahaanRequest $request, $id)
     {
-        //
+      DataPerusahaan::find($id)->update($request->all());
+
+      return redirect('profile')->with('Success', 'Data anda telah berhasil di edit !');
     }
 
     /**
