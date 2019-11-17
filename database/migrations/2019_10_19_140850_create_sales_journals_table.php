@@ -17,7 +17,7 @@ class CreateSalesJournalsTable extends Migration
 
             $table->Increments('id');
             $table->date('tanggal');
-            $table->string('kode');
+            $table->string('kode')->unique();
             $table->unsignedInteger('customers_id');
             $table->text('description')->nullable();
             $table->timestamps();

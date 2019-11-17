@@ -45,11 +45,11 @@ class CashBankController extends Controller
     {
         if (($request->status) == 0) {
 
-			//insert data pettycash
+			//insert data cashbank
             $dataCashInBank          = $request->only('id','tanggal', 'kode', 'penerima_diterima', 'description','status');
             $cashinbank              = Cashinbank::create($dataCashInBank);
 
-            //insert data pettycash detail
+            //insert data cashbank detail
             $detailcashinbank                 = $request->only('nomor_akun', 'nama_akun','nomor_akun2', 'nama_akun2', 'debet', 'jumlah', 'index', 'total');
             $countKasBank = count($detailcashinbank['nomor_akun']);
             $countKasBank2 = count($detailcashinbank['total']);
@@ -75,11 +75,11 @@ class CashBankController extends Controller
 
         } else {
 
-            //insert data pettycash
+            //insert data cashbank
             $dataCashInBank          = $request->only('id','tanggal', 'kode', 'penerima_diterima', 'description','status');
             $cashinbank              = Cashinbank::create($dataCashInBank);
 
-            //insert data pettycash detail
+            //insert data cashbank detail
             $detailcashinbank                 = $request->only('nomor_akun', 'nama_akun','nomor_akun2', 'nama_akun2', 'debet', 'jumlah', 'index', 'total');
             $countKasBank = count($detailcashinbank['nomor_akun']);
             $countKasBank2 = count($detailcashinbank['total']);

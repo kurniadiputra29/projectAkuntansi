@@ -16,7 +16,7 @@ class CreatepurchaseJournalsTable extends Migration
         Schema::create('purchase_journals', function (Blueprint $table) {
             $table->Increments('id');
             $table->date('tanggal');
-            $table->string('kode');
+            $table->string('kode')->unique();
             $table->unsignedInteger('suppliers_id');
             $table->text('description')->nullable();
             $table->timestamps();
