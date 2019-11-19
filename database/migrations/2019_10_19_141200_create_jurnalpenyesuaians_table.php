@@ -17,10 +17,7 @@ class CreateJurnalpenyesuaiansTable extends Migration
             $table->Increments('id');
             $table->date('tanggal');
             $table->string('kode')->unique();
-            $table->text('description');
-            $table->string('nomor_akun');
-            $table->integer('debet')->nullable();
-            $table->integer('kredit')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

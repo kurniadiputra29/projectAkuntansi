@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\Account;
+use App\Model\Jurnalpenyesuaian;
+use App\Model\jurnalpenyesuaiandetail;
 
 class JpController extends Controller
 {
@@ -17,7 +20,8 @@ class JpController extends Controller
      */
     public function index()
     {
-        return view('pages.jp.index');
+        $data = Jurnalpenyesuaian::orderBy('created_at', 'desc')->get();
+        return view('pages.jp.index', compact('data'));
     }
 
     /**
@@ -27,7 +31,8 @@ class JpController extends Controller
      */
     public function create()
     {
-        //
+        $akun = Account::all();
+        return view('pages.jp.create', compact('akun'));
     }
 
     /**
@@ -38,7 +43,35 @@ class JpController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $messages = [
+            'required' => ':attribute wajib diisi !!!',
+            'unique' => ':attribute harus diisi dengan syarat unique !!!',
+        ];
+        $this->validate($request,[
+            'tanggal' => 'required',
+            'description' => 'required',
+            'kode' => 'unique:jurnalpenyesuaians,kode|required',
+        ],$messages);
+
+        //insert data cashbank
+        $dataJurnalpenyesuaian          = $request->only('id','tanggal', 'kode', 'description');
+        $Jurnalpenyesuaian              = Jurnalpenyesuaian::create($dataJurnalpenyesuaian);
+
+        //insert data cashbank detail
+        $detailJurnalpenyesuaian                 = $request->only('nomor_akun', 'nama_akun', 'debet', 'kredit');
+        $countKasBank = count($detailJurnalpenyesuaian['nomor_akun']);
+
+        for ($a=0; $a < $countKasBank; $a++) { 
+            $detail                     = new jurnalpenyesuaiandetail();
+            $detail->jurnalpenyesuaians_id      = $Jurnalpenyesuaian->id;
+            $detail->nomor_akun         = $detailJurnalpenyesuaian['nomor_akun'][$a];
+            $detail->nama_akun               = $detailJurnalpenyesuaian['nama_akun'][$a];
+            $detail->debet              = $detailJurnalpenyesuaian['debet'][$a];
+            $detail->kredit             = $detailJurnalpenyesuaian['kredit'][$a];
+            $detail->save();
+        }
+
+        return redirect('/jp')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
     /**
@@ -49,7 +82,8 @@ class JpController extends Controller
      */
     public function show($id)
     {
-        //
+        $detail = jurnalpenyesuaiandetail::where('jurnalpenyesuaians_id', $id)->get();
+        return view('pages.jp.show', compact('detail'));
     }
 
     /**
@@ -83,6 +117,7 @@ class JpController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Jurnalpenyesuaian::find($id)->delete();
+        return redirect('/jp')->with('Success', 'Data anda telah berhasil di Hapus !');
     }
 }

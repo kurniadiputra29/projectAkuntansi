@@ -38,7 +38,15 @@
           <button type="button" id="sembunyikan" class="btn btn-success btn-rounded "><i class="ik ik-plus-circle"></i> Pemasukan Kas</button>
           <button type="button" id="muncul" class="btn btn-warning btn-rounded"><i class="ik ik-log-out"></i> Pengeluaran Kas</button>
         </div>
-
+        @if (count($errors) > 0)
+          <div class="alert alert-danger">
+            <ul>
+              @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+          @endif
         <form class="forms-sample" id="a" action="{{route('cashbank.store')}}" method="post">
           @csrf
           <div class="card">
