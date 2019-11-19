@@ -14,6 +14,6 @@ class PurchaseJournal extends Model
 
     public function data_suppliers()
     {
-        return $this->belongsTo(DataSupplier::class);
+        return $this->belongsTo(DataSupplier::class, "suppliers_id");
     }
 }

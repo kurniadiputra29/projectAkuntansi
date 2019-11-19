@@ -16,4 +16,9 @@ class DataCustomer extends Model
     {
       return $this->hasMany(SaldoPiutang::class);
     }
+
+    public function sales_journal()
+    {
+      return $this->hasMany(SalesJournal::class);
+    }
 }

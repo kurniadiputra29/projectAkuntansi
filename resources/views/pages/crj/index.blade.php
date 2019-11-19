@@ -78,7 +78,7 @@
                         <tr>
                           <td>{{ $key->tanggal }}</td>
                           <td>{{ $key->kode }}</td>
-                          <td>{{ $key->customers_id }}</td>
+                          <td>{{ $key->data_customers->nama }}</td>
                           <td>{{ $key->description }}</td>
                           <td class="text-right">
                             <div class="dropdown">

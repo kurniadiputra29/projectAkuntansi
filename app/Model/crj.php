@@ -11,9 +11,8 @@ class crj extends Model
     protected $fillable = [
       'id','tanggal','kode','customers_id', 'description', 'created_at','update_at'
     ];
-
     public function data_customers()
     {
-        return $this->belongsTo(DataCustomer::class);
+        return $this->belongsTo(DataCustomer::class, "customers_id");
     }
 }
