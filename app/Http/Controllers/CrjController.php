@@ -47,6 +47,17 @@ class CrjController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'required' => ':attribute wajib diisi !!!',
+            'unique' => ':attribute harus diisi dengan syarat unique !!!',
+        ];
+        $this->validate($request,[
+            'tanggal' => 'required',
+            'customers_id' => 'required',
+            'description' => 'required',
+            'kode' => 'unique:crjs,kode|required',
+        ],$messages);
+
         //insert data crj
         $dataCRJ          = $request->only('id','tanggal', 'kode', 'customers_id', 'description');
         $crj              = crj::create($dataCRJ);
@@ -138,6 +149,6 @@ class CrjController extends Controller
     public function destroy($id)
     {
         crj::find($id)->delete();
-        return redirect('/crj');
+        return redirect('/crj')->with('Success', 'Data anda telah berhasil di Hapus !');
     }
 }

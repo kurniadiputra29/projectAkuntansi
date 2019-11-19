@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\cpj;
+use App\Model\cpjdetail;
 use App\Model\Account;
 use App\Model\DataSupplier;
 use App\Model\Item;
@@ -21,7 +22,8 @@ class CpjController extends Controller
      */
     public function index()
     {
-        return view('pages.cpj.index');
+        $data = cpj::orderBy('created_at', 'desc')->get();
+        return view('pages.cpj.index', compact('data'));
     }
 
     /**
@@ -45,7 +47,62 @@ class CpjController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $messages = [
+            'required' => ':attribute wajib diisi !!!',
+            'unique' => ':attribute harus diisi dengan syarat unique !!!',
+        ];
+        $this->validate($request,[
+            'tanggal' => 'required',
+            'suppliers_id' => 'required',
+            'description' => 'required',
+            'kode' => 'unique:cpjs,kode|required',
+        ],$messages);
+
+        //insert data cpj
+        $dataCPJ          = $request->only('id','tanggal', 'kode', 'suppliers_id', 'description');
+        $cpj              = cpj::create($dataCPJ);
+
+        //insert data cpj detail
+        $detailcrj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+        $countKasBank1 = count($detailcrj['total']);
+        $countKasBank2 = count($detailcrj['subtotal']);
+        $countKasBank3 = count($detailcrj['PPN']);
+        $countKasBank4 = count($detailcrj['jasa_pengiriman']);
+
+        for ($a=0; $a < $countKasBank1; $a++) { 
+            $detail                     = new cpjdetail();
+            $detail->cpj_id             = $cpj->id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun2'][$a];
+            $detail->nama_akun          = $detailcrj['nama_akun2'][$a];
+            $detail->kredit              = $detailcrj['total'][$a];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank2; $i++) { 
+            $detail                     = new cpjdetail();
+            $detail->cpj_id             = $cpj->id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_sales'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_sales'][$i];
+            $detail->debet             = $detailcrj['subtotal'][$i];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank3; $i++) { 
+            $detail                     = new cpjdetail();
+            $detail->cpj_id             = $cpj->id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_ppn'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_ppn'][$i];
+            $detail->debet             = $detailcrj['PPN'][$i];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank4; $i++) { 
+            $detail                     = new cpjdetail();
+            $detail->cpj_id             = $cpj->id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_jasa'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_jasa'][$i];
+            $detail->debet             = $detailcrj['jasa_pengiriman'][$i];
+            $detail->save();
+        }
+
+        return redirect('/cpj')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
     /**
@@ -56,7 +113,8 @@ class CpjController extends Controller
      */
     public function show($id)
     {
-        //
+        $detail = cpjdetail::where('cpj_id', $id)->get();
+        return view('pages.cpj.show', compact('detail'));
     }
 
     /**
@@ -90,6 +148,7 @@ class CpjController extends Controller
      */
     public function destroy($id)
     {
-        //
+        cpj::find($id)->delete();
+        return redirect('/cpj')->with('Success', 'Data anda telah berhasil di Hapus !');
     }
 }

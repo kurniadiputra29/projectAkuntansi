@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\SaldoJournal;
 use App\Model\Account;
 use App\Model\DataCustomer;
 use App\Model\Item;
+use App\Model\SalesJournal;
+use App\Model\salesjournaldetail;
 
 class SalesJournalController extends Controller
 {
@@ -21,7 +22,9 @@ class SalesJournalController extends Controller
      */
     public function index()
     {
-        return view('pages.sales_journal.index');
+        $data = SalesJournal::orderBy('created_at', 'desc')->get();
+        $DataCustomer = DataCustomer::all();
+        return view('pages.sales_journal.index', compact('data', 'DataCustomer'));
     }
 
     /**
@@ -45,7 +48,62 @@ class SalesJournalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $messages = [
+            'required' => ':attribute wajib diisi !!!',
+            'unique' => ':attribute harus diisi dengan syarat unique !!!',
+        ];
+        $this->validate($request,[
+            'tanggal' => 'required',
+            'customers_id' => 'required',
+            'description' => 'required',
+            'kode' => 'unique:sales_journals,kode|required',
+        ],$messages);
+
+        //insert data SalesJournal
+        $dataSalesJournal          = $request->only('id','tanggal', 'kode', 'customers_id', 'description');
+        $salesjournal              = SalesJournal::create($dataSalesJournal);
+
+        //insert data SalesJournal detail
+        $detailsalesjournal                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+        $countKasBank1 = count($detailsalesjournal['total']);
+        $countKasBank2 = count($detailsalesjournal['subtotal']);
+        $countKasBank3 = count($detailsalesjournal['PPN']);
+        $countKasBank4 = count($detailsalesjournal['jasa_pengiriman']);
+
+        for ($a=0; $a < $countKasBank1; $a++) { 
+            $detail                     = new salesjournaldetail();
+            $detail->salesjournal_id             = $salesjournal->id;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun2'][$a];
+            $detail->nama_akun          = $detailsalesjournal['nama_akun2'][$a];
+            $detail->debet              = $detailsalesjournal['total'][$a];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank2; $i++) { 
+            $detail                     = new salesjournaldetail();
+            $detail->salesjournal_id             = $salesjournal->id;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_sales'][$i];
+            $detail->nama_akun          = $detailsalesjournal['nama_akun2_sales'][$i];
+            $detail->kredit             = $detailsalesjournal['subtotal'][$i];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank3; $i++) { 
+            $detail                     = new salesjournaldetail();
+            $detail->salesjournal_id             = $salesjournal->id;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_ppn'][$i];
+            $detail->nama_akun          = $detailsalesjournal['nama_akun2_ppn'][$i];
+            $detail->kredit             = $detailsalesjournal['PPN'][$i];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank4; $i++) { 
+            $detail                     = new salesjournaldetail();
+            $detail->salesjournal_id             = $salesjournal->id;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_jasa'][$i];
+            $detail->nama_akun          = $detailsalesjournal['nama_akun2_jasa'][$i];
+            $detail->kredit             = $detailsalesjournal['jasa_pengiriman'][$i];
+            $detail->save();
+        }
+
+        return redirect('/sales_journal')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
     /**
@@ -56,7 +114,8 @@ class SalesJournalController extends Controller
      */
     public function show($id)
     {
-        //
+        $detail = salesjournaldetail::where('salesjournal_id', $id)->get();
+        return view('pages.sales_journal.show', compact('detail'));
     }
 
     /**
@@ -90,6 +149,7 @@ class SalesJournalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        SalesJournal::find($id)->delete();
+        return redirect('/sales_journal')->with('Success', 'Data anda telah berhasil di Hapus !');
     }
 }

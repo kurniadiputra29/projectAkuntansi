@@ -151,6 +151,6 @@ class CashBankController extends Controller
     public function destroy($id)
     {
         Cashinbank::find($id)->delete();
-        return redirect('/cashbank');
+        return redirect('/cashbank')->with('Success', 'Data anda telah berhasil di Hapus !');
     }
 }

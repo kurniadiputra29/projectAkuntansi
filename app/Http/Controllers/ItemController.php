@@ -125,6 +125,6 @@ class ItemController extends Controller
     public function destroy($id)
     {
         Item::find($id)->delete();
-        return redirect('item');
+        return redirect('item')->with('Success', 'Data anda telah berhasil di Hapus !');
     }
 }
