@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\SaldoAwal;
+use App\Model\Account;
+use Illuminate\Database\Eloquent\Collection;
 
 use Illuminate\Http\Request;
 
@@ -17,7 +20,40 @@ class DasborController extends Controller
      */
     public function index()
     {
-        return view('pages.dasbor.index');
+      $account = Account::all();
+      $saldo_awal = SaldoAwal::orderBy('account_id', 'asc')->get();
+      // untuk coba chart
+      $kredit = $saldo_awal->sum('kredit');
+      $debet = $saldo_awal->sum('debet');
+
+      $a1 = SaldoAwal::get('account_id');
+      $a2 = SaldoAwal::get('debet');
+
+      $count = SaldoAwal::get('id')->count();
+
+      foreach ($saldo_awal as $key) {
+        // code...
+        $ai = $key->account_id;
+        $db = $key->debet;
+      }
+
+      // dd($ai);
+
+        return view('pages.dasbor.index', compact('saldo_awal','kredit','debet','ai','db','account'));
+    }
+
+    public function cobaChart()
+    {
+      $saldo_awal = SaldoAwal::all();
+
+      foreach ($saldo_awal as $key) {
+        $k = $key->sum('kredit');
+      }
+      foreach ($saldo_awal as $key) {
+        $d = $key->sum('debet');
+      }
+      $coba = [$k, $d];
+      return response()->json($coba);
     }
 
     /**

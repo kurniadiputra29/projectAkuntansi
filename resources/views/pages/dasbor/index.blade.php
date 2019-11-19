@@ -96,6 +96,32 @@
         </div>
         <!-- product profit end -->
 
+        <div class="col-xl-12 col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h3>Coba Bikin Chart</h3>
+            </div>
+            <div class="card-block">
+              <div class="charet">
+                <canvas id="tryChart" width="400" height="100" aria-label="Hello ARIA World" role="img"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-12 col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h3>Coba Bikin Chart 2</h3>
+            </div>
+            <div class="card-block">
+              <div class="charet">
+                <canvas id="tryChart2" height="150" aria-label="Hello ARIA World" role="img"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- product and new customar start -->
         <div class="col-xl-4 col-md-6">
           <div class="card new-cust-card">
@@ -649,5 +675,87 @@
       </div>
     </div>
   </div>
+
+@endsection
+
+@section('chart-script')
+
+  <script>
+      var ctx = document.getElementById("tryChart").getContext('2d');
+      var tryChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ["Kredit", "Debet"],
+          datasets: [{
+            label: '# Rupiah',
+            data: [{{$kredit}},{{$debet}}],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
+        }
+      });
+  </script>
+  <script>
+      var kvd = document.getElementById('tryChart2').getContext('2d');
+      var tryChart2 = new Chart(kvd, {
+        type: 'line',
+        data: {
+          labels: [
+            @foreach ($saldo_awal as $key)
+              "{{$key->account->nama}}",
+            @endforeach
+          ],
+          datasets: [{
+            label: 'Debet Dataset',
+            data: [
+              @foreach ($saldo_awal as $key)
+                {{$key->debet}},
+              @endforeach
+            ],
+            order: 1,
+            borderWidth: 1,
+            borderColor: '#ce5456',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)'
+          }, {
+            label: 'Kredit Dataset',
+            data: [
+              @foreach ($saldo_awal as $key)
+                {{$key->kredit}},
+              @endforeach
+            ],
+            type: 'line',
+            order: 2,
+            borderWidth: 1,
+            borderColor: '#adad23',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)'
+          }],
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
+        }
+      });
+  </script>
 
 @endsection
