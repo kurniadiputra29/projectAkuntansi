@@ -34,6 +34,7 @@ Route::get('/jijal', function () {
     return view('pages.dasbor.index');
 });
 Route::resource('dasbor', 'DasborController');
+Route::get('/dasbor/cobaChart', 'DasborController@cobaChart')->name('dasbor.cobaChart');
 Route::resource('akun', 'AkunController');
 Route::resource('cpj', 'CpjController');
 Route::resource('crj', 'CrjController');

@@ -52,7 +52,10 @@
 {{-- vue script --}}
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 {{-- end vue script   --}}
-</script>
+
+{{-- chartjs script --}}
+<script src="/Chart.js"></script>
+{{-- end chartjs script --}}
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>

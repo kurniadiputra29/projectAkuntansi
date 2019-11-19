@@ -48,5 +48,7 @@
         @include('layouts.script')
 
         @yield('vue')
+
+        @yield('chart-script')
     </body>
 </html>
