@@ -63,3 +63,9 @@ Route::delete('cashbank/{id}', 'CashBankController@destroy')->name('cashbank.des
 Route::resource('profile', 'ProfileController');
 
 Route::resource('users', 'UserController');
+
+// index Laporan
+Route::get('/print/neraca', 'PrintController@neraca')->name('laporan.neraca');
+
+//for print
+Route::get('/print/print_neraca', 'PrintController@print_neraca')->name('print.neraca');

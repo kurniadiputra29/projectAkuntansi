@@ -63,7 +63,7 @@
                           <p>
                             Menampilan apa yang anda miliki (aset), apa yang anda hutang (liabilitas), dan apa yang anda sudah investasikan pada perusahaan anda (ekuitas).
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="http://localhost/ProjectAkuntan/views/reports/neraca">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.neraca')}}">
                             Lihat Laporan
                           </a>
                         </div>
