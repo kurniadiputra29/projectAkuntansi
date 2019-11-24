@@ -17,4 +17,9 @@ class PrintController extends Controller
       $pdf = PDF::loadview('reports.neraca.print');
       return $pdf->stream();
     }
+
+    public function neraca_saldo()
+    {
+      return view('reports.neraca_saldo.index');
+    }
 }

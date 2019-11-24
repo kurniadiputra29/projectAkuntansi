@@ -56,7 +56,7 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.neraca')}}">
                               Balance Sheet / Neraca
                             </a>
                           </h3>
@@ -71,14 +71,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.neraca_saldo')}}">
                               Trial Balance / Neraca Saldo
                             </a>
                           </h3>
                           <p>
                             Menampilan apa yang anda miliki (aset), apa yang anda hutang (liabilitas), dan apa yang anda sudah investasikan pada perusahaan anda (ekuitas).
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.neraca_saldo')}}">
                             Lihat Laporan
                           </a>
                         </div>

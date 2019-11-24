@@ -66,6 +66,8 @@ Route::resource('users', 'UserController');
 
 // index Laporan
 Route::get('/print/neraca', 'PrintController@neraca')->name('laporan.neraca');
+Route::get('/print/neraca_saldo', 'PrintController@neraca_saldo')->name('laporan.neraca_saldo');
 
 //for print
 Route::get('/print/print_neraca', 'PrintController@print_neraca')->name('print.neraca');
+Route::get('/print/print_neraca_saldo', 'PrintController@print_neraca_saldo')->name('print.neraca_saldo');
