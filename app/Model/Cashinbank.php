@@ -11,4 +11,8 @@ class Cashinbank extends Model
     protected $fillable = [
       'id','tanggal','kode','penerima_diterima', 'description','status', 'created_at','update_at'
     ];
+    public function Cashinbankdetail()
+    {
+      return $this->hasMany(Cashinbankdetail::class);
+    }
 }

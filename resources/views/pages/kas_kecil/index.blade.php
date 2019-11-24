@@ -84,16 +84,16 @@
                             <div class="dropdown">
                                 <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="aksiDropdown">
-                                    <a href="{{route('kas_kecil.edit', $key->id)}}" class="dropdown-item"><i class="ik ik-edit-2"> Edit</i></a>
+                                    <a href="{{route('kas_kecil.edit', $key->id)}}" class="dropdown-item"><i class="ik ik-edit-2"> </i>Edit</a>
                                     <form method="get" action="{{ route('kas_kecil.show', $key->id) }}">
                                       @csrf
                                       @method('GET')
-                                      <button class="dropdown-item" type="submit"><i class="ik ik-eye"></i> Detail</button>
+                                      <button class="dropdown-item" type="submit"><i class="ik ik-eye"></i> Journal</button>
                                     </form>
                                     <form method="post" action="{{ route('kas_kecil.destroy', $key->id) }}">
                                       @csrf
                                       @method('DELETE')
-                                      <button class="dropdown-item" type="submit"><i class="ik ik-trash-2"></i> Delete</button>
+                                      <button class="dropdown-item" type="submit" onclick='javascript:return confirm("Apakah anda yakin ingin menghapus data ini?")'><i class="ik ik-trash-2"></i> Delete</button>
                                     </form>
                                 </div>
                             </div>

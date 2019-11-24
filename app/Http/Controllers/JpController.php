@@ -94,7 +94,10 @@ class JpController extends Controller
      */
     public function edit($id)
     {
-        //
+        $akun = Account::all();
+        $cashbanks     = Jurnalpenyesuaian::find($id);
+        $details        = jurnalpenyesuaiandetail::where('jurnalpenyesuaians_id', $id)->get();
+        return view('pages.jp.edit', compact('akun', 'cashbanks', 'details'));
     }
 
     /**
@@ -106,7 +109,38 @@ class JpController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $messages = [
+            'required' => ':attribute wajib diisi !!!',
+            'unique' => ':attribute harus diisi dengan syarat unique !!!',
+        ];
+        $this->validate($request,[
+            'tanggal' => 'required',
+            'description' => 'required',
+            'kode' => 'unique:jurnalpenyesuaians,kode,'.$id,
+        ],$messages);
+
+        //insert data cashbank
+        $dataJurnalpenyesuaian          = $request->only('id','tanggal', 'kode', 'description');
+        $Jurnalpenyesuaian              = Jurnalpenyesuaian::find($id)->update($dataJurnalpenyesuaian);
+
+
+        //insert data cashbank detail
+        $detailJurnalpenyesuaian        = $request->only('nomor_akun', 'nama_akun', 'debet', 'kredit');
+        $countKasBank                   = count($detailJurnalpenyesuaian['nomor_akun']);
+
+        jurnalpenyesuaiandetail::where('jurnalpenyesuaians_id', $id)->delete();
+
+        for ($a=0; $a < $countKasBank; $a++) { 
+            $detail                     = new jurnalpenyesuaiandetail();
+            $detail->jurnalpenyesuaians_id      = $id;
+            $detail->nomor_akun         = $detailJurnalpenyesuaian['nomor_akun'][$a];
+            $detail->nama_akun               = $detailJurnalpenyesuaian['nama_akun'][$a];
+            $detail->debet              = $detailJurnalpenyesuaian['debet'][$a];
+            $detail->kredit             = $detailJurnalpenyesuaian['kredit'][$a];
+            $detail->save();
+        }
+
+        return redirect('/jp')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
     /**

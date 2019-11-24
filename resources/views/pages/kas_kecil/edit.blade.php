@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Edit Kas Kecil')
+@section('title', 'AccountMin - Create Kas Kecil')
 
 @section('content')
 
@@ -12,7 +12,7 @@
             <div class="page-header-title">
               <i class="ik ik-menu bg-blue"></i>
               <div class="d-inline">
-                <h5>Edit Kas Kecil</h5>
+                <h5>Create Kas Kecil</h5>
                 <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
               </div>
             </div>
@@ -24,7 +24,7 @@
                   <a href="/dasbor"><i class="ik ik-home"></i></a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Pettycash</li>
-                <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                <li class="breadcrumb-item active" aria-current="page">Create</li>
               </ol>
             </nav>
           </div>
@@ -33,8 +33,18 @@
 
       <div class="row" id="app">
         <div class="col-md-12">
-          <form class="forms-sample" id="a" action="{{route('kas_kecil.update', $kas_kecil->id)}}" method="post">
-            @csrf @method('PUT')
+        	@if (count($errors) > 0)
+			<div class="alert alert-danger">
+				<ul>
+					@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			</div>
+			@endif
+          <form class="forms-sample" id="a" action="{{route('kas_kecil.update', $pettycashs->id)}}" method="post">
+            @csrf
+			@method('PUT')
             <div class="card">
               <div class="card-header d-flex justify-content-between flex-row bg-primary">
                 <div class="left-container">
@@ -45,87 +55,89 @@
                 </div>
               </div>
               <div class="card-body">
+
+              	<div
+                v-for="(pettycash, index) in pettycashs2"
+                :key="index"
+                >
                 <div class="row input-group-primary">
-                  @foreach($kredit as $dadit)
+                	
                   <div class="col-md-5">
-                    <div class="form-group">
-                      <label for="setor_ke">Di Bayar Dari</label>
-                      <select class="form-control" id="setor_ke" name="akun_id">
-                        @foreach ($akun as $key)
-                        <option
-                          value="{{$key->id}}"
-                          {{ $key->nomor == $dadit->nomor_akun ? 'selected' : '' }}
-                        >
-                          {{$key->nomor}} - {{$key->nama}}
-                        </option>
-                        @endforeach
-                      </select>
-                    </div>
+                  <div class="form-group">
+                    <label for="id_akun">Akun</label>
+                    <select class="form-control" id="id_akun" v-model="pettycash.id_akun2">
+                      <option class="col-sm-10" value=""> ~~ Pilih Akun ~~ </option>
+                      @foreach($kredits as $kredit)
+                      @foreach ($akun as $key)
+                        <option value="{{$key->nomor}}" {{$kredit->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
+                      @endforeach
+                      @endforeach
+                    </select>
                   </div>
-                  @endforeach
+                  
                 </div>
+                <input type="hidden" name="nomor_akun2[]"
+                :value="nomor_akun2(pettycash.id_akun2, index)"
+                >
+
+                <input type="hidden" name="nama_akun2[]"
+                :value="nama_akun2(pettycash.id_akun2, index)"
+                >
+              </div>
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="yang_membayar">Diterima Dari</label>
-                      <input class="form-control" type="text" id="yang_membayar" name="penerima" value="{{$kas_kecil->penerima}}">
+                      <label for="yang_membayar">Penerima</label>
+                      <input class="form-control" type="text" id="yang_membayar" name="penerima" value="{{$pettycashs->penerima}}" required="">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="tanggal_transaksi">Tanggal Transaksi</label>
-                      <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{$kas_kecil->tanggal}}">
+                      <input class="form-control" name="tanggal" type="date" value="{{$pettycashs->tanggal}}" id="tanggal_transaksi">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="no_transaksi">Nomor Transaksi</label>
-                      <input class="form-control" name="kode" type="text" id="no_transaksi" value="{{$kas_kecil->kode}}">
+                      <input class="form-control" name="kode" type="text" value="{{$pettycashs->kode}}" id="no_transaksi">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="description">Deskripsi</label>
-                      <textarea class="form-control" name="description" type="text" id="description" rows="3">{{$kas_kecil->description}}</textarea>
+                      <textarea class="form-control" name="description" type="text" id="description"  rows="3">{{$pettycashs->description}}</textarea>
                     </div>
                   </div>
                 </div>
-
-              <div
-              class="row"
-              v-for="(pettycash, index) in pettycashs"
-              :key="index"
-              >
-              @foreach($debet as $data)
+                <div
+                class="row"
+                v-for="(pettycash, index) in pettycashs"
+                :key="index"
+                >
                 <div class="col-md-5">
                   <div class="form-group">
                     <label for="id_akun">Akun</label>
                     <select class="form-control" id="id_akun" name="id_akun[]" v-model="pettycash.id_akun">
                       <option class="col-sm-10" value=""> ~~ Pilih Akun ~~ </option>
                       @foreach ($akun as $key)
-                        <option
-                          value="{{$key->id}}"
-                          {{ $key->nomor == $data->nomor_akun ? 'selected' : '' }}
-                        >
-                          {{$key->nomor}} - {{$key->nama}}
-                        </option>
+                        <option value="{{$key->nomor}}">{{$key->nomor}} - {{$key->nama}}</option>
                       @endforeach
                     </select>
                   </div>
                 </div>
-                  <input type="hidden" name="nomor_akun[]"
-                    :value="nomor_akun(pettycash.id_akun, index)"
-                  >
-                  <input type="hidden" name="nama_akun[]"
-                    :value="nama_akun(pettycash.id_akun, index)"
-                  >
+                <input type="hidden" name="nomor_akun[]"
+                :value="nomor_akun(pettycash.id_akun, index)"
+                >
+                <input type="hidden" name="nama_akun[]"
+                :value="nama_akun(pettycash.id_akun, index)"
+                >
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="jumlah">Jumlah</label>
-                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" v-model="pettycash.jumlah" value="{{$data->debet}}">
+                    <input class="form-control uang" type="number" id="jumlah" name="jumlah[]" v-model="pettycash.jumlah">
                   </div>
                 </div>
-              @endforeach
                 <div class="col-md-1">
                   <div class="form-group">
                     <label for="jumlah">Delete</label>
@@ -146,14 +158,14 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>Total : Rp</label>
-                    <input class="form-control" type="number" name="total" :value="total" readonly>
+                    <input class="form-control" type="number" name="total[]" :value="total" readonly>
                   </div>
                 </div>
               </div>
 
               <div class="forms-sample" style="margin-bottom: 10px; margin-top: 10px; justify-content: space-between; display: flex;">
                 <a class="btn btn-secondary btn-rounded" href="/kas_kecil"><i class="ik ik-arrow-left"></i> Back</a>
-                <button class="btn btn-success btn-rounded" type="submit"><i class="ik ik-edit-2"></i> Edit</button>
+                <button class="btn btn-success btn-rounded" type="submit"><i class="ik ik-plus-circle"></i> Create</button>
               </div>
             </div>
           </div>
@@ -172,7 +184,10 @@
     data: {
       pettycashs: [
         {id_akun: 0, nomor_akun:"", nama_akun:"", description:"", jumlah: 0},
-      ]
+      ],
+      pettycashs2: [
+	    	{id_akun2: "{{$kredit->nomor_akun}}", nomor_akun:"", nama_akun:"", description:"", jumlah: 0},
+	    ],
     },
     methods: {
       add() {
@@ -193,14 +208,42 @@
         var nama_akun = this.nama_akuns[id_akun];
         this.pettycashs[index].nama_akun = nama_akun;
         return nama_akun;
-      }
+      },
+
+      nomor_akun2(id_akun2, index) {
+        var nomor_akun2 = this.nomor_akunss[id_akun2];
+        this.pettycashs2[index].nomor_akun2 = nomor_akun2;
+        return nomor_akun2;
+      },
+      nama_akun2(id_akun2, index) {
+        var nama_akun2 = this.nama_akunss[id_akun2];
+        this.pettycashs2[index].nama_akun2 = nama_akun2;
+        return nama_akun2;
+      },
     },
     computed: {
+      nomor_akunss() {
+        var akun = [];
+        akun[0] = 0;
+        @foreach($akun as $key)
+          akun[ "{{ $key->nomor }}" ] = "{{ $key->nomor }}"
+        @endforeach
+        return akun;
+      },
+      nama_akunss() {
+        var akun = [];
+        akun[0] = 0;
+        @foreach($akun as $key)
+          akun[ "{{ $key->nomor }}" ] = "{{ $key->nama }}"
+        @endforeach
+        return akun;
+      },
+
       nomor_akuns() {
         var akun = [];
         akun[0] = 0;
         @foreach($akun as $key)
-          akun[ {{ $key->id }} ] = "{{ $key->nomor }}"
+          akun[ "{{ $key->nomor }}" ] = "{{ $key->nomor }}"
         @endforeach
         return akun;
       },
@@ -208,7 +251,7 @@
         var akun = [];
         akun[0] = 0;
         @foreach($akun as $key)
-          akun[ {{ $key->id }} ] = "{{ $key->nama }}"
+          akun[ "{{ $key->nomor }}" ] = "{{ $key->nama }}"
         @endforeach
         return akun;
       },
@@ -219,28 +262,24 @@
         });
         return sum;
       },
-      total2() {
-        return this.pettycashs
-        .map( pettycash => pettycash.jumlah )
-        .reduce( (prev, next) => prev + next );
-      },
     },
-    created() {
-      var pettycashs = [];
-      @foreach($kas_kecil->pettycash_detail as $index => $detail)
-      pettycashs[ {{$index}} ] = {
-        id_akun: {{ $detail->id_akun }},
-        pettycash_id: {{ $detail->pettycash_id }},
-        nama_akun: {{ $detail->nama_akun }},
-        nomor_akun: {{ $detail->nomor_akun }},
-        description: {{ $detail->description }},
-        kredit: {{ $detail->kredit }},
-        debet: {{ $detail->debet }},
-      };
-      @endforeach
-      this.pettycashs = pettycashs;
-    },
+    created(){
+		var pettycashs = [];
+
+		@foreach($pettycashs->pettycash_detail as $index => $detail)
+		pettycashs [{{$index-1}}] = {
+			id_akun: "{{$detail->nomor_akun}}",
+			nomor_akun: "{{$detail->nomor_akun}}",
+			nama_akun: "{{$detail->nama_akun}}",
+			jumlah: "{{$detail->debet}}",
+		};
+		@endforeach
+		this.pettycashs = pettycashs;
+	},	
   });
 </script>
 
 @endsection
+
+
+	

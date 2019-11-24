@@ -16,4 +16,8 @@ class cpj extends Model
     {
         return $this->belongsTo(DataSupplier::class, "suppliers_id");
     }
+    public function cpjdetail()
+    {
+      return $this->hasMany(cpjdetail::class);
+    }
 }
