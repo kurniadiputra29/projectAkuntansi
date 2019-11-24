@@ -34,8 +34,18 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <div class="d-flex justify-content-end py-3">
-            <a type="button" class="btn btn-primary" href="{{route('print.neraca')}}"><i class="ik ik-printer"></i>Print</a>
+          <div class="row py-3">
+            <div class="col-md-6">
+              <form class="forms-sample" action="#" method="post">
+                <label for="filter">Per Tanggal</label>
+                <input type="date" name="tanggal" id="filter">
+                <button class="btn btn-primary" type="submit" name="button">Filter</button>
+              </form>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+              <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
+              <a type="button" class="btn btn-primary" href="{{route('print.neraca')}}"><i class="ik ik-printer"></i>Print</a>
+            </div>
           </div>
           <div class="table-container list-table">
             <div class="table-responsive">
@@ -65,12 +75,12 @@
                   <tr>
                     <td class="report-data data-col-1">
                       <div class="header-price-label">
-                        <a class="text-primary" href="/accounts/17896740?q%5Btransaction_date_gteq%5D=&amp;q%5Btransaction_date_lteq%5D=14%2F10%2F2019&amp;tag_ids=&amp;tag_logic=">1-10001</a>
+                        <a class="text-primary" href="#">1-10001</a>
                       </div>
                     </td>
                     <td class="report-data width-100">
                       <div class="header-price-label">
-                        <a class="text-primary" href="/accounts/17896740?q%5Btransaction_date_gteq%5D=&amp;q%5Btransaction_date_lteq%5D=14%2F10%2F2019&amp;tag_ids=&amp;tag_logic=">Kas</a>
+                        <a class="text-primary" href="#">Kas</a>
                       </div>
                     </td>
                     <td class="header-price-label report-data text-right">
@@ -110,7 +120,6 @@
                     <td class="report-subtotal" colspan="2">
                       Total Liabilitas
                     </td>
-                    <!-- / total_liabilities = (@balance_sheet_accounts.current_liability_balance_arr[i] + @balance_sheet_accounts.long_liability_balance_arr[i]) -->
                     <td class="report-subtotal text-right" id="assets-type-1-total-data">
                       0,00
                     </td>
@@ -128,12 +137,12 @@
                   <tr>
                     <td class="report-data data-col-1">
                       <div class="header-price-label">
-                        <a class="text-primary" href="/accounts/17896778?q%5Btransaction_date_gteq%5D=&amp;q%5Btransaction_date_lteq%5D=14%2F10%2F2019&amp;tag_ids=&amp;tag_logic=">3-30000</a>
+                        <a class="text-primary" href="#">3-30000</a>
                       </div>
                     </td>
                     <td class="report-data width-100">
                       <div class="header-price-label">
-                        <a class="text-primary" href="/accounts/17896778?q%5Btransaction_date_gteq%5D=&amp;q%5Btransaction_date_lteq%5D=14%2F10%2F2019&amp;tag_ids=&amp;tag_logic=">Modal Saham</a>
+                        <a class="text-primary" href="#">Modal Saham</a>
                       </div>
                     </td>
                     <td class="header-price-label report-data text-right">
@@ -193,7 +202,6 @@
                     <td class="report-subtotal" colspan="2">
                       Total Modal Pemilik
                     </td>
-                    <!-- / total_equity = (@balance_sheet_accounts.equity_balance_arr[i] + @balance_sheet_accounts.earning_up_to_last_period_balance_arr[i] + @balance_sheet_accounts.current_period_earnings_balance_arr[i] + @balance_sheet_accounts.accumulated_other_comprehensive_income_balance_arr[i]) -->
                     <td class="report-subtotal text-right" id="assets-type-1-total-data">
                       100.000.000,00
                     </td>
