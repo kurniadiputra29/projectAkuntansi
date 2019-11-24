@@ -94,7 +94,11 @@ class JuController extends Controller
      */
     public function edit($id)
     {
-        //
+        $akun           = Account::all();
+        $cashbanks     = JurnalUmum::find($id);
+        $details        = jurnalumumdetail::where('jurnal_umums_id', $id)->get();
+
+        return view('pages.ju.edit', compact('akun', 'cashbanks', 'details'));
     }
 
     /**
@@ -106,7 +110,37 @@ class JuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $messages = [
+            'required' => ':attribute wajib diisi !!!',
+            'unique' => ':attribute harus diisi dengan syarat unique !!!',
+        ];
+        $this->validate($request,[
+            'tanggal' => 'required',
+            'description' => 'required',
+            'kode' => 'unique:jurnal_umums,kode,'.$id,
+        ],$messages);
+
+        //insert data cashbank
+        $dataJurnalUmum          = $request->only('id','tanggal', 'kode', 'description');
+        $jurnalumum              = JurnalUmum::find($id)->update($dataJurnalUmum);
+
+        //insert data cashbank detail
+        $detailjurnalumum                 = $request->only('nomor_akun', 'nama_akun', 'debet', 'kredit');
+        $countKasBank = count($detailjurnalumum['nomor_akun']);
+
+        jurnalumumdetail::where('jurnal_umums_id', $id)->delete();
+
+        for ($a=0; $a < $countKasBank; $a++) { 
+            $detail                     = new jurnalumumdetail();
+            $detail->jurnal_umums_id    = $id;
+            $detail->nomor_akun         = $detailjurnalumum['nomor_akun'][$a];
+            $detail->nama_akun          = $detailjurnalumum['nama_akun'][$a];
+            $detail->debet              = $detailjurnalumum['debet'][$a];
+            $detail->kredit             = $detailjurnalumum['kredit'][$a];
+            $detail->save();
+        }
+
+        return redirect('/ju')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
     /**

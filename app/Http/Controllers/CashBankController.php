@@ -44,6 +44,16 @@ class CashBankController extends Controller
     public function store(Request $request)
     {
         if (($request->status) == 0) {
+        	$messages = [
+					'required' => ':attribute wajib diisi !!!',
+					'unique' => ':attribute harus diisi dengan syarat unique !!!',
+			];
+			$this->validate($request,[
+					'tanggal' => 'required',
+					'penerima_diterima' => 'required',
+					'description' => 'required',
+					'kode' => 'unique:cashinbanks,kode|required',
+			],$messages);
 
 			//insert data cashbank
             $dataCashInBank          = $request->only('id','tanggal', 'kode', 'penerima_diterima', 'description','status');
@@ -74,7 +84,17 @@ class CashBankController extends Controller
             return redirect('/cashbank')->with('Success', 'Data anda telah berhasil di Input !');
 
         } else {
-
+        	$messages = [
+					'required' => ':attribute wajib diisi !!!',
+					'unique' => ':attribute harus diisi dengan syarat unique !!!',
+			];
+			$this->validate($request,[
+					'tanggal' => 'required',
+					'penerima_diterima' => 'required',
+					'description' => 'required',
+					'kode' => 'unique:cashinbanks,kode|required',
+			],$messages);
+			
             //insert data cashbank
             $dataCashInBank          = $request->only('id','tanggal', 'kode', 'penerima_diterima', 'description','status');
             $cashinbank              = Cashinbank::create($dataCashInBank);
@@ -127,7 +147,21 @@ class CashBankController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Cashinbank = Cashinbank::find($id);
+        $status = $Cashinbank->status;
+        if ($status == 0) {
+            $akun           = Account::all();
+            $cashbanks     = Cashinbank::find($id);
+            $debets        = Cashinbankdetail::where('cashinbank_id', $id)->where('kredit', null)->get();
+
+            return view('pages.cashbank.edit_in', compact('akun', 'cashbanks', 'debets'));
+        } else {
+            $akun           = Account::all();
+            $cashbanks     = Cashinbank::find($id);
+            $kredits        = Cashinbankdetail::where('cashinbank_id', $id)->where('debet', null)->get();
+            return view('pages.cashbank.edit_out', compact('akun', 'cashbanks', 'kredits'));
+        }
+        
     }
 
     /**
@@ -139,7 +173,92 @@ class CashBankController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (($request->status) == 0) {
+            $messages = [
+                    'required' => ':attribute wajib diisi !!!',
+                    'unique' => ':attribute harus diisi dengan syarat unique !!!',
+            ];
+            $this->validate($request,[
+                    'tanggal' => 'required',
+                    'penerima_diterima' => 'required',
+                    'description' => 'required',
+                    'kode' => 'unique:cashinbanks,kode,'.$id,
+            ],$messages);
+
+            //insert data cashbank
+            $dataCashInBank          = $request->only('id','tanggal', 'kode', 'penerima_diterima', 'description','status');
+            $cashinbank              = Cashinbank::find($id)->update($dataCashInBank);
+
+            //insert data cashbank detail
+            $detailcashinbank                 = $request->only('nomor_akun', 'nama_akun','nomor_akun2', 'nama_akun2', 'jumlah', 'total');
+            $countKasBank = count($detailcashinbank['nomor_akun']);
+            $countKasBank2 = count($detailcashinbank['total']);
+
+            Cashinbankdetail::where('cashinbank_id', $id)->delete();
+
+            for ($a=0; $a < $countKasBank2; $a++) { 
+                $detail                     = new Cashinbankdetail();
+                $detail->cashinbank_id      = $id;
+                $detail->nomor_akun         = $detailcashinbank['nomor_akun2'][$a];
+                $detail->nama               = $detailcashinbank['nama_akun2'][$a];
+                $detail->debet              = $detailcashinbank['total'][$a];
+                $detail->save();
+            }
+            for ($i=0; $i < $countKasBank; $i++) { 
+                $detail                     = new Cashinbankdetail();
+                $detail->cashinbank_id      = $id;
+                $detail->nomor_akun         = $detailcashinbank['nomor_akun'][$i];
+                $detail->nama               = $detailcashinbank['nama_akun'][$i];
+                $detail->kredit             = $detailcashinbank['jumlah'][$i];
+                $detail->save();
+            }
+
+            return redirect('/cashbank')->with('Success', 'Data anda telah berhasil di Input !');
+
+        } else {
+
+            $messages = [
+                    'required' => ':attribute wajib diisi !!!',
+                    'unique' => ':attribute harus diisi dengan syarat unique !!!',
+            ];
+            $this->validate($request,[
+                    'tanggal' => 'required',
+                    'penerima_diterima' => 'required',
+                    'description' => 'required',
+                    'kode' => 'unique:cashinbanks,kode,'.$id,
+            ],$messages);
+
+            //insert data cashbank
+            $dataCashInBank          = $request->only('id','tanggal', 'kode', 'penerima_diterima', 'description','status');
+            $cashinbank              = Cashinbank::find($id)->update($dataCashInBank);
+
+            //insert data cashbank detail
+            $detailcashinbank                 = $request->only('nomor_akun', 'nama_akun','nomor_akun2', 'nama_akun2', 'jumlah', 'total');
+            $countKasBank = count($detailcashinbank['nomor_akun']);
+            $countKasBank2 = count($detailcashinbank['total']);
+
+            Cashinbankdetail::where('cashinbank_id', $id)->delete();
+
+            for ($a=0; $a < $countKasBank2; $a++) { 
+                $detail                     = new Cashinbankdetail();
+                $detail->cashinbank_id      = $id;
+                $detail->nomor_akun         = $detailcashinbank['nomor_akun2'][$a];
+                $detail->nama               = $detailcashinbank['nama_akun2'][$a];
+                $detail->kredit              = $detailcashinbank['total'][$a];
+                $detail->save();
+            }
+            for ($i=0; $i < $countKasBank; $i++) { 
+                $detail                     = new Cashinbankdetail();
+                $detail->cashinbank_id      = $id;
+                $detail->nomor_akun         = $detailcashinbank['nomor_akun'][$i];
+                $detail->nama               = $detailcashinbank['nama_akun'][$i];
+                $detail->debet             = $detailcashinbank['jumlah'][$i];
+                $detail->save();
+            }
+
+            return redirect('/cashbank')->with('Success', 'Data anda telah berhasil di Input !');
+
+        }
     }
 
     /**

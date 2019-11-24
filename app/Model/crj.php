@@ -15,4 +15,8 @@ class crj extends Model
     {
         return $this->belongsTo(DataCustomer::class, "customers_id");
     }
+    public function crjdetail()
+    {
+      return $this->hasMany(crjdetail::class);
+    }
 }

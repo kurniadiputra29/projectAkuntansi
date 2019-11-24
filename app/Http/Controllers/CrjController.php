@@ -125,7 +125,13 @@ class CrjController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $akun           = Account::all();
+        $customers      = DataCustomer::all();
+        $items          = Item::all();
+        $cashbanks     = crj::find($id);
+        $kredits        = crjdetail::where('crj_id', $id)->where('debet', null)->get();
+        return view('pages.crj.edit', compact('akun', 'customers', 'items', 'cashbanks', 'kredits'));
     }
 
     /**

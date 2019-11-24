@@ -11,4 +11,8 @@ class JurnalUmum extends Model
     protected $fillable = [
       'id','tanggal','kode', 'description', 'created_at','update_at'
     ];
+    public function jurnalumumdetail()
+    {
+      return $this->hasMany(jurnalumumdetail::class, "jurnal_umums_id");
+    }
 }

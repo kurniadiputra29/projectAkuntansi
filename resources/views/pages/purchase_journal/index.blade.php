@@ -88,7 +88,7 @@
                                     <form method="get" action="{{ route('purchase_journal.show', $key->id) }}">
                                       @csrf
                                       @method('GET')
-                                      <button class="dropdown-item" type="submit"><i class="ik ik-eye"></i> Detail</button>
+                                      <button class="dropdown-item" type="submit"><i class="ik ik-eye"></i> Journal</button>
                                     </form>
                                     <form method="post" action="{{ route('purchase_journal.destroy', $key->id) }}">
                                       @csrf

@@ -16,4 +16,8 @@ class SalesJournal extends Model
     {
         return $this->belongsTo(DataCustomer::class, "customers_id");
     }
+    public function salesjournaldetail()
+    {
+      return $this->hasMany(salesjournaldetail::class);
+    }
 }
