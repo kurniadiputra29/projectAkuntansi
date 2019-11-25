@@ -27,4 +27,9 @@ class PrintController extends Controller
     {
       return view('reports.buku_besar.index');
     }
+
+    public function laba_rugi()
+    {
+      return view('reports.laba_rugi.index');
+    }
 }

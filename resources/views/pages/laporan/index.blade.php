@@ -146,14 +146,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.laba_rugi')}}">
                               Income Statement / Laporan Laba-Rugi
                             </a>
                           </h3>
                           <p>
                             Menampilkan setiap tipe transaksi dan jumlah total untuk pendapatan dan pengeluaran anda.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.laba_rugi')}}">
                             Lihat Laporan
                           </a>
                         </div>
