@@ -8,7 +8,7 @@
           <div class="nav-item {{ Request::is('dasbor') ? 'active' : ''}}">
               <a href="{{ route('dasbor.index') }}"><i class="ik ik-home"></i><span>Dasbor</span></a>
           </div>
-          <div class="nav-item {{ Request::is('laporan') ? 'active' : '' }}">
+          <div class="nav-item {{ Request::is('laporan') || Request::is('print/*') ? 'active' : '' }}">
               <a href="{{ route('laporan.index') }}"><i class="ik ik-trending-up"></i><span>Laporan</span></a>
           </div>
           <div class="nav-lavel">Master Data</div>

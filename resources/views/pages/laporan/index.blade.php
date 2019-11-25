@@ -56,14 +56,15 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.neraca')}}">
+                              <i class="ik ik-check"></i>
                               Balance Sheet / Neraca
                             </a>
                           </h3>
                           <p>
                             Menampilan apa yang anda miliki (aset), apa yang anda hutang (liabilitas), dan apa yang anda sudah investasikan pada perusahaan anda (ekuitas).
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="http://localhost/ProjectAkuntan/views/reports/neraca">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.neraca')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -71,14 +72,15 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.neraca_saldo')}}">
+                              <i class="ik ik-check"></i>
                               Trial Balance / Neraca Saldo
                             </a>
                           </h3>
                           <p>
                             Menampilan apa yang anda miliki (aset), apa yang anda hutang (liabilitas), dan apa yang anda sudah investasikan pada perusahaan anda (ekuitas).
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.neraca_saldo')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -116,14 +118,15 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.buku_besar')}}">
+                              <i class="ik ik-check"></i>
                               Ledger / Buku Besar
                             </a>
                           </h3>
                           <p>
                             Laporan ini menampilkan semua transaksi yang telah dilakukan untuk suatu periode. Laporan ini bermanfaat jika Anda memerlukan daftar kronologis untuk semua transaksi yang telah dilakukan oleh perusahaan Anda.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.buku_besar')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -131,14 +134,15 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.alur_kas')}}">
+                              <i class="ik ik-check"></i>
                               Cash Flow / Alur Kas
                             </a>
                           </h3>
                           <p>
                             Laporan ini menampilkan semua transaksi yang telah dilakukan untuk suatu periode. Laporan ini bermanfaat jika Anda memerlukan daftar kronologis untuk semua transaksi yang telah dilakukan oleh perusahaan Anda.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.alur_kas')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -146,14 +150,15 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.laba_rugi')}}">
+                              <i class="ik ik-check"></i>
                               Income Statement / Laporan Laba-Rugi
                             </a>
                           </h3>
                           <p>
                             Menampilkan setiap tipe transaksi dan jumlah total untuk pendapatan dan pengeluaran anda.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.laba_rugi')}}">
                             Lihat Laporan
                           </a>
                         </div>

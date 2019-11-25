@@ -63,3 +63,14 @@ Route::delete('cashbank/{id}', 'CashBankController@destroy')->name('cashbank.des
 Route::resource('profile', 'ProfileController');
 
 Route::resource('users', 'UserController');
+
+// index Laporan
+Route::get('/print/neraca', 'PrintController@neraca')->name('laporan.neraca');
+Route::get('/print/neraca_saldo', 'PrintController@neraca_saldo')->name('laporan.neraca_saldo');
+Route::get('/print/buku_besar', 'PrintController@buku_besar')->name('laporan.buku_besar');
+Route::get('/print/laba_rugi', 'PrintController@laba_rugi')->name('laporan.laba_rugi');
+Route::get('/print/alur_kas', 'PrintController@alur_kas')->name('laporan.alur_kas');
+
+//for print
+Route::get('/print/print_neraca', 'PrintController@print_neraca')->name('print.neraca');
+Route::get('/print/print_neraca_saldo', 'PrintController@print_neraca_saldo')->name('print.neraca_saldo');
