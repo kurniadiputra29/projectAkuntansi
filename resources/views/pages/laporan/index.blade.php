@@ -57,6 +57,7 @@
                         <div class="report-item">
                           <h3>
                             <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.neraca')}}">
+                              <i class="ik ik-check"></i>
                               Balance Sheet / Neraca
                             </a>
                           </h3>
@@ -72,6 +73,7 @@
                         <div class="report-item">
                           <h3>
                             <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.neraca_saldo')}}">
+                              <i class="ik ik-check"></i>
                               Trial Balance / Neraca Saldo
                             </a>
                           </h3>
@@ -117,6 +119,7 @@
                         <div class="report-item">
                           <h3>
                             <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.buku_besar')}}">
+                              <i class="ik ik-check"></i>
                               Ledger / Buku Besar
                             </a>
                           </h3>
@@ -132,6 +135,7 @@
                         <div class="report-item">
                           <h3>
                             <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.alur_kas')}}">
+                              <i class="ik ik-check"></i>
                               Cash Flow / Alur Kas
                             </a>
                           </h3>
@@ -147,6 +151,7 @@
                         <div class="report-item">
                           <h3>
                             <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.laba_rugi')}}">
+                              <i class="ik ik-check"></i>
                               Income Statement / Laporan Laba-Rugi
                             </a>
                           </h3>
