@@ -50,39 +50,39 @@
           <div class="table-container list-table">
             <div class="report-title">
               <div class="table-responsive">
-                <table class="table table-striped ctb-worksheet trial-balance-table report-table">
+                <table class="table ctb-worksheet trial-balance-table report-table">
                   <thead class="bg-light">
                     <tr>
-                      <th class="border-bottom border-sides in-the-middle" colspan="2" rowspan="2">
+                      <th class="bg-secondary text-light border-bottom border-sides in-the-middle" colspan="2" rowspan="2">
                         Daftar Akun
                       </th>
-                      <th class="text-center border-bottom border-sides" colspan="2">
+                      <th class="bg-secondary text-light text-center border-bottom border-sides" colspan="2">
                         Saldo Awal
                       </th>
-                      <th class="text-center border-bottom border-sides" colspan="2">
+                      <th class="bg-secondary text-light text-center border-bottom border-sides" colspan="2">
                         Pergerakan
                       </th>
-                      <th class="text-center border-bottom border-sides" colspan="2">
+                      <th class="bg-secondary text-light text-center border-bottom border-sides" colspan="2">
                         Saldo Akhir
                       </th>
                     </tr>
                     <tr>
-                      <th class="text-center border-bottom border-sides">
+                      <th class="bg-secondary text-light text-center border-bottom border-sides">
                         Debit
                       </th>
-                      <th class="text-center border-bottom border-sides">
+                      <th class="bg-secondary text-light text-center border-bottom border-sides">
                         Credit
                       </th>
-                      <th class="text-center border-bottom border-sides">
+                      <th class="bg-secondary text-light text-center border-bottom border-sides">
                         Debit
                       </th>
-                      <th class="text-center border-bottom border-sides">
+                      <th class="bg-secondary text-light text-center border-bottom border-sides">
                         Credit
                       </th>
-                      <th class="text-center border-bottom border-sides">
+                      <th class="bg-secondary text-light text-center border-bottom border-sides">
                         Debit
                       </th>
-                      <th class="text-center border-bottom border-sides">
+                      <th class="bg-secondary text-light text-center border-bottom border-sides">
                         Credit
                       </th>
                     </tr>
@@ -102,12 +102,10 @@
                     </tr>
                     <tr account_id="18884986">
                       <td class="border-left text-right">
-                        <a class="" href="#">(1-10001)</a>
-
+                        <a class="text-primary" href="#">(1-10001)</a>
                       </td>
                       <td class="text-left lines-on-top">
-                        <a class="" href="#">Cash</a>
-
+                        <a class="text-primary" href="#">Cash</a>
                       </td>
                       <td class="opening-balance debit text-right border-sides" data-value="10500000.0">
                         10.500.000,00
@@ -142,12 +140,10 @@
                     </tr>
                     <tr account_id="18885043">
                       <td class="border-left text-right">
-                        <a class="" href="#">(2-20100)</a>
-
+                        <a class="text-primary" href="#">(2-20100)</a>
                       </td>
                       <td class="text-left lines-on-top">
-                        <a class="" href="#">Trade Payable</a>
-
+                        <a class="text-primary" href="#">Trade Payable</a>
                       </td>
                       <td class="opening-balance debit text-right border-sides" data-value="500000.0">
                         500.000,00
@@ -170,12 +166,10 @@
                     </tr>
                     <tr account_id="18885045">
                       <td class="border-left text-right">
-                        <a class="" href="#">(2-20500)</a>
-
+                        <a class="text-primary" href="#">(2-20500)</a>
                       </td>
                       <td class="text-left lines-on-top">
-                        <a class="" href="#">VAT Out</a>
-
+                        <a class="text-primary" href="#">VAT Out</a>
                       </td>
                       <td class="opening-balance debit text-right border-sides" data-value="0.0">
                         0,00
@@ -233,12 +227,10 @@
                     </tr>
                     <tr account_id="18885109">
                       <td class="border-left text-right">
-                        <a class="" href="#">(5-50000)</a>
-
+                        <a class="text-primary" href="#">(5-50000)</a>
                       </td>
                       <td class="text-left lines-on-top">
-                        <a class="" href="#">Cost of Sales</a>
-
+                        <a class="text-primary" href="#">Cost of Sales</a>
                       </td>
                       <td class="opening-balance debit text-right border-sides" data-value="0.0">
                         0,00
@@ -260,7 +252,7 @@
                       </td>
                     </tr>
                     <!-- GRAND TOTAL -->
-                    <tr>
+                    <tr class="bg-success text-light font-weight-bold">
                       <td class="border-sides border-bottom bold lines-on-top text-left" colspan="2">
                         Total
                       </td>

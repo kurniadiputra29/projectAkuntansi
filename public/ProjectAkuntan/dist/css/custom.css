@@ -32,3 +32,8 @@
 .report-notes {
   font-size: 10px;
 }
+
+.border-sides {
+  border-left: solid 1pt lightgrey !important;
+  border-right: solid 1pt lightgrey !important;
+}
