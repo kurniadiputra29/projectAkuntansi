@@ -21,7 +21,7 @@
   padding-left: 2em!important;
 }
 
-.report-subheader, .report-subtotal {
+.report-subheader, .report-subtotal, .indent {
   padding-left: 4em!important;
 }
 
@@ -36,4 +36,8 @@
 .border-sides {
   border-left: solid 1pt lightgrey !important;
   border-right: solid 1pt lightgrey !important;
+}
+
+.bg-white {
+  background-color: '#ffffff';
 }
