@@ -22,4 +22,9 @@ class PrintController extends Controller
     {
       return view('reports.neraca_saldo.index');
     }
+
+    public function buku_besar()
+    {
+      return view('reports.buku_besar.index');
+    }
 }

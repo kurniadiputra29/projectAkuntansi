@@ -37,8 +37,10 @@
           <div class="row py-3">
             <div class="col-md-6">
               <form class="forms-sample" action="#" method="post">
-                <label for="filter">Per Tanggal</label>
+                <label for="filter">Tanggal Mulai</label>
                 <input type="date" name="tanggal" id="filter">
+                <label for="filter2">Tanggal Akhir</label>
+                <input type="date" name="tanggal" id="filter2">
                 <button class="btn btn-primary" type="submit" name="button">Filter</button>
               </form>
             </div>
