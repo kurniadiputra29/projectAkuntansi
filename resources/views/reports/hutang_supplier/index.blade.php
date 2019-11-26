@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Laporan Buku Besar')
+@section('title', 'Laporan Hutang Supplier')
 
 @section('content')
 
@@ -12,7 +12,7 @@
             <div class="page-header-title">
               <i class="ik ik-trending-up bg-blue"></i>
               <div class="d-inline">
-                <h5>Buku Besar</h5>
+                <h5>Hutang Supplier</h5>
                 <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
               </div>
             </div>
@@ -26,7 +26,7 @@
                 <li class="breadcrumb-item">
                   <a href="/laporan">Laporan</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Buku Besar</li>
+                <li class="breadcrumb-item active" aria-current="page">Hutang Supplier</li>
               </ol>
             </nav>
           </div>
@@ -56,7 +56,7 @@
                   <thead class="report-header">
                     <tr class="bg-secondary font-weight-bold">
                       <th class="text-light">
-                        Nama Akun / Tanggal
+                        Supplier / Tanggal
                       </th>
                       <th class="text-light">
                         Transaksi
@@ -65,13 +65,13 @@
                         Nomor
                       </th>
                       <th class="text-light">
-                        Keterangan
+                        Deskripsi
                       </th>
                       <th class="text-right text-light">
-                        Debit
+
                       </th>
                       <th class="text-right text-light">
-                        Kredit
+                        Jumlah
                       </th>
                       <th class="text-right text-light">
                         Saldo
@@ -81,7 +81,7 @@
                   <tbody>
                     <tr>
                       <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        (1-10001) Cash
+                        PT Sanex
                       </td>
                     </tr>
                     <tr>
@@ -91,28 +91,50 @@
                       <td class="text-left bold">
                         Saldo Awal
                       </td>
-                      <td colspan="4"></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
                       <td class="text-right bold">
                         10.500.000,00
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal">
-                      <td class="text-right regular-text" colspan="4">
-                        ((1-10001) Cash) | Saldo Akhir
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        0,00
                       </td>
                       <td class="text-right bold">
                         10.500.000,00
                       </td>
                     </tr>
                     <tr>
+                      <td class="bold">
+                        24/11/2019
+                      </td>
+                      <td class="text-left bold">
+                        Purchase
+                      </td>
+                      <td>10001</td>
+                      <td></td>
+                      <td></td>
+                      <td class="text-right bold">
+                        10.500.000,00
+                      </td>
+                      <td class="text-right bold">
+                        500.000,00
+                      </td>
+                    </tr>
+                    <tr class="report-subtotal" style="border-top: solid 2px grey;">
+                      <td class="text-right regular-text" colspan="4">
+
+                      </td>
+                      <td class="text-right bold">
+                        Total
+                      </td>
+                      <td class="text-right bold">
+                        21.000.000,00
+                      </td>
+                      <td class="text-right bold">
+                        11.000.000,00
+                      </td>
+                    </tr>
+                    <tr>
                       <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        (2-20100) Trade Payable
+                        PT Kent
                       </td>
                     </tr>
                     <tr>
@@ -122,28 +144,33 @@
                       <td class="text-left bold">
                         Saldo Awal
                       </td>
-                      <td colspan="4"></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
                       <td class="text-right bold">
-                        ( 500.000,00)
+                        10.500.000,00
+                      </td>
+                      <td class="text-right bold">
+                        10.500.000,00
                       </td>
                     </tr>
-                    <tr class="report-subtotal">
+                    <tr class="report-subtotal" style="border-top: solid 2px grey;">
                       <td class="text-right regular-text" colspan="4">
-                        ((2-20100) Trade Payable) | Saldo Akhir
+
                       </td>
                       <td class="text-right bold">
-                        0,00
+                        Total
                       </td>
                       <td class="text-right bold">
-                        0,00
+                        10.500.000,00
                       </td>
                       <td class="text-right bold">
-                        ( 500.000,00)
+                        10.500.000,00
                       </td>
                     </tr>
                     <tr>
                       <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        (2-20500) VAT Out
+                        PT Konimex
                       </td>
                     </tr>
                     <tr>
@@ -153,67 +180,40 @@
                       <td class="text-left bold">
                         Saldo Awal
                       </td>
-                      <td colspan="4"></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
                       <td class="text-right bold">
-                        1.000.000,00
+                        10.500.000,00
+                      </td>
+                      <td class="text-right bold">
+                        10.500.000,00
                       </td>
                     </tr>
-                    <tr class="report-subtotal">
+                    <tr class="report-subtotal" style="border-top: solid 2px grey;">
                       <td class="text-right regular-text" colspan="4">
-                        ((2-20500) VAT Out) | Saldo Akhir
+
                       </td>
                       <td class="text-right bold">
-                        0,00
+                        Total
                       </td>
                       <td class="text-right bold">
-                        0,00
+                        10.500.000,00
                       </td>
                       <td class="text-right bold">
-                        1.000.000,00
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        (5-50000) Cost of Sales
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        24/11/2019
-                      </td>
-                      <td class="text-left bold">
-                        Saldo Awal
-                      </td>
-                      <td colspan="4"></td>
-                      <td class="text-right bold">
-                        ( 10.000.000,00)
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal">
-                      <td class="text-right regular-text" colspan="4">
-                        ((5-50000) Cost of Sales) | Saldo Akhir
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        ( 10.000.000,00)
+                        10.500.000,00
                       </td>
                     </tr>
                     <tr class="bg-success text-light">
-                      <td class="text-right grand-total" colspan="4">
+                      <td class="text-right grand-total" colspan="5">
                         Grand Total
                       </td>
                       <td class="text-right grand-total">
-                        0,00
+                        31.500.000,00
                       </td>
                       <td class="text-right grand-total">
-                        0,00
+                        31.500.000,00
                       </td>
-                      <td class="text-right grand-total"></td>
                     </tr>
                   </tbody>
                 </table>

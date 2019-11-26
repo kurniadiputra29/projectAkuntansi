@@ -164,7 +164,8 @@
                       <td class="text-left padding-top-grey">Saldo kas awal</td>
                       <td class="text-right padding-top-grey"> 10.500.000,00</td>
                       <td class="text-right padding-left-0 padding-top-grey"></td>
-                    </tr><tr class="activity-header">
+                    </tr>
+                    <tr class="activity-header">
                       <td class="text-left padding-top-grey">Saldo kas akhir</td>
                       <td class="text-right padding-top-grey"> 10.500.000,00</td>
                       <td class="text-right padding-left-0 padding-top-grey"></td>

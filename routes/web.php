@@ -70,6 +70,12 @@ Route::get('/print/neraca_saldo', 'PrintController@neraca_saldo')->name('laporan
 Route::get('/print/buku_besar', 'PrintController@buku_besar')->name('laporan.buku_besar');
 Route::get('/print/laba_rugi', 'PrintController@laba_rugi')->name('laporan.laba_rugi');
 Route::get('/print/alur_kas', 'PrintController@alur_kas')->name('laporan.alur_kas');
+Route::get('/print/daftar_penjualan', 'PrintController@daftar_penjualan')->name('laporan.daftar_penjualan');
+Route::get('/print/piutang_pelanggan', 'PrintController@piutang_pelanggan')->name('laporan.piutang_pelanggan');
+Route::get('/print/penjualan_per_produk', 'PrintController@penjualan_per_produk')->name('laporan.penjualan_per_produk');
+Route::get('/print/daftar_pembelian', 'PrintController@daftar_pembelian')->name('laporan.daftar_pembelian');
+Route::get('/print/pembelian_per_produk', 'PrintController@pembelian_per_produk')->name('laporan.pembelian_per_produk');
+Route::get('/print/hutang_supplier', 'PrintController@hutang_supplier')->name('laporan.hutang_supplier');
 
 //for print
 Route::get('/print/print_neraca', 'PrintController@print_neraca')->name('print.neraca');

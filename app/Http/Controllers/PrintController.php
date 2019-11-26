@@ -37,4 +37,34 @@ class PrintController extends Controller
     {
       return view('reports.alur_kas.index');
     }
+
+    public function daftar_penjualan()
+    {
+      return view('reports.daftar_penjualan.index');
+    }
+
+    public function piutang_pelanggan()
+    {
+      return view('reports.piutang_pelanggan.index');
+    }
+
+    public function penjualan_per_produk()
+    {
+      return view('reports.penjualan_per_produk.index');
+    }
+
+    public function daftar_pembelian()
+    {
+      return view('reports.daftar_pembelian.index');
+    }
+
+    public function pembelian_per_produk()
+    {
+      return view('reports.pembelian_per_produk.index');
+    }
+
+    public function hutang_supplier()
+    {
+      return view('reports.hutang_supplier.index');
+    }
 }
