@@ -234,14 +234,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
-                              Pembelian per Produk
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.daftar_pembelian')}}">
+                              Daftar Pembelian
                             </a>
                           </h3>
                           <p>
                             Menunjukkan daftar kronologis dari semua pembelian, pemesanan, penawaran, dan pembayaran Anda untuk rentang tanggal yang dipilih.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.daftar_pembelian')}}">
                             Lihat Laporan
                           </a>
                         </div>
