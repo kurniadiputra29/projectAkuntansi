@@ -215,14 +215,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.penjualan_per_produk')}}">
                               Penjualan per Produk
                             </a>
                           </h3>
                           <p>
                             Menampilkan daftar kuantitas penjualan per produk, termasuk jumlah retur, net penjualan, dan harga penjualan rata-rata.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.penjualan_per_produk')}}">
                             Lihat Laporan
                           </a>
                         </div>

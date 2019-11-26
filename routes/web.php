@@ -72,6 +72,7 @@ Route::get('/print/laba_rugi', 'PrintController@laba_rugi')->name('laporan.laba_
 Route::get('/print/alur_kas', 'PrintController@alur_kas')->name('laporan.alur_kas');
 Route::get('/print/daftar_penjualan', 'PrintController@daftar_penjualan')->name('laporan.daftar_penjualan');
 Route::get('/print/piutang_pelanggan', 'PrintController@piutang_pelanggan')->name('laporan.piutang_pelanggan');
+Route::get('/print/penjualan_per_produk', 'PrintController@penjualan_per_produk')->name('laporan.penjualan_per_produk');
 
 //for print
 Route::get('/print/print_neraca', 'PrintController@print_neraca')->name('print.neraca');
