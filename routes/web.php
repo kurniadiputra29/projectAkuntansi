@@ -75,6 +75,7 @@ Route::get('/print/piutang_pelanggan', 'PrintController@piutang_pelanggan')->nam
 Route::get('/print/penjualan_per_produk', 'PrintController@penjualan_per_produk')->name('laporan.penjualan_per_produk');
 Route::get('/print/daftar_pembelian', 'PrintController@daftar_pembelian')->name('laporan.daftar_pembelian');
 Route::get('/print/pembelian_per_produk', 'PrintController@pembelian_per_produk')->name('laporan.pembelian_per_produk');
+Route::get('/print/hutang_supplier', 'PrintController@hutang_supplier')->name('laporan.hutang_supplier');
 
 //for print
 Route::get('/print/print_neraca', 'PrintController@print_neraca')->name('print.neraca');
