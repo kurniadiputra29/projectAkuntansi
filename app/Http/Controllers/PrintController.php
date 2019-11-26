@@ -37,4 +37,9 @@ class PrintController extends Controller
     {
       return view('reports.alur_kas.index');
     }
+
+    public function daftar_penjualan()
+    {
+      return view('reports.daftar_penjualan.index');
+    }
 }
