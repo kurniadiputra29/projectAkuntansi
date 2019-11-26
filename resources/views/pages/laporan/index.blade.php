@@ -200,14 +200,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.piutang_pelanggan')}}">
                               Laporan Piutang Pelanggan
                             </a>
                           </h3>
                           <p>
                             Menampilkan tagihan yang belum dibayar untuk setiap pelanggan, termasuk nomor & tanggal faktur, tanggal jatuh tempo, jumlah nilai, dan sisa tagihan yang terhutang pada Anda.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.piutang_pelanggan')}}">
                             Lihat Laporan
                           </a>
                         </div>

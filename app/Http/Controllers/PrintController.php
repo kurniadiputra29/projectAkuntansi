@@ -42,4 +42,9 @@ class PrintController extends Controller
     {
       return view('reports.daftar_penjualan.index');
     }
+
+    public function piutang_pelanggan()
+    {
+      return view('reports.piutang_pelanggan.index');
+    }
 }
