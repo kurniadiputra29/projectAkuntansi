@@ -51,6 +51,7 @@ Route::resource('saldo_piutang', 'SaldoPiutangController');
 Route::resource('sales_journal', 'SalesJournalController');
 Route::resource('stock_opname', 'StockOpnameController');
 Route::resource('supplier', 'SupplierController');
+Route::resource('retur_penjualan', 'ReturPenjualanController');
 
 Route::get('cashbank', 'CashBankController@index')->name('cashbank.index');
 Route::get('cashbank/create', 'CashBankController@create')->name('cashbank.create');
