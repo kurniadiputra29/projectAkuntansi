@@ -39,11 +39,12 @@
                   <a href="{{ route('retur_penjualan.index') }}" class="menu-item {{Request::is('retur_penjualan') || Request::is('retur_penjualan/create') || Request::is('retur_penjualan/*') ?'active':''}}">Retur Penjualan</a>
               </div>
           </div>
-          <div class="nav-item has-sub {{ Request::is('cpj') || Request::is('purchase_journal') || Request::is('cpj/create') || Request::is('purchase_journal/create') || Request::is('purchase_journal/*') || Request::is('cpj/*') ? 'active open' : '' }}">
+          <div class="nav-item has-sub {{ Request::is('cpj') || Request::is('purchase_journal') || Request::is('cpj/create') || Request::is('purchase_journal/create') || Request::is('purchase_journal/*') || Request::is('cpj/*') || Request::is('retur_pembelian') || Request::is('retur_pembelian/*') || Request::is('retur_pembelian/create') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-shopping-cart"></i><span>Pembelian</span></a>
               <div class="submenu-content">
                   <a href="{{ route('cpj.index') }}" class="menu-item {{ Request::is('cpj') || Request::is('cpj/create') || Request::is('cpj/*') ? 'active' : '' }}">Cash Payment Journal</a>
                   <a href="{{ route('purchase_journal.index') }}" class="menu-item {{ Request::is('purchase_journal') || Request::is('purchase_journal/*') ? 'active' : '' }}">Purchase Journal</a>
+                  <a href="{{ route('retur_pembelian.index') }}" class="menu-item {{Request::is('retur_pembelian') || Request::is('retur_pembelian/create') || Request::is('retur_pembelian/*') ?'active':''}}">Retur Penjualan</a>
               </div>
           </div>
           <div class="nav-item {{ Request::is('ju') || Request::is('ju/*') ? 'active' : '' }}">
