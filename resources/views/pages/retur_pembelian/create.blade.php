@@ -23,7 +23,9 @@
               <li class="breadcrumb-item">
                 <a href="/dasbor"><i class="ik ik-home"></i></a>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">Retur Pembelian</li>
+              <li class="breadcrumb-item" aria-current="page">
+                <a href="/retur_pembelian">Retur Pembelian</a>
+              </li>
               <li class="breadcrumb-item active" aria-current="page">Create</li>
             </ol>
           </nav>
