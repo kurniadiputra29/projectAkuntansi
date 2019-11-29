@@ -16,4 +16,9 @@ class ReturPembelian extends Model
     {
         return $this->belongsTo(DataSupplier::class, "suppliers_id");
     }
+
+    public function retur_pembelian_details()
+    {
+      return $this->hasMany(ReturPembelianDetail::class);
+    }
 }

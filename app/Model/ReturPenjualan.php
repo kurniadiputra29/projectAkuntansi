@@ -16,4 +16,9 @@ class ReturPenjualan extends Model
     {
         return $this->belongsTo(DataCustomer::class, "customers_id");
     }
+
+    public function retur_penjualan_details()
+    {
+      return $this->hasMany(ReturPenjualanDetail::class);
+    }
 }
