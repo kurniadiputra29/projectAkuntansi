@@ -8,6 +8,7 @@ use App\Model\Account;
 use App\Model\DataCustomer;
 use App\Model\Item;
 use App\Model\crjdetail;
+use App\Model\Inventory;
 
 class CrjController extends Controller
 {
@@ -36,7 +37,9 @@ class CrjController extends Controller
         $akun = Account::all();
         $customers = DataCustomer::all();
         $items = Item::all();
-        return view('pages.crj.create', compact('akun', 'customers', 'items'));
+        $crjs     = crj::orderBy('id', 'desc')->paginate(1);
+        $crjs_count = crj::all()->count();
+        return view('pages.crj.create', compact('akun', 'customers', 'items', 'crjs', 'crjs_count'));
     }
 
     /**
@@ -102,6 +105,20 @@ class CrjController extends Controller
             $detail->save();
         }
 
+        //insert data Inventory
+        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
+        $countinventory1 = count($inventory['jumlah']);
+
+        for ($x=0; $x < $countinventory1; $x++) { 
+            $detail                     = new Inventory();
+            $detail->crj_id             = $crj->id;
+            $detail->items_id           = $inventory['items'][$x];
+            $detail->status             = $inventory['status'][$x];
+            $detail->unit               = $inventory['unit'][$x];
+            $detail->price              = $inventory['harga'][$x];
+            $detail->total              = $inventory['jumlah'][$x];
+            $detail->save();
+        }
         return redirect('/crj')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
@@ -129,9 +146,13 @@ class CrjController extends Controller
         $akun           = Account::all();
         $customers      = DataCustomer::all();
         $items          = Item::all();
-        $cashbanks     = crj::find($id);
-        $kredits        = crjdetail::where('crj_id', $id)->where('debet', null)->get();
-        return view('pages.crj.edit', compact('akun', 'customers', 'items', 'cashbanks', 'kredits'));
+        $cashbanks      = crj::find($id);
+        $crjdetails     = crjdetail::all();
+        $debets         = crjdetail::where('crj_id', $id)->where('kredit', null)->get();
+        $inventories    = Inventory::where('crj_id', $id)->get();
+        $jasa           = crjdetail::where('crj_id', $id)->where('nomor_akun', '4-2200')->get();
+        // dd($jasa);
+        return view('pages.crj.edit', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa'));
     }
 
     /**

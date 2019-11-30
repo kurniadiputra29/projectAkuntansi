@@ -42,8 +42,9 @@
             </ul>
           </div>
           @endif
-        <form class="forms-sample" action="{{route('crj.store')}}" method="post">
+        <form class="forms-sample" action="{{route('crj.update', $cashbanks->id)}}" method="post">
           @csrf
+          @method('PUT')
           <div class="card">
             <div class="card-header" style="background: #2dce89;"><h3 style="color: white">Cash Receipt Journal</h3>
             </div>
@@ -57,8 +58,10 @@
                     <div class="form-group">
                       <label for="setor_ke">Setor Ke</label>
                       <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
+                        @foreach($debets as $debet)
                         @foreach ($akun as $key)
-                        <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
+                        <option value="{{$key->nomor}}" {{$debet->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
+                        @endforeach
                         @endforeach
                       </select>
                     </div>
@@ -76,9 +79,8 @@
                   <div class="form-group">
                     <label for="setor_ke">Customers</label>
                       <select class="form-control" id="setor_ke" name="customers_id">
-                        <option value="0"> ~~ Pilih Customers ~~ </option>
                         @foreach ($customers as $customer)
-                        <option value="{{$customer->id}}">{{$customer->nama}}</option>
+                        <option value="{{$customer->id}}" {{$cashbanks->customers_id == $customer->id ? 'selected' : ''}}>{{$customer->nama}}</option>
                         @endforeach
                       </select>
                   </div>
@@ -86,19 +88,19 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="tanggal_transaksi">Tanggal Transaksi</label>
-                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi">
+                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{$cashbanks->tanggal}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="no_transaksi">Nomor Transaksi</label>
-                    <input class="form-control" name="kode" type="text" id="no_transaksi">
+                    <input class="form-control" name="kode" type="text" id="no_transaksi" value="{{$cashbanks->kode}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="description">Deskripsi</label>
-                    <textarea class="form-control" name="description" type="text" id="description" rows="3"></textarea>
+                    <textarea class="form-control" name="description" type="text" id="description" rows="3">{{$cashbanks->description}}</textarea>
                   </div>
                 </div>
               </div>
@@ -123,6 +125,7 @@
                   <div class="form-group">
                     <label for="unit">QTY</label>
                     <input class="form-control" type="number" id="unit" name="unit[]" v-model="cashbank.unit">
+                    <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="0">
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -171,14 +174,15 @@
                   </label>
                   <input type="hidden" name="nomor_akun_ppn[]" value="2-1310">
                   <input type="hidden" name="nama_akun2_ppn[]" value="PPN Outcome">
-                  <input type="hidden" class="form-control" id="exampleInputUsername2" name="PPN[]" :value="ppns"  readonly>
+                  <input type="text" class="form-control" id="exampleInputUsername2" name="PPN[]" :value="ppns"  readonly>
               </div>
             </div>
           </div>
           <div class="form-group row justify-content-end">
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Jasa Pengiriman : Rp</label>
             <div class="col-sm-4">
-              <input type="number" class="form-control" id="exampleInputUsername2" name="jasa_pengiriman[]" v-model.number="jasa_pengiriman">
+              <input type="text" class="form-control" id="exampleInputUsername2" name="jasa_pengiriman2[]" v-model.number="jasa_pengiriman">
+              <input type="text" class="form-control" id="exampleInputUsername2" name="jasa_pengiriman[]" v-model.number="jasas">
               <input type="hidden" name="nomor_akun_jasa[]" value="4-2200">
               <input type="hidden" name="nama_akun2_jasa[]" value="Freight Colected">
             </div>
@@ -211,7 +215,7 @@
    el: '#app',
    data: {
     cashbanks2: [
-    {terima_dari:"", description:"", jumlah: 0},
+    {id_akun2:"{{$debet->nomor_akun}}", description:"", jumlah: 0},
     ],
     cashbanks: [
     {id_item:0, harga:0, description:"", unit:1, jumlah: 0},
@@ -261,6 +265,7 @@
         this.cashbanks[index].jumlah = jumlah;
         return jumlah;
       }, 
+      
   },
   computed: {
     
@@ -268,7 +273,7 @@
       var akun = [];
       akun[0] = 0;
       @foreach($akun as $key)
-        akun[ {{ $key->id }} ] = "{{ $key->nomor }}"
+        akun[ "{{ $key->nomor }}" ] = "{{ $key->nomor }}"
       @endforeach
       return akun;
     },
@@ -276,7 +281,7 @@
       var akun = [];
       akun[0] = 0;
       @foreach($akun as $key)
-        akun[ {{ $key->id }} ] = "{{ $key->nama }}"
+        akun[ "{{ $key->nomor }}" ] = "{{ $key->nama }}"
       @endforeach
       return akun;
     },
@@ -294,37 +299,55 @@
       .reduce( (prev, next) => prev + next );
     },
     ppns() {
-        if (this.ppn == '') {
-          var ppns =  0;
-          this.ppn = this.ppn;
-          return ppns;
-        } else
-        var ppns = this.subtotal*10/100;
+      if (this.ppn == '') {
+        var ppns =  0;
+        this.ppn = this.ppn;
         return ppns;
-      },
-      jasas() {
+      } else
+      var ppns = this.subtotal*10/100;
+      return ppns;
+    },
+    jasa_pengiriman() {
+      var jasa_pengiriman = this.jasa_pengiriman2;
+      return jasa_pengiriman;
+    },
+    jasas() {
+      if (this.ppn == '') {
+        var ppns =  @foreach($jasa as $key)
+                      {{ $key->kredit }}
+                    @endforeach;
+        this.ppn = this.ppn;
+        return ppns;
+      } else {
         var jasas = this.jasa_pengiriman;
         return jasas;
-      },
+      }
+      
+    },
     totals() {
         if (this.subtotal == '') {
           var totals =  0;
           this.jasa_pengiriman = this.subtotal;
           return totals;
-        } else
-        var totals = this.subtotal + this.ppns + this.jasa_pengiriman;
-        return totals;
+        } else if (this.jasa_pengiriman == 0){
+          var totals = this.subtotal + this.ppns + this.jasa_pengiriman;
+          return totals;
+        } else {
+          var totals = this.subtotal + this.ppns + this.jasa_pengiriman;
+          return totals;
+        }
+        
       },
-    },
+  },
   created(){
     var cashbanks = [];
 
-    @foreach($cashbanks->crjdetail as $index => $detail)
-    cashbanks [{{$index-1}}] = {
-      id_akun: "{{$detail->nomor_akun}}",
-      nomor_akun: "{{$detail->nomor_akun}}",
-      nama_akun: "{{$detail->nama_akun}}",
-      jumlah: "{{$detail->debet}}",
+    @foreach($cashbanks->Inventory as $index => $detail)
+    cashbanks [{{$index}}] = {
+      id_item: "{{$detail->items_id}}",
+      unit: "{{$detail->unit}}",
+      price: "{{$detail->price}}",
+      jumlah: "{{$detail->total}}",
     };
     @endforeach
     this.cashbanks = cashbanks;

@@ -32,7 +32,10 @@ class JuController extends Controller
     public function create()
     {
         $akun = Account::all();
-        return view('pages.ju.create', compact('akun'));
+        $jus_count = JurnalUmum::all()->count();
+        $jus     = JurnalUmum::orderBy('id', 'desc')->paginate(1);
+
+        return view('pages.ju.create', compact('akun', 'jus', 'jus_count'));
     }
 
     /**

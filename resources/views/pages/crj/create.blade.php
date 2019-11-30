@@ -92,7 +92,14 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="no_transaksi">Nomor Transaksi</label>
-                    <input class="form-control" name="kode" type="text" id="no_transaksi">
+                    @if ($crjs_count <= 0)
+                      <input class="form-control" name="kode" type="text" id="no_transaksi">
+                    @else
+                      @foreach ($crjs as $key)
+                      <input class="form-control" name="kode" type="text" id="no_transaksi" placeholder="
+                      {{$key->kode}}">
+                      @endforeach
+                    @endif
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -123,6 +130,7 @@
                   <div class="form-group">
                     <label for="unit">QTY</label>
                     <input class="form-control" type="number" id="unit" name="unit[]" v-model="cashbank.unit">
+                    <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="0">
                   </div>
                 </div>
                 <div class="col-md-3">

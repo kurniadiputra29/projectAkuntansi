@@ -8,6 +8,7 @@ use App\Model\purchasejournaldetail;
 use App\Model\Account;
 use App\Model\DataSupplier;
 use App\Model\Item;
+use App\Model\Inventory;
 
 class PurchaseJournalController extends Controller
 {
@@ -36,7 +37,9 @@ class PurchaseJournalController extends Controller
         $akun = Account::all();
         $suppliers = DataSupplier::all();
         $items = Item::all();
-        return view('pages.purchase_journal.create', compact('akun', 'suppliers', 'items'));
+        $purchase_count = PurchaseJournal::all()->count();
+        $purchase     = PurchaseJournal::orderBy('id', 'desc')->paginate(1);
+        return view('pages.purchase_journal.create', compact('akun', 'suppliers', 'items', 'purchase_count','purchase'));
     }
 
     /**
@@ -102,6 +105,20 @@ class PurchaseJournalController extends Controller
             $detail->save();
         }
 
+        //insert data Inventory
+        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
+        $countinventory1 = count($inventory['jumlah']);
+
+        for ($x=0; $x < $countinventory1; $x++) { 
+            $detail                     = new Inventory();
+            $detail->purchasejournal_id             = $PurchaseJournal->id;
+            $detail->items_id           = $inventory['items'][$x];
+            $detail->status             = $inventory['status'][$x];
+            $detail->unit               = $inventory['unit'][$x];
+            $detail->price              = $inventory['harga'][$x];
+            $detail->total              = $inventory['jumlah'][$x];
+            $detail->save();
+        }
         return redirect('/purchase_journal')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
@@ -125,7 +142,15 @@ class PurchaseJournalController extends Controller
      */
     public function edit($id)
     {
-        //
+        $akun               = Account::all();
+        $suppliers          = DataSupplier::all();
+        $items              = Item::all();
+        $cashbanks          = PurchaseJournal::find($id);
+        $purchasedetails    = purchasejournaldetail::all();
+        $inventories        = Inventory::where('purchasejournal_id', $id)->get();
+        $kredits            = purchasejournaldetail::where('purchasejournal_id', $id)->where('debet', null)->get();
+        return view('pages.purchase_journal.edit', compact('akun', 'suppliers', 'items','cashbanks', 'purchasedetails', 'inventories', 'kredits'));
+
     }
 
     /**

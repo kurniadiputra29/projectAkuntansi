@@ -16,4 +16,8 @@ class PurchaseJournal extends Model
     {
         return $this->belongsTo(DataSupplier::class, "suppliers_id");
     }
+    public function Inventory()
+    {
+      return $this->hasMany(Inventory::class, "purchasejournal_id");
+    }
 }

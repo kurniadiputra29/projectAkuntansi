@@ -36,6 +36,7 @@
               <div class="submenu-content">
                   <a href="{{ route('crj.index') }}" class="menu-item {{ Request::is('crj') || Request::is('crj/create') || Request::is('crj/*') ? 'active' : '' }}">Cash Receipt Journal</a>
                   <a href="{{ route('sales_journal.index') }}" class="menu-item {{Request::is('sales_journal') || Request::is('sales_journal/create') || Request::is('sales_journal/*') ?'active':''}}">Sales Journal</a>
+                  <a href="{{ route('sales_journal.index') }}" class="menu-item {{Request::is('sales_journal') || Request::is('sales_journal/create') || Request::is('sales_journal/*') ?'active':''}}">Return Penjualan</a>
               </div>
           </div>
           <div class="nav-item has-sub {{ Request::is('cpj') || Request::is('purchase_journal') || Request::is('cpj/create') || Request::is('purchase_journal/create') || Request::is('purchase_journal/*') || Request::is('cpj/*') ? 'active open' : '' }}">
@@ -43,6 +44,7 @@
               <div class="submenu-content">
                   <a href="{{ route('cpj.index') }}" class="menu-item {{ Request::is('cpj') || Request::is('cpj/create') || Request::is('cpj/*') ? 'active' : '' }}">Cash Payment Journal</a>
                   <a href="{{ route('purchase_journal.index') }}" class="menu-item {{ Request::is('purchase_journal') || Request::is('purchase_journal/*') ? 'active' : '' }}">Purchase Journal</a>
+                  <a href="{{ route('purchase_journal.index') }}" class="menu-item {{ Request::is('purchase_journal') || Request::is('purchase_journal/*') ? 'active' : '' }}">Return Pembelian</a>
               </div>
           </div>
           <div class="nav-item {{ Request::is('ju') || Request::is('ju/*') ? 'active' : '' }}">

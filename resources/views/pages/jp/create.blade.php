@@ -59,7 +59,14 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="no_transaksi">Nomor Transaksi</label>
-                    <input class="form-control" name="kode" type="text" id="no_transaksi">
+                    @if ($jps_count <= 0)
+                      <input class="form-control" name="kode" type="text" id="no_transaksi">
+                    @else
+                      @foreach ($jps as $key)
+                      <input class="form-control" name="kode" type="text" id="no_transaksi" placeholder="
+                      {{$key->kode}}">
+                      @endforeach
+                    @endif
                   </div>
                 </div>
                 <div class="col-md-4">

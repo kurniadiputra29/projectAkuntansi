@@ -19,4 +19,8 @@ class crj extends Model
     {
       return $this->hasMany(crjdetail::class);
     }
+    public function Inventory()
+    {
+      return $this->hasMany(Inventory::class, "crj_id");
+    }
 }

@@ -20,4 +20,8 @@ class cpj extends Model
     {
       return $this->hasMany(cpjdetail::class);
     }
+    public function Inventory()
+    {
+      return $this->hasMany(Inventory::class, "cpj_id");
+    }
 }

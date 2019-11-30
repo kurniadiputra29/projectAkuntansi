@@ -11,4 +11,8 @@ class Item extends Model
     protected $fillable = [
       'id','kode','nama','unit','harga','nilai_persediaan','gambar'
     ];
+    public function Inventory()
+    {
+      return $this->hasMany(Inventory::class);
+    }
 }
