@@ -31,8 +31,10 @@ class CashBankController extends Controller
      */
     public function create()
     {
-        $akun = Account::all();
-        return view('pages.cashbank.create', compact('akun'));
+        $akun           = Account::all();
+        $cashbanks     = Cashinbank::orderBy('id', 'desc')->paginate(1);
+        $cashbanks_count = Cashinbank::all()->count();
+        return view('pages.cashbank.create', compact('akun', 'cashbanks', 'cashbanks_count'));
     }
 
     /**

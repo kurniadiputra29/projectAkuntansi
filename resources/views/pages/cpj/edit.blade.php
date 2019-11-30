@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Create CPJ')
+@section('title', 'AccountMin - Edit CPJ')
 
 @section('content')
 
@@ -12,7 +12,7 @@
           <div class="page-header-title">
             <i class="ik ik-menu bg-blue"></i>
             <div class="d-inline">
-              <h5>Create Cash Payment Journal</h5>
+              <h5>Edit Cash Payment Journal</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
             </div>
           </div>
@@ -24,7 +24,7 @@
                 <a href="/dasbor"><i class="ik ik-home"></i></a>
               </li>
               <li class="breadcrumb-item active" aria-current="page">CPJ</li>
-              <li class="breadcrumb-item active" aria-current="page">Create</li>
+              <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
           </nav>
         </div>
@@ -42,8 +42,9 @@
             </ul>
           </div>
           @endif
-        <form class="forms-sample" action="{{route('cpj.store')}}" method="post">
+        <form class="forms-sample" action="{{route('cpj.update', $cashbanks->id)}}" method="post">
           @csrf
+          @method('PUT')
           <div class="card">
             <div class="card-header" style="background: #2dce89;"><h3 style="color: white">Cash Payment Journal</h3>
             </div>
@@ -57,17 +58,19 @@
                     <div class="form-group">
                       <label for="setor_ke">Di Bayar Dari</label>
                       <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
+                        @foreach($kredits as $kredit)
                         @foreach ($akun as $key)
-                        <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
+                        <option value="{{$key->nomor}}" {{$kredit->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
+                        @endforeach
                         @endforeach
                       </select>
                     </div>
                   </div>
                 </div>
-                <input type="hidden" name="nomor_akun2[]"
+                <input type="text" name="nomor_akun2[]"
                     :value="nomor_akun(cashbank.id_akun2, index)"
                   >
-                <input type="hidden" name="nama_akun2[]"
+                <input type="text" name="nama_akun2[]"
                     :value="nama_akun(cashbank.id_akun2, index)"
                 >
               </div>
@@ -78,7 +81,7 @@
                       <select class="form-control" id="setor_ke" name="suppliers_id">
                         <option value="0"> ~~ Pilih Suppliers ~~ </option>
                         @foreach ($suppliers as $supplier)
-                        <option value="{{$supplier->id}}">{{$supplier->nama}}</option>
+                        <option value="{{$supplier->id}}" {{$cashbanks->suppliers_id == $supplier->id ? 'selected' : ''}}>{{$supplier->nama}}</option>
                         @endforeach
                       </select>
                   </div>
@@ -86,26 +89,19 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="tanggal_transaksi">Tanggal Transaksi</label>
-                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi">
+                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{$cashbanks->tanggal}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="no_transaksi">Nomor Transaksi</label>
-                    @if ($cpjs_count <= 0)
-                      <input class="form-control" name="kode" type="text" id="no_transaksi">
-                    @else
-                      @foreach ($cpjs as $key)
-                      <input class="form-control" name="kode" type="text" id="no_transaksi" placeholder="
-                      {{$key->kode}}">
-                      @endforeach
-                    @endif
+                    <input class="form-control" name="kode" type="text" id="no_transaksi" value="{{$cashbanks->kode}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="description">Deskripsi</label>
-                    <textarea class="form-control" name="description" type="text" id="description" rows="3"></textarea>
+                    <textarea class="form-control" name="description" type="text" id="description" rows="3">{{$cashbanks->description}}</textarea>
                   </div>
                 </div>
               </div>
@@ -200,7 +196,7 @@
 
           <div class="forms-sample" style="margin-bottom: 10px; margin-top: 30px; justify-content: space-between; display: flex;">
             <a href="{{route('cpj.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
-            <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Create</button>
+            <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Edit</button>
           </div>
         </div>
       </div>
@@ -219,7 +215,7 @@
    el: '#app',
    data: {
     cashbanks2: [
-    {terima_dari:"", description:"", jumlah: 0},
+    {id_akun2:"{{$kredit->nomor_akun}}", description:"", jumlah: 0},
     ],
     cashbanks: [
     {id_item:0, harga:0, description:"", unit:1, jumlah: 0},
@@ -276,7 +272,7 @@
       var akun = [];
       akun[0] = 0;
       @foreach($akun as $key)
-        akun[ {{ $key->id }} ] = "{{ $key->nomor }}"
+        akun[ "{{ $key->nomor }}" ] = "{{ $key->nomor }}"
       @endforeach
       return akun;
     },
@@ -284,7 +280,7 @@
       var akun = [];
       akun[0] = 0;
       @foreach($akun as $key)
-        akun[ {{ $key->id }} ] = "{{ $key->nama }}"
+        akun[ "{{ $key->nomor }}" ] = "{{ $key->nama }}"
       @endforeach
       return akun;
     },
@@ -323,6 +319,19 @@
         var totals = this.subtotal + this.ppns + this.jasa_pengiriman;
         return totals;
       },
+  },
+  created(){
+    var cashbanks = [];
+
+    @foreach($cashbanks->Inventory as $index => $detail)
+    cashbanks [{{$index}}] = {
+      id_item: "{{$detail->items_id}}",
+      unit: "{{$detail->unit}}",
+      price: "{{$detail->price}}",
+      jumlah: "{{$detail->total}}",
+    };
+    @endforeach
+    this.cashbanks = cashbanks;
   },
 });
 </script>

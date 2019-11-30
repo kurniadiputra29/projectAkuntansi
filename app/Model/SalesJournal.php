@@ -20,4 +20,8 @@ class SalesJournal extends Model
     {
       return $this->hasMany(salesjournaldetail::class);
     }
+    public function Inventory()
+    {
+      return $this->hasMany(Inventory::class, "salesjournal_id");
+    }
 }

@@ -8,6 +8,7 @@ use App\Model\cpjdetail;
 use App\Model\Account;
 use App\Model\DataSupplier;
 use App\Model\Item;
+use App\Model\Inventory;
 
 class CpjController extends Controller
 {
@@ -36,7 +37,9 @@ class CpjController extends Controller
         $akun = Account::all();
         $suppliers = DataSupplier::all();
         $items = Item::all();
-        return view('pages.cpj.create', compact('akun', 'suppliers', 'items'));
+        $cpjs     = cpj::orderBy('id', 'desc')->paginate(1);
+        $cpjs_count = cpj::all()->count();
+        return view('pages.cpj.create', compact('akun', 'suppliers', 'items', 'cpjs', 'cpjs_count'));
     }
 
     /**
@@ -102,6 +105,20 @@ class CpjController extends Controller
             $detail->save();
         }
 
+        //insert data Inventory
+        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
+        $countinventory1 = count($inventory['jumlah']);
+
+        for ($x=0; $x < $countinventory1; $x++) { 
+            $detail                     = new Inventory();
+            $detail->cpj_id             = $cpj->id;
+            $detail->items_id           = $inventory['items'][$x];
+            $detail->status             = $inventory['status'][$x];
+            $detail->unit               = $inventory['unit'][$x];
+            $detail->price              = $inventory['harga'][$x];
+            $detail->total              = $inventory['jumlah'][$x];
+            $detail->save();
+        }
         return redirect('/cpj')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
@@ -125,7 +142,14 @@ class CpjController extends Controller
      */
     public function edit($id)
     {
-        //
+        $akun           = Account::all();
+        $suppliers      = DataSupplier::all();
+        $items          = Item::all();
+        $cashbanks      = cpj::find($id);
+        $cpjdetails     = cpjdetail::all();
+        $inventories    = Inventory::where('cpj_id', $id)->get();
+        $kredits        = cpjdetail::where('cpj_id', $id)->where('debet', null)->get();
+        return view('pages.cpj.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'cpjdetails', 'inventories', 'kredits'));
     }
 
     /**

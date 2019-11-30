@@ -8,6 +8,7 @@ use App\Model\DataCustomer;
 use App\Model\Item;
 use App\Model\SalesJournal;
 use App\Model\salesjournaldetail;
+use App\Model\Inventory;
 
 class SalesJournalController extends Controller
 {
@@ -22,8 +23,8 @@ class SalesJournalController extends Controller
      */
     public function index()
     {
-        $data = SalesJournal::orderBy('created_at', 'desc')->get();
-        $DataCustomer = DataCustomer::all();
+        $data           = SalesJournal::orderBy('created_at', 'desc')->get();
+        $DataCustomer   = DataCustomer::all();
         return view('pages.sales_journal.index', compact('data', 'DataCustomer'));
     }
 
@@ -34,10 +35,12 @@ class SalesJournalController extends Controller
      */
     public function create()
     {
-        $akun = Account::all();
-        $customers = DataCustomer::all();
-        $items = Item::all();
-        return view('pages.sales_journal.create', compact('akun', 'customers', 'items'));
+        $akun           = Account::all();
+        $customers      = DataCustomer::all();
+        $items          = Item::all();
+        $sales_count    = SalesJournal::all()->count();
+        $sales          = SalesJournal::orderBy('id', 'desc')->paginate(1);
+        return view('pages.sales_journal.create', compact('akun', 'customers', 'items', 'sales_count', 'sales'));
     }
 
     /**
@@ -103,6 +106,21 @@ class SalesJournalController extends Controller
             $detail->save();
         }
 
+        //insert data Inventory
+        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
+        $countinventory1 = count($inventory['jumlah']);
+
+        for ($x=0; $x < $countinventory1; $x++) { 
+            $detail                     = new Inventory();
+            $detail->salesjournal_id             = $salesjournal->id;
+            $detail->items_id           = $inventory['items'][$x];
+            $detail->status             = $inventory['status'][$x];
+            $detail->unit               = $inventory['unit'][$x];
+            $detail->price              = $inventory['harga'][$x];
+            $detail->total              = $inventory['jumlah'][$x];
+            $detail->save();
+        }
+
         return redirect('/sales_journal')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
@@ -126,7 +144,14 @@ class SalesJournalController extends Controller
      */
     public function edit($id)
     {
-        //
+        $akun               = Account::all();
+        $customers          = DataCustomer::all();
+        $items              = Item::all();
+        $cashbanks          = SalesJournal::find($id);
+        $salesdetails       = salesjournaldetail::all();
+        $inventories        = Inventory::where('salesjournal_id', $id)->get();
+        $debets             = salesjournaldetail::where('salesjournal_id', $id)->where('kredit', null)->get();
+        return view('pages.sales_journal.edit', compact('akun', 'customers', 'items','cashbanks', 'salesdetails', 'inventories', 'debets'));
     }
 
     /**

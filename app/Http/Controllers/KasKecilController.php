@@ -32,8 +32,9 @@ class KasKecilController extends Controller
 		 */
 		public function create()
 		{
-			$akun = Account::all();
-				return view('pages.kas_kecil.create', compact('akun'));
+			$akun 			= Account::all();
+			$pettycashs 	= Pettycash::orderBy('id', 'desc')->paginate(1);
+			return view('pages.kas_kecil.create', compact('akun', 'pettycashs'));
 		}
 
 		/**
