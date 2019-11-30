@@ -46,7 +46,62 @@ class ReturPembelianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $messages = [
+          'required'  => ':attribute wajib diisi !!!',
+          'unique'    => ':attribute harus diisi dengan syarat unique !!!',
+      ];
+      $this->validate($request,[
+          'tanggal'       => 'required',
+          'customers_id'  => 'required',
+          'description'   => 'required',
+          'kode'          => 'unique:retur_pembelians,kode|required',
+      ],$messages);
+
+      //insert data retur_pembelian
+      $dataReturPembelian          = $request->only('id','tanggal', 'kode', 'customers_id', 'description');
+      $ReturPembelian              = ReturPembelian::create($dataReturPembelian);
+
+      //insert data retur_pembelian detail
+      $detailReturPembelian        = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+      $countKasBank1 = count($detailReturPembelian['total']);
+      $countKasBank2 = count($detailReturPembelian['subtotal']);
+      $countKasBank3 = count($detailReturPembelian['PPN']);
+      $countKasBank4 = count($detailReturPembelian['jasa_pengiriman']);
+
+      for ($a=0; $a < $countKasBank1; $a++) {
+          $detail                     = new ReturPembelianDetail();
+          $detail->retur_pembelian_id = $ReturPembelian->id;
+          $detail->nomor_akun         = $detailReturPembelian['nomor_akun2'][$a];
+          $detail->nama_akun          = $detailReturPembelian['nama_akun2'][$a];
+          $detail->debet              = $detailReturPembelian['total'][$a];
+          $detail->save();
+      }
+      for ($i=0; $i < $countKasBank2; $i++) {
+          $detail                     = new ReturPembelianDetail();
+          $detail->retur_pembelian_id = $ReturPembelian->id;
+          $detail->nomor_akun         = $detailReturPembelian['nomor_akun_sales'][$i];
+          $detail->nama_akun          = $detailReturPembelian['nama_akun2_sales'][$i];
+          $detail->kredit             = $detailReturPembelian['subtotal'][$i];
+          $detail->save();
+      }
+      for ($i=0; $i < $countKasBank3; $i++) {
+          $detail                     = new ReturPembelianDetail();
+          $detail->retur_pembelian_id = $ReturPembelian->id;
+          $detail->nomor_akun         = $detailReturPembelian['nomor_akun_ppn'][$i];
+          $detail->nama_akun          = $detailReturPembelian['nama_akun2_ppn'][$i];
+          $detail->kredit             = $detailReturPembelian['PPN'][$i];
+          $detail->save();
+      }
+      for ($i=0; $i < $countKasBank4; $i++) {
+          $detail                     = new ReturPembelianDetail();
+          $detail->retur_pembelian_id = $ReturPembelian->id;
+          $detail->nomor_akun         = $detailReturPembelian['nomor_akun_jasa'][$i];
+          $detail->nama_akun          = $detailReturPembelian['nama_akun2_jasa'][$i];
+          $detail->kredit             = $detailReturPembelian['jasa_pengiriman'][$i];
+          $detail->save();
+      }
+
+      return redirect('/retur_pembelian')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
     /**
@@ -57,7 +112,8 @@ class ReturPembelianController extends Controller
      */
     public function show($id)
     {
-        //
+        $detail = ReturPembelianDetail::where('retur_pembelian_id', $id)->get();
+        return view('pages.retur_pembelian.show', compact('detail'));
     }
 
     /**
@@ -91,6 +147,7 @@ class ReturPembelianController extends Controller
      */
     public function destroy($id)
     {
-        //
+      ReturPembelian::find($id)->delete();
+      return redirect('/retur_pembelian')->with('Success', 'Data anda telah berhasil di Hapus !');
     }
 }

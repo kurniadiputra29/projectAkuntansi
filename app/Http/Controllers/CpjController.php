@@ -69,36 +69,36 @@ class CpjController extends Controller
         $countKasBank3 = count($detailcrj['PPN']);
         $countKasBank4 = count($detailcrj['jasa_pengiriman']);
 
-        for ($a=0; $a < $countKasBank1; $a++) { 
+        for ($a=0; $a < $countKasBank1; $a++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $cpj->id;
             $detail->nomor_akun         = $detailcrj['nomor_akun2'][$a];
             $detail->nama_akun          = $detailcrj['nama_akun2'][$a];
-            $detail->kredit              = $detailcrj['total'][$a];
+            $detail->kredit             = $detailcrj['total'][$a];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank2; $i++) { 
+        for ($i=0; $i < $countKasBank2; $i++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $cpj->id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_sales'][$i];
             $detail->nama_akun          = $detailcrj['nama_akun2_sales'][$i];
-            $detail->debet             = $detailcrj['subtotal'][$i];
+            $detail->debet              = $detailcrj['subtotal'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank3; $i++) { 
+        for ($i=0; $i < $countKasBank3; $i++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $cpj->id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_ppn'][$i];
             $detail->nama_akun          = $detailcrj['nama_akun2_ppn'][$i];
-            $detail->debet             = $detailcrj['PPN'][$i];
+            $detail->debet              = $detailcrj['PPN'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank4; $i++) { 
+        for ($i=0; $i < $countKasBank4; $i++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $cpj->id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_jasa'][$i];
             $detail->nama_akun          = $detailcrj['nama_akun2_jasa'][$i];
-            $detail->debet             = $detailcrj['jasa_pengiriman'][$i];
+            $detail->debet              = $detailcrj['jasa_pengiriman'][$i];
             $detail->save();
         }
 
