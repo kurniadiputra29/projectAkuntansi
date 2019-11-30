@@ -21,7 +21,7 @@
                     <nav class="breadcrumb-container" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="http://localhost/ProjectAkuntan/index.php"><i class="ik ik-home"></i></a>
+                                <a href="/dasbor"><i class="ik ik-home"></i></a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">Laporan</li>
                         </ol>
@@ -56,14 +56,15 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.neraca')}}">
+                              <i class="ik ik-check"></i>
                               Balance Sheet / Neraca
                             </a>
                           </h3>
                           <p>
                             Menampilan apa yang anda miliki (aset), apa yang anda hutang (liabilitas), dan apa yang anda sudah investasikan pada perusahaan anda (ekuitas).
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="http://localhost/ProjectAkuntan/views/reports/neraca">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.neraca')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -71,14 +72,15 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.neraca_saldo')}}">
+                              <i class="ik ik-check"></i>
                               Trial Balance / Neraca Saldo
                             </a>
                           </h3>
                           <p>
                             Menampilan apa yang anda miliki (aset), apa yang anda hutang (liabilitas), dan apa yang anda sudah investasikan pada perusahaan anda (ekuitas).
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.neraca_saldo')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -116,14 +118,15 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.buku_besar')}}">
+                              <i class="ik ik-check"></i>
                               Ledger / Buku Besar
                             </a>
                           </h3>
                           <p>
                             Laporan ini menampilkan semua transaksi yang telah dilakukan untuk suatu periode. Laporan ini bermanfaat jika Anda memerlukan daftar kronologis untuk semua transaksi yang telah dilakukan oleh perusahaan Anda.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.buku_besar')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -131,14 +134,15 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.alur_kas')}}">
+                              <i class="ik ik-check"></i>
                               Cash Flow / Alur Kas
                             </a>
                           </h3>
                           <p>
                             Laporan ini menampilkan semua transaksi yang telah dilakukan untuk suatu periode. Laporan ini bermanfaat jika Anda memerlukan daftar kronologis untuk semua transaksi yang telah dilakukan oleh perusahaan Anda.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.alur_kas')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -146,14 +150,15 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.laba_rugi')}}">
+                              <i class="ik ik-check"></i>
                               Income Statement / Laporan Laba-Rugi
                             </a>
                           </h3>
                           <p>
                             Menampilkan setiap tipe transaksi dan jumlah total untuk pendapatan dan pengeluaran anda.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.laba_rugi')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -180,14 +185,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.daftar_penjualan')}}">
                               Daftar Penjualan
                             </a>
                           </h3>
                           <p>
                             Menunjukkan daftar kronologis dari semua faktur, pemesanan, penawaran, dan pembayaran Anda untuk rentang tanggal yang dipilih.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.daftar_penjualan')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -195,14 +200,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.piutang_pelanggan')}}">
                               Laporan Piutang Pelanggan
                             </a>
                           </h3>
                           <p>
                             Menampilkan tagihan yang belum dibayar untuk setiap pelanggan, termasuk nomor & tanggal faktur, tanggal jatuh tempo, jumlah nilai, dan sisa tagihan yang terhutang pada Anda.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.piutang_pelanggan')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -210,14 +215,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.penjualan_per_produk')}}">
                               Penjualan per Produk
                             </a>
                           </h3>
                           <p>
                             Menampilkan daftar kuantitas penjualan per produk, termasuk jumlah retur, net penjualan, dan harga penjualan rata-rata.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.penjualan_per_produk')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -229,14 +234,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
-                              Pembelian per Produk
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.daftar_pembelian')}}">
+                              Daftar Pembelian
                             </a>
                           </h3>
                           <p>
                             Menunjukkan daftar kronologis dari semua pembelian, pemesanan, penawaran, dan pembayaran Anda untuk rentang tanggal yang dipilih.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.daftar_pembelian')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -244,14 +249,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.hutang_supplier')}}">
                               Laporan Hutang Supplier
                             </a>
                           </h3>
                           <p>
                             Menampilkan jumlah nilai yang Anda hutang pada setiap Supplier.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.hutang_supplier')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -259,14 +264,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.pembelian_per_produk')}}">
                               Pembelian per Produk
                             </a>
                           </h3>
                           <p>
                             Menampilkan daftar kuantitas pembelian per produk, termasuk jumlah retur, net pembelian, dan harga pembelian rata-rata.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.pembelian_per_produk')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -278,14 +283,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.penjualan_per_produk')}}">
                               Penjualan per Produk
                             </a>
                           </h3>
                           <p>
                             Menampilkan daftar kuantitas penjualan per produk, termasuk jumlah retur, net penjualan, dan harga penjualan rata-rata.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.penjualan_per_produk')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -293,14 +298,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.pembelian_per_produk')}}">
                               Pembelian per Produk
                             </a>
                           </h3>
                           <p>
                             Menampilkan daftar kuantitas pembelian per produk, termasuk jumlah retur, net pembelian, dan harga pembelian rata-rata.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.pembelian_per_produk')}}">
                             Lihat Laporan
                           </a>
                         </div>
