@@ -106,6 +106,6 @@
     </div>
   </div>
 
-  @include('pages.akun.create')
+  @include('pages.akun.create-modal')
 
 @endsection
