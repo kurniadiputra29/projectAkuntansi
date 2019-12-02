@@ -32,7 +32,7 @@ class AkunController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.akun.create');
     }
 
     /**

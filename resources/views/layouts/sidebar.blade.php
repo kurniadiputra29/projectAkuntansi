@@ -12,8 +12,12 @@
               <a href="{{ route('laporan.index') }}"><i class="ik ik-trending-up"></i><span>Laporan</span></a>
           </div>
           <div class="nav-lavel">Master Data</div>
-          <div class="nav-item {{ Request::is('akun') ? 'active' : '' }}">
-              <a href="{{ route('akun.index') }}"><i class="ik ik-menu"></i><span>Daftar Akun</span></a>
+          <div class="nav-item has-sub {{ Request::is('akun') || Request::is('akun/create') ? 'active open' : '' }}">
+              <a href="#"><i class="ik ik-menu"></i><span>Akun</span></a>
+              <div class="submenu-content">
+                  <a href="{{ route('akun.index') }}" class="menu-item {{ Request::is('akun') ? 'active' : '' }}">Daftar Akun</a>
+                  <a href="{{ route('akun.create') }}" class="menu-item {{ Request::is('akun/create') ? 'active' : '' }}">Create Akun</a>
+              </div>
           </div>
           <div class="nav-item has-sub {{ Request::is('customer') || Request::is('supplier') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-phone"></i><span>Kontak</span></a>
