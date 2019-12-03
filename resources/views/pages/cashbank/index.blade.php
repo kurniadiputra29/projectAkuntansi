@@ -118,6 +118,4 @@
     </div>
   </div>
 
-  @include('pages.akun.create')
-
 @endsection

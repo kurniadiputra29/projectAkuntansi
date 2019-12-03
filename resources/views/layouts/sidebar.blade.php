@@ -48,8 +48,7 @@
               <div class="submenu-content">
                   <a href="{{ route('cpj.index') }}" class="menu-item {{ Request::is('cpj') || Request::is('cpj/create') || Request::is('cpj/*') ? 'active' : '' }}">Cash Payment Journal</a>
                   <a href="{{ route('purchase_journal.index') }}" class="menu-item {{ Request::is('purchase_journal') || Request::is('purchase_journal/*') ? 'active' : '' }}">Purchase Journal</a>
-                  <a href="{{ route('purchase_journal.index') }}" class="menu-item {{ Request::is('purchase_journal') || Request::is('purchase_journal/*') ? 'active' : '' }}">Return Pembelian</a>
-                  <a href="{{ route('retur_pembelian.index') }}" class="menu-item {{Request::is('retur_pembelian') || Request::is('retur_pembelian/create') || Request::is('retur_pembelian/*') ?'active':''}}">Retur Penjualan</a>
+                  <a href="{{ route('retur_pembelian.index') }}" class="menu-item {{Request::is('retur_pembelian') || Request::is('retur_pembelian/create') || Request::is('retur_pembelian/*') ?'active':''}}">Retur Pembelian</a>
               </div>
           </div>
           <div class="nav-item {{ Request::is('ju') || Request::is('ju/*') ? 'active' : '' }}">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PDF;
+use App\Model\Account;
+use App\Model\SaldoAwal;
 
 class PrintController extends Controller
 {
@@ -25,7 +27,8 @@ class PrintController extends Controller
 
     public function buku_besar()
     {
-      return view('reports.buku_besar.index');
+      $saldo_awal = SaldoAwal::all();
+      return view('reports.buku_besar.index', compact('saldo_awal'));
     }
 
     public function laba_rugi()

@@ -94,6 +94,7 @@
                               </div>
                           </div>
                         </td>
+                      </tr>
                       @include('pages.akun.edit')
                     @endforeach
                   </tbody>
