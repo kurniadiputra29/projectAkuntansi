@@ -220,10 +220,8 @@
     cashbanks: [
     {id_item:0, harga:0, description:"", unit:1, jumlah: 0},
     ],
-    jasa_pengiriman: [
-      {jasa_pengiriman:0, subtotal:0}
-    ],
-    ppn: [],
+    jasa_pengiriman: null,
+    ppn: false,
   },
   methods: {
     add() {
@@ -332,6 +330,14 @@
     };
     @endforeach
     this.cashbanks = cashbanks;
+
+    @if(isset($jasa))
+      this.jasa_pengiriman = parseInt('{{ $jasa->debet }}');
+    @endif
+
+    @if(isset($ppn) && $ppn == true)
+      this.ppn = true;
+    @endif
   },
 });
 </script>

@@ -67,10 +67,10 @@
                     </div>
                   </div>
                 </div>
-                <input type="text" name="nomor_akun2[]"
+                <input type="hidden" name="nomor_akun2[]"
                     :value="nomor_akun(cashbank.id_akun2, index)"
                   >
-                <input type="text" name="nama_akun2[]"
+                <input type="hidden" name="nama_akun2[]"
                     :value="nama_akun(cashbank.id_akun2, index)"
                 >
               </div>
@@ -220,10 +220,8 @@
     cashbanks: [
     {id_item:0, harga:0, description:"", unit:1, jumlah: 0},
     ],
-    jasa_pengiriman: [
-      {jasa_pengiriman:0, subtotal:0}
-    ],
-    ppn: [],
+    jasa_pengiriman: null,
+    ppn: false,
   },
   methods: {
     add() {
@@ -332,6 +330,14 @@
     };
     @endforeach
     this.cashbanks = cashbanks;
+
+    @if(isset($jasa))
+      this.jasa_pengiriman = parseInt('{{ $jasa->kredit }}');
+    @endif
+
+    @if(isset($ppn) && $ppn == true)
+      this.ppn = true;
+    @endif
   },
 });
 </script>

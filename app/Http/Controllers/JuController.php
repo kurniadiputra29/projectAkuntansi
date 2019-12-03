@@ -143,7 +143,7 @@ class JuController extends Controller
             $detail->save();
         }
 
-        return redirect('/ju')->with('Success', 'Data anda telah berhasil di Input !');
+        return redirect('/ju')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**

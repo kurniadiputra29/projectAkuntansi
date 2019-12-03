@@ -52,14 +52,14 @@ class SalesJournalController extends Controller
     public function store(Request $request)
     {
         $messages = [
-            'required' => ':attribute wajib diisi !!!',
-            'unique' => ':attribute harus diisi dengan syarat unique !!!',
+            'required'      => ':attribute wajib diisi !!!',
+            'unique'        => ':attribute harus diisi dengan syarat unique !!!',
         ];
         $this->validate($request,[
-            'tanggal' => 'required',
-            'customers_id' => 'required',
-            'description' => 'required',
-            'kode' => 'unique:sales_journals,kode|required',
+            'tanggal'       => 'required',
+            'customers_id'  => 'required',
+            'description'   => 'required',
+            'kode'          => 'unique:sales_journals,kode|required',
         ],$messages);
 
         //insert data SalesJournal
@@ -144,14 +144,19 @@ class SalesJournalController extends Controller
      */
     public function edit($id)
     {
-        $akun               = Account::all();
-        $customers          = DataCustomer::all();
-        $items              = Item::all();
-        $cashbanks          = SalesJournal::find($id);
-        $salesdetails       = salesjournaldetail::all();
-        $inventories        = Inventory::where('salesjournal_id', $id)->get();
-        $debets             = salesjournaldetail::where('salesjournal_id', $id)->where('kredit', null)->get();
-        return view('pages.sales_journal.edit', compact('akun', 'customers', 'items','cashbanks', 'salesdetails', 'inventories', 'debets'));
+        $akun           = Account::all();
+        $customers      = DataCustomer::all();
+        $items          = Item::all();
+        $cashbanks      = SalesJournal::find($id);
+        $debets         = salesjournaldetail::where('salesjournal_id', $id)->where('kredit', null)->get();
+        $inventories    = Inventory::where('salesjournal_id', $id)->get();
+        $jasa           = salesjournaldetail::where('salesjournal_id', $id)->where('nomor_akun', '4-2200')->first();
+        $ppn            = salesjournaldetail::where('salesjournal_id', $id)
+                                    ->where('nomor_akun', '2-1310')
+                                    ->where('kredit', '>', '0')
+                                    ->exists();
+        // dd($ppn);
+        return view('pages.sales_journal.edit', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn'));
     }
 
     /**
@@ -163,7 +168,80 @@ class SalesJournalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $messages = [
+            'required'      => ':attribute wajib diisi !!!',
+            'unique'        => ':attribute harus diisi dengan syarat unique !!!',
+        ];
+        $this->validate($request,[
+            'tanggal'       => 'required',
+            'customers_id'  => 'required',
+            'description'   => 'required',
+            'kode'          => 'unique:sales_journals,kode,'.$id,
+        ],$messages);
+
+        //insert data SalesJournal
+        $dataSalesJournal          = $request->only('id','tanggal', 'kode', 'customers_id', 'description');
+        $salesjournal              = SalesJournal::find($id)->update($dataSalesJournal);
+
+        //insert data SalesJournal detail
+        $detailsalesjournal                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+        $countKasBank1 = count($detailsalesjournal['total']);
+        $countKasBank2 = count($detailsalesjournal['subtotal']);
+        $countKasBank3 = count($detailsalesjournal['PPN']);
+        $countKasBank4 = count($detailsalesjournal['jasa_pengiriman']);
+
+        salesjournaldetail::where('salesjournal_id', $id)->delete();
+
+        for ($a=0; $a < $countKasBank1; $a++) { 
+            $detail                     = new salesjournaldetail();
+            $detail->salesjournal_id    = $id;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun2'][$a];
+            $detail->nama_akun          = $detailsalesjournal['nama_akun2'][$a];
+            $detail->debet              = $detailsalesjournal['total'][$a];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank2; $i++) { 
+            $detail                     = new salesjournaldetail();
+            $detail->salesjournal_id    = $id;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_sales'][$i];
+            $detail->nama_akun          = $detailsalesjournal['nama_akun2_sales'][$i];
+            $detail->kredit             = $detailsalesjournal['subtotal'][$i];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank3; $i++) { 
+            $detail                     = new salesjournaldetail();
+            $detail->salesjournal_id    = $id;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_ppn'][$i];
+            $detail->nama_akun          = $detailsalesjournal['nama_akun2_ppn'][$i];
+            $detail->kredit             = $detailsalesjournal['PPN'][$i];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank4; $i++) { 
+            $detail                     = new salesjournaldetail();
+            $detail->salesjournal_id    = $id;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_jasa'][$i];
+            $detail->nama_akun          = $detailsalesjournal['nama_akun2_jasa'][$i];
+            $detail->kredit             = $detailsalesjournal['jasa_pengiriman'][$i];
+            $detail->save();
+        }
+
+        Inventory::where('salesjournal_id', $id)->delete();
+        //insert data Inventory
+        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
+        $countinventory1 = count($inventory['jumlah']);
+
+        for ($x=0; $x < $countinventory1; $x++) { 
+            $detail                     = new Inventory();
+            $detail->salesjournal_id    = $id;
+            $detail->items_id           = $inventory['items'][$x];
+            $detail->status             = $inventory['status'][$x];
+            $detail->unit               = $inventory['unit'][$x];
+            $detail->price              = $inventory['harga'][$x];
+            $detail->total              = $inventory['jumlah'][$x];
+            $detail->save();
+        }
+
+        return redirect('/sales_journal')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**

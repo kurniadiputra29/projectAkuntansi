@@ -174,15 +174,14 @@
                   </label>
                   <input type="hidden" name="nomor_akun_ppn[]" value="2-1310">
                   <input type="hidden" name="nama_akun2_ppn[]" value="PPN Outcome">
-                  <input type="text" class="form-control" id="exampleInputUsername2" name="PPN[]" :value="ppns"  readonly>
+                  <input type="hidden" class="form-control" id="exampleInputUsername2" name="PPN[]" :value="ppns"  readonly>
               </div>
             </div>
           </div>
           <div class="form-group row justify-content-end">
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Jasa Pengiriman : Rp</label>
             <div class="col-sm-4">
-              <input type="text" class="form-control" id="exampleInputUsername2" name="jasa_pengiriman2[]" v-model.number="jasa_pengiriman">
-              <input type="text" class="form-control" id="exampleInputUsername2" name="jasa_pengiriman[]" v-model.number="jasas">
+              <input type="text" class="form-control" id="exampleInputUsername2" name="jasa_pengiriman[]" v-model.number="jasa_pengiriman">
               <input type="hidden" name="nomor_akun_jasa[]" value="4-2200">
               <input type="hidden" name="nama_akun2_jasa[]" value="Freight Colected">
             </div>
@@ -220,10 +219,8 @@
     cashbanks: [
     {id_item:0, harga:0, description:"", unit:1, jumlah: 0},
     ],
-    jasa_pengiriman: [
-      {jasa_pengiriman:0, subtotal:0}
-    ],
-    ppn: [],
+    jasa_pengiriman: null,
+    ppn: false,
   },
   methods: {
     add() {
@@ -307,22 +304,15 @@
       var ppns = this.subtotal*10/100;
       return ppns;
     },
-    jasa_pengiriman() {
-      var jasa_pengiriman = this.jasa_pengiriman2;
-      return jasa_pengiriman;
-    },
     jasas() {
       if (this.ppn == '') {
-        var ppns =  @foreach($jasa as $key)
-                      {{ $key->kredit }}
-                    @endforeach;
+        var ppns =  parseInt('{{$jasa->kredit}}');
         this.ppn = this.ppn;
         return ppns;
       } else {
         var jasas = this.jasa_pengiriman;
         return jasas;
       }
-      
     },
     totals() {
         if (this.subtotal == '') {
@@ -351,6 +341,14 @@
     };
     @endforeach
     this.cashbanks = cashbanks;
+
+    @if(isset($jasa))
+      this.jasa_pengiriman = parseInt('{{ $jasa->kredit }}');
+    @endif
+
+    @if(isset($ppn) && $ppn == true)
+      this.ppn = true;
+    @endif
   },
 });
 </script>

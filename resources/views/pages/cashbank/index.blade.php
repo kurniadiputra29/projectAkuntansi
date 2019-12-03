@@ -64,11 +64,11 @@
                 </div>
                 @endif
               <div class="dt-responsive">
-                <table id="order-table" class="table table-striped table-bordered nowrap">
+                <table id="simpletable" class="table table-striped table-bordered nowrap">
                   <thead>
                     <tr>
-                      <th>Tanggal</th>
                       <th>Kode</th>
+                      <th>Tanggal</th>
                       <th>Penerima/ Diterima</th>
                       <th>Deskripsi</th>
                       <th>Status</th>
@@ -78,8 +78,8 @@
                   <tbody>
                     @foreach ($data as $key)
                         <tr>
-                          <td>{{ $key->tanggal }}</td>
                           <td>{{ $key->kode }}</td>
+                          <td>{{ $key->tanggal }}</td>
                           <td>{{ $key->penerima_diterima }}</td>
                           <td>{{ $key->description }}</td>
                           <td>@if ($key->status == 0)

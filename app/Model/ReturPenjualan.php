@@ -21,4 +21,8 @@ class ReturPenjualan extends Model
     {
       return $this->hasMany(ReturPenjualanDetail::class);
     }
+    public function Inventory()
+    {
+      return $this->hasMany(Inventory::class, "retur_penjualan_id");
+    }
 }

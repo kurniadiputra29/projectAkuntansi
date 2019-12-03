@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Inventory extends Model
 {
     protected $table = 'inventories';
-    protected $fillable = ['items_id', 'cpj_id', 'crj_id', 'purchasejournal_id', 'salesjournal_id', 'status', 'unit' ,'price', 'total'];
+    protected $fillable = ['items_id', 'cpj_id', 'crj_id', 'purchasejournal_id', 'salesjournal_id', 'retur_penjualan_id', 'retur_pembelian_id','status', 'unit' ,'price', 'total'];
     public function Items()
     {
     	return $this->belongsTo(Item::class, "items_id");
@@ -28,4 +28,13 @@ class Inventory extends Model
     {
     	return $this->belongsTo(cpj::class, "cpj_id");
     }
+    public function ReturPenjualan()
+    {
+        return $this->belongsTo(ReturPenjualan::class, "retur_penjualan_id");
+    }
+    public function ReturPembelian()
+    {
+        return $this->belongsTo(ReturPembelian::class, "retur_pembelian_id");
+    }
+
 }

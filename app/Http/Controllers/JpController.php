@@ -143,7 +143,7 @@ class JpController extends Controller
             $detail->save();
         }
 
-        return redirect('/jp')->with('Success', 'Data anda telah berhasil di Input !');
+        return redirect('/jp')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**

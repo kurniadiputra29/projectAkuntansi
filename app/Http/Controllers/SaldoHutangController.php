@@ -79,7 +79,7 @@ class SaldoHutangController extends Controller
     public function update(SaldoHutangRequest $request, $id)
     {
         SaldoHutang::find($id)->update($request->all());
-        return redirect('saldo_hutang')->with('Success', 'Data anda telah berhasil di edit !');
+        return redirect('saldo_hutang')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**

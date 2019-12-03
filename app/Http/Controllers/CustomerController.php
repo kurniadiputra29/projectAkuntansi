@@ -80,7 +80,7 @@ class CustomerController extends Controller
     {
         DataCustomer::find($id)->update($request->all());
 
-        return redirect('customer')->with('Success', 'Data anda telah berhasil di edit !');
+        return redirect('customer')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**

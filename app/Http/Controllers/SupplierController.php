@@ -77,7 +77,7 @@ class SupplierController extends Controller
     public function update(SupplierRequest $request, $id)
     {
         DataSupplier::find($id)->update($request->all());
-        return redirect('supplier')->with('Success', 'Data anda telah berhasil di edit !');
+        return redirect('supplier')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**

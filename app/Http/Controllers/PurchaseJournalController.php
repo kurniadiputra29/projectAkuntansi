@@ -146,11 +146,15 @@ class PurchaseJournalController extends Controller
         $suppliers          = DataSupplier::all();
         $items              = Item::all();
         $cashbanks          = PurchaseJournal::find($id);
-        $purchasedetails    = purchasejournaldetail::all();
         $inventories        = Inventory::where('purchasejournal_id', $id)->get();
         $kredits            = purchasejournaldetail::where('purchasejournal_id', $id)->where('debet', null)->get();
-        return view('pages.purchase_journal.edit', compact('akun', 'suppliers', 'items','cashbanks', 'purchasedetails', 'inventories', 'kredits'));
-
+        $jasa               = purchasejournaldetail::where('purchasejournal_id', $id)->where('nomor_akun', '5-1300')->first();
+        $ppn                = purchasejournaldetail::where('purchasejournal_id', $id)
+                                    ->where('nomor_akun', '2-1320')
+                                    ->where('debet', '>', '0')
+                                    ->exists();
+        
+        return view('pages.purchase_journal.edit', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn'));
     }
 
     /**
@@ -162,7 +166,80 @@ class PurchaseJournalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $messages = [
+            'required' => ':attribute wajib diisi !!!',
+            'unique' => ':attribute harus diisi dengan syarat unique !!!',
+        ];
+        $this->validate($request,[
+            'tanggal' => 'required',
+            'suppliers_id' => 'required',
+            'description' => 'required',
+            'kode' => 'unique:purchase_journals,kode,'.$id,
+        ],$messages);
+
+        //insert data PurchaseJournal
+        $dataPurchaseJournal          = $request->only('id','tanggal', 'kode', 'suppliers_id', 'description');
+        $PurchaseJournal              = PurchaseJournal::find($id)->update($dataPurchaseJournal);
+
+        //insert data PurchaseJournal detail
+        $detailcrj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+        $countKasBank1 = count($detailcrj['total']);
+        $countKasBank2 = count($detailcrj['subtotal']);
+        $countKasBank3 = count($detailcrj['PPN']);
+        $countKasBank4 = count($detailcrj['jasa_pengiriman']);
+
+        purchasejournaldetail::where('purchasejournal_id', $id)->delete();
+
+        for ($a=0; $a < $countKasBank1; $a++) { 
+            $detail                         = new purchasejournaldetail();
+            $detail->purchasejournal_id     = $id;
+            $detail->nomor_akun             = $detailcrj['nomor_akun2'][$a];
+            $detail->nama_akun              = $detailcrj['nama_akun2'][$a];
+            $detail->kredit                 = $detailcrj['total'][$a];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank2; $i++) { 
+            $detail                         = new purchasejournaldetail();
+            $detail->purchasejournal_id     = $id;
+            $detail->nomor_akun             = $detailcrj['nomor_akun_sales'][$i];
+            $detail->nama_akun              = $detailcrj['nama_akun2_sales'][$i];
+            $detail->debet                  = $detailcrj['subtotal'][$i];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank3; $i++) { 
+            $detail                         = new purchasejournaldetail();
+            $detail->purchasejournal_id     = $id;
+            $detail->nomor_akun             = $detailcrj['nomor_akun_ppn'][$i];
+            $detail->nama_akun              = $detailcrj['nama_akun2_ppn'][$i];
+            $detail->debet                  = $detailcrj['PPN'][$i];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank4; $i++) { 
+            $detail                         = new purchasejournaldetail();
+            $detail->purchasejournal_id     = $id;
+            $detail->nomor_akun             = $detailcrj['nomor_akun_jasa'][$i];
+            $detail->nama_akun              = $detailcrj['nama_akun2_jasa'][$i];
+            $detail->debet                  = $detailcrj['jasa_pengiriman'][$i];
+            $detail->save();
+        }
+
+        Inventory::where('purchasejournal_id', $id)->delete();
+
+        //insert data Inventory
+        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
+        $countinventory1 = count($inventory['jumlah']);
+
+        for ($x=0; $x < $countinventory1; $x++) { 
+            $detail                         = new Inventory();
+            $detail->purchasejournal_id     = $id;
+            $detail->items_id               = $inventory['items'][$x];
+            $detail->status                 = $inventory['status'][$x];
+            $detail->unit                   = $inventory['unit'][$x];
+            $detail->price                  = $inventory['harga'][$x];
+            $detail->total                  = $inventory['jumlah'][$x];
+            $detail->save();
+        }
+        return redirect('/purchase_journal')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**
