@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Edit CPJ')
+@section('title', 'AccountMin - Edit Retur Pembelian')
 
 @section('content')
 
@@ -12,7 +12,7 @@
           <div class="page-header-title">
             <i class="ik ik-menu bg-blue"></i>
             <div class="d-inline">
-              <h5>Edit Cash Payment Journal</h5>
+              <h5>Edit Retur Pembelian</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
             </div>
           </div>
@@ -23,7 +23,9 @@
               <li class="breadcrumb-item">
                 <a href="/dasbor"><i class="ik ik-home"></i></a>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">CPJ</li>
+              <li class="breadcrumb-item" aria-current="page">
+                <a href="/retur_pembelian">Retur Pembelian</a>
+              </li>
               <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
           </nav>
@@ -42,11 +44,11 @@
             </ul>
           </div>
           @endif
-        <form class="forms-sample" action="{{route('cpj.update', $cashbanks->id)}}" method="post">
+        <form class="forms-sample" action="{{route('retur_pembelian.update', $cashbanks->id)}}" method="post">
           @csrf
           @method('PUT')
           <div class="card">
-            <div class="card-header" style="background: #2dce89;"><h3 style="color: white">Cash Payment Journal</h3>
+            <div class="card-header" style="background: #2dce89;"><h3 style="color: white">Retur Pembelian</h3>
             </div>
             <div class="card-body">
               <div
@@ -56,11 +58,11 @@
                 <div class="row input-group-primary">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="setor_ke">Di Bayar Dari</label>
+                      <label for="setor_ke">Setor Ke</label>
                       <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
-                        @foreach($kredits as $kredit)
+                        @foreach($debets as $debet)
                         @foreach ($akun as $key)
-                        <option value="{{$key->nomor}}" {{$kredit->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
+                        <option value="{{$key->nomor}}" {{$debet->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
                         @endforeach
                         @endforeach
                       </select>
@@ -95,7 +97,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="no_transaksi">Nomor Transaksi</label>
-                    <input class="form-control" name="kode" type="text" id="no_transaksi" value="{{$cashbanks->kode}}">
+                    <input class="form-control" name="kode" type="text" id="no_transaksi"value="{{$cashbanks->kode}}">
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -106,7 +108,7 @@
                 </div>
               </div>
 
-              <div 
+              <div
                 class="row"
                 v-for="(cashbank, index) in cashbanks"
                 :key="index"
@@ -126,13 +128,13 @@
                   <div class="form-group">
                     <label for="unit">QTY</label>
                     <input class="form-control" type="number" id="unit" name="unit[]" v-model="cashbank.unit">
+                    <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="1">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="harga">Harga Satuan</label>
                     <input class="form-control" type="number" id="harga" name="harga[]" :value="harga(cashbank.id_item, index)">
-                    <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="1">
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -195,7 +197,7 @@
           </div>
 
           <div class="forms-sample" style="margin-bottom: 10px; margin-top: 30px; justify-content: space-between; display: flex;">
-            <a href="{{route('cpj.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
+            <a href="{{route('retur_pembelian.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
             <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Edit</button>
           </div>
         </div>
@@ -215,15 +217,13 @@
    el: '#app',
    data: {
     cashbanks2: [
-    {id_akun2:"{{$kredit->nomor_akun}}", description:"", jumlah: 0},
+    {id_akun2:"{{$debet->nomor_akun}}", description:"", jumlah: 0},
     ],
     cashbanks: [
     {id_item:0, harga:0, description:"", unit:1, jumlah: 0},
     ],
-    jasa_pengiriman: [
-      {jasa_pengiriman:0, subtotal:0}
-    ],
-    ppn: [],
+    jasa_pengiriman: null,
+    ppn: false,
   },
   methods: {
     add() {
@@ -264,10 +264,10 @@
         var jumlah =  this.items[id_item]*unit;
         this.cashbanks[index].jumlah = jumlah;
         return jumlah;
-      }, 
+      },
   },
   computed: {
-    
+
     nomor_akuns() {
       var akun = [];
       akun[0] = 0;
@@ -334,7 +334,7 @@
     this.cashbanks = cashbanks;
 
     @if(isset($jasa))
-      this.jasa_pengiriman = parseInt('{{ $jasa->debet }}');
+      this.jasa_pengiriman = parseInt('{{ $jasa->kredit }}');
     @endif
 
     @if(isset($ppn) && $ppn == true)

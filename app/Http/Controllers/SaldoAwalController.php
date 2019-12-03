@@ -80,7 +80,7 @@ class SaldoAwalController extends Controller
     public function update(SaldoAwalRequest $request, $id)
     {
         SaldoAwal::find($id)->update($request->all());
-        return redirect('saldo_awal')->with('Success', 'Data anda telah berhasil di edit !');
+        return redirect('saldo_awal')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**

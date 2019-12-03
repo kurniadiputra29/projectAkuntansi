@@ -34,7 +34,8 @@ class KasKecilController extends Controller
 		{
 			$akun 			= Account::all();
 			$pettycashs 	= Pettycash::orderBy('id', 'desc')->paginate(1);
-			return view('pages.kas_kecil.create', compact('akun', 'pettycashs'));
+        	$pettycashs_count 	= Pettycash::all()->count();
+			return view('pages.kas_kecil.create', compact('akun', 'pettycashs', 'pettycashs_count'));
 		}
 
 		/**
@@ -194,7 +195,7 @@ class KasKecilController extends Controller
 					$detail->save();
 				}
 				
-				return redirect('kas_kecil')->with('Success', 'Data anda telah berhasil di input !');
+				return redirect('kas_kecil')->with('Success', 'Data anda telah berhasil di Edit !');
 		}
 
 		/**

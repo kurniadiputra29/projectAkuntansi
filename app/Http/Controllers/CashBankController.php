@@ -215,7 +215,7 @@ class CashBankController extends Controller
                 $detail->save();
             }
 
-            return redirect('/cashbank')->with('Success', 'Data anda telah berhasil di Input !');
+            return redirect('/cashbank')->with('Success', 'Data anda telah berhasil di Edit !');
 
         } else {
 
@@ -258,7 +258,7 @@ class CashBankController extends Controller
                 $detail->save();
             }
 
-            return redirect('/cashbank')->with('Success', 'Data anda telah berhasil di Input !');
+            return redirect('/cashbank')->with('Success', 'Data anda telah berhasil di Edit !');
 
         }
     }

@@ -21,4 +21,8 @@ class ReturPembelian extends Model
     {
       return $this->hasMany(ReturPembelianDetail::class);
     }
+    public function Inventory()
+    {
+      return $this->hasMany(Inventory::class, "retur_pembelian_id");
+    }
 }

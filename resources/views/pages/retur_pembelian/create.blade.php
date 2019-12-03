@@ -57,7 +57,7 @@
                 <div class="row input-group-primary">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="setor_ke">Setor Ke</label>
+                      <label for="setor_ke">Di Bayar Dari</label>
                       <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
                         @foreach ($akun as $key)
                         <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
@@ -94,7 +94,14 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="no_transaksi">Nomor Transaksi</label>
-                    <input class="form-control" name="kode" type="text" id="no_transaksi">
+                    @if ($returns_count <= 0)
+                      <input class="form-control" name="kode" type="text" id="no_transaksi">
+                    @else
+                      @foreach ($returns as $key)
+                      <input class="form-control" name="kode" type="text" id="no_transaksi" placeholder="
+                      {{$key->kode}}">
+                      @endforeach
+                    @endif
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -125,6 +132,7 @@
                   <div class="form-group">
                     <label for="unit">QTY</label>
                     <input class="form-control" type="number" id="unit" name="unit[]" v-model="cashbank.unit">
+                    <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="1">
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -159,8 +167,8 @@
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Sub Total : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="subtotal[]" :value="subtotal" readonly>
-              <input type="hidden" name="nomor_akun_sales[]" value="4-1100">
-              <input type="hidden" name="nama_akun2_sales[]" value="Sales Of Merchandise">
+              <input type="hidden" name="nomor_akun_sales[]" value="1-1310">
+              <input type="hidden" name="nama_akun2_sales[]" value="Merchandise Inventory">
             </div>
           </div>
           <div class="form-group row justify-content-end" >
@@ -171,8 +179,8 @@
                   <label for="checkbox18">
                   PPN 10%
                   </label>
-                  <input type="hidden" name="nomor_akun_ppn[]" value="2-1310">
-                  <input type="hidden" name="nama_akun2_ppn[]" value="PPN Outcome">
+                  <input type="hidden" name="nomor_akun_ppn[]" value="2-1320">
+                  <input type="hidden" name="nama_akun2_ppn[]" value="PPN Income">
                   <input type="hidden" class="form-control" id="exampleInputUsername2" name="PPN[]" :value="ppns"  readonly>
               </div>
             </div>
@@ -181,8 +189,8 @@
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Jasa Pengiriman : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="jasa_pengiriman[]" v-model.number="jasa_pengiriman">
-              <input type="hidden" name="nomor_akun_jasa[]" value="4-2200">
-              <input type="hidden" name="nama_akun2_jasa[]" value="Freight Colected">
+              <input type="hidden" name="nomor_akun_jasa[]" value="5-1300">
+              <input type="hidden" name="nama_akun2_jasa[]" value="Freight Paid">
             </div>
           </div>
           <div class="form-group row justify-content-end">

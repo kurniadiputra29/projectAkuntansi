@@ -82,7 +82,7 @@ class AkunController extends Controller
     {
         Account::find($id)->update($request->all());
 
-        return redirect('akun')->with('Success', 'Data anda telah berhasil di edit !');
+        return redirect('akun')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**

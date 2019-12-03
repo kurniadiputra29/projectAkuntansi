@@ -63,11 +63,11 @@
                 </div>
                 @endif
                 <div class="dt-responsive">
-                  <table id="order-table" class="table table-striped table-bordered nowrap">
+                  <table id="simpletable" class="table table-striped table-bordered nowrap">
                     <thead>
                       <tr>
-                        <th>Tanggal</th>
                         <th>Kode</th>
+                        <th>Tanggal</th>
                         <th>Deskripsi</th>
                         <th class="text-right">Aksi</th>
                       </tr>
@@ -75,8 +75,8 @@
                     <tbody>
                       @foreach ($data as $key)
                         <tr>
-                          <td>{{ $key->tanggal }}</td>
                           <td>{{ $key->kode }}</td>
+                          <td>{{ $key->tanggal }}</td>
                           <td>{{ $key->description }}</td>
                           <td class="text-right">
                             <div class="dropdown">

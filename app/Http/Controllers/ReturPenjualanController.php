@@ -8,6 +8,7 @@ use App\Model\ReturPenjualanDetail;
 use App\Model\Account;
 use App\Model\DataCustomer;
 use App\Model\Item;
+use App\Model\Inventory;
 
 class ReturPenjualanController extends Controller
 {
@@ -33,10 +34,12 @@ class ReturPenjualanController extends Controller
      */
     public function create()
     {
-        $akun = Account::all();
-        $customers = DataCustomer::all();
-        $items = Item::all();
-        return view('pages.retur_penjualan.create', compact('akun', 'customers', 'items'));
+        $akun             = Account::all();
+        $customers        = DataCustomer::all();
+        $items            = Item::all();
+        $returns          = ReturPenjualan::orderBy('id', 'desc')->paginate(1);
+        $returns_count    = ReturPenjualan::all()->count();
+        return view('pages.retur_penjualan.create', compact('akun', 'customers', 'items', 'returns', 'returns_count'));
     }
 
     /**
@@ -101,7 +104,20 @@ class ReturPenjualanController extends Controller
           $detail->debet              = $detailReturPenjualan['jasa_pengiriman'][$i];
           $detail->save();
       }
+      //insert data Inventory
+      $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
+      $countinventory1 = count($inventory['jumlah']);
 
+      for ($x=0; $x < $countinventory1; $x++) { 
+          $detail                     = new Inventory();
+          $detail->retur_penjualan_id = $ReturPenjualan->id;
+          $detail->items_id           = $inventory['items'][$x];
+          $detail->status             = $inventory['status'][$x];
+          $detail->unit               = $inventory['unit'][$x];
+          $detail->price              = $inventory['harga'][$x];
+          $detail->total              = $inventory['jumlah'][$x];
+          $detail->save();
+      }
       return redirect('/retur_penjualan')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
@@ -125,7 +141,19 @@ class ReturPenjualanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $akun           = Account::all();
+        $customers      = DataCustomer::all();
+        $items          = Item::all();
+        $cashbanks      = ReturPenjualan::find($id);
+        $kredits        = ReturPenjualanDetail::where('retur_penjualan_id', $id)->where('debet', null)->get();
+        $inventories    = Inventory::where('retur_penjualan_id', $id)->get();
+        $jasa           = ReturPenjualanDetail::where('retur_penjualan_id', $id)->where('nomor_akun', '4-2200')->first();
+        $ppn            = ReturPenjualanDetail::where('retur_penjualan_id', $id)
+                                    ->where('nomor_akun', '2-1310')
+                                    ->where('debet', '>', '0')
+                                    ->exists();
+
+        return view('pages.retur_penjualan.edit', compact('akun', 'customers', 'items', 'cashbanks', 'kredits', 'inventories', 'jasa', 'ppn'));
     }
 
     /**
@@ -137,7 +165,80 @@ class ReturPenjualanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $messages = [
+          'required'  => ':attribute wajib diisi !!!',
+          'unique'    => ':attribute harus diisi dengan syarat unique !!!',
+      ];
+      $this->validate($request,[
+          'tanggal'       => 'required',
+          'customers_id'  => 'required',
+          'description'   => 'required',
+          'kode'          => 'unique:retur_penjualans,kode,'.$id,
+      ],$messages);
+
+      //insert data retur_penjualan
+      $dataReturPenjualan          = $request->only('id','tanggal', 'kode', 'customers_id', 'description');
+      $ReturPenjualan              = ReturPenjualan::find($id)->update($dataReturPenjualan);
+
+      //insert data retur_penjualan detail
+      $detailReturPenjualan        = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+      $countKasBank1 = count($detailReturPenjualan['total']);
+      $countKasBank2 = count($detailReturPenjualan['subtotal']);
+      $countKasBank3 = count($detailReturPenjualan['PPN']);
+      $countKasBank4 = count($detailReturPenjualan['jasa_pengiriman']);
+
+      ReturPenjualanDetail::where('retur_penjualan_id', $id)->delete();
+
+      for ($a=0; $a < $countKasBank1; $a++) {
+          $detail                     = new ReturPenjualanDetail();
+          $detail->retur_penjualan_id = $id;
+          $detail->nomor_akun         = $detailReturPenjualan['nomor_akun2'][$a];
+          $detail->nama_akun          = $detailReturPenjualan['nama_akun2'][$a];
+          $detail->kredit             = $detailReturPenjualan['total'][$a];
+          $detail->save();
+      }
+      for ($i=0; $i < $countKasBank2; $i++) {
+          $detail                     = new ReturPenjualanDetail();
+          $detail->retur_penjualan_id = $id;
+          $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_sales'][$i];
+          $detail->nama_akun          = $detailReturPenjualan['nama_akun2_sales'][$i];
+          $detail->debet              = $detailReturPenjualan['subtotal'][$i];
+          $detail->save();
+      }
+      for ($i=0; $i < $countKasBank3; $i++) {
+          $detail                     = new ReturPenjualanDetail();
+          $detail->retur_penjualan_id = $id;
+          $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_ppn'][$i];
+          $detail->nama_akun          = $detailReturPenjualan['nama_akun2_ppn'][$i];
+          $detail->debet              = $detailReturPenjualan['PPN'][$i];
+          $detail->save();
+      }
+      for ($i=0; $i < $countKasBank4; $i++) {
+          $detail                     = new ReturPenjualanDetail();
+          $detail->retur_penjualan_id = $id;
+          $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_jasa'][$i];
+          $detail->nama_akun          = $detailReturPenjualan['nama_akun2_jasa'][$i];
+          $detail->debet              = $detailReturPenjualan['jasa_pengiriman'][$i];
+          $detail->save();
+      }
+
+      Inventory::where('retur_penjualan_id', $id)->delete();
+      
+      //insert data Inventory
+      $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
+      $countinventory1 = count($inventory['jumlah']);
+
+      for ($x=0; $x < $countinventory1; $x++) { 
+          $detail                     = new Inventory();
+          $detail->retur_penjualan_id = $id;
+          $detail->items_id           = $inventory['items'][$x];
+          $detail->status             = $inventory['status'][$x];
+          $detail->unit               = $inventory['unit'][$x];
+          $detail->price              = $inventory['harga'][$x];
+          $detail->total              = $inventory['jumlah'][$x];
+          $detail->save();
+      }
+      return redirect('/retur_penjualan')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**

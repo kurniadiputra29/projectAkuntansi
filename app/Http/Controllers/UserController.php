@@ -141,7 +141,7 @@ class UserController extends Controller
 
             $data->foto = $path;
             $data->save();
-            return redirect('users')->with('Success', 'Data anda telah berhasil di edit !');
+            return redirect('users')->with('Success', 'Data anda telah berhasil di Edit !');
         }
     }
 

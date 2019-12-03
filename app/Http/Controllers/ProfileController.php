@@ -83,7 +83,7 @@ class ProfileController extends Controller
     {
       DataPerusahaan::find($id)->update($request->all());
 
-      return redirect('profile')->with('Success', 'Data anda telah berhasil di edit !');
+      return redirect('profile')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**

@@ -43,7 +43,7 @@
               </div>
               <div class="card-body">
                 <div class="dt-responsive">
-                  <table id="order-table" class="table table-striped table-bordered nowrap">
+                  <table id="simpletable" class="table table-striped table-bordered nowrap">
                     <thead>
                       <tr>
                         <th>Kode</th>

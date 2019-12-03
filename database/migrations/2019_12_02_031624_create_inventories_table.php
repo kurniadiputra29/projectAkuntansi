@@ -20,6 +20,8 @@ class CreateInventoriesTable extends Migration
             $table->unsignedInteger('crj_id')->nullable();
             $table->unsignedInteger('purchasejournal_id')->nullable();
             $table->unsignedInteger('salesjournal_id')->nullable();
+            $table->unsignedInteger('retur_penjualan_id')->nullable();
+            $table->unsignedInteger('retur_pembelian_id')->nullable();
             $table->string('status');
             $table->integer('unit');
             $table->integer('price');
@@ -31,6 +33,8 @@ class CreateInventoriesTable extends Migration
             $table->foreign('crj_id')->references('id')->on('crjs')->onDelete('cascade');
             $table->foreign('purchasejournal_id')->references('id')->on('purchase_journals')->onDelete('cascade');
             $table->foreign('salesjournal_id')->references('id')->on('sales_journals')->onDelete('cascade');
+            $table->foreign('retur_penjualan_id')->references('id')->on('retur_penjualans')->onDelete('cascade');
+            $table->foreign('retur_pembelian_id')->references('id')->on('retur_pembelians')->onDelete('cascade');
         });
     }
 

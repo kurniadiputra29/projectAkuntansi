@@ -51,14 +51,14 @@ class CpjController extends Controller
     public function store(Request $request)
     {
         $messages = [
-            'required' => ':attribute wajib diisi !!!',
-            'unique' => ':attribute harus diisi dengan syarat unique !!!',
+            'required'      => ':attribute wajib diisi !!!',
+            'unique'        => ':attribute harus diisi dengan syarat unique !!!',
         ];
         $this->validate($request,[
-            'tanggal' => 'required',
-            'suppliers_id' => 'required',
-            'description' => 'required',
-            'kode' => 'unique:cpjs,kode|required',
+            'tanggal'       => 'required',
+            'suppliers_id'  => 'required',
+            'description'   => 'required',
+            'kode'          => 'unique:cpjs,kode|required',
         ],$messages);
 
         //insert data cpj
@@ -146,10 +146,15 @@ class CpjController extends Controller
         $suppliers      = DataSupplier::all();
         $items          = Item::all();
         $cashbanks      = cpj::find($id);
-        $cpjdetails     = cpjdetail::all();
         $inventories    = Inventory::where('cpj_id', $id)->get();
         $kredits        = cpjdetail::where('cpj_id', $id)->where('debet', null)->get();
-        return view('pages.cpj.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'cpjdetails', 'inventories', 'kredits'));
+        $jasa           = cpjdetail::where('cpj_id', $id)->where('nomor_akun', '5-1300')->first();
+        $ppn            = cpjdetail::where('cpj_id', $id)
+                                    ->where('nomor_akun', '2-1320')
+                                    ->where('debet', '>', '0')
+                                    ->exists();
+
+        return view('pages.cpj.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn'));
     }
 
     /**
@@ -161,7 +166,80 @@ class CpjController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $messages = [
+            'required'      => ':attribute wajib diisi !!!',
+            'unique'        => ':attribute harus diisi dengan syarat unique !!!',
+        ];
+        $this->validate($request,[
+            'tanggal'       => 'required',
+            'suppliers_id'  => 'required',
+            'description'   => 'required',
+            'kode'          => 'unique:cpjs,kode,'.$id,
+        ],$messages);
+
+        //insert data cpj
+        $dataCPJ          = $request->only('id','tanggal', 'kode', 'suppliers_id', 'description');
+        $cpj              = cpj::find($id)->update($dataCPJ);
+
+        //insert data cpj detail
+        $detailcrj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+        $countKasBank1 = count($detailcrj['total']);
+        $countKasBank2 = count($detailcrj['subtotal']);
+        $countKasBank3 = count($detailcrj['PPN']);
+        $countKasBank4 = count($detailcrj['jasa_pengiriman']);
+
+        cpjdetail::where('cpj_id', $id)->delete();
+
+        for ($a=0; $a < $countKasBank1; $a++) {
+            $detail                     = new cpjdetail();
+            $detail->cpj_id             = $id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun2'][$a];
+            $detail->nama_akun          = $detailcrj['nama_akun2'][$a];
+            $detail->kredit             = $detailcrj['total'][$a];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank2; $i++) {
+            $detail                     = new cpjdetail();
+            $detail->cpj_id             = $id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_sales'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_sales'][$i];
+            $detail->debet              = $detailcrj['subtotal'][$i];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank3; $i++) {
+            $detail                     = new cpjdetail();
+            $detail->cpj_id             = $id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_ppn'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_ppn'][$i];
+            $detail->debet              = $detailcrj['PPN'][$i];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank4; $i++) {
+            $detail                     = new cpjdetail();
+            $detail->cpj_id             = $id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_jasa'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_jasa'][$i];
+            $detail->debet              = $detailcrj['jasa_pengiriman'][$i];
+            $detail->save();
+        }
+
+        Inventory::where('cpj_id', $id)->delete();
+
+        //insert data Inventory
+        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
+        $countinventory1 = count($inventory['jumlah']);
+
+        for ($x=0; $x < $countinventory1; $x++) { 
+            $detail                     = new Inventory();
+            $detail->cpj_id             = $id;
+            $detail->items_id           = $inventory['items'][$x];
+            $detail->status             = $inventory['status'][$x];
+            $detail->unit               = $inventory['unit'][$x];
+            $detail->price              = $inventory['harga'][$x];
+            $detail->total              = $inventory['jumlah'][$x];
+            $detail->save();
+        }
+        return redirect('/cpj')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**

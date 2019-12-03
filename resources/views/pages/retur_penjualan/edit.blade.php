@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Edit CPJ')
+@section('title', 'AccountMin - Edit Retur Penjualan')
 
 @section('content')
 
@@ -12,7 +12,7 @@
           <div class="page-header-title">
             <i class="ik ik-menu bg-blue"></i>
             <div class="d-inline">
-              <h5>Edit Cash Payment Journal</h5>
+              <h5>Edit Retur Penjualan</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
             </div>
           </div>
@@ -23,7 +23,7 @@
               <li class="breadcrumb-item">
                 <a href="/dasbor"><i class="ik ik-home"></i></a>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">CPJ</li>
+              <li class="breadcrumb-item active" aria-current="page">Retur Penjualan</li>
               <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
           </nav>
@@ -42,11 +42,11 @@
             </ul>
           </div>
           @endif
-        <form class="forms-sample" action="{{route('cpj.update', $cashbanks->id)}}" method="post">
+        <form class="forms-sample" action="{{route('retur_penjualan.update', $cashbanks->id)}}" method="post">
           @csrf
           @method('PUT')
           <div class="card">
-            <div class="card-header" style="background: #2dce89;"><h3 style="color: white">Cash Payment Journal</h3>
+            <div class="card-header" style="background: #2dce89;"><h3 style="color: white">Retur Penjualan</h3>
             </div>
             <div class="card-body">
               <div
@@ -56,7 +56,7 @@
                 <div class="row input-group-primary">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="setor_ke">Di Bayar Dari</label>
+                      <label for="setor_ke">Setor Ke</label>
                       <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
                         @foreach($kredits as $kredit)
                         @foreach ($akun as $key)
@@ -77,11 +77,11 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="setor_ke">Suppliers</label>
-                      <select class="form-control" id="setor_ke" name="suppliers_id">
-                        <option value="0"> ~~ Pilih Suppliers ~~ </option>
-                        @foreach ($suppliers as $supplier)
-                        <option value="{{$supplier->id}}" {{$cashbanks->suppliers_id == $supplier->id ? 'selected' : ''}}>{{$supplier->nama}}</option>
+                    <label for="setor_ke">Customers</label>
+                      <select class="form-control" id="setor_ke" name="customers_id">
+                        <option value="0"> ~~ Pilih Customers ~~ </option>
+                        @foreach ($customers as $customer)
+                        <option value="{{$customer->id}}" {{$cashbanks->customers_id == $customer->id ? 'selected' : ''}}>{{$customer->nama}}</option>
                         @endforeach
                       </select>
                   </div>
@@ -101,12 +101,12 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="description">Deskripsi</label>
-                    <textarea class="form-control" name="description" type="text" id="description" rows="3">{{$cashbanks->description}}</textarea>
+                    <textarea class="form-control" name="description" type="text" id="description" rows="3">{{$cashbanks->tanggal}}</textarea>
                   </div>
                 </div>
               </div>
 
-              <div 
+              <div
                 class="row"
                 v-for="(cashbank, index) in cashbanks"
                 :key="index"
@@ -126,13 +126,13 @@
                   <div class="form-group">
                     <label for="unit">QTY</label>
                     <input class="form-control" type="number" id="unit" name="unit[]" v-model="cashbank.unit">
+                    <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="0">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="harga">Harga Satuan</label>
                     <input class="form-control" type="number" id="harga" name="harga[]" :value="harga(cashbank.id_item, index)">
-                    <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="1">
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -161,8 +161,8 @@
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Sub Total : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="subtotal[]" :value="subtotal" readonly>
-              <input type="hidden" name="nomor_akun_sales[]" value="1-1310">
-              <input type="hidden" name="nama_akun2_sales[]" value="Merchandise Inventory">
+              <input type="hidden" name="nomor_akun_sales[]" value="4-1100">
+              <input type="hidden" name="nama_akun2_sales[]" value="Sales Of Merchandise">
             </div>
           </div>
           <div class="form-group row justify-content-end" >
@@ -173,8 +173,8 @@
                   <label for="checkbox18">
                   PPN 10%
                   </label>
-                  <input type="hidden" name="nomor_akun_ppn[]" value="2-1320">
-                  <input type="hidden" name="nama_akun2_ppn[]" value="PPN Income">
+                  <input type="hidden" name="nomor_akun_ppn[]" value="2-1310">
+                  <input type="hidden" name="nama_akun2_ppn[]" value="PPN Outcome">
                   <input type="hidden" class="form-control" id="exampleInputUsername2" name="PPN[]" :value="ppns"  readonly>
               </div>
             </div>
@@ -183,8 +183,8 @@
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Jasa Pengiriman : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="jasa_pengiriman[]" v-model.number="jasa_pengiriman">
-              <input type="hidden" name="nomor_akun_jasa[]" value="5-1300">
-              <input type="hidden" name="nama_akun2_jasa[]" value="Freight Paid">
+              <input type="hidden" name="nomor_akun_jasa[]" value="4-2200">
+              <input type="hidden" name="nama_akun2_jasa[]" value="Freight Colected">
             </div>
           </div>
           <div class="form-group row justify-content-end">
@@ -195,7 +195,7 @@
           </div>
 
           <div class="forms-sample" style="margin-bottom: 10px; margin-top: 30px; justify-content: space-between; display: flex;">
-            <a href="{{route('cpj.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
+            <a href="{{route('retur_penjualan.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
             <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Edit</button>
           </div>
         </div>
@@ -264,10 +264,10 @@
         var jumlah =  this.items[id_item]*unit;
         this.cashbanks[index].jumlah = jumlah;
         return jumlah;
-      }, 
+      },
   },
   computed: {
-    
+
     nomor_akuns() {
       var akun = [];
       akun[0] = 0;
