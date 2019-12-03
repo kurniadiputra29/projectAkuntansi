@@ -110,6 +110,7 @@
                         10.500.000,00
                       </td>
                     </tr>
+
                     <tr>
                       <td class="report-subheader-noindent bg-primary text-light" colspan="7">
                         (2-20100) Trade Payable
@@ -141,6 +142,7 @@
                         ( 500.000,00)
                       </td>
                     </tr>
+
                     <tr>
                       <td class="report-subheader-noindent bg-primary text-light" colspan="7">
                         (2-20500) VAT Out
@@ -172,6 +174,7 @@
                         1.000.000,00
                       </td>
                     </tr>
+
                     <tr>
                       <td class="report-subheader-noindent bg-primary text-light" colspan="7">
                         (5-50000) Cost of Sales
@@ -222,6 +225,78 @@
                 Menampilkan total dari 4 baris transaksi
               </div>
             </div>
+          </div>
+          <div class="dt-responsive">
+            <table id="order-table" class="table table-striped table-bordered nowrap">
+              <thead>
+                <tr class="bg-secondary font-weight-bold">
+                  <th class="text-light">
+                    Nama Akun / Tanggal
+                  </th>
+                  <th class="text-light">
+                    Transaksi
+                  </th>
+                  <th class="text-light">
+                    Nomor
+                  </th>
+                  <th class="text-light">
+                    Keterangan
+                  </th>
+                  <th class="text-right text-light">
+                    Debit
+                  </th>
+                  <th class="text-right text-light">
+                    Kredit
+                  </th>
+                  <th class="text-right text-light">
+                    Saldo
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                @php
+                function format_uang($angka){
+                  $hasil =  number_format($angka,2, ',' , '.');
+                  return $hasil;
+                }
+                @endphp
+                @foreach ($saldo_awal as $key)
+                  <tr>
+                    <tr>
+                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
+                        ({{ $key->account->nomor }}) {{ $key->account->nama }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="bold">
+                        {{$key->created_at}}
+                      </td>
+                      <td class="text-left bold">
+                        Saldo Awal
+                      </td>
+                      <td colspan="4"></td>
+                      <td class="text-right bold">
+                        Rp{{format_uang($key->debet)}}
+                      </td>
+                    </tr>
+                    <tr class="report-subtotal">
+                      <td class="text-right regular-text" colspan="4">
+                        ((1-10001) Cash) | Saldo Akhir
+                      </td>
+                      <td class="text-right bold">
+                        0,00
+                      </td>
+                      <td class="text-right bold">
+                        0,00
+                      </td>
+                      <td class="text-right bold">
+                        10.500.000,00
+                      </td>
+                    </tr>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

@@ -66,7 +66,7 @@ class CashBankController extends Controller
             $countKasBank = count($detailcashinbank['nomor_akun']);
             $countKasBank2 = count($detailcashinbank['total']);
 
-            for ($a=0; $a < $countKasBank2; $a++) { 
+            for ($a=0; $a < $countKasBank2; $a++) {
                 $detail                     = new Cashinbankdetail();
                 $detail->cashinbank_id      = $cashinbank->id;
                 $detail->nomor_akun         = $detailcashinbank['nomor_akun2'][$a];
@@ -74,7 +74,7 @@ class CashBankController extends Controller
                 $detail->debet              = $detailcashinbank['total'][$a];
                 $detail->save();
             }
-            for ($i=0; $i < $countKasBank; $i++) { 
+            for ($i=0; $i < $countKasBank; $i++) {
                 $detail                     = new Cashinbankdetail();
                 $detail->cashinbank_id      = $cashinbank->id;
                 $detail->nomor_akun         = $detailcashinbank['nomor_akun'][$i];
@@ -96,7 +96,7 @@ class CashBankController extends Controller
 					'description' => 'required',
 					'kode' => 'unique:cashinbanks,kode|required',
 			],$messages);
-			
+
             //insert data cashbank
             $dataCashInBank          = $request->only('id','tanggal', 'kode', 'penerima_diterima', 'description','status');
             $cashinbank              = Cashinbank::create($dataCashInBank);
@@ -106,7 +106,7 @@ class CashBankController extends Controller
             $countKasBank = count($detailcashinbank['nomor_akun']);
             $countKasBank2 = count($detailcashinbank['total']);
 
-            for ($a=0; $a < $countKasBank2; $a++) { 
+            for ($a=0; $a < $countKasBank2; $a++) {
                 $detail                     = new Cashinbankdetail();
                 $detail->cashinbank_id      = $cashinbank->id;
                 $detail->nomor_akun         = $detailcashinbank['nomor_akun2'][$a];
@@ -114,7 +114,7 @@ class CashBankController extends Controller
                 $detail->kredit              = $detailcashinbank['total'][$a];
                 $detail->save();
             }
-            for ($i=0; $i < $countKasBank; $i++) { 
+            for ($i=0; $i < $countKasBank; $i++) {
                 $detail                     = new Cashinbankdetail();
                 $detail->cashinbank_id      = $cashinbank->id;
                 $detail->nomor_akun         = $detailcashinbank['nomor_akun'][$i];
@@ -126,7 +126,7 @@ class CashBankController extends Controller
             return redirect('/cashbank')->with('Success', 'Data anda telah berhasil di Input !');
 
         }
-        
+
     }
 
     /**
@@ -163,7 +163,7 @@ class CashBankController extends Controller
             $kredits        = Cashinbankdetail::where('cashinbank_id', $id)->where('debet', null)->get();
             return view('pages.cashbank.edit_out', compact('akun', 'cashbanks', 'kredits'));
         }
-        
+
     }
 
     /**
@@ -198,7 +198,7 @@ class CashBankController extends Controller
 
             Cashinbankdetail::where('cashinbank_id', $id)->delete();
 
-            for ($a=0; $a < $countKasBank2; $a++) { 
+            for ($a=0; $a < $countKasBank2; $a++) {
                 $detail                     = new Cashinbankdetail();
                 $detail->cashinbank_id      = $id;
                 $detail->nomor_akun         = $detailcashinbank['nomor_akun2'][$a];
@@ -206,7 +206,7 @@ class CashBankController extends Controller
                 $detail->debet              = $detailcashinbank['total'][$a];
                 $detail->save();
             }
-            for ($i=0; $i < $countKasBank; $i++) { 
+            for ($i=0; $i < $countKasBank; $i++) {
                 $detail                     = new Cashinbankdetail();
                 $detail->cashinbank_id      = $id;
                 $detail->nomor_akun         = $detailcashinbank['nomor_akun'][$i];
@@ -241,7 +241,7 @@ class CashBankController extends Controller
 
             Cashinbankdetail::where('cashinbank_id', $id)->delete();
 
-            for ($a=0; $a < $countKasBank2; $a++) { 
+            for ($a=0; $a < $countKasBank2; $a++) {
                 $detail                     = new Cashinbankdetail();
                 $detail->cashinbank_id      = $id;
                 $detail->nomor_akun         = $detailcashinbank['nomor_akun2'][$a];
@@ -249,7 +249,7 @@ class CashBankController extends Controller
                 $detail->kredit              = $detailcashinbank['total'][$a];
                 $detail->save();
             }
-            for ($i=0; $i < $countKasBank; $i++) { 
+            for ($i=0; $i < $countKasBank; $i++) {
                 $detail                     = new Cashinbankdetail();
                 $detail->cashinbank_id      = $id;
                 $detail->nomor_akun         = $detailcashinbank['nomor_akun'][$i];

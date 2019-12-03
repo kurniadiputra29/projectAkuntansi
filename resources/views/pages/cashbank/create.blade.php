@@ -23,7 +23,9 @@
               <li class="breadcrumb-item">
                 <a href="/dasbor"><i class="ik ik-home"></i></a>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">Cash & Bank</li>
+              <li class="breadcrumb-item" aria-current="page">
+                <a href="/cashbank">Cash & Bank</a>
+              </li>
               <li class="breadcrumb-item active" aria-current="page">Create</li>
             </ol>
           </nav>
@@ -127,7 +129,7 @@
                     </select>
                   </div>
                 </div>
-                
+
                 <input type="hidden" name="nomor_akun[]"
                     :value="nomor_akun(cashbank.id_akun, index)"
                   >
