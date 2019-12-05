@@ -56,12 +56,12 @@
               return $hasil;
             }
             @endphp
-            @foreach ($saldo_awal as $key)
+            @foreach ($saldo_awal as $awal)
             <table class="table table-striped table-bordered nowrap">
               <thead>
                 <tr class="bg-secondary font-weight-bold">
-                  <th class="col-8 text-light" colspan="4">Nama Akun: {{$key->account->nama}}</th>
-                  <th class="col-4 text-light" colspan="2">Nomor Akun: {{$key->account->nomor}}</th>
+                  <th class="col-8 text-light" colspan="4">Nama Akun: {{$awal->account->nama}}</th>
+                  <th class="col-4 text-light" colspan="2">Nomor Akun: {{$awal->account->nomor}}</th>
                 </tr>
                 <tr>
                   <th class="col-2" rowspan="2">Tanggal</th>
@@ -71,22 +71,143 @@
                   <th class="col-4" colspan="2" style="text-align: center;">Balance</th>
                 </tr>
                 <tr>
-                  <th>Debet</th>
-                  <th>Kredit</th>
+                  <th class="col-2">Debet</th>
+                  <th class="col-2">Kredit</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>{{date('d F Y', strtotime($key->created_at ))}}</td>
-                  <td></td>
-                  <td>Rp{{format_uang($key->debet)}}</td>
-                  <td>Rp{{format_uang($key->kredit)}}</td>
+                  <td>{{date('d F Y', strtotime($awal->created_at ))}}</td>
+                  <td>Saldo Awal</td>
                   <td></td>
                   <td></td>
+                  <td>Rp{{format_uang($awal->debet)}}</td>
+                  <td>Rp{{format_uang($awal->kredit)}}</td>
                 </tr>
+                {{-- $key_detail,$cpj_detail,$crj_detail,$jp_detail,$ju_detail,$pc_detail,$pj_detail,$sj_detail,$rpb_detail,$rpj_detail --}}
+                @foreach ($cb_detail as $key)
+                  @if ($key->nomor_akun == $awal->account->nomor)
+                    <tr>
+                      <td>{{date('d F Y', strtotime($key->cashinbank->created_at ))}}</td>
+                      <td></td>
+                      <td>Rp{{format_uang($key->debet)}}</td>
+                      <td>Rp{{format_uang($key->kredit)}}</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  @endif
+                @endforeach
+                @foreach ($cpj_detail as $key)
+                  @if ($key->nomor_akun == $awal->cpjs->nomor)
+                    <tr>
+                      <td>{{date('d F Y', strtotime($key->cashinbank->created_at ))}}</td>
+                      <td></td>
+                      <td>Rp{{format_uang($key->debet)}}</td>
+                      <td>Rp{{format_uang($key->kredit)}}</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  @endif
+                @endforeach
+                @foreach ($crj_detail as $key)
+                  @if ($key->nomor_akun == $awal->account->nomor)
+                    <tr>
+                      <td>{{date('d F Y', strtotime($key->crjs->created_at ))}}</td>
+                      <td></td>
+                      <td>Rp{{format_uang($key->debet)}}</td>
+                      <td>Rp{{format_uang($key->kredit)}}</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  @endif
+                @endforeach
+                @foreach ($jp_detail as $key)
+                  @if ($key->nomor_akun == $awal->account->nomor)
+                    <tr>
+                      <td>{{date('d F Y', strtotime($key->jurnalpenyesuaians->created_at ))}}</td>
+                      <td></td>
+                      <td>Rp{{format_uang($key->debet)}}</td>
+                      <td>Rp{{format_uang($key->kredit)}}</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  @endif
+                @endforeach
+                @foreach ($ju_detail as $key)
+                  @if ($key->nomor_akun == $awal->account->nomor)
+                    <tr>
+                      <td>{{date('d F Y', strtotime($key->jurnal_umums->created_at ))}}</td>
+                      <td></td>
+                      <td>Rp{{format_uang($key->debet)}}</td>
+                      <td>Rp{{format_uang($key->kredit)}}</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  @endif
+                @endforeach
+                @foreach ($pc_detail as $key)
+                  @if ($key->nomor_akun == $awal->account->nomor)
+                    <tr>
+                      <td>{{date('d F Y', strtotime($key->pettycash->created_at ))}}</td>
+                      <td></td>
+                      <td>Rp{{format_uang($key->debet)}}</td>
+                      <td>Rp{{format_uang($key->kredit)}}</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  @endif
+                @endforeach
+                @foreach ($pj_detail as $key)
+                  @if ($key->nomor_akun == $awal->account->nomor)
+                    <tr>
+                      <td>{{date('d F Y', strtotime($key->purchase_journals->created_at ))}}</td>
+                      <td></td>
+                      <td>Rp{{format_uang($key->debet)}}</td>
+                      <td>Rp{{format_uang($key->kredit)}}</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  @endif
+                @endforeach
+                @foreach ($sj_detail as $key)
+                  @if ($key->nomor_akun == $awal->account->nomor)
+                    <tr>
+                      <td>{{date('d F Y', strtotime($key->seles_journals->created_at ))}}</td>
+                      <td></td>
+                      <td>Rp{{format_uang($key->debet)}}</td>
+                      <td>Rp{{format_uang($key->kredit)}}</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  @endif
+                @endforeach
+                @foreach ($rpb_detail as $key)
+                  @if ($key->nomor_akun == $awal->account->nomor)
+                    <tr>
+                      <td>{{date('d F Y', strtotime($key->retur_pembelians->created_at ))}}</td>
+                      <td></td>
+                      <td>Rp{{format_uang($key->debet)}}</td>
+                      <td>Rp{{format_uang($key->kredit)}}</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  @endif
+                @endforeach
+                @foreach ($rpj_detail as $key)
+                  @if ($key->nomor_akun == $awal->account->nomor)
+                    <tr>
+                      <td>{{date('d F Y', strtotime($key->retur_penjualans->created_at ))}}</td>
+                      <td></td>
+                      <td>Rp{{format_uang($key->debet)}}</td>
+                      <td>Rp{{format_uang($key->kredit)}}</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  @endif
+                @endforeach
               </tbody>
             </table>
-          @endforeach
+            @endforeach
           </div>
         </div>
       </div>
