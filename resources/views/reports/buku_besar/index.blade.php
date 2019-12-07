@@ -49,258 +49,214 @@
               <a type="button" class="btn btn-primary" href="#"><i class="ik ik-printer"></i>Print</a>
             </div>
           </div>
-          <div class="table-container list-table">
-            <div class="report-title">
-              <div class="table-responsive">
-                <table class="account-transactions report-table table" id="account-entry">
-                  <thead class="report-header">
-                    <tr class="bg-secondary font-weight-bold">
-                      <th class="text-light">
-                        Nama Akun / Tanggal
-                      </th>
-                      <th class="text-light">
-                        Transaksi
-                      </th>
-                      <th class="text-light">
-                        Nomor
-                      </th>
-                      <th class="text-light">
-                        Keterangan
-                      </th>
-                      <th class="text-right text-light">
-                        Debit
-                      </th>
-                      <th class="text-right text-light">
-                        Kredit
-                      </th>
-                      <th class="text-right text-light">
-                        Saldo
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        (1-10001) Cash
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        24/11/2019
-                      </td>
-                      <td class="text-left bold">
-                        Saldo Awal
-                      </td>
-                      <td colspan="4"></td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal">
-                      <td class="text-right regular-text" colspan="4">
-                        ((1-10001) Cash) | Saldo Akhir
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
+          <div id="app">
+            @php
+            function format_uang($angka){
+              $hasil =  number_format($angka,2, ',' , '.');
+              return $hasil;
+            }
 
-                    <tr>
-                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        (2-20100) Trade Payable
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        24/11/2019
-                      </td>
-                      <td class="text-left bold">
-                        Saldo Awal
-                      </td>
-                      <td colspan="4"></td>
-                      <td class="text-right bold">
-                        ( 500.000,00)
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal">
-                      <td class="text-right regular-text" colspan="4">
-                        ((2-20100) Trade Payable) | Saldo Akhir
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        ( 500.000,00)
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        (2-20500) VAT Out
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        24/11/2019
-                      </td>
-                      <td class="text-left bold">
-                        Saldo Awal
-                      </td>
-                      <td colspan="4"></td>
-                      <td class="text-right bold">
-                        1.000.000,00
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal">
-                      <td class="text-right regular-text" colspan="4">
-                        ((2-20500) VAT Out) | Saldo Akhir
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        1.000.000,00
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        (5-50000) Cost of Sales
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        24/11/2019
-                      </td>
-                      <td class="text-left bold">
-                        Saldo Awal
-                      </td>
-                      <td colspan="4"></td>
-                      <td class="text-right bold">
-                        ( 10.000.000,00)
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal">
-                      <td class="text-right regular-text" colspan="4">
-                        ((5-50000) Cost of Sales) | Saldo Akhir
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        ( 10.000.000,00)
-                      </td>
-                    </tr>
-                    <tr class="bg-success text-light">
-                      <td class="text-right grand-total" colspan="4">
-                        Grand Total
-                      </td>
-                      <td class="text-right grand-total">
-                        0,00
-                      </td>
-                      <td class="text-right grand-total">
-                        0,00
-                      </td>
-                      <td class="text-right grand-total"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="text-left show-total-transaction bold-roboto-text" style="">
-                Menampilkan total dari 4 baris transaksi
-              </div>
-            </div>
-          </div>
-          <div class="dt-responsive">
-            <table id="order-table" class="table table-striped table-bordered nowrap">
-              <thead>
-                <tr class="bg-secondary font-weight-bold">
-                  <th class="text-light">
-                    Nama Akun / Tanggal
-                  </th>
-                  <th class="text-light">
-                    Transaksi
-                  </th>
-                  <th class="text-light">
-                    Nomor
-                  </th>
-                  <th class="text-light">
-                    Keterangan
-                  </th>
-                  <th class="text-right text-light">
-                    Debit
-                  </th>
-                  <th class="text-right text-light">
-                    Kredit
-                  </th>
-                  <th class="text-right text-light">
-                    Saldo
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                @php
-                function format_uang($angka){
-                  $hasil =  number_format($angka,2, ',' , '.');
-                  return $hasil;
-                }
-                @endphp
-                @foreach ($saldo_awal as $key)
-                  <tr>
-                    <tr>
-                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        ({{ $key->account->nomor }}) {{ $key->account->nama }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        {{$key->created_at}}
-                      </td>
-                      <td class="text-left bold">
-                        Saldo Awal
-                      </td>
-                      <td colspan="4"></td>
-                      <td class="text-right bold">
-                        Rp{{format_uang($key->debet)}}
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal">
-                      <td class="text-right regular-text" colspan="4">
-                        ((1-10001) Cash) | Saldo Akhir
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        0,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
+            function sum_fun($w){
+              return ($w);
+            }
+            @endphp
+            @foreach ($saldo_awal as $awal)
+              <table class="table table-striped table-bordered nowrap" v-for="(item,index) in items" :key="index">
+                <thead>
+                  <tr class="bg-secondary font-weight-bold">
+                    <th class="col-8 text-light" colspan="4">Nama Akun: {{$awal->account->nama}}</th>
+                    <th class="col-4 text-light" colspan="2">Nomor Akun: {{$awal->account->nomor}}</th>
                   </tr>
-                @endforeach
-              </tbody>
-            </table>
+                  <tr>
+                    <th class="col-2" rowspan="2">Tanggal</th>
+                    <th class="col-2" rowspan="2">Deskripsi</th>
+                    <th class="col-2" rowspan="2">Debet</th>
+                    <th class="col-2" rowspan="2">Kredit</th>
+                    <th class="col-4" colspan="2" style="text-align: center;">Balance</th>
+                  </tr>
+                  <tr>
+                    <th class="col-2">Debet</th>
+                    <th class="col-2">Kredit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{date('d F Y', strtotime($awal->created_at ))}}</td>
+                    <td>Saldo Awal</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      Rp{{format_uang($awal->debet)}}
+                    </td>
+                    <td>
+                      Rp{{format_uang($awal->kredit)}}
+                    </td>
+                  </tr>
+                  {{-- $key_detail,$cpj_detail,$crj_detail,$jp_detail,$ju_detail,$pc_detail,$pj_detail,$sj_detail,$rpb_detail,$rpj_detail --}}
+              @foreach ($cb_detail as $key)
+                @if ($key->nomor_akun == $awal->account->nomor)
+                  <tr>
+                    <td>{{date('d F Y', strtotime($key->cashinbank->created_at ))}}</td>
+                    <td></td>
+                    <td>Rp{{format_uang($key->debet)}}</td>
+                    <td>Rp{{format_uang($key->kredit)}}</td>
+                    <td name="debetCB[]"></td>
+                    <td name="kreditCB[]"></td>
+                  </tr>
+                @endif
+              @endforeach
+              @foreach ($cpj_detail as $key)
+                @if ($key->nomor_akun == $awal->account->nomor)
+                  <tr>
+                    <td>{{date('d F Y', strtotime($key->cashinbank->created_at ))}}</td>
+                    <td></td>
+                    <td>Rp{{format_uang($key->debet)}}</td>
+                    <td>Rp{{format_uang($key->kredit)}}</td>
+                    <td name="debetCPJ[]"></td>
+                    <td name="kreditCPJ[]"></td>
+                  </tr>
+                @endif
+              @endforeach
+              @foreach ($crj_detail as $key)
+                @if ($key->nomor_akun == $awal->account->nomor)
+                  <tr>
+                    <td>{{date('d F Y', strtotime($key->crjs->created_at ))}}</td>
+                    <td></td>
+                    <td>Rp{{format_uang($key->debet)}}</td>
+                    <td>Rp{{format_uang($key->kredit)}}</td>
+                    <td name="debetCRJ[]"></td>
+                    <td name="kreditCRJ[]"></td>
+                  </tr>
+                @endif
+              @endforeach
+              @foreach ($jp_detail as $key)
+                @if ($key->nomor_akun == $awal->account->nomor)
+                  <tr>
+                    <td>{{date('d F Y', strtotime($key->jurnalpenyesuaians->created_at ))}}</td>
+                    <td></td>
+                    <td>Rp{{format_uang($key->debet)}}</td>
+                    <td>Rp{{format_uang($key->kredit)}}</td>
+                    <td name="debetJP[]"></td>
+                    <td name="kreditJP[]"></td>
+                  </tr>
+                @endif
+              @endforeach
+              @foreach ($ju_detail as $key)
+                @if ($key->nomor_akun == $awal->account->nomor)
+                  <tr>
+                    <td>{{date('d F Y', strtotime($key->jurnal_umums->created_at ))}}</td>
+                    <td></td>
+                    <td>Rp{{format_uang($key->debet)}}</td>
+                    <td>Rp{{format_uang($key->kredit)}}</td>
+                    <td name="debetJU[]"></td>
+                    <td name="kreditJU[]"></td>
+                  </tr>
+                @endif
+              @endforeach
+              @foreach ($pc_detail as $key => $val)
+                @if ($val->nomor_akun == $awal->account->nomor)
+                  <tr>
+                    <td>{{date('d F Y', strtotime($val->pettycash->created_at ))}}</td>
+                    <td></td>
+                    <td>Rp{{format_uang($val->debet)}}</td>
+                    <td>Rp{{format_uang($val->kredit)}}</td>
+                    @if ($awal->debet > 0)
+                      <td>
+                        @if ($val->kredit > 0)
+                          Rp{{format_uang(($awal->debet)-($val->kredit))}}
+                        @elseif ($val->debet > 0)
+                          Rp{{format_uang(($awal->debet)+($val->debet))}}
+                        @endif
+                      </td>
+                      <td>
+                        Rp{{format_uang(0)}}
+                      </td>
+                    @elseif ($awal->kredit > 0)
+                      <td>
+                        Rp{{format_uang(0)}}
+                      </td>
+                      <td>
+                        @if ($val->debet > 0)
+                          Rp{{format_uang(($awal->kredit)-($val->debet))}}
+                        @elseif ($val->kredit > 0)
+                          Rp{{format_uang(($awal->kredit)+($val->kredit))}}
+                        @endif
+                      </td>
+                    @endif
+                  </tr>
+                @endif
+              @endforeach
+              @foreach ($pj_detail as $key)
+                @if ($key->nomor_akun == $awal->account->nomor)
+                  <tr>
+                    <td>{{date('d F Y', strtotime($key->purchase_journals->created_at ))}}</td>
+                    <td></td>
+                    <td>Rp{{format_uang($key->debet)}}</td>
+                    <td>Rp{{format_uang($key->kredit)}}</td>
+                    <td name="debetPJ[]"></td>
+                    <td name="kreditPJ[]"></td>
+                  </tr>
+                @endif
+              @endforeach
+              @foreach ($sj_detail as $key)
+                @if ($key->nomor_akun == $awal->account->nomor)
+                  <tr>
+                    <td>{{date('d F Y', strtotime($key->seles_journals->created_at ))}}</td>
+                    <td></td>
+                    <td>Rp{{format_uang($key->debet)}}</td>
+                    <td>Rp{{format_uang($key->kredit)}}</td>
+                    <td name="debetSJ[]"></td>
+                    <td name="kreditSJ[]"></td>
+                  </tr>
+                @endif
+              @endforeach
+              @foreach ($rpb_detail as $key)
+                @if ($key->nomor_akun == $awal->account->nomor)
+                  <tr>
+                    <td>{{date('d F Y', strtotime($key->retur_pembelians->created_at ))}}</td>
+                    <td></td>
+                    <td>Rp{{format_uang($key->debet)}}</td>
+                    <td>Rp{{format_uang($key->kredit)}}</td>
+                    <td name="debetRPB[]"></td>
+                    <td name="kreditRPB[]"></td>
+                  </tr>
+                @endif
+              @endforeach
+              @foreach ($rpj_detail as $key)
+                @if ($key->nomor_akun == $awal->account->nomor)
+                  <tr>
+                    <td>{{date('d F Y', strtotime($key->retur_penjualans->created_at ))}}</td>
+                    <td></td>
+                    <td>Rp{{format_uang($key->debet)}}</td>
+                    <td>Rp{{format_uang($key->kredit)}}</td>
+                    <td name="debetRPJ[]"></td>
+                    <td name="kreditRPJ[]"></td>
+                  </tr>
+                @endif
+              @endforeach
+                </tbody>
+              </table>
+            @endforeach
           </div>
         </div>
       </div>
     </div>
   </div>
 
+@endsection
+
+@section('vue')
+  <script type="text/javascript">
+    new Vue({
+      el: '#app',
+      data: {
+        items: [
+          {
+            debet: 1,
+            kredit: 1,
+          }
+        ],
+      }
+    });
+  </script>
 @endsection
