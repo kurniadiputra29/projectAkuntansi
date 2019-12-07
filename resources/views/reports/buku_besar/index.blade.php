@@ -49,21 +49,19 @@
               <a type="button" class="btn btn-primary" href="#"><i class="ik ik-printer"></i>Print</a>
             </div>
           </div>
-          <div id="app" v-for="(buku_besar, index) in buku_besars" :key="index">
+          <div id="app">
             @php
-            $arr = array(1,2,3);
             function format_uang($angka){
               $hasil =  number_format($angka,2, ',' , '.');
               return $hasil;
             }
 
-            function sum_fun($a)
-            {
-              return array_sum($a);
+            function sum_fun($w){
+              return ($w);
             }
             @endphp
             @foreach ($saldo_awal as $awal)
-              <table class="table table-striped table-bordered nowrap">
+              <table class="table table-striped table-bordered nowrap" v-for="(item,index) in items" :key="index">
                 <thead>
                   <tr class="bg-secondary font-weight-bold">
                     <th class="col-8 text-light" colspan="4">Nama Akun: {{$awal->account->nama}}</th>
@@ -88,10 +86,10 @@
                     <td></td>
                     <td></td>
                     <td>
-                      <input type="text" name="debet_awal" :value="{{$awal->debet}}">
+                      Rp{{format_uang($awal->debet)}}
                     </td>
                     <td>
-                      <input type="text" name="kredit_awal" :value="{{$awal->kredit}}">
+                      Rp{{format_uang($awal->kredit)}}
                     </td>
                   </tr>
                   {{-- $key_detail,$cpj_detail,$crj_detail,$jp_detail,$ju_detail,$pc_detail,$pj_detail,$sj_detail,$rpb_detail,$rpj_detail --}}
@@ -165,27 +163,23 @@
                     @if ($awal->debet > 0)
                       <td>
                         @if ($val->kredit > 0)
-                          <input
-                            type="text"
-                            name="debetPC[]"
-                            value="{{$awal->debet-$val->kredit}}"
-                          >
+                          Rp{{format_uang(($awal->debet)-($val->kredit))}}
                         @elseif ($val->debet > 0)
-                          <input type="text" name="debetPC[]" value="Rp{{format_uang(($awal->debet)+($val->debet))}}">
+                          Rp{{format_uang(($awal->debet)+($val->debet))}}
                         @endif
                       </td>
                       <td>
-                        <input type="text" name="kreditPC[]" value="Rp{{format_uang(0)}}">
+                        Rp{{format_uang(0)}}
                       </td>
                     @elseif ($awal->kredit > 0)
                       <td>
-                        <input type="text" name="debetPC[]" value="Rp{{format_uang(0)}}">
+                        Rp{{format_uang(0)}}
                       </td>
                       <td>
                         @if ($val->debet > 0)
-                          <input type="text" name="kreditPC[]" value="Rp{{format_uang(($awal->kredit)-($val->debet))}}">
+                          Rp{{format_uang(($awal->kredit)-($val->debet))}}
                         @elseif ($val->kredit > 0)
-                          <input type="text" name="kreditPC[]" value="Rp{{format_uang(($awal->kredit)+($val->kredit))}}">
+                          Rp{{format_uang(($awal->kredit)+($val->kredit))}}
                         @endif
                       </td>
                     @endif
@@ -256,21 +250,12 @@
     new Vue({
       el: '#app',
       data: {
-        buku_besars: [
+        items: [
           {
-            debet_awal: 0,
-            kredit_awal: 0,
-            debetPC: 0,
-            kreditPC: 0,
+            debet: 1,
+            kredit: 1,
           }
         ],
-      },
-      computed: {
-        subtotal() {
-          return this.buku_besars
-          .map( buku_besar => buku_besar.jumlah)
-          .reduce( (prev, next) => prev + next );
-        },
       }
     });
   </script>
