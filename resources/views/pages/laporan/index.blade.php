@@ -280,32 +280,17 @@
                   </div>
                   <div class="tab-pane fade" id="produk" role="tabpanel" aria-labelledby="produk-tab">
                     <div class="d-flex flex-wrap">
-                      <div class="col-sm-12 col-md-6">
+                      <div class="col-sm-12 col-md-12">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.penjualan_per_produk')}}">
-                              Penjualan per Produk
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('inventory.index')}}">
+                              Laporan Inventory Card
                             </a>
                           </h3>
                           <p>
-                            Menampilkan daftar kuantitas penjualan per produk, termasuk jumlah retur, net penjualan, dan harga penjualan rata-rata.
+                            Menampilkan daftar kuantitas inventory per produk/item, termasuk jumlah retur, net pembelian, net penjualan, dan harga pokok penjualan (Mothod: rata-rata).
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.penjualan_per_produk')}}">
-                            Lihat Laporan
-                          </a>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6">
-                        <div class="report-item">
-                          <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.pembelian_per_produk')}}">
-                              Pembelian per Produk
-                            </a>
-                          </h3>
-                          <p>
-                            Menampilkan daftar kuantitas pembelian per produk, termasuk jumlah retur, net pembelian, dan harga pembelian rata-rata.
-                          </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.pembelian_per_produk')}}">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('inventory.index')}}">
                             Lihat Laporan
                           </a>
                         </div>
