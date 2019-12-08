@@ -93,28 +93,6 @@ class KasKecilController extends Controller
 					$detail->save();
 				}
 
-				$total = $detailKasKecil2['total'];
-
-				$saldo_awal_kredit = SaldoAwal::where('id', $detailKasKecil2['akun_id'])->get();
-				foreach ($saldo_awal_kredit as $key) {
-					$kredit_tertera = $key->kredit;
-				}
-
-				$dataKredit = ['kredit' => $kredit_tertera + $total];
-				$updateSaldoAwal = SaldoAwal::where('id', $detailKasKecil2['akun_id'])->update($dataKredit);
-
-				$saldo_awal_debet = SaldoAwal::where('id', $detailKasKecil2['id_akun'])->get();
-				foreach ($saldo_awal_debet as $key) {
-					$debet_tertera = $key->debet;
-				}
-
-				$detailDebet = $detailKasKecil2['jumlah'];
-				// $dataDebet[] = ['debet' => $debet_tertera + $detailDebet[]];
-				for ($i=0; $i < $nomorAkun ; $i++) {
-					$dataDebet[$i] = ['debet' => $debet_tertera + $detailDebet[$i]];
-					SaldoAwal::where('id', $detailKasKecil2['id_akun'])->update($dataDebet[$i]);
-				}
-
 				return redirect('kas_kecil')->with('Success', 'Data anda telah berhasil di input !');
 		}
 
@@ -177,7 +155,7 @@ class KasKecilController extends Controller
 
 				PettycashDetail::where('pettycash_id', $id)->delete();
 
-				for ($a=0; $a < $nomorAkun2; $a++) { 
+				for ($a=0; $a < $nomorAkun2; $a++) {
 						$detail                     = new PettycashDetail();
 						$detail->pettycash_id       = $id;
 						$detail->nomor_akun         = $detailKasKecil2['nomor_akun2'][$a];
@@ -194,7 +172,7 @@ class KasKecilController extends Controller
 					$detail->debet              = $detailKasKecil2['jumlah'][$i];
 					$detail->save();
 				}
-				
+
 				return redirect('kas_kecil')->with('Success', 'Data anda telah berhasil di Edit !');
 		}
 

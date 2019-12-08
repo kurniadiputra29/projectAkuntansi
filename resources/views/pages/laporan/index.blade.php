@@ -118,7 +118,7 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.buku_besar')}}">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('buku_besar.index')}}">
                               <i class="ik ik-check"></i>
                               Ledger / Buku Besar
                             </a>
@@ -126,7 +126,7 @@
                           <p>
                             Laporan ini menampilkan semua transaksi yang telah dilakukan untuk suatu periode. Laporan ini bermanfaat jika Anda memerlukan daftar kronologis untuk semua transaksi yang telah dilakukan oleh perusahaan Anda.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.buku_besar')}}">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('buku_besar.index')}}">
                             Lihat Laporan
                           </a>
                         </div>

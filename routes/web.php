@@ -83,6 +83,7 @@ Route::get('/print/hutang_supplier', 'PrintController@hutang_supplier')->name('l
 Route::get('/print/print_neraca', 'PrintController@print_neraca')->name('print.neraca');
 Route::get('/print/print_neraca_saldo', 'PrintController@print_neraca_saldo')->name('print.neraca_saldo');
 
-
+//fix
 Route::get('/inventory/', 'InventoryController@index')->name('inventory.index');
+Route::get('buku_besar', 'Reports\BukuBesarController@index')->name('buku_besar.index');
 
