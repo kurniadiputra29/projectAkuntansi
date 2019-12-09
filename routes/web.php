@@ -86,4 +86,4 @@ Route::get('/print/print_neraca_saldo', 'PrintController@print_neraca_saldo')->n
 //fix
 Route::get('/inventory/', 'InventoryController@index')->name('inventory.index');
 Route::get('buku_besar', 'Reports\BukuBesarController@index')->name('buku_besar.index');
-
+Route::get('neraca', 'Reports\NeracaController@index')->name('neraca.index');

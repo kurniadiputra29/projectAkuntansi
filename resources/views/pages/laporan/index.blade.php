@@ -56,7 +56,7 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.neraca')}}">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('neraca.index')}}">
                               <i class="ik ik-check"></i>
                               Balance Sheet / Neraca
                             </a>
@@ -64,7 +64,7 @@
                           <p>
                             Menampilan apa yang anda miliki (aset), apa yang anda hutang (liabilitas), dan apa yang anda sudah investasikan pada perusahaan anda (ekuitas).
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.neraca')}}">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('neraca.index')}}">
                             Lihat Laporan
                           </a>
                         </div>
