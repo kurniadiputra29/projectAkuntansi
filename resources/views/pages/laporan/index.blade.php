@@ -178,6 +178,21 @@
                           </a>
                         </div>
                       </div>
+                      <div class="col-sm-12 col-md-6">
+                        <div class="report-item">
+                          <h3>
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('petty_cash_book.index')}}">
+                              Petty Cash Book / Rekapitulasi Kas Kecil
+                            </a>
+                          </h3>
+                          <p>
+                            Daftar semua jurnal per transaksi yang terjadi dalam periode waktu. Hal ini berguna untuk melacak di mana transaksi Anda masuk ke masing-masing rekening
+                          </p>
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('petty_cash_book.index')}}">
+                            Lihat Laporan
+                          </a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="tab-pane fade" id="penjualan" role="tabpanel" aria-labelledby="penjualan-tab">

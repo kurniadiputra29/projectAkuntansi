@@ -1,0 +1,150 @@
+@extends('layouts.app')
+
+@section('title', 'Laporan Kas Kecil')
+
+@section('content')
+
+  <div class="main-content">
+    <div class="container-fluid">
+      <div class="page-header">
+        <div class="row align-items-end">
+          <div class="col-lg-8">
+            <div class="page-header-title">
+              <i class="ik ik-trending-up bg-blue"></i>
+              <div class="d-inline">
+                <h5>Kas Kecil</h5>
+                <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <nav class="breadcrumb-container" aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="/dasbor"><i class="ik ik-home"></i></a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="/laporan">Laporan</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Kas Kecil</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row py-3">
+            <div class="col-md-6">
+              <form class="forms-sample" action="#" method="post">
+                <label for="filter">Tanggal Mulai</label>
+                <input type="date" name="tanggal" id="filter">
+                <label for="filter2">Tanggal Akhir</label>
+                <input type="date" name="tanggal" id="filter2">
+                <button class="btn btn-primary" type="submit" name="button">Filter</button>
+              </form>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+              <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
+              <a type="button" class="btn btn-primary" href="#"><i class="ik ik-printer"></i>Print</a>
+            </div>
+          </div>
+          <div id="app">
+            @php
+            function format_uang($angka){
+              $hasil =  number_format($angka,2, ',' , '.');
+              return $hasil;
+            }
+            function format_uang2($angka){
+              $hasil =  number_format($angka,0, ',' , '.');
+              return $hasil;
+            }
+            @endphp
+            <table class="table table-bordered nowrap" v-for="(item,index) in items" :key="index">
+              <thead>
+                <tr class="bg-secondary font-weight-bold">
+                  <th class="col-2 text-light" rowspan="2">Tanggal</th>
+                  <th class="col-2 text-light" rowspan="2">Deskripsi</th>
+                  <th class="col-6 text-light text-center" colspan="3">Debet</th>
+                  <th class="col-2 text-light text-center">Kredit</th>
+                </tr>
+                <tr class="bg-secondary font-weight-bold">
+                  <th class="col-2 text-light">Nomor Akun</th>
+                  <th class="col-2 text-light">Nama Akun</th>
+                  <th class="col-2 text-light">Amount</th>
+                  <th class="col-2 text-light">Petty Cash</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($pc_detail as $data)
+                    <tr>
+                      <td>{{date('d F Y', strtotime($data->created_at ))}}</td>
+                      <td>{{$data->pettycash->description}}</td>
+                      <td>{{$data->nomor_akun}}</td>
+                      <td>{{$data->nama_akun}}</td>
+                      <td class="text-right">
+                        {{format_uang2($data->debet)}}
+                      </td>
+                      <td class="text-right">
+                        {{format_uang2($data->kredit)}}
+                      </td>
+                    </tr>
+                @endforeach
+                <tr class="bg-secondary font-weight-bold">
+                  <td></td>
+                  <td class="text-light" colspan="3">Total</td>
+                  <td class="text-light text-right">{{format_uang2($sum_debet)}}</td>
+                  <td class="text-light text-right">{{format_uang2($sum_debet)}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table table-bordered nowrap">
+              <thead>
+                <tr class="bg-secondary font-weight-bold">
+                  <td class="text-light text-center" colspan="4">Rekapitulasi</td>
+                </tr>
+                <tr>
+                  <td>Nomor Akun</td>
+                  <td>Debet</td>
+                  <td>Nomor Akun</td>
+                  <td>Kredit</td>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($pc_detail as $data)
+                <tr>
+                  <td>{{$data->nomor_akun}}</td>
+                  @if ($data->debet > 0)
+                    <td>{{$pc_detail->where('nomor_akun', $data->nomor_akun)->sum('debet')}}</td>
+                  @endif
+                  <td>{{$data->nomor_akun}}</td>
+                  @if ($data->kredit > 0)
+                    <td>{{$pc_detail->where('nomor_akun', $data->nomor_akun)->sum('kredit')}}</td>
+                  @endif
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+@endsection
+
+@section('vue')
+  <script type="text/javascript">
+    new Vue({
+      el: '#app',
+      data: {
+        items: [
+          {
+            debet: 1,
+            kredit: 1,
+          }
+        ],
+      }
+    });
+  </script>
+@endsection
