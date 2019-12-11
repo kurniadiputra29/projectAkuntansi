@@ -66,16 +66,12 @@
                 <table id="complex-dt" class="table table-bordered nowrap" v-for="(item,index) in items" :key="index">
                   <thead>
                     <tr class="bg-secondary font-weight-bold">
-                      <th class="col-2 text-light" rowspan="2">Tanggal</th>
-                      <th class="col-2 text-light" rowspan="2">Deskripsi</th>
-                      <th class="col-6 text-light text-center" colspan="3">Debet</th>
-                      <th class="col-2 text-light text-center">Kredit</th>
-                    </tr>
-                    <tr class="bg-secondary font-weight-bold">
+                      <th class="col-2 text-light">Tanggal</th>
+                      <th class="col-2 text-light">Deskripsi</th>
                       <th class="col-2 text-light">Nomor Akun</th>
                       <th class="col-2 text-light">Nama Akun</th>
-                      <th class="col-2 text-light">Amount</th>
-                      <th class="col-2 text-light">Petty Cash</th>
+                      <th class="col-2 text-light">Debet</th>
+                      <th class="col-2 text-light">Kredit</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -93,14 +89,13 @@
                         </td>
                       </tr>
                     @endforeach
-
                   </tbody>
                   <tfoot>
-                    <tr class="bg-secondary font-weight-bold">
+                    <tr class="bg-success font-weight-bold">
                       <td></td>
                       <td class="text-light" colspan="3">Total</td>
                       <td class="text-light text-right">{{format_uang2($sum_debet)}}</td>
-                      <td class="text-light text-right">{{format_uang2($sum_debet)}}</td>
+                      <td class="text-light text-right">{{format_uang2($sum_kredit)}}</td>
                     </tr>
                   </tfoot>
                 </table>
@@ -114,25 +109,28 @@
                     </tr>
                     <tr>
                       <td>Nomor Akun</td>
+                      <td>Nama Akun</td>
                       <td>Debet</td>
-                      <td>Nomor Akun</td>
                       <td>Kredit</td>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($luke as $data)
+                    @foreach ($distinct_pc as $rekap)
                       <tr>
-                        <td>{{$data->nomor_akun}}</td>
-                        @if ($data->debet > 0)
-                          <td>{{$pc_detail->where('nomor_akun', $data->nomor_akun)->sum('debet')}}</td>
-                        @endif
-                        <td>{{$data->nomor_akun}}</td>
-                        @if ($data->kredit > 0)
-                          <td>{{$pc_detail->where('nomor_akun', $data->nomor_akun)->sum('kredit')}}</td>
-                        @endif
+                        <td>{{$rekap->nomor_akun}}</td>
+                        <td>{{$rekap->nama_akun}}</td>
+                        <td class="text-right">{{format_uang2($rekap->where('nomor_akun', $rekap->nomor_akun)->sum('debet'))}}</td>
+                        <td class="text-right">{{format_uang2($rekap->where('nomor_akun', $rekap->nomor_akun)->sum('kredit'))}}</td>
                       </tr>
                     @endforeach
                   </tbody>
+                  <tfoot>
+                    <tr class="bg-success font-weight-bold">
+                      <td class="text-light text-right" colspan="2">Total</td>
+                      <td class="text-light text-right">{{format_uang2($sum_debet)}}</td>
+                      <td class="text-light text-right">{{format_uang2($sum_kredit)}}</td>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
             </div>
