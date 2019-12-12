@@ -38,17 +38,10 @@
           <div class="card">
             <div class="card-header d-flex justify-content-between flex-row">
               <div class="left-container">
-                <form class="forms-sample" action="{{route('petty_cash_book.filter')}}" method="post">
-                  @csrf
-                  <label for="filter">Tanggal Mulai</label>
-                  <input type="date" name="tanggal_mulai" id="filter">
-                  <label for="filter2">Tanggal Akhir</label>
-                  <input type="date" name="tanggal_akhir" id="filter2">
-                  <button class="btn btn-primary" type="submit">Filter</button>
-                </form>
+
               </div>
               <div class="right-container">
-                <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
+                <a type="button" class="btn btn-success mr-5" href="/petty_cash_book"><i class="ik ik-arrow-left"></i>Back</a>
                 <a type="button" class="btn btn-primary" href="#"><i class="ik ik-printer"></i>Print</a>
               </div>
             </div>
