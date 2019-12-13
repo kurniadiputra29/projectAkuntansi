@@ -1,13 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Reports;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\Account;
-use App\Model\SaldoAwal;
-use App\Http\Requests\SaldoAwalRequest;
+use App\Model\DataSupplier;
+use App\Model\SaldoHutang;
+use App\Model\PurchaseJournal;
+use App\Model\purchasejournaldetail;
+use App\Model\ReturPembelian;
+use App\Model\ReturPembelianDetail;
+use App\Model\CashBankOut;
+use App\Model\CashBankOutDetails;
 
-class SaldoAwalController extends Controller
+class HutangController extends Controller
 {
     public function __construct()
     {
@@ -20,9 +26,16 @@ class SaldoAwalController extends Controller
      */
     public function index()
     {
-      $dataSaldoAwal = SaldoAwal::orderBy('account_id', 'asc')->get();
-      $dataAkun = Account::all();
-        return view('pages.saldo_awal.index', compact('dataSaldoAwal','dataAkun'));
+        $DataSuppliers             = DataSupplier::all();
+        $SaldoHutangs              = SaldoHutang::all();
+        $PurchaseJournals          = PurchaseJournal::all();
+        $purchasejournaldetails    = purchasejournaldetail::where('nomor_akun', '2-1210')->first();
+        $ReturPembelians           = ReturPembelian::all();
+        $ReturPembelianDetails     = ReturPembelianDetail::where('nomor_akun', '2-1210')->first();
+        $CashBankOuts           = CashBankOut::all();
+        $CashBankOutDetails     = CashBankOutDetails::where('nomor_akun', '2-1210')->first();
+
+        return view('reports.hutang_supplier.index', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails'));
     }
 
     /**
@@ -43,20 +56,7 @@ class SaldoAwalController extends Controller
      */
     public function store(Request $request)
     {
-        $messages = [
-                'required' => ':attribute wajib diisi !!!',
-        ];
-        $this->validate($request,[
-                'account_id'  => 'required',
-        ],$messages);
-
-        $data                   = new SaldoAwal;
-        $data->account_id       = $request->account_id;
-        $data->debet            = $request->debet;
-        $data->kredit           = $request->kredit;
-        $data->save();
-
-        return redirect('saldo_awal')->with('Success', 'Data anda telah berhasil di Input !');
+        //
     }
 
     /**
@@ -88,10 +88,9 @@ class SaldoAwalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SaldoAwalRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        SaldoAwal::find($id)->update($request->all());
-        return redirect('saldo_awal')->with('Success', 'Data anda telah berhasil di Edit !');
+        //
     }
 
     /**
@@ -102,7 +101,6 @@ class SaldoAwalController extends Controller
      */
     public function destroy($id)
     {
-        SaldoAwal::find($id)->delete();
-        return redirect('saldo_awal')->with('Success', 'Data anda telah berhasil di delete !');
+        //
     }
 }

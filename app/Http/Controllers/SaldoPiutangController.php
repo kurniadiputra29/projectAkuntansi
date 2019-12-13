@@ -20,8 +20,8 @@ class SaldoPiutangController extends Controller
      */
     public function index()
     {
-      $dataSaldoPiutang = SaldoPiutang::orderBy('created_at', 'desc')->get();
-      $dataCustomer = DataCustomer::all();
+      $dataSaldoPiutang     = SaldoPiutang::orderBy('created_at', 'desc')->get();
+      $dataCustomer         = DataCustomer::all();
         return view('pages.saldo_piutang.index', compact('dataSaldoPiutang','dataCustomer'));
     }
 
@@ -41,9 +41,23 @@ class SaldoPiutangController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SaldoPiutangRequest $request)
+    public function store(Request $request)
     {
-        SaldoPiutang::create($request->all());
+        $messages = [
+                'required' => ':attribute wajib diisi !!!',
+        ];
+        $this->validate($request,[
+                'customers_id' => 'required',
+                'keterangan' => 'required',
+        ],$messages);
+
+        $data                   = new SaldoPiutang;
+        $data->customers_id     = $request->customers_id;
+        $data->keterangan       = $request->keterangan;
+        $data->debet            = $request->debet;
+        $data->kredit           = $request->kredit;
+        $data->save();
+
         return redirect('saldo_piutang')->with('Success', 'Data anda telah berhasil di input !');
     }
 
@@ -76,9 +90,23 @@ class SaldoPiutangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SaldoPiutangRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        SaldoPiutang::find($id)->update($request->all());
+        $messages = [
+                'required' => ':attribute wajib diisi !!!',
+        ];
+        $this->validate($request,[
+                'customers_id' => 'required',
+                'keterangan' => 'required',
+        ],$messages);
+
+        $data                   = SaldoPiutang::find($id);
+        $data->customers_id     = $request->customers_id;
+        $data->keterangan       = $request->keterangan;
+        $data->debet            = $request->debet;
+        $data->kredit           = $request->kredit;
+        $data->save();
+
         return redirect('saldo_piutang')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 

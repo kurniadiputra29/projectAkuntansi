@@ -53,14 +53,8 @@ Route::resource('stock_opname', 'StockOpnameController');
 Route::resource('supplier', 'SupplierController');
 Route::resource('retur_penjualan', 'ReturPenjualanController');
 Route::resource('retur_pembelian', 'ReturPembelianController');
-
-Route::get('cashbank', 'CashBankController@index')->name('cashbank.index');
-Route::get('cashbank/create', 'CashBankController@create')->name('cashbank.create');
-Route::post('cashbank', 'CashBankController@store')->name('cashbank.store');
-Route::get('cashbank/{id}/edit', 'CashBankController@edit')->name('cashbank.edit');
-Route::get('cashbank/{id}', 'CashBankController@show')->name('cashbank.show');
-Route::put('cashbank/{id}', 'CashBankController@update')->name('cashbank.update');
-Route::delete('cashbank/{id}', 'CashBankController@destroy')->name('cashbank.destroy');
+Route::resource('cashbank_in', 'CashBankInController');
+Route::resource('cashbank_out', 'CashBankOutController');
 
 Route::resource('profile', 'ProfileController');
 
@@ -73,17 +67,17 @@ Route::get('/print/buku_besar', 'PrintController@buku_besar')->name('laporan.buk
 Route::get('/print/laba_rugi', 'PrintController@laba_rugi')->name('laporan.laba_rugi');
 Route::get('/print/alur_kas', 'PrintController@alur_kas')->name('laporan.alur_kas');
 Route::get('/print/daftar_penjualan', 'PrintController@daftar_penjualan')->name('laporan.daftar_penjualan');
-Route::get('/print/piutang_pelanggan', 'PrintController@piutang_pelanggan')->name('laporan.piutang_pelanggan');
 Route::get('/print/penjualan_per_produk', 'PrintController@penjualan_per_produk')->name('laporan.penjualan_per_produk');
 Route::get('/print/daftar_pembelian', 'PrintController@daftar_pembelian')->name('laporan.daftar_pembelian');
 Route::get('/print/pembelian_per_produk', 'PrintController@pembelian_per_produk')->name('laporan.pembelian_per_produk');
-Route::get('/print/hutang_supplier', 'PrintController@hutang_supplier')->name('laporan.hutang_supplier');
 
 //for print
 Route::get('/print/print_neraca', 'PrintController@print_neraca')->name('print.neraca');
 Route::get('/print/print_neraca_saldo', 'PrintController@print_neraca_saldo')->name('print.neraca_saldo');
 
 //fix
-Route::get('/inventory/', 'InventoryController@index')->name('inventory.index');
-Route::get('buku_besar', 'Reports\BukuBesarController@index')->name('buku_besar.index');
+Route::get('/inventory', 'Reports\InventoryController@index')->name('inventory.index');
+Route::get('/buku_besar', 'Reports\BukuBesarController@index')->name('buku_besar.index');
+Route::get('/piutang_pelanggan', 'Reports\PiutangController@index')->name('piutang_pelanggan.index');
+Route::get('/hutang', 'Reports\HutangController@index')->name('hutang.index');
 

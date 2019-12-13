@@ -15,11 +15,13 @@ class CreateSaldoHutangsTable extends Migration
     {
         Schema::create('saldo_hutangs', function (Blueprint $table) {
             $table->Increments('id');
-            $table->unsignedInteger('supplier_id');
-            $table->integer('keterangan');
+            $table->unsignedInteger('suppliers_id');
+            $table->string('keterangan');
             $table->integer('debet')->nullable();
             $table->integer('kredit')->nullable();
             $table->timestamps();
+
+            $table->foreign('suppliers_id')->references('id')->on('data_suppliers')->onDelete('cascade');
         });
     }
 

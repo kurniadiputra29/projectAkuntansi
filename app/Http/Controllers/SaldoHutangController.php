@@ -41,9 +41,23 @@ class SaldoHutangController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SaldoHutangRequest $request)
+    public function store(Request $request)
     {
-        SaldoHutang::create($request->all());
+        $messages = [
+                'required' => ':attribute wajib diisi !!!',
+        ];
+        $this->validate($request,[
+                'suppliers_id'  => 'required',
+                'keterangan'    => 'required',
+        ],$messages);
+
+        $data                   = new SaldoHutang;
+        $data->suppliers_id     = $request->suppliers_id;
+        $data->keterangan       = $request->keterangan;
+        $data->debet            = $request->debet;
+        $data->kredit           = $request->kredit;
+        $data->save();
+
         return redirect('saldo_hutang')->with('Success', 'Data anda telah berhasil di input !');
     }
 
@@ -76,9 +90,23 @@ class SaldoHutangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SaldoHutangRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        SaldoHutang::find($id)->update($request->all());
+        $messages = [
+                'required' => ':attribute wajib diisi !!!',
+        ];
+        $this->validate($request,[
+                'suppliers_id'  => 'required',
+                'keterangan'    => 'required',
+        ],$messages);
+
+        $data                   = SaldoHutang::find($id);
+        $data->suppliers_id     = $request->suppliers_id;
+        $data->keterangan       = $request->keterangan;
+        $data->debet            = $request->debet;
+        $data->kredit           = $request->kredit;
+        $data->save();
+
         return redirect('saldo_hutang')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 

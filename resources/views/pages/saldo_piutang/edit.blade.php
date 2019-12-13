@@ -16,8 +16,7 @@
                 <select class="form-control" name="customers_id">
                   @foreach($dataCustomer as $item)
                     <option
-                    value="{{ $item->id }}"
-                    {{ $key->customer_id == $item->id ? 'selected' : '' }}
+                    value="{{ $item->id }}" {{ $key->customers_id == $item->id ? 'selected' : '' }}
                     >
                     {{ $item->kode.' - '. $item->nama }}
                   </option>
@@ -26,7 +25,7 @@
             </div>
             <div class="form-group">
               <label for="keterangan">Keterangan</label>
-              <input type="number" class="form-control" name="keterangan" id="keterangan" value="{{ $key->keterangan }}">
+              <input type="text" class="form-control" name="keterangan" id="keterangan" value="{{ $key->keterangan }}">
             </div>
             <div class="form-group">
               <label for="debet">Debet</label>

@@ -13,11 +13,11 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label for="kode">Pilih Akun</label>
-                <select class="form-control" name="account_id">
+                <select class="form-control" name="suppliers_id">
                   @foreach($dataSupplier as $item)
                     <option
                     value="{{ $item->id }}"
-                    {{ $key->supplier_id == $item->id ? 'selected' : '' }}
+                    {{ $key->suppliers_id == $item->id ? 'selected' : '' }}
                     >
                     {{ $item->kode.' - '. $item->nama }}
                   </option>
@@ -26,7 +26,7 @@
             </div>
             <div class="form-group">
               <label for="keterangan">Keterangan</label>
-              <input type="number" class="form-control" name="keterangan" id="keterangan" value="{{ $key->keterangan }}">
+              <input type="text" class="form-control" name="keterangan" id="keterangan" value="{{ $key->keterangan }}">
             </div>
             <div class="form-group">
               <label for="debet">Debet</label>
