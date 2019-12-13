@@ -14,6 +14,6 @@ class SaldoPiutang extends Model
 
     public function customers()
     {
-      return $this->belongsTo(DataCustomer::class);
+      return $this->belongsTo(DataCustomer::class, 'customers_id');
     }
 }

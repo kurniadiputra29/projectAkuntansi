@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Edit CashBank')
+@section('title', 'AccountMin - Edit Cash & Bank Out')
 
 @section('content')
 
@@ -23,7 +23,9 @@
               <li class="breadcrumb-item">
                 <a href="/dasbor"><i class="ik ik-home"></i></a>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">Cash & Bank</li>
+              <li class="breadcrumb-item" aria-current="page">
+                <a href="/cashbank_out">Cash & Bank Out</a>
+              </li>
               <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
           </nav>
@@ -42,13 +44,14 @@
             </ul>
           </div>
           @endif
-        <form class="forms-sample" id="a" action="{{route('cashbank.update', $cashbanks->id)}}" method="post">
+        <form class="forms-sample" id="b" action="{{route('cashbank_out.update', $cashbanks->id)}}" method="post">
           @csrf
           @method('PUT')
           <div class="card">
-            <div class="card-header" style="background: #2dce89;"><h3 style="color: white">Pemasukan Kas In Bank</h3>
+            <div class="card-header" style="background: #fb6340;"><h3 style="color: white">Pengeluaran Cash & Bank</h3>
             </div>
             <div class="card-body">
+
               <div
                 v-for="(cashbank, index) in cashbanks2"
                 :key="index"
@@ -56,11 +59,11 @@
                 <div class="row input-group-primary">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="setor_ke">Setor Ke</label>
+                      <label for="setor_ke">Di Bayar Dari</label>
                       <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
-                        @foreach($debets as $debet)
+                        @foreach($kredits as $kredit)
                         @foreach ($akun as $key)
-                        <option value="{{$key->nomor}}" {{$debet->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
+                        <option value="{{$key->nomor}}" {{$kredit->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
                         @endforeach
                         @endforeach
                       </select>
@@ -77,11 +80,16 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="yang_membayar">Diterima Dari</label>
-                    <input class="form-control" type="text" id="yang_membayar" name="penerima_diterima" value="{{$cashbanks->penerima_diterima}}" required="">
-                    <input class="form-control" type="hidden" id="yang_membayar" name="status" value="0">
+                    <label for="setor_ke">Suppliers</label>
+                      <select class="form-control" id="setor_ke" name="suppliers_id">
+                        <option value="0"> ~~ Pilih Suppliers ~~ </option>
+                        @foreach ($suppliers as $supplier)
+                        <option value="{{$supplier->id}}" {{$cashbanks->suppliers_id == $supplier->id ? 'selected' : ''}}>{{$supplier->nama}}</option>
+                        @endforeach
+                      </select>
                   </div>
                 </div>
+                <input class="form-control" type="hidden" id="yang_membayar" name="status" value="1">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="tanggal_transaksi">Tanggal Transaksi</label>
@@ -118,18 +126,17 @@
                     </select>
                   </div>
                 </div>
-                
                 <input type="hidden" name="nomor_akun[]"
                     :value="nomor_akun(cashbank.id_akun, index)"
                   >
-                <input type="hidden" name="nama_akun[]"
+                  <input type="hidden" name="nama_akun[]"
                     :value="nama_akun(cashbank.id_akun, index)"
                 >
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="jumlah">Jumlah</label>
                     <input class="form-control" type="number" id="jumlah" name="jumlah[]" v-model="cashbank.jumlah">
-                    <!-- <input class="form-control" type="hidden" id="yang_membayar" name="index" :value=" index + 1"> -->
+                    <!-- <input class="form-control" type="text" id="yang_membayar" name="index" :value=" index + 1"> -->
                   </div>
                 </div>
                 <div class="col-md-1">
@@ -158,8 +165,8 @@
           </div>
 
           <div class="forms-sample" style="margin-bottom: 10px; margin-top: 10px; justify-content: space-between; display: flex;">
-            <a href="{{route('cashbank.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
-            <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Edit</button>
+            <a href="{{route('cashbank_out.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
+            <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Create</button>
           </div>
         </div>
       </div>
@@ -181,7 +188,7 @@
     {terima_dari:"", description:"", jumlah: 0},
     ],
     cashbanks2: [
-    {id_akun2:"{{$debet->nomor_akun}}", description:"", jumlah: 0},
+    {id_akun2:"{{$kredit->nomor_akun}}", description:"", jumlah: 0},
     ],
   },
   methods: {
@@ -243,12 +250,12 @@
   created(){
     var cashbanks = [];
 
-    @foreach($cashbanks->Cashinbankdetail as $index => $detail)
+    @foreach($cashbanks->CashBankOutDetails as $index => $detail)
     cashbanks [{{$index-1}}] = {
       id_akun: "{{$detail->nomor_akun}}",
       nomor_akun: "{{$detail->nomor_akun}}",
       nama_akun: "{{$detail->nama_akun}}",
-      jumlah: "{{$detail->kredit}}",
+      jumlah: "{{$detail->debet}}",
     };
     @endforeach
     this.cashbanks = cashbanks;

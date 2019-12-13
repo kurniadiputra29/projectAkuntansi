@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Edit CashBank')
+@section('title', 'AccountMin - Create Cash & Bank Out')
 
 @section('content')
 
@@ -12,7 +12,7 @@
           <div class="page-header-title">
             <i class="ik ik-menu bg-blue"></i>
             <div class="d-inline">
-              <h5>Edit Cash & Bank</h5>
+              <h5>Create Cash & Bank Out</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
             </div>
           </div>
@@ -23,8 +23,10 @@
               <li class="breadcrumb-item">
                 <a href="/dasbor"><i class="ik ik-home"></i></a>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">Cash & Bank</li>
-              <li class="breadcrumb-item active" aria-current="page">Edit</li>
+              <li class="breadcrumb-item" aria-current="page">
+                <a href="/cashbank_out">Cash & Bank Out</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">Create</li>
             </ol>
           </nav>
         </div>
@@ -42,11 +44,10 @@
             </ul>
           </div>
           @endif
-        <form class="forms-sample" id="b" action="{{route('cashbank.update', $cashbanks->id)}}" method="post">
+    <form class="forms-sample" id="b" action="{{route('cashbank_out.store')}}" method="post">
           @csrf
-          @method('PUT')
           <div class="card">
-            <div class="card-header" style="background: #fb6340;"><h3 style="color: white">Pengeluaran Kas In Bank</h3>
+            <div class="card-header" style="background: #fb6340;"><h3 style="color: white">Pengeluaran Cash & Bank</h3>
             </div>
             <div class="card-body">
 
@@ -59,10 +60,8 @@
                     <div class="form-group">
                       <label for="setor_ke">Di Bayar Dari</label>
                       <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
-                        @foreach($kredits as $kredit)
                         @foreach ($akun as $key)
-                        <option value="{{$key->nomor}}" {{$kredit->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
-                        @endforeach
+                        <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -78,27 +77,38 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="yang_membayar">Penerima</label>
-                    <input class="form-control" type="text" id="yang_membayar" name="penerima_diterima" required="" value="{{$cashbanks->penerima_diterima}}">
-                    <input class="form-control" type="hidden" id="yang_membayar" name="status" value="1">
+                    <label for="setor_ke">Suppliers</label>
+                      <select class="form-control" id="setor_ke" name="suppliers_id">
+                        <option value="0"> ~~ Pilih Suppliers ~~ </option>
+                        @foreach ($suppliers as $supplier)
+                        <option value="{{$supplier->id}}">{{$supplier->nama}}</option>
+                        @endforeach
+                      </select>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="tanggal_transaksi">Tanggal Transaksi</label>
-                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{$cashbanks->tanggal}}">
+                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="no_transaksi">Nomor Transaksi</label>
-                    <input class="form-control" name="kode" type="text" id="no_transaksi" value="{{$cashbanks->kode}}">
+                    @if ($CashBankOut_count <= 0)
+                      <input class="form-control" name="kode" type="text" id="no_transaksi">
+                    @else
+                      @foreach ($CashBankOut as $key)
+                      <input class="form-control" name="kode" type="text" id="no_transaksi" placeholder="
+                      {{$key->kode}}">
+                      @endforeach
+                    @endif
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="description">Deskripsi</label>
-                    <textarea class="form-control" name="description" type="text" id="description" rows="3">{{$cashbanks->description}}</textarea>
+                    <textarea class="form-control" name="description" type="text" id="description" rows="3"></textarea>
                   </div>
                 </div>
               </div>
@@ -114,7 +124,7 @@
                     <select class="form-control" id="nomor_akun" v-model="cashbank.id_akun">
                       <option class="col-sm-10" value=""> ~~ Pilih Akun ~~ </option>
                       @foreach ($akun as $key)
-                      <option value="{{$key->nomor}}">{{$key->nomor}} - {{$key->nama}}</option>
+                      <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
                       @endforeach
                     </select>
                   </div>
@@ -129,7 +139,7 @@
                   <div class="form-group">
                     <label for="jumlah">Jumlah</label>
                     <input class="form-control" type="number" id="jumlah" name="jumlah[]" v-model="cashbank.jumlah">
-                    <!-- <input class="form-control" type="text" id="yang_membayar" name="index" :value=" index + 1"> -->
+                    <!-- <input class="form-control" type="hidden" id="yang_membayar" name="index" :value=" index + 1"> -->
                   </div>
                 </div>
                 <div class="col-md-1">
@@ -158,7 +168,7 @@
           </div>
 
           <div class="forms-sample" style="margin-bottom: 10px; margin-top: 10px; justify-content: space-between; display: flex;">
-            <a href="{{route('cashbank.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
+            <a href="{{route('cashbank_out.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
             <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Create</button>
           </div>
         </div>
@@ -181,7 +191,7 @@
     {terima_dari:"", description:"", jumlah: 0},
     ],
     cashbanks2: [
-    {id_akun2:"{{$kredit->nomor_akun}}", description:"", jumlah: 0},
+    {id_akun2:"1", description:"", jumlah: 0},
     ],
   },
   methods: {
@@ -216,22 +226,6 @@
       },
   },
   computed: {
-    nomor_akuns() {
-      var akun = [];
-      akun[0] = 0;
-      @foreach($akun as $key)
-        akun[ "{{ $key->nomor }}" ] = "{{ $key->nomor }}"
-      @endforeach
-      return akun;
-    },
-    nama_akuns() {
-      var akun = [];
-      akun[0] = 0;
-      @foreach($akun as $key)
-        akun[ "{{ $key->nomor }}" ] = "{{ $key->nama }}"
-      @endforeach
-      return akun;
-    },
     total: function(){
       let sum = 0;
       this.cashbanks.forEach(function(cashbank) {
@@ -239,19 +233,22 @@
       });
       return sum;
     },
-  },
-  created(){
-    var cashbanks = [];
-
-    @foreach($cashbanks->Cashinbankdetail as $index => $detail)
-    cashbanks [{{$index-1}}] = {
-      id_akun: "{{$detail->nomor_akun}}",
-      nomor_akun: "{{$detail->nomor_akun}}",
-      nama_akun: "{{$detail->nama_akun}}",
-      jumlah: "{{$detail->debet}}",
-    };
-    @endforeach
-    this.cashbanks = cashbanks;
+    nomor_akuns() {
+      var akun = [];
+      akun[0] = 0;
+      @foreach($akun as $key)
+        akun[ {{ $key->id }} ] = "{{ $key->nomor }}"
+      @endforeach
+      return akun;
+    },
+    nama_akuns() {
+      var akun = [];
+      akun[0] = 0;
+      @foreach($akun as $key)
+        akun[ {{ $key->id }} ] = "{{ $key->nama }}"
+      @endforeach
+      return akun;
+    },
   },
 });
 </script>

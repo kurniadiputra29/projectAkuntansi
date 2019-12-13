@@ -52,174 +52,75 @@
           <div class="table-container list-table">
             <div class="report-title">
               <div class="table-responsive">
+                @foreach ($DataSuppliers as $DataSupplier)
+                <h5 style="margin-top: 30px;">Customers Name : {{ $DataSupplier->nama }}</h5>
                 <table class="account-transactions report-table table" id="account-entry">
                   <thead class="report-header">
                     <tr class="bg-secondary font-weight-bold">
-                      <th class="text-light">
-                        Supplier / Tanggal
-                      </th>
-                      <th class="text-light">
-                        Transaksi
-                      </th>
-                      <th class="text-light">
-                        Nomor
-                      </th>
-                      <th class="text-light">
-                        Deskripsi
-                      </th>
-                      <th class="text-right text-light">
-
-                      </th>
-                      <th class="text-right text-light">
-                        Jumlah
-                      </th>
-                      <th class="text-right text-light">
-                        Saldo
-                      </th>
+                      <th class="text-center text-light">Tanggal</th>
+                      <th class="text-center text-light">Kode Customers</th>
+                      <th class="text-center text-light">Deskripsi</th>
+                      <th class="text-center text-light">Debet</th>
+                      <th class="text-center text-light">Kredit</th>
+                      <th class="text-center text-light">Debet</th>
+                      <th class="text-center text-light">Kredit</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        PT Sanex
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        24/11/2019
-                      </td>
-                      <td class="text-left bold">
-                        Saldo Awal
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        24/11/2019
-                      </td>
-                      <td class="text-left bold">
-                        Purchase
-                      </td>
-                      <td>10001</td>
-                      <td></td>
-                      <td></td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                      <td class="text-right bold">
-                        500.000,00
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal" style="border-top: solid 2px grey;">
-                      <td class="text-right regular-text" colspan="4">
-
-                      </td>
-                      <td class="text-right bold">
-                        Total
-                      </td>
-                      <td class="text-right bold">
-                        21.000.000,00
-                      </td>
-                      <td class="text-right bold">
-                        11.000.000,00
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        PT Kent
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        24/11/2019
-                      </td>
-                      <td class="text-left bold">
-                        Saldo Awal
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal" style="border-top: solid 2px grey;">
-                      <td class="text-right regular-text" colspan="4">
-
-                      </td>
-                      <td class="text-right bold">
-                        Total
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        PT Konimex
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        24/11/2019
-                      </td>
-                      <td class="text-left bold">
-                        Saldo Awal
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal" style="border-top: solid 2px grey;">
-                      <td class="text-right regular-text" colspan="4">
-
-                      </td>
-                      <td class="text-right bold">
-                        Total
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
-                    <tr class="bg-success text-light">
-                      <td class="text-right grand-total" colspan="5">
-                        Grand Total
-                      </td>
-                      <td class="text-right grand-total">
-                        31.500.000,00
-                      </td>
-                      <td class="text-right grand-total">
-                        31.500.000,00
-                      </td>
-                    </tr>
+                        @foreach ($SaldoHutangs as $SaldoHutang)
+                          <tr>
+                            @if ($SaldoHutang->suppliers_id == $DataSupplier->id)
+                            <td class="text-center">{{date('d F Y', strtotime($DataSupplier->created_at ))}}</td>
+                            <td class="text-center">{{ $DataSupplier->kode }}</td>
+                            <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Saldo Awal</span></td>
+                            <td class="text-center">{{ $DataSupplier->status }}</td>
+                            <td class="text-center">{{ $DataSupplier->status }}</td>
+                            <td class="text-right">Rp {{ number_format($SaldoHutang->debet, 0, " ", ".")}}</td>
+                            <td class="text-right">Rp {{ number_format($SaldoHutang->kredit, 0, " ", ".")}}</td>
+                            @endif
+                          </tr>
+                        @endforeach
+                        @foreach ($PurchaseJournals as $PurchaseJournal)
+                          <tr>
+                            @if ($PurchaseJournal->suppliers_id == $DataSupplier->id)
+                              <td class="text-center">{{date('d F Y', strtotime($PurchaseJournal->tanggal ))}}</td>
+                              <td class="text-center">{{ $DataSupplier->kode }}</td>
+                              <td class="text-center"><span class="badge badge-pill badge-warning mb-1">Purchase Journal</span></td>
+                              <td class="text-right">Rp {{ number_format($purchasejournaldetails->debet, 0, " ", ".")}}</td>
+                              <td class="text-right">Rp {{ number_format($purchasejournaldetails->kredit, 0, " ", ".")}}</td>
+                            @endif
+                          </tr>
+                        @endforeach
+                        @foreach ($ReturPembelians as $ReturPembelian)
+                          <tr>
+                            @if ($ReturPembelian->suppliers_id == $DataSupplier->id)
+                              <td class="text-center">{{date('d F Y', strtotime($ReturPembelian->tanggal ))}}</td>
+                              <td class="text-center">{{ $DataSupplier->kode }}</td>
+                              <td class="text-center"><span class="badge badge-pill badge-success mb-1">Retur Pembelian</span></td>
+                              <td class="text-right">Rp {{ number_format($ReturPembelianDetails->debet, 0, " ", ".")}}</td>
+                              <td class="text-right">Rp {{ number_format($ReturPembelianDetails->kredit, 0, " ", ".")}}</td>
+                            @endif
+                          </tr>
+                        @endforeach
+                        @foreach ($CashBankOuts as $CashBankOut)
+                          <tr>
+                            @if ($CashBankOut->suppliers_id == $DataSupplier->id)
+                              <td class="text-center">{{date('d F Y', strtotime($CashBankOut->tanggal ))}}</td>
+                              <td class="text-center">{{ $DataSupplier->kode }}</td>
+                              <td class="text-center"><span class="badge badge-pill badge-warning mb-1">Cash & Bank</span></td>
+                              <td class="text-right">Rp {{ number_format($CashBankOutDetails->debet, 0, " ", ".")}}</td>
+                              <td class="text-right">Rp {{ number_format($CashBankOutDetails->kredit, 0, " ", ".")}}</td>
+                            @endif
+                          </tr>
+                        @endforeach
+                        <tr class="bg-success text-light">
+                          <td class="text-center grand-total" colspan="10">
+                            {{ $DataSupplier->kode }}
+                          </td>
+                        </tr>
                   </tbody>
                 </table>
-              </div>
-              <div class="text-left show-total-transaction bold-roboto-text" style="">
-                Menampilkan total dari 4 baris transaksi
+                @endforeach
               </div>
             </div>
           </div>

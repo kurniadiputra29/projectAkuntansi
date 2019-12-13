@@ -21,4 +21,8 @@ class DataCustomer extends Model
     {
       return $this->hasMany(SalesJournal::class);
     }
+    public function cashinbank()
+    {
+      return $this->hasMany(Cashinbank::class, "customers_id");
+    }
 }

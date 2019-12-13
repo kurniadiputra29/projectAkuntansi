@@ -126,7 +126,7 @@
                   <div class="form-group">
                     <label for="unit">QTY</label>
                     <input class="form-control" type="number" id="unit" name="unit[]" v-model="cashbank.unit">
-                    <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="0">
+                    <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="1">
                   </div>
                 </div>
                 <div class="col-md-3">

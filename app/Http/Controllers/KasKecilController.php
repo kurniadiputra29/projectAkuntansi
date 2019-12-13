@@ -67,24 +67,20 @@ class KasKecilController extends Controller
 
 				//insert data pettycash detail
 				// versi adib
-				$detailKasKecil2 = $request->only('id_akun', 'nomor_akun', 'nama_akun', 'akun_id', 'jumlah', 'total');
-				$nomorAkun = count($detailKasKecil2['nomor_akun']);
+				$detailKasKecil2 = $request->only('id_akun', 'nomor_akun2', 'nama_akun2', 'nomor_akun', 'nama_akun', 'akun_id', 'jumlah', 'total');
+				$nomorAkun1 = count($detailKasKecil2['total']);
+				$nomorAkun2 = count($detailKasKecil2['nomor_akun']);
 
-				// untuk memilih baris pertama si petty cash
-				$account = Account::where('id', $detailKasKecil2['akun_id'])->get();
-				foreach ($account as $key) {
-					$nomor = $key->nomor;
-					$nama = $key->nama;
-				}
-
+				for ($a=0; $a < $nomorAkun1; $a++) {
 					$detail                     = new PettycashDetail();
 					$detail->pettycash_id       = $pettycash->id;
-					$detail->nomor_akun         = $nomor;
-					$detail->nama_akun          = $nama;
-					$detail->kredit             = $detailKasKecil2['total'];
+					$detail->nomor_akun         = $detailKasKecil2['nomor_akun2'][$a];
+					$detail->nama_akun          = $detailKasKecil2['nama_akun2'][$a];
+					$detail->kredit              = $detailKasKecil2['total'][$a];
 					$detail->save();
+				}
 
-				for ($i=0; $i < $nomorAkun; $i++) {
+				for ($i=0; $i < $nomorAkun2; $i++) {
 					$detail                     = new PettycashDetail();
 					$detail->pettycash_id       = $pettycash->id;
 					$detail->nomor_akun         = $detailKasKecil2['nomor_akun'][$i];

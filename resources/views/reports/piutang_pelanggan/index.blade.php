@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Laporan Piutang Pelanggan')
+@section('title', 'Laporan Piutang Angsuran Pelanggan')
 
 @section('content')
 
@@ -12,7 +12,7 @@
             <div class="page-header-title">
               <i class="ik ik-trending-up bg-blue"></i>
               <div class="d-inline">
-                <h5>Piutang Pelanggan</h5>
+                <h5>Piutang Angsuran Pelanggan</h5>
                 <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
               </div>
             </div>
@@ -26,7 +26,7 @@
                 <li class="breadcrumb-item">
                   <a href="/laporan">Laporan</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Piutang Pelanggan</li>
+                <li class="breadcrumb-item active" aria-current="page">Piutang Angsuran Pelanggan</li>
               </ol>
             </nav>
           </div>
@@ -52,157 +52,75 @@
           <div class="table-container list-table">
             <div class="report-title">
               <div class="table-responsive">
+                @foreach ($DataCustomers as $DataCustomer)
+                <h5 style="margin-top: 30px;">Customers Name : {{ $DataCustomer->nama }}</h5>
                 <table class="account-transactions report-table table" id="account-entry">
                   <thead class="report-header">
                     <tr class="bg-secondary font-weight-bold">
-                      <th class="text-light">
-                        Pelanggan / Tanggal
-                      </th>
-                      <th class="text-light">
-                        Transaksi
-                      </th>
-                      <th class="text-light">
-                        Nomor
-                      </th>
-                      <th class="text-light">
-                        Deskripsi
-                      </th>
-                      <th class="text-right text-light">
-
-                      </th>
-                      <th class="text-right text-light">
-                        Jumlah
-                      </th>
-                      <th class="text-right text-light">
-                        Sisa Piutang
-                      </th>
+                      <th class="text-center text-light">Tanggal</th>
+                      <th class="text-center text-light">Kode Customers</th>
+                      <th class="text-center text-light">Deskripsi</th>
+                      <th class="text-center text-light">Debet</th>
+                      <th class="text-center text-light">Kredit</th>
+                      <th class="text-center text-light">Debet</th>
+                      <th class="text-center text-light">Kredit</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        PT Sanex
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        24/11/2019
-                      </td>
-                      <td class="text-left bold">
-                        Saldo Awal
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal" style="border-top: solid 2px grey;">
-                      <td class="text-right regular-text" colspan="4">
-
-                      </td>
-                      <td class="text-right bold">
-                        Total
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        PT Kent
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        24/11/2019
-                      </td>
-                      <td class="text-left bold">
-                        Saldo Awal
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal" style="border-top: solid 2px grey;">
-                      <td class="text-right regular-text" colspan="4">
-
-                      </td>
-                      <td class="text-right bold">
-                        Total
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-subheader-noindent bg-primary text-light" colspan="7">
-                        PT Konimex
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="bold">
-                        24/11/2019
-                      </td>
-                      <td class="text-left bold">
-                        Saldo Awal
-                      </td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
-                    <tr class="report-subtotal" style="border-top: solid 2px grey;">
-                      <td class="text-right regular-text" colspan="4">
-
-                      </td>
-                      <td class="text-right bold">
-                        Total
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                      <td class="text-right bold">
-                        10.500.000,00
-                      </td>
-                    </tr>
-                    <tr class="bg-success text-light">
-                      <td class="text-right grand-total" colspan="5">
-                        Grand Total
-                      </td>
-                      <td class="text-right grand-total">
-                        31.500.000,00
-                      </td>
-                      <td class="text-right grand-total">
-                        31.500.000,00
-                      </td>
-                    </tr>
+                        @foreach ($SaldoPiutangs as $SaldoPiutang)
+                          <tr>
+                            @if ($SaldoPiutang->customers_id == $DataCustomer->id)
+                            <td class="text-center">{{date('d F Y', strtotime($DataCustomer->created_at ))}}</td>
+                            <td class="text-center">{{ $DataCustomer->kode }}</td>
+                            <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Saldo Awal</span></td>
+                            <td class="text-center">{{ $DataCustomer->status }}</td>
+                            <td class="text-center">{{ $DataCustomer->status }}</td>
+                            <td class="text-right">Rp {{ number_format($SaldoPiutang->debet, 0, " ", ".")}}</td>
+                            <td class="text-right">Rp {{ number_format($SaldoPiutang->kredit, 0, " ", ".")}}</td>
+                            @endif
+                          </tr>
+                        @endforeach
+                        @foreach ($SalesJournals as $SalesJournal)
+                          <tr>
+                            @if ($SalesJournal->customers_id == $DataCustomer->id)
+                              <td class="text-center">{{date('d F Y', strtotime($SalesJournal->tanggal ))}}</td>
+                              <td class="text-center">{{ $DataCustomer->kode }}</td>
+                              <td class="text-center"><span class="badge badge-pill badge-success mb-1">Sales Journal</span></td>
+                              <td class="text-right">Rp {{ number_format($salesjournaldetails->debet, 0, " ", ".")}}</td>
+                              <td class="text-right">Rp {{ number_format($salesjournaldetails->kredit, 0, " ", ".")}}</td>
+                            @endif
+                          </tr>
+                        @endforeach
+                        @foreach ($ReturPenjualans as $ReturPenjualan)
+                          <tr>
+                            @if ($ReturPenjualan->customers_id == $DataCustomer->id)
+                              <td class="text-center">{{date('d F Y', strtotime($ReturPenjualan->tanggal ))}}</td>
+                              <td class="text-center">{{ $DataCustomer->kode }}</td>
+                              <td class="text-center"><span class="badge badge-pill badge-warning mb-1">Retur Penjualan</span></td>
+                              <td class="text-right">Rp {{ number_format($ReturPenjualanDetails->debet, 0, " ", ".")}}</td>
+                              <td class="text-right">Rp {{ number_format($ReturPenjualanDetails->kredit, 0, " ", ".")}}</td>
+                            @endif
+                          </tr>
+                        @endforeach
+                        @foreach ($CashBankIns as $CashBankIn)
+                          <tr>
+                            @if ($CashBankIn->customers_id == $DataCustomer->id)
+                              <td class="text-center">{{date('d F Y', strtotime($CashBankIn->tanggal ))}}</td>
+                              <td class="text-center">{{ $DataCustomer->kode }}</td>
+                              <td class="text-center"><span class="badge badge-pill badge-success mb-1">Cash & Bank</span></td>
+                              <td class="text-right">Rp {{ number_format($CashBankInDetails->debet, 0, " ", ".")}}</td>
+                              <td class="text-right">Rp {{ number_format($CashBankInDetails->kredit, 0, " ", ".")}}</td>
+                            @endif
+                          </tr>
+                        @endforeach
+                        <tr class="bg-success text-light">
+                          <td class="text-center grand-total" colspan="10">
+                            {{ $DataCustomer->kode }}
+                          </td>
+                        </tr>
                   </tbody>
                 </table>
-              </div>
-              <div class="text-left show-total-transaction bold-roboto-text" style="">
-                Menampilkan total dari 4 baris transaksi
+                @endforeach
               </div>
             </div>
           </div>

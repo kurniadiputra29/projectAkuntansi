@@ -13,7 +13,7 @@
             <div class="col-md-12">
               <div class="form-group">
                   <label>Pilih Supplier</label>
-                  <select class="form-control" name="supplier_id">
+                  <select class="form-control" name="suppliers_id">
                     @foreach ($dataSupplier as $key)
                       <option value="{{$key->id}}">{{$key->kode.' - '.$key->nama}}</option>
                     @endforeach

@@ -69,24 +69,18 @@
                       <tr>
                         <th>Nomor</th>
                         <th>Nama</th>
-                        <th>Debet</th>
-                        <th>Kredit</th>
+                        <th class="text-right">Debet</th>
+                        <th class="text-right">Kredit</th>
                         <th class="text-right">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @php
-                      function format_uang($angka){
-                        $hasil =  number_format($angka,2, ',' , '.');
-                        return $hasil;
-                      }
-                      @endphp
                       @foreach ($dataSaldoAwal as $key)
                         <tr>
                           <td>{{ $key->account->nomor }}</td>
                           <td>{{ $key->account->nama }}</td>
-                          <td>Rp{{ format_uang($key->debet) }}</td>
-                          <td>Rp{{ format_uang($key->kredit) }}</td>
+                          <td class="text-right">Rp {{ number_format($key->debet, 0, " ", ".")}}</td>
+                          <td class="text-right">Rp {{ number_format($key->kredit, 0, " ", ".")}}</td>
                           <td class="text-right">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
@@ -95,7 +89,7 @@
                                     <form method="post" action="{{ route('saldo_awal.destroy', $key->id) }}">
                                       @csrf
                                       @method('DELETE')
-                                      <button class="dropdown-item" type="submit"><i class="ik ik-trash-2"></i> Delete</button>
+                                      <button class="dropdown-item" type="submit" onclick='javascript:return confirm("Apakah anda yakin ingin menghapus data ini?")'><i class="ik ik-trash-2"></i> Delete</button>
                                     </form>
                                 </div>
                               </div>

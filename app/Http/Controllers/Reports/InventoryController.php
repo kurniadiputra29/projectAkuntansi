@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Reports;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Item;
 use App\Model\Inventory;
@@ -14,6 +15,10 @@ use App\Model\ReturPembelian;
 
 class InventoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *

@@ -6,8 +6,6 @@
                 <div class="header-search">
                     <div class="input-group">
                         <span class="input-group-addon search-close"><i class="ik ik-x"></i></span>
-                        <input type="text" class="form-control">
-                        <span class="input-group-addon search-btn"><i class="ik ik-search"></i></span>
                     </div>
                 </div>
                 <button type="button" id="navbar-fullscreen" class="nav-link"><i class="ik ik-maximize"></i></button>
