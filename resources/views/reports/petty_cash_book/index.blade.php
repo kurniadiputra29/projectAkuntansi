@@ -53,7 +53,7 @@
               </div>
             </div>
             <div class="card-body">
-              <div id="app" class="dt-responsive">
+              <div class="dt-responsive">
                 @php
                 function format_uang($angka){
                   $hasil =  number_format($angka,2, ',' , '.');
@@ -64,7 +64,7 @@
                   return $hasil;
                 }
                 @endphp
-                <table id="complex-dt" class="table table-bordered nowrap" v-for="(item,index) in items" :key="index">
+                <table id="complex-dt" class="table table-bordered nowrap">
                   <thead>
                     <tr class="bg-secondary font-weight-bold">
                       <th class="col-2 text-light">Tanggal</th>
@@ -78,7 +78,7 @@
                   <tbody>
                     @foreach ($pc_detail as $data)
                       <tr>
-                        <td>{{date('d F Y', strtotime($data->created_at ))}}</td>
+                        <td>{{date('d F Y', strtotime($data->pettycash->tanggal ))}}</td>
                         <td>{{$data->pettycash->description}}</td>
                         <td>{{$data->nomor_akun}}</td>
                         <td>{{$data->nama_akun}}</td>
@@ -141,20 +141,4 @@
     </div>
   </div>
 
-@endsection
-
-@section('vue')
-  <script type="text/javascript">
-    new Vue({
-      el: '#app',
-      data: {
-        items: [
-          {
-            debet: 1,
-            kredit: 1,
-          }
-        ],
-      }
-    });
-  </script>
 @endsection

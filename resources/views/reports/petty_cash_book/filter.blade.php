@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="card-body">
-              <div id="app" class="dt-responsive">
+              <div class="dt-responsive">
                 @php
                 function format_uang($angka){
                   $hasil =  number_format($angka,2, ',' , '.');
@@ -57,7 +57,7 @@
                   return $hasil;
                 }
                 @endphp
-                <table id="complex-dt" class="table table-bordered nowrap" v-for="(item,index) in items" :key="index">
+                <table id="complex-dt" class="table table-bordered nowrap">
                   <thead>
                     <tr class="bg-secondary font-weight-bold">
                       <th class="col-2 text-light">Tanggal</th>
@@ -71,7 +71,7 @@
                   <tbody>
                     @foreach ($pc_detail as $data)
                       <tr>
-                        <td>{{date('d F Y', strtotime($data->created_at ))}}</td>
+                        <td>{{date('d F Y', strtotime($data->pettycash->tanggal ))}}</td>
                         <td>{{$data->pettycash->description}}</td>
                         <td>{{$data->nomor_akun}}</td>
                         <td>{{$data->nama_akun}}</td>
@@ -102,10 +102,10 @@
                       <td class="text-light text-center" colspan="4">Rekapitulasi</td>
                     </tr>
                     <tr>
-                      <td>Nomor Akun</td>
-                      <td>Nama Akun</td>
-                      <td>Debet</td>
-                      <td>Kredit</td>
+                      <td class="col-3">Nomor Akun</td>
+                      <td class="col-3">Nama Akun</td>
+                      <td class="col-3">Debet</td>
+                      <td class="col-3">Kredit</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -113,8 +113,8 @@
                       <tr>
                         <td>{{$rekap->nomor_akun}}</td>
                         <td>{{$rekap->nama_akun}}</td>
-                        <td class="text-right">{{format_uang2($rekap->where('nomor_akun', $rekap->nomor_akun)->sum('debet'))}}</td>
-                        <td class="text-right">{{format_uang2($rekap->where('nomor_akun', $rekap->nomor_akun)->sum('kredit'))}}</td>
+                        <td class="text-right">{{format_uang2($rekap->where('nomor_akun', $rekap->nomor_akun)->whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('debet'))}}</td>
+                        <td class="text-right">{{format_uang2($rekap->where('nomor_akun', $rekap->nomor_akun)->whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('kredit'))}}</td>
                       </tr>
                     @endforeach
                   </tbody>
@@ -134,20 +134,4 @@
     </div>
   </div>
 
-@endsection
-
-@section('vue')
-  <script type="text/javascript">
-    new Vue({
-      el: '#app',
-      data: {
-        items: [
-          {
-            debet: 1,
-            kredit: 1,
-          }
-        ],
-      }
-    });
-  </script>
 @endsection

@@ -30,17 +30,21 @@ class PettyCashBookController extends Controller
     {
         $tanggal_mulai  = $request->tanggal_mulai;
         $tanggal_akhir  = $request->tanggal_akhir;
-        $sub_day        = $tanggal_mulai->subDay();
-        $add_day        = $tanggal_akhir->addDay();
+        // $sub_day        = $tanggal_mulai->subDay();
+        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
 
         $account        = Account::all();
-        $pc_detail      = PettycashDetail::whereBetween('created_at', [$sub_day,$add_day])->get();
-        $sum_debet      = PettycashDetail::whereDate('created_at', $tanggal_akhir)->sum('debet');
-        $sum_kredit     = PettycashDetail::whereDate('created_at', $tanggal_akhir)->sum('kredit');
-        $distinct_pc    = PettycashDetail::distinct('nomor_akun')->select('nomor_akun', 'nama_akun')->whereDate('created_at', $tanggal_akhir)->get();
+        // $pc_detail      = PettycashDetail::whereBetween('created_at', [$sub_day,$add_day])->get();
+        $pc_detail      = PettycashDetail::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        $sum_debet      = PettycashDetail::whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('debet');
+        $sum_kredit     = PettycashDetail::whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('kredit');
+        $distinct_pc    = PettycashDetail::distinct('nomor_akun')->select('nomor_akun', 'nama_akun')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        // $distinct_pc    = $pc_detail->distinct('nomor_akun')->select('nomor_akun', 'nama_akun')->get();
+        // foreach ($distinct_pc as $rekap) {
+        //   $u = $rekap->where('nomor_akun', '1-1120')->whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('kredit');
+        // }
+        // dd($u);
 
-        dd($one_day);
-
-        return view('reports.petty_cash_book.filter', compact('pc_detail','sum_debet','sum_kredit','distinct_pc'));
+        return view('reports.petty_cash_book.filter', compact('pc_detail','sum_debet','sum_kredit','distinct_pc','tanggal_mulai','add_day'));
     }
 }
