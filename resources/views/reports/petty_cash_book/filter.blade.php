@@ -38,17 +38,10 @@
           <div class="card">
             <div class="card-header d-flex justify-content-between flex-row">
               <div class="left-container">
-                <form class="forms-sample" action="{{route('petty_cash_book.filter')}}" method="post">
-                  @csrf
-                  <label for="filter">Tanggal Mulai</label>
-                  <input type="date" name="tanggal_mulai" id="filter">
-                  <label for="filter2">Tanggal Akhir</label>
-                  <input type="date" name="tanggal_akhir" id="filter2">
-                  <button class="btn btn-primary" type="submit">Filter</button>
-                </form>
+
               </div>
               <div class="right-container">
-                <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
+                <a type="button" class="btn btn-success mr-5" href="/petty_cash_book"><i class="ik ik-arrow-left"></i>Back</a>
                 <a type="button" class="btn btn-primary" href="#"><i class="ik ik-printer"></i>Print</a>
               </div>
             </div>
@@ -109,10 +102,10 @@
                       <td class="text-light text-center" colspan="4">Rekapitulasi</td>
                     </tr>
                     <tr>
-                      <td>Nomor Akun</td>
-                      <td>Nama Akun</td>
-                      <td>Debet</td>
-                      <td>Kredit</td>
+                      <td class="col-3">Nomor Akun</td>
+                      <td class="col-3">Nama Akun</td>
+                      <td class="col-3">Debet</td>
+                      <td class="col-3">Kredit</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -120,8 +113,8 @@
                       <tr>
                         <td>{{$rekap->nomor_akun}}</td>
                         <td>{{$rekap->nama_akun}}</td>
-                        <td class="text-right">{{format_uang2($rekap->where('nomor_akun', $rekap->nomor_akun)->sum('debet'))}}</td>
-                        <td class="text-right">{{format_uang2($rekap->where('nomor_akun', $rekap->nomor_akun)->sum('kredit'))}}</td>
+                        <td class="text-right">{{format_uang2($rekap->where('nomor_akun', $rekap->nomor_akun)->whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('debet'))}}</td>
+                        <td class="text-right">{{format_uang2($rekap->where('nomor_akun', $rekap->nomor_akun)->whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('kredit'))}}</td>
                       </tr>
                     @endforeach
                   </tbody>
