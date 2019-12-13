@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSaldoPiutangsTable extends Migration
+class CreateCashBankInDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreateSaldoPiutangsTable extends Migration
      */
     public function up()
     {
-        Schema::create('saldo_piutangs', function (Blueprint $table) {
+        Schema::create('cash_bank_in_details', function (Blueprint $table) {
             $table->Increments('id');
-            $table->unsignedInteger('customers_id');
-            $table->string('keterangan');
+            $table->unsignedInteger('cash_bank_ins_id');
+            $table->string('nomor_akun');
+            $table->string('nama_akun');
             $table->integer('debet')->nullable();
             $table->integer('kredit')->nullable();
             $table->timestamps();
 
-            $table->foreign('customers_id')->references('id')->on('data_customers')->onDelete('cascade');
+            $table->foreign('cash_bank_ins_id')->references('id')->on('cash_bank_ins')->onDelete('cascade');
         });
     }
 
@@ -32,6 +33,6 @@ class CreateSaldoPiutangsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('saldo_piutangs');
+        Schema::dropIfExists('cash_bank_in_details');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCashinbankdetailsTable extends Migration
+class CreateCashBankOutDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateCashinbankdetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('cashinbankdetails', function (Blueprint $table) {
+        Schema::create('cash_bank_out_details', function (Blueprint $table) {
             $table->Increments('id');
-            $table->unsignedInteger('cashinbank_id');
+            $table->unsignedInteger('cash_bank_outs_id');
             $table->string('nomor_akun');
-            $table->string('nama');
+            $table->string('nama_akun');
             $table->integer('debet')->nullable();
             $table->integer('kredit')->nullable();
             $table->timestamps();
 
-            $table->foreign('cashinbank_id')->references('id')->on('cashinbanks')->onDelete('cascade');
+            $table->foreign('cash_bank_outs_id')->references('id')->on('cash_bank_outs')->onDelete('cascade');
         });
     }
 
@@ -33,6 +33,6 @@ class CreateCashinbankdetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cashinbankdetails');
+        Schema::dropIfExists('cash_bank_out_details');
     }
 }

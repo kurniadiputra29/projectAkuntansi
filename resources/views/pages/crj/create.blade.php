@@ -219,7 +219,7 @@
    el: '#app',
    data: {
     cashbanks2: [
-    {terima_dari:"", description:"", jumlah: 0},
+    {id_akun2:"1", description:"", jumlah: 0},
     ],
     cashbanks: [
     {id_item:0, harga:0, description:"", unit:1, jumlah: 0},

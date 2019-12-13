@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCashinbanksTable extends Migration
+class CreateCashBankOutsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateCashinbanksTable extends Migration
      */
     public function up()
     {
-        Schema::create('cashinbanks', function (Blueprint $table) {
+        Schema::create('cash_bank_outs', function (Blueprint $table) {
             $table->Increments('id');
             $table->date('tanggal');
             $table->string('kode')->unique();
-            $table->string('penerima_diterima');
+            $table->unsignedInteger('suppliers_id')->nullable();
             $table->text('description')->nullable();
-            $table->boolean('status')->nullable();
-            
             $table->timestamps();
+
+            $table->foreign('suppliers_id')->references('id')->on('data_suppliers')->onDelete('cascade');
         });
     }
 
@@ -32,6 +32,6 @@ class CreateCashinbanksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cashinbanks');
+        Schema::dropIfExists('cash_bank_outs');
     }
 }

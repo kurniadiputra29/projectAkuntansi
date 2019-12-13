@@ -16,4 +16,8 @@ class DataSupplier extends Model
     {
       return $this->hasMany(SaldoHutang::class);
     }
+    public function cashinbank()
+    {
+      return $this->hasMany(Cashinbank::class, "suppliers_id");
+    }
 }

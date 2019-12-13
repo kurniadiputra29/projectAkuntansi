@@ -54,8 +54,12 @@
           <div class="nav-item {{ Request::is('ju') || Request::is('ju/*') ? 'active' : '' }}">
               <a href="{{ route('ju.index') }}"><i class="ik ik-book"></i><span>Jurnal Umum</span></a>
           </div>
-          <div class="nav-item {{ Request::is('cashbank') || Request::is('cashbank/*') ? 'active' : '' }}">
-              <a href="{{ route('cashbank.index') }}"><i class="ik ik-credit-card"></i><span>Cash & Bank</span></a>
+          <div class="nav-item has-sub {{ Request::is('cashbank_in') || Request::is('cashbank_in/*') || Request::is('cashbank_out') || Request::is('cashbank_out/*') ? 'active open' : '' }}">
+              <a href="#"><i class="ik ik-credit-card"></i></i><span>Cash & Bank</span></a>
+              <div class="submenu-content">
+                  <a href="{{ route('cashbank_in.index') }}" class="menu-item {{ Request::is('cashbank_in') || Request::is('cashbank_in/*') ? 'active':'' }}">Cash & Bank In</a>
+                  <a href="{{ route('cashbank_out.index') }}" class="menu-item {{ Request::is('cashbank_out') || Request::is('cashbank_out/*') ? 'active':'' }}">Cash & Bank Out</a>
+              </div>
           </div>
           <div class="nav-item {{ Request::is('kas_kecil') || Request::is('kas_kecil/*') ? 'active' : '' }}">
               <a href="{{ route('kas_kecil.index') }}"><i class="ik ik-briefcase"></i><span>Kas Kecil</span></a>

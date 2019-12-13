@@ -215,14 +215,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.piutang_pelanggan')}}">
-                              Laporan Piutang Pelanggan
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('piutang_pelanggan.index')}}">
+                              Laporan Piutang Angsuran Pelanggan
                             </a>
                           </h3>
                           <p>
                             Menampilkan tagihan yang belum dibayar untuk setiap pelanggan, termasuk nomor & tanggal faktur, tanggal jatuh tempo, jumlah nilai, dan sisa tagihan yang terhutang pada Anda.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.piutang_pelanggan')}}">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('piutang_pelanggan.index')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -264,14 +264,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.hutang_supplier')}}">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('hutang.index')}}">
                               Laporan Hutang Supplier
                             </a>
                           </h3>
                           <p>
                             Menampilkan jumlah nilai yang Anda hutang pada setiap Supplier.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.hutang_supplier')}}">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('hutang.index')}}">
                             Lihat Laporan
                           </a>
                         </div>

@@ -132,7 +132,7 @@
                   <div class="form-group">
                     <label for="unit">QTY</label>
                     <input class="form-control" type="number" id="unit" name="unit[]" v-model="cashbank.unit">
-                    <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="1">
+                    <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="0">
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -221,7 +221,7 @@
    el: '#app',
    data: {
     cashbanks2: [
-    {terima_dari:"", description:"", jumlah: 0},
+    {id_akun2:"18", description:"", jumlah: 0},
     ],
     cashbanks: [
     {id_item:0, harga:0, description:"", unit:1, jumlah: 0},

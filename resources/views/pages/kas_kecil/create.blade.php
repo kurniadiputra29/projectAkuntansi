@@ -45,18 +45,26 @@
                 </div>
               </div>
               <div class="card-body">
-                <div class="row input-group-primary">
-                  <div class="col-md-5">
+
+                <div class="row" v-for="(pettycash, index) in pettycashs2" :key="index">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label for="setor_ke">Di Bayar Dari</label>
-                      <select class="form-control" id="setor_ke" name="akun_id">
+                      <select class="form-control" id="id_akun" name="akun_id[]" v-model="pettycash.id_akun2">
                         @foreach ($akun as $key)
-                        <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
+                          <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
                         @endforeach
                       </select>
                     </div>
                   </div>
+                  <input type="hidden" name="nomor_akun2[]"
+                  :value="nomor_akun(pettycash.id_akun2, index)"
+                  >
+                  <input type="hidden" name="nama_akun2[]"
+                  :value="nama_akun(pettycash.id_akun2, index)"
+                  >
                 </div>
+
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
@@ -138,7 +146,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>Total : Rp</label>
-                    <input class="form-control" type="number" name="total" :value="total" readonly>
+                    <input class="form-control" type="number" name="total[]" :value="total" readonly>
                   </div>
                 </div>
               </div>
@@ -164,7 +172,10 @@
     data: {
       pettycashs: [
         {id_akun: 0, nomor_akun:"", nama_akun:"", description:"", jumlah: 0},
-      ]
+      ],
+      pettycashs2: [
+        {id_akun2:"2", description:"", jumlah: 0},
+      ],
     },
     methods: {
       add() {
@@ -184,6 +195,16 @@
       nama_akun(id_akun, index) {
         var nama_akun = this.nama_akuns[id_akun];
         this.pettycashs[index].nama_akun = nama_akun;
+        return nama_akun;
+      },
+      nomor_akun2(id_akun2, index) {
+        var nomor_akun = this.nomor_akuns[id_akun2];
+        this.pettycashs2[index].nomor_akun = nomor_akun;
+        return nomor_akun;
+      },
+      nama_akun2(id_akun2, index) {
+        var nama_akun = this.nama_akuns[id_akun2];
+        this.pettycashs2[index].nama_akun = nama_akun;
         return nama_akun;
       },
     },
