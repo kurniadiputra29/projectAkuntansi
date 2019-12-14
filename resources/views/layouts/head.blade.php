@@ -16,4 +16,5 @@
 <link rel="stylesheet" href="/ProjectAkuntan/plugins/owl.carousel/dist/assets/owl.theme.default.min.css">
 <link rel="stylesheet" href="/ProjectAkuntan/dist/css/theme.min.css">
 <link rel="stylesheet" href="/ProjectAkuntan/dist/css/custom.css">
+<link rel="stylesheet" href="/ProjectAkuntan/plugins/datedropper/datedropper.min.css">
 <script src="/ProjectAkuntan/src/js/vendor/modernizr-2.8.3.min.js"></script>

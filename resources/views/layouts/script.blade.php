@@ -24,3 +24,7 @@
 <script src="/Chart.js"></script>
 {{-- end chartjs script --}}
 
+<script src="/ProjectAkuntan/js/form-picker.js"></script>
+<script src="/ProjectAkuntan/plugins/datedropper/datedropper.min.js"></script>
+<script src="/ProjectAkuntan/plugins/moment/moment.js"></script>
+<script src="/ProjectAkuntan/plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>
