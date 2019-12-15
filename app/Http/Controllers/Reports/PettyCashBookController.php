@@ -39,7 +39,7 @@ class PettyCashBookController extends Controller
         $sum_kredit     = PettycashDetail::whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('kredit');
         $distinct_pc    = PettycashDetail::distinct('nomor_akun')->select('nomor_akun', 'nama_akun')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
 
-        return view('reports.petty_cash_book.filter', compact('pc_detail','sum_debet','sum_kredit','distinct_pc','tanggal_mulai','add_day'));
+        return view('reports.petty_cash_book.filter', compact('pc_detail','sum_debet','sum_kredit','distinct_pc','tanggal_mulai','tanggal_akhir','add_day'));
     }
 
     public function print(Request $request)
@@ -54,8 +54,8 @@ class PettyCashBookController extends Controller
         $sum_kredit     = PettycashDetail::whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('kredit');
         $distinct_pc    = PettycashDetail::distinct('nomor_akun')->select('nomor_akun', 'nama_akun')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
 
-        $pdf = PDF::loadview('reports.petty_cash_book.print', compact('pc_detail','sum_debet','sum_kredit','distinct_pc','tanggal_mulai','add_day'));
-        return $pdf->setPaper('a4', 'landscape')->stream('laporan_petty_cash_book.pdf');
+        $pdf = PDF::loadview('reports.petty_cash_book.print', compact('pc_detail','sum_debet','sum_kredit','distinct_pc','tanggal_mulai','tanggal_akhir','add_day'));
+        return $pdf->setPaper('a4', 'landscape')->stream("laporan_petty_cash_book.pdf");
     }
 
     public function show(Request $request)
