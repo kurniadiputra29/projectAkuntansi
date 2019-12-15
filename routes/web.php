@@ -81,6 +81,7 @@ Route::get('buku_besar', 'Reports\BukuBesarController@index')->name('buku_besar.
 Route::get('neraca', 'Reports\NeracaController@index')->name('neraca.index');
 Route::get('petty_cash_book', 'Reports\PettyCashBookController@index')->name('petty_cash_book.index');
 Route::post('petty_cash_book/filter', 'Reports\PettyCashBookController@filter')->name('petty_cash_book.filter');
+Route::post('petty_cash_book/print', 'Reports\PettyCashBookController@print')->name('petty_cash_book.print');
 Route::get('petty_cash_book/{petty_cash_book}', 'Reports\PettyCashBookController@show')->name('petty_cash_book.show');
 
 Route::get('/piutang_pelanggan', 'Reports\PiutangController@index')->name('piutang_pelanggan.index');

@@ -12,7 +12,7 @@
             <div class="page-header-title">
               <i class="ik ik-trending-up bg-blue"></i>
               <div class="d-inline">
-                <h5>Kas Kecil</h5>
+                <h5>Petty Cash Book</h5>
                 <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
               </div>
             </div>
@@ -38,11 +38,12 @@
           <div class="card">
             <div class="card-header d-flex justify-content-between flex-row">
               <div class="left-container">
-
+                <h3>Petty Cash Book</h3>
+                <span>Periode <code>transaksi</code> {{date('d F Y', strtotime($tanggal_mulai))}} sampai {{date('d F Y', strtotime($tanggal_akhir))}}</span>
               </div>
               <div class="right-container">
                 <a type="button" class="btn btn-success mr-5" href="/petty_cash_book"><i class="ik ik-arrow-left"></i>Back</a>
-                <a type="button" class="btn btn-primary" href="#"><i class="ik ik-printer"></i>Print</a>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal"><i class="ik ik-printer"></i>Print</button>
               </div>
             </div>
             <div class="card-body">
@@ -133,5 +134,6 @@
       </div>
     </div>
   </div>
+  @include('reports.petty_cash_book.pdf')
 
 @endsection

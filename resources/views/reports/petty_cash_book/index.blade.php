@@ -12,7 +12,7 @@
             <div class="page-header-title">
               <i class="ik ik-trending-up bg-blue"></i>
               <div class="d-inline">
-                <h5>Kas Kecil</h5>
+                <h5>Petty Cash Book</h5>
                 <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
               </div>
             </div>
@@ -38,14 +38,24 @@
           <div class="card">
             <div class="card-header d-flex justify-content-between flex-row">
               <div class="left-container">
-                <a type="button" class="btn btn-info" data-toggle="modal" data-target="#createModal"><i class="ik ik-filter"></i>Filter</a>
+                <h3>Petty Cash Book</h3>
+                <span>use class <code>table-hover</code> inside table element</span>
               </div>
               <div class="right-container">
                 <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
-                <a type="button" class="btn btn-primary" href="#"><i class="ik ik-printer"></i>Print</a>
+                <button type="button" class="btn btn-info mr-5" data-toggle="modal" data-target="#createModal"><i class="ik ik-filter"></i>Filter</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal"><i class="ik ik-printer"></i>Print</button>
               </div>
             </div>
             <div class="card-body">
+              @if (session('Success'))
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{ session('Success') }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <i class="ik ik-x"></i>
+                  </button>
+              </div>
+              @endif
               <div class="dt-responsive">
                 @php
                 function format_uang($angka){
@@ -134,5 +144,6 @@
     </div>
   </div>
   @include('reports.petty_cash_book.show')
+  @include('reports.petty_cash_book.pdf')
 
 @endsection
