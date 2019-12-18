@@ -30,8 +30,8 @@ Route::get('confirmasipassword', 'AuthController@confirmasipassword')->name('con
 Route::post('confirmasipassword', 'AuthController@confirmpass')->name('confirm.pass');
 Route::put('reset', 'AuthController@update')->name('reset.update');
 
-Route::get('/jijal', function () {
-    return view('pages.dasbor.index');
+Route::get('/', function () {
+    return view('welcome');
 });
 Route::resource('dasbor', 'DasborController');
 Route::get('/dasbor/cobaChart', 'DasborController@cobaChart')->name('dasbor.cobaChart');
