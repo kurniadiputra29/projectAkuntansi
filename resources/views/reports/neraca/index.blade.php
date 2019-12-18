@@ -38,15 +38,13 @@
           <div class="card">
             <div class="card-header d-flex justify-content-between flex-row">
               <div class="left-container">
-                <form class="forms-sample" action="#" method="post">
-                  <label for="filter">Per Tanggal</label>
-                  <input type="date" name="tanggal" id="filter">
-                  <button class="btn btn-primary" type="submit" name="button">Filter</button>
-                </form>
+                <h3>Neraca</h3>
+                <span>use class <code>table-hover</code> inside table element</span>
               </div>
               <div class="right-container">
                 <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
-                <a type="button" class="btn btn-primary" href="{{route('print.neraca')}}"><i class="ik ik-printer"></i>Print</a>
+                <button type="button" class="btn btn-info mr-5" data-toggle="modal" data-target="#createModal"><i class="ik ik-filter"></i>Filter</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal"><i class="ik ik-printer"></i>Print</button>
               </div>
             </div>
             <div class="card-body">
@@ -226,15 +224,13 @@
                         <td>Debet</td>
                         <td>Kredit</td>
                       </tr>
-                      @foreach ($saldo_awal as $awal)
-                        @if ($aset->nomor == $awal->account->nomor)
-                          <tr>
-                            <td>{{$awal->account->nomor}}</td>
-                            <td>{{$awal->account->nama}}</td>
-                            <td class="text-right">100.000.000,00</td>
-                            <td class="text-right">100.000.000,00</td>
-                          </tr>
-                        @endif
+                      @foreach ($asset as $aset)
+                        <tr>
+                          <td>{{$aset->nomor}}</td>
+                          <td>{{$aset->nama}}</td>
+                          <td class="text-right">{{format_uang($aset->debet)}}</td>
+                          <td class="text-right">{{format_uang($aset->kredit)}}</td>
+                        </tr>
                       @endforeach
                       <tr>
                         <td class="report-subtotal" colspan="2">
@@ -385,182 +381,6 @@
                 <div class="report-notes bg-dark text-light p-2">
                   Catatan: Akun persediaan barang dihitung berdasarkan metode Average
                 </div>
-              </div>
-              <div class="dt-responsive">
-                <table id="complex-dt" class="table table-bordered nowrap">
-                  <thead class="bg-light">
-                    <tr>
-                      <th colspan="2">
-                        Oemar TECH - Neraca
-                      </th>
-                      <th class="text-right">
-                        14/10/2019
-                      </th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="report-header bg-secondary text-light font-weight-bold" colspan="4">
-                        Aset
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-subheader white-bg" colspan="4">
-                        Aset Lancar
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-data data-col-1">
-                        <div class="header-price-label">
-                          <a class="text-primary" href="#">1-10001</a>
-                        </div>
-                      </td>
-                      <td class="report-data width-100">
-                        <div class="header-price-label">
-                          <a class="text-primary" href="#">Kas</a>
-                        </div>
-                      </td>
-                      <td class="header-price-label report-data text-right">
-                        <div class="header-price-label">
-                          100.000.000,00
-                        </div>
-                      </td>
-                      <td class="">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-subtotal" colspan="2">
-                        Total Aset Lancar
-                      </td>
-                      <td class="report-subtotal text-right" id="assets-type-1-total-data">
-                        100.000.000,00
-                      </td>
-                      <td class="border-top-thin">
-                      </td>
-                    </tr>
-                    <tr class="bg-success text-light font-weight-bold">
-                      <td class="grand-total no-indent" colspan="2">
-                        Total Aset
-                      </td>
-                      <td class="grand-total text-right no-indent" id="assets-type-1-total-data">
-                        100.000.000,00
-                      </td>
-                      <td class="no-indent grand-total">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-header bg-secondary text-light font-weight-bold" colspan="4">
-                        Liabilitas dan Modal
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-subtotal" colspan="2">
-                        Total Liabilitas
-                      </td>
-                      <td class="report-subtotal text-right" id="assets-type-1-total-data">
-                        0,00
-                      </td>
-                      <td class="border-top-thin">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="w-border-bottom" colspan="4" height="28px"></td>
-                    </tr>
-                    <tr>
-                      <td class="report-subheader white-bg" colspan="4">
-                        Modal Pemilik
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-data data-col-1">
-                        <div class="header-price-label">
-                          <a class="text-primary" href="#">3-30000</a>
-                        </div>
-                      </td>
-                      <td class="report-data width-100">
-                        <div class="header-price-label">
-                          <a class="text-primary" href="#">Modal Saham</a>
-                        </div>
-                      </td>
-                      <td class="header-price-label report-data text-right">
-                        <div class="header-price-label">
-                          100.000.000,00
-                        </div>
-                      </td>
-                      <td class="">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-data data-col-1"></td>
-                      <td class="report-data">
-                        <div class="header-price-label">
-                          Akumulasi pendapatan komprehensif lain
-                        </div>
-                      </td>
-                      <td class="report-data text-right">
-                        <div class="header-price-label">
-                          0,00
-                        </div>
-                      </td>
-                      <td class="">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-data data-col-1"></td>
-                      <td class="report-data">
-                        <div class="header-price-label">
-                          Pendapatan sampai Tahun lalu
-                        </div>
-                      </td>
-                      <td class="report-data text-right">
-                        <div class="header-price-label">
-                          0,00
-                        </div>
-                      </td>
-                      <td class="">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-data data-col-1"></td>
-                      <td class="report-data">
-                        <div class="header-price-label">
-                          Pendapatan Periode ini
-                        </div>
-                      </td>
-                      <td class="report-data text-right">
-                        <div class="header-price-label">
-                          0,00
-                        </div>
-                      </td>
-                      <td class="">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="report-subtotal" colspan="2">
-                        Total Modal Pemilik
-                      </td>
-                      <td class="report-subtotal text-right" id="assets-type-1-total-data">
-                        100.000.000,00
-                      </td>
-                      <td class="report-subtotal">
-                      </td>
-                    </tr>
-                    <tr class="bg-success text-light font-weight-bold">
-                      <td class="grand-total no-indent" colspan="2">
-                        Total Liabilitas dan Modal
-                      </td>
-                      <td class="no-indent grand-total text-right">
-                        100.000.000,00
-                      </td>
-                      <td class="no-indent grand-total">
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="report-notes bg-dark text-light p-2">
-                  Catatan: Akun persediaan barang dihitung berdasarkan metode Average
-                </div>
               </div> --}}
             </div>
           </div>
@@ -568,5 +388,6 @@
       </div>
     </div>
   </div>
+  @include('reports.neraca.pdf')
 
 @endsection
