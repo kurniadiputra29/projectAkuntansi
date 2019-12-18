@@ -54,11 +54,11 @@
 					<form action="{{route('login.enter')}}" method="post">
 						@csrf
 						<div class="form-group">
-							<input type="email" name="email" class="form-control" placeholder="Email" required="">
+							<input type="email" name="email" class="form-control" value="coba@gmail.com" required="">
 							<i class="ik ik-user"></i>
 						</div>
 						<div class="form-group">
-							<input type="password" name="password" class="form-control" placeholder="Password" required="">
+							<input type="password" name="password" class="form-control" value="12345" required="">
 							<i class="ik ik-lock"></i>
 						</div>
 						<div class="row">
