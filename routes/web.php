@@ -86,3 +86,4 @@ Route::get('petty_cash_book/{petty_cash_book}', 'Reports\PettyCashBookController
 
 Route::get('/piutang_pelanggan', 'Reports\PiutangController@index')->name('piutang_pelanggan.index');
 Route::get('/hutang', 'Reports\HutangController@index')->name('hutang.index');
+Route::get('neraca_saldo', 'Reports\NeracaSaldoController@index')->name('neraca_saldo.index');
