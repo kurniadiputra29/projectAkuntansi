@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use PDF;
 use App\Model\Account;
 use App\Model\SaldoAwal;
-use App\Model\Cashinbankdetail;
+use App\Model\CashBankInDetails;
+use App\Model\CashBankOutDetails;
 use App\Model\cpjdetail;
 use App\Model\crjdetail;
 use App\Model\jurnalpenyesuaiandetail;
@@ -29,7 +30,8 @@ class BukuBesarController extends Controller
     {
         $saldo_awal   = SaldoAwal::all();
         $account      = Account::all();
-        $cb_detail    = Cashinbankdetail::all();
+        $cbi_detail   = CashBankInDetails::all();
+        $cbo_detail   = CashBankOutDetails::all();
         $cpj_detail   = cpjdetail::all();
         $crj_detail   = crjdetail::all();
         $jp_detail    = jurnalpenyesuaiandetail::all();
@@ -40,6 +42,6 @@ class BukuBesarController extends Controller
         $rpb_detail   = ReturPembelianDetail::all();
         $rpj_detail   = ReturPenjualanDetail::all();
 
-        return view('reports.buku_besar.index', compact('saldo_awal', 'account', 'cb_detail', 'cpj_detail', 'crj_detail', 'jp_detail', 'ju_detail', 'pc_detail', 'pj_detail', 'sj_detail', 'rpb_detail', 'rpj_detail'));
+        return view('reports.buku_besar.index', compact('saldo_awal', 'account', 'cbi_detail', 'cbo_detail', 'cpj_detail', 'crj_detail', 'jp_detail', 'ju_detail', 'pc_detail', 'pj_detail', 'sj_detail', 'rpb_detail', 'rpj_detail'));
     }
 }
