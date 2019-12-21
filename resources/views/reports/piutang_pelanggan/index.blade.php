@@ -81,37 +81,49 @@
                           </tr>
                         @endforeach
                         @foreach ($SalesJournals as $SalesJournal)
-                          <tr>
-                            @if ($SalesJournal->customers_id == $DataCustomer->id)
-                              <td class="text-center">{{date('d F Y', strtotime($SalesJournal->tanggal ))}}</td>
-                              <td class="text-center">{{ $DataCustomer->kode }}</td>
-                              <td class="text-center"><span class="badge badge-pill badge-success mb-1">Sales Journal</span></td>
-                              <td class="text-right">Rp {{ number_format($salesjournaldetails->debet, 0, " ", ".")}}</td>
-                              <td class="text-right">Rp {{ number_format($salesjournaldetails->kredit, 0, " ", ".")}}</td>
-                            @endif
-                          </tr>
+                          @foreach ($salesjournaldetails as $salesjournaldetail)
+                            <tr>
+                              @if ($SalesJournal->customers_id == $DataCustomer->id)
+                                @if ($salesjournaldetail->salesjournal_id == $SalesJournal->id)
+                                  <td class="text-center">{{date('d F Y', strtotime($SalesJournal->tanggal ))}}</td>
+                                  <td class="text-center">{{ $DataCustomer->kode }}</td>
+                                  <td class="text-center"><span class="badge badge-pill badge-success mb-1">Sales Journal</span></td>
+                                  <td class="text-right">Rp {{ number_format($salesjournaldetail->debet, 0, " ", ".")}}</td>
+                                  <td class="text-right">Rp {{ number_format($salesjournaldetail->kredit, 0, " ", ".")}}</td>
+                                @endif
+                              @endif
+                            </tr>
+                          @endforeach
                         @endforeach
                         @foreach ($ReturPenjualans as $ReturPenjualan)
-                          <tr>
-                            @if ($ReturPenjualan->customers_id == $DataCustomer->id)
-                              <td class="text-center">{{date('d F Y', strtotime($ReturPenjualan->tanggal ))}}</td>
-                              <td class="text-center">{{ $DataCustomer->kode }}</td>
-                              <td class="text-center"><span class="badge badge-pill badge-warning mb-1">Retur Penjualan</span></td>
-                              <td class="text-right">Rp {{ number_format($ReturPenjualanDetails->debet, 0, " ", ".")}}</td>
-                              <td class="text-right">Rp {{ number_format($ReturPenjualanDetails->kredit, 0, " ", ".")}}</td>
-                            @endif
-                          </tr>
+                          @foreach ($ReturPenjualanDetails as $ReturPenjualanDetail)
+                            <tr>
+                              @if ($ReturPenjualan->customers_id == $DataCustomer->id)
+                                @if ($ReturPenjualanDetail->retur_penjualan_id == $ReturPenjualan->id)
+                                  <td class="text-center">{{date('d F Y', strtotime($ReturPenjualan->tanggal ))}}</td>
+                                  <td class="text-center">{{ $DataCustomer->kode }}</td>
+                                  <td class="text-center"><span class="badge badge-pill badge-warning mb-1">Retur Penjualan</span></td>
+                                  <td class="text-right">Rp {{ number_format($ReturPenjualanDetail->debet, 0, " ", ".")}}</td>
+                                  <td class="text-right">Rp {{ number_format($ReturPenjualanDetail->kredit, 0, " ", ".")}}</td>
+                                @endif
+                              @endif
+                            </tr>
+                          @endforeach
                         @endforeach
                         @foreach ($CashBankIns as $CashBankIn)
-                          <tr>
-                            @if ($CashBankIn->customers_id == $DataCustomer->id)
-                              <td class="text-center">{{date('d F Y', strtotime($CashBankIn->tanggal ))}}</td>
-                              <td class="text-center">{{ $DataCustomer->kode }}</td>
-                              <td class="text-center"><span class="badge badge-pill badge-success mb-1">Cash & Bank</span></td>
-                              <td class="text-right">Rp {{ number_format($CashBankInDetails->debet, 0, " ", ".")}}</td>
-                              <td class="text-right">Rp {{ number_format($CashBankInDetails->kredit, 0, " ", ".")}}</td>
-                            @endif
-                          </tr>
+                          @foreach ($CashBankInDetails as $CashBankInDetail)
+                            <tr>
+                              @if ($CashBankIn->customers_id == $DataCustomer->id)
+                                @if ($CashBankInDetail->cash_bank_ins_id == $CashBankIn->id)
+                                  <td class="text-center">{{date('d F Y', strtotime($CashBankIn->tanggal ))}}</td>
+                                  <td class="text-center">{{ $DataCustomer->kode }}</td>
+                                  <td class="text-center"><span class="badge badge-pill badge-success mb-1">Cash & Bank</span></td>
+                                  <td class="text-right">Rp {{ number_format($CashBankInDetail->debet, 0, " ", ".")}}</td>
+                                  <td class="text-right">Rp {{ number_format($CashBankInDetail->kredit, 0, " ", ".")}}</td>
+                                @endif
+                              @endif
+                            </tr>
+                          @endforeach
                         @endforeach
                         <tr class="bg-success text-light">
                           <td class="text-center grand-total" colspan="10">
@@ -121,6 +133,56 @@
                   </tbody>
                 </table>
                 @endforeach
+              </div>
+              <div class="dt-responsive">
+                <table id="simpletable" class="table table-bordered nowrap">
+                  <thead>
+                    <tr class="bg-secondary font-weight-bold">
+                      <td class="text-light text-center" colspan="4">Rekapitulasi</td>
+                    </tr>
+                    <tr>
+                      <td>Kode</td>
+                      <td>Customers Name</td>
+                      <td>Debet</td>
+                      <td>Kredit</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($distinct_pc as $rekap)
+                      <tr>
+                        <td>{{$rekap->kode}}</td>
+                        <td>{{$rekap->nama}}</td>
+                        <td class="text-right">
+                          Rp {{number_format($distinct_pcc->where('customers_id', $rekap->id)->sum('debet'))}}
+                        </td>
+                        <td class="text-right">
+                          Rp {{number_format($distinct_pcc->where('customers_id', $rekap->id)->sum('kredit'))}}
+                        </td>
+                      </tr>
+                      <!-- @foreach ($SalesJournals as $SalesJournal)
+                        @foreach ($salesjournaldetails as $salesjournaldetail)
+                          <tr>
+                            @if ($SalesJournal->customers_id == $rekap->id)
+                              @if ($salesjournaldetail->salesjournal_id == $SalesJournal->id)
+                                <td>{{$rekap->kode}}</td>
+                                <td>{{$rekap->nama}}</td>
+                                <td class="text-right">Rp {{ number_format($salesjournaldetail->where('nomor_akun', '1-1220')->where('salesjournal_id', $SalesJournal->id)->sum('debet'))}}</td>
+                                <td class="text-right">Rp {{ number_format($salesjournaldetail->where('nomor_akun', '1-1220')->where('salesjournal_id', $SalesJournal->id)->sum('kredit'))}}</td>
+                              @endif
+                            @endif
+                          </tr>
+                        @endforeach
+                      @endforeach -->
+                    @endforeach
+                  </tbody>
+                  <tfoot>
+                    <tr class="bg-success font-weight-bold">
+                      <td class="text-light text-right" colspan="2">Total</td>
+                      <td class="text-light text-right"></td>
+                      <td class="text-light text-right"></td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
             </div>
           </div>

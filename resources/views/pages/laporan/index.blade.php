@@ -56,61 +56,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('neraca.index')}}">
-                              {{-- <i class="ik ik-check"></i> --}}
-                              Balance Sheet / Neraca
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('petty_cash_book.index')}}">
+                              Petty Cash Book / Rekapitulasi Kas Kecil
                             </a>
                           </h3>
                           <p>
-                            Menampilan apa yang anda miliki (aset), apa yang anda hutang (liabilitas), dan apa yang anda sudah investasikan pada perusahaan anda (ekuitas).
+                            Menampilkan laporan-laporan transaksi pengeluaran Petty Cash yang terjadi dalam periode waktu tertentu. Hal ini berguna untuk mengetahui pengeluaran dana Petty Cash untuk kegiatan apa saja secara rinci. 
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('neraca.index')}}">
-                            Lihat Laporan
-                          </a>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6">
-                        <div class="report-item">
-                          <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.neraca_saldo')}}">
-                              {{-- <i class="ik ik-check"></i> --}}
-                              Trial Balance / Neraca Saldo
-                            </a>
-                          </h3>
-                          <p>
-                            Menampilan apa yang anda miliki (aset), apa yang anda hutang (liabilitas), dan apa yang anda sudah investasikan pada perusahaan anda (ekuitas).
-                          </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.neraca_saldo')}}">
-                            Lihat Laporan
-                          </a>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6">
-                        <div class="report-item">
-                          <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
-                              Adjusted Trial Balance / Neraca Saldo Penyesuaian
-                            </a>
-                          </h3>
-                          <p>
-                            Menampilan apa yang anda miliki (aset), apa yang anda hutang (liabilitas), dan apa yang anda sudah investasikan pada perusahaan anda (ekuitas).
-                          </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
-                            Lihat Laporan
-                          </a>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6">
-                        <div class="report-item">
-                          <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
-                              Work Sheet / Neraca Lajur
-                            </a>
-                          </h3>
-                          <p>
-                            Menampilan apa yang anda miliki (aset), apa yang anda hutang (liabilitas), dan apa yang anda sudah investasikan pada perusahaan anda (ekuitas).
-                          </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('petty_cash_book.index')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -124,7 +77,7 @@
                             </a>
                           </h3>
                           <p>
-                            Laporan ini menampilkan semua transaksi yang telah dilakukan untuk suatu periode. Laporan ini bermanfaat jika Anda memerlukan daftar kronologis untuk semua transaksi yang telah dilakukan oleh perusahaan Anda.
+                            Laporan ini menampilkan perubahan perubahan semua saldo tiap-tiap akun yang terjadi dalam periode waktu tertentu. Laporan ini bermanfaat jika Anda ingin mengetahui saldo masing-masing akun dari awal periode sampai akhir periode. Dan menampilkan kronologis perubahan saldo dikarenakan terjadinya transaksi yang telah dilakukan oleh perusahaan Anda.
                           </p>
                           <a class="btn btn-outline-primary btn-rounded" href="{{route('buku_besar.index')}}">
                             Lihat Laporan
@@ -134,15 +87,30 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.alur_kas')}}">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.neraca_saldo')}}">
                               {{-- <i class="ik ik-check"></i> --}}
-                              Cash Flow / Alur Kas
+                              Trial Balance / Neraca Saldo
                             </a>
                           </h3>
                           <p>
-                            Laporan ini menampilkan semua transaksi yang telah dilakukan untuk suatu periode. Laporan ini bermanfaat jika Anda memerlukan daftar kronologis untuk semua transaksi yang telah dilakukan oleh perusahaan Anda.
+                            Menampilan Saldo Akhir pada tiap tiap akun yang terjadi dalam periode waktu tertentu. Laporan ini bermanfaat jika Anda ingin mengetahui saldo masing-masing akun dari awal periode sampai akhir periode.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.alur_kas')}}">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.neraca_saldo')}}">
+                            Lihat Laporan
+                          </a>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-6">
+                        <div class="report-item">
+                          <h3>
+                            <a data-placement="left" data-toggle="tooltop" href="/reports/balance_sheet">
+                              Work Sheet / Neraca Lajur
+                            </a>
+                          </h3>
+                          <p>
+                            Menampilan Trial Balance / Neraca Saldo, Menampilan Adjustment / Jurnal Penyesuaian, Menampilan Adjustment Trial Balance / Neraca Saldo Setelah Penyesuaian,
+                          </p>
+                          <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
                             Lihat Laporan
                           </a>
                         </div>
@@ -156,7 +124,7 @@
                             </a>
                           </h3>
                           <p>
-                            Menampilkan setiap tipe transaksi dan jumlah total untuk pendapatan dan pengeluaran anda.
+                            Menampilkan laporan transaksi pendapatan penjualan, hpp, biaya, pendapatan lain-lain dan biaya lain-lain.
                           </p>
                           <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.laba_rugi')}}">
                             Lihat Laporan
@@ -171,7 +139,7 @@
                             </a>
                           </h3>
                           <p>
-                            Daftar semua jurnal per transaksi yang terjadi dalam periode waktu. Hal ini berguna untuk melacak di mana transaksi Anda masuk ke masing-masing rekening
+                            Menampilkan laporan laba dari penjualan barang dagang.
                           </p>
                           <a class="btn btn-outline-primary btn-rounded" href="/reports/balance_sheet">
                             Lihat Laporan
@@ -181,18 +149,37 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('petty_cash_book.index')}}">
-                              Petty Cash Book / Rekapitulasi Kas Kecil
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('neraca.index')}}">
+                              {{-- <i class="ik ik-check"></i> --}}
+                              Financial Position Report / Neraca
                             </a>
                           </h3>
                           <p>
-                            Daftar semua jurnal per transaksi yang terjadi dalam periode waktu. Hal ini berguna untuk melacak di mana transaksi Anda masuk ke masing-masing rekening
+                            Menampilkan laporan Aktiva (Aset), laporan Hutang (Liabilitas), dan laporan Modal (Ekuitas).
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('petty_cash_book.index')}}">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('neraca.index')}}">
                             Lihat Laporan
                           </a>
                         </div>
                       </div>
+                      <div class="col-sm-12 col-md-6">
+                        <div class="report-item">
+                          <h3>
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.alur_kas')}}">
+                              {{-- <i class="ik ik-check"></i> --}}
+                              Cash Flow / Alur Kas
+                            </a>
+                          </h3>
+                          <p>
+                            Laporan ini mengukur kas yang telah dihasilkan atau digunakan oleh suatu perusahaan dan menunjukkan detail pergerakannya dalam suatu periode. 
+                          </p>
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.alur_kas')}}">
+                            Lihat Laporan
+                          </a>
+                        </div>
+                      </div>
+                      
+                      
                     </div>
                   </div>
                   <div class="tab-pane fade" id="penjualan" role="tabpanel" aria-labelledby="penjualan-tab">

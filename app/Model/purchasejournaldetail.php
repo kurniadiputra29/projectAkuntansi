@@ -10,7 +10,7 @@ class purchasejournaldetail extends Model
     protected $fillable = ['purchasejournal_id', 'nomor_akun', 'nama_akun' ,'debet', 'kredit'];
     public function purchase_journals()
     {
-    	return $this->belongsTo(PurchaseJournal::class);
+    	return $this->belongsTo(PurchaseJournal::class, "purchasejournal_id");
     }
     public function account()
     {

@@ -20,4 +20,8 @@ class PurchaseJournal extends Model
     {
       return $this->hasMany(Inventory::class, "purchasejournal_id");
     }
+    public function purchase_journals()
+    {
+        return $this->hasMany(PurchaseJournal::class, "purchasejournal_id");
+    }
 }

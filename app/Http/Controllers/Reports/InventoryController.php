@@ -26,15 +26,19 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        $items                 = Item::all();
-        $inventories           = Inventory::all();
-        $cpjs                  = cpj::all();
-        $crjs                  = crj::all();
-        $PurchaseJournals      = PurchaseJournal::all();
-        $SalesJournals         = SalesJournal::all();
-        $ReturPembelians       = ReturPembelian::all();
-        $ReturPenjualans      = ReturPenjualan::all();
-        return view('reports.inventory_card.index', compact('items', 'inventories', 'cpjs', 'crjs', 'PurchaseJournals', 'SalesJournals', 'ReturPembelians', 'ReturPenjualans'));
+        $items                  = Item::all();
+        $inventories            = Inventory::all();
+        $cpjs                   = cpj::all();
+        $crjs                   = crj::all();
+        $PurchaseJournals       = PurchaseJournal::all();
+        $SalesJournals          = SalesJournal::all();
+        $ReturPembelians        = ReturPembelian::all();
+        $ReturPenjualans        = ReturPenjualan::all();
+
+        $distinct_pc            = Item::distinct('id')->select('id', 'kode', 'nama', 'unit', 'harga', 'nilai_persediaan')->get();
+        $distinct_pcc           = Inventory::distinct('items_id')->select('unit', 'price', 'total', 'items_id')->get();
+
+        return view('reports.inventory_card.index', compact('items', 'inventories', 'cpjs', 'crjs', 'PurchaseJournals', 'SalesJournals', 'ReturPembelians', 'ReturPenjualans', 'distinct_pc', 'distinct_pcc'));
     }
 
     /**

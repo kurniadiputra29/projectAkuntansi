@@ -123,6 +123,46 @@
                 </table>
                 @endforeach
               </div>
+              <div class="dt-responsive">
+                <table id="simpletable" class="table table-bordered nowrap">
+                  <thead>
+                    <tr class="bg-secondary font-weight-bold">
+                      <td class="text-light text-center" colspan="5">Rekapitulasi</td>
+                    </tr>
+                    <tr>
+                      <td>Kode</td>
+                      <td>Item Name</td>
+                      <td>Qty</td>
+                      <td>Price</td>
+                      <td>Amounts</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($distinct_pc as $rekap)
+                      <tr>
+                        <td>{{$rekap->kode}}</td>
+                        <td>{{$rekap->nama}}</td>
+                        <td class="text-right">
+                          Rp {{number_format($distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('unit'))}}
+                        </td>
+                        <td class="text-right">
+                          Rp {{number_format($distinct_pcc->where('items_id', $rekap->id)->sum('kredit'))}}
+                        </td>
+                        <td class="text-right">
+                          Rp {{number_format($distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('total'))}}
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                  <tfoot>
+                    <tr class="bg-success font-weight-bold">
+                      <td class="text-light text-right" colspan="3">Total</td>
+                      <td class="text-light text-right"></td>
+                      <td class="text-light text-right"></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
             </div>
           </div>
         </div>

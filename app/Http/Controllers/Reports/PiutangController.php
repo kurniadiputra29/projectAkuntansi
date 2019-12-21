@@ -29,17 +29,19 @@ class PiutangController extends Controller
         $DataCustomers              = DataCustomer::all();
         $SaldoPiutangs              = SaldoPiutang::all();
         $SalesJournals              = SalesJournal::all();
-        $salesjournaldetails        = salesjournaldetail::where('nomor_akun', '1-1220')->first();
+        $salesjournaldetails        = salesjournaldetail::where('nomor_akun', '1-1220')->get();
         $ReturPenjualans            = ReturPenjualan::all();
-        $ReturPenjualanDetails      = ReturPenjualanDetail::where('nomor_akun', '1-1220')->first();
+        $ReturPenjualanDetails      = ReturPenjualanDetail::where('nomor_akun', '1-1220')->get();
         $CashBankIns                = CashBankIn::all();
-        $CashBankInDetails          = CashBankInDetails::where('nomor_akun', '1-1220')->first();
+        $CashBankInDetails          = CashBankInDetails::where('nomor_akun', '1-1220')->get();
 
-
-
+        $sum_debet                  = SaldoPiutang::sum('debet');
+        $sum_kredit                 = SaldoPiutang::sum('kredit');
+        $distinct_pc                = DataCustomer::distinct('kode')->select('id', 'kode', 'nama')->get();
+        $distinct_pcc                = SaldoPiutang::distinct('customers_id')->select('debet', 'kredit', 'customers_id')->get();
         // dd($salesjournaldetails);
 
-        return view('reports.piutang_pelanggan.index', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails'));
+        return view('reports.piutang_pelanggan.index', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'sum_debet', 'sum_kredit', 'distinct_pc', 'distinct_pcc'));
     }
 
     /**
