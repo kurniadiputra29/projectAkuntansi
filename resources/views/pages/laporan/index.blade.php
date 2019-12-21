@@ -61,7 +61,7 @@
                             </a>
                           </h3>
                           <p>
-                            Menampilkan laporan-laporan transaksi pengeluaran Petty Cash yang terjadi dalam periode waktu tertentu. Hal ini berguna untuk mengetahui pengeluaran dana Petty Cash untuk kegiatan apa saja secara rinci. 
+                            Menampilkan laporan-laporan transaksi pengeluaran Petty Cash yang terjadi dalam periode waktu tertentu. Hal ini berguna untuk mengetahui pengeluaran dana Petty Cash untuk kegiatan apa saja secara rinci.
                           </p>
                           <a class="btn btn-outline-primary btn-rounded" href="{{route('petty_cash_book.index')}}">
                             Lihat Laporan
@@ -87,7 +87,7 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.neraca_saldo')}}">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('neraca_saldo.index')}}">
                               {{-- <i class="ik ik-check"></i> --}}
                               Trial Balance / Neraca Saldo
                             </a>
@@ -95,7 +95,7 @@
                           <p>
                             Menampilan Saldo Akhir pada tiap tiap akun yang terjadi dalam periode waktu tertentu. Laporan ini bermanfaat jika Anda ingin mengetahui saldo masing-masing akun dari awal periode sampai akhir periode.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.neraca_saldo')}}">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('neraca_saldo.index')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -171,15 +171,15 @@
                             </a>
                           </h3>
                           <p>
-                            Laporan ini mengukur kas yang telah dihasilkan atau digunakan oleh suatu perusahaan dan menunjukkan detail pergerakannya dalam suatu periode. 
+                            Laporan ini mengukur kas yang telah dihasilkan atau digunakan oleh suatu perusahaan dan menunjukkan detail pergerakannya dalam suatu periode.
                           </p>
                           <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.alur_kas')}}">
                             Lihat Laporan
                           </a>
                         </div>
                       </div>
-                      
-                      
+
+
                     </div>
                   </div>
                   <div class="tab-pane fade" id="penjualan" role="tabpanel" aria-labelledby="penjualan-tab">
