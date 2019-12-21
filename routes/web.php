@@ -30,8 +30,8 @@ Route::get('confirmasipassword', 'AuthController@confirmasipassword')->name('con
 Route::post('confirmasipassword', 'AuthController@confirmpass')->name('confirm.pass');
 Route::put('reset', 'AuthController@update')->name('reset.update');
 
-Route::get('/jijal', function () {
-    return view('pages.dasbor.index');
+Route::get('/', function () {
+    return view('welcome');
 });
 Route::resource('dasbor', 'DasborController');
 Route::get('/dasbor/cobaChart', 'DasborController@cobaChart')->name('dasbor.cobaChart');
@@ -79,6 +79,7 @@ Route::get('/print/print_neraca_saldo', 'PrintController@print_neraca_saldo')->n
 Route::get('/inventory/', 'Reports\InventoryController@index')->name('inventory.index');
 Route::get('buku_besar', 'Reports\BukuBesarController@index')->name('buku_besar.index');
 Route::get('neraca', 'Reports\NeracaController@index')->name('neraca.index');
+Route::get('neraca/print', 'Reports\NeracaController@print')->name('neraca.print');
 Route::get('petty_cash_book', 'Reports\PettyCashBookController@index')->name('petty_cash_book.index');
 Route::post('petty_cash_book/filter', 'Reports\PettyCashBookController@filter')->name('petty_cash_book.filter');
 Route::post('petty_cash_book/print', 'Reports\PettyCashBookController@print')->name('petty_cash_book.print');
@@ -86,3 +87,5 @@ Route::get('petty_cash_book/{petty_cash_book}', 'Reports\PettyCashBookController
 
 Route::get('/piutang_pelanggan', 'Reports\PiutangController@index')->name('piutang_pelanggan.index');
 Route::get('/hutang', 'Reports\HutangController@index')->name('hutang.index');
+Route::get('neraca_saldo', 'Reports\NeracaSaldoController@index')->name('neraca_saldo.index');
+Route::get('neraca_saldo/print', 'Reports\NeracaSaldoController@print')->name('neraca_saldo.print');

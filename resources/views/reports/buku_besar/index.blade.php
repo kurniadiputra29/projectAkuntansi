@@ -93,15 +93,27 @@
                     </td>
                   </tr>
                   {{-- $key_detail,$cpj_detail,$crj_detail,$jp_detail,$ju_detail,$pc_detail,$pj_detail,$sj_detail,$rpb_detail,$rpj_detail --}}
-              @foreach ($cb_detail as $key)
+              @foreach ($cbi_detail as $key)
                 @if ($key->nomor_akun == $awal->account->nomor)
                   <tr>
-                    <td>{{date('d F Y', strtotime($key->cashinbank->created_at ))}}</td>
+                    <td>{{date('d F Y', strtotime($key->CashBankIn->created_at ))}}</td>
                     <td></td>
                     <td>Rp{{format_uang($key->debet)}}</td>
                     <td>Rp{{format_uang($key->kredit)}}</td>
-                    <td name="debetCB[]"></td>
-                    <td name="kreditCB[]"></td>
+                    <td name="debetCBI[]"></td>
+                    <td name="kreditCBI[]"></td>
+                  </tr>
+                @endif
+              @endforeach
+              @foreach ($cbo_detail as $key)
+                @if ($key->nomor_akun == $awal->account->nomor)
+                  <tr>
+                    <td>{{date('d F Y', strtotime($key->CashBankOut->created_at ))}}</td>
+                    <td></td>
+                    <td>Rp{{format_uang($key->debet)}}</td>
+                    <td>Rp{{format_uang($key->kredit)}}</td>
+                    <td name="debetCBO[]"></td>
+                    <td name="kreditCBO[]"></td>
                   </tr>
                 @endif
               @endforeach

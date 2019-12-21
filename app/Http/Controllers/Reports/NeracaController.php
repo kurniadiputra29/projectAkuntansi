@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Reports;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\Account;
+use App\Model\SaldoAwal;
+use Illuminate\Support\Facades\DB;
+use PDF;
 
 class NeracaController extends Controller
 {
@@ -14,6 +18,43 @@ class NeracaController extends Controller
 
     public function index()
     {
-        return view('reports.neraca.index');
+        $saldo_awal     = SaldoAwal::all();
+        $account        = Account::all();
+        $asset          = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '1-%')->get();
+        $liability      = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '2-%')->get();
+        $equity         = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '3-%')->get();
+
+        $sum_debet_asset  = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '1-%')->sum('debet');
+        $sum_kredit_asset = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '1-%')->sum('kredit');
+
+        $sum_debet_liability  = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '2-%')->sum('debet');
+        $sum_kredit_liability = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '2-%')->sum('kredit');
+
+        $sum_debet_equity  = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '3-%')->sum('debet');
+        $sum_kredit_equity = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '3-%')->sum('kredit');
+        // dd($liability);
+
+        return view('reports.neraca.index', compact('asset','liability','equity','sum_debet_asset','sum_kredit_asset','sum_debet_liability','sum_kredit_liability','sum_debet_equity','sum_kredit_equity'));
+    }
+
+    public function print()
+    {
+        $saldo_awal     = SaldoAwal::all();
+        $account        = Account::all();
+        $asset          = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '1-%')->get();
+        $liability      = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '2-%')->get();
+        $equity         = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '3-%')->get();
+
+        $sum_debet_asset  = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '1-%')->sum('debet');
+        $sum_kredit_asset = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '1-%')->sum('kredit');
+
+        $sum_debet_liability  = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '2-%')->sum('debet');
+        $sum_kredit_liability = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '2-%')->sum('kredit');
+
+        $sum_debet_equity  = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '3-%')->sum('debet');
+        $sum_kredit_equity = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '3-%')->sum('kredit');
+
+        $pdf = PDF::loadview('reports.neraca.print', compact('asset','liability','equity','sum_debet_asset','sum_kredit_asset','sum_debet_liability','sum_kredit_liability','sum_debet_equity','sum_kredit_equity'));
+        return $pdf->setPaper('a4', 'potrait')->stream('laporan_neraca.pdf');
     }
 }
