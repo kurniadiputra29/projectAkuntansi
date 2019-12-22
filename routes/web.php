@@ -86,6 +86,7 @@ Route::post('petty_cash_book/print', 'Reports\PettyCashBookController@print')->n
 Route::get('petty_cash_book/{petty_cash_book}', 'Reports\PettyCashBookController@show')->name('petty_cash_book.show');
 Route::get('inventory_card/print', 'Reports\InventoryController@print')->name('inventory_card.print');
 Route::get('hutang/print', 'Reports\HutangController@print')->name('hutang.print');
+Route::get('piutang/print', 'Reports\PiutangController@print')->name('piutang.print');
 
 Route::get('/piutang_pelanggan', 'Reports\PiutangController@index')->name('piutang_pelanggan.index');
 Route::get('/hutang', 'Reports\HutangController@index')->name('hutang.index');

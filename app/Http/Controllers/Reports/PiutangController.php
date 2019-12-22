@@ -12,6 +12,7 @@ use App\Model\ReturPenjualan;
 use App\Model\ReturPenjualanDetail;
 use App\Model\CashBankIn;
 use App\Model\CashBankInDetails;
+use PDF;
 
 class PiutangController extends Controller
 {
@@ -108,5 +109,26 @@ class PiutangController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function print()
+    {
+        $DataCustomers              = DataCustomer::all();
+        $SaldoPiutangs              = SaldoPiutang::all();
+        $SalesJournals              = SalesJournal::all();
+        $salesjournaldetails        = salesjournaldetail::where('nomor_akun', '1-1220')->get();
+        $ReturPenjualans            = ReturPenjualan::all();
+        $ReturPenjualanDetails      = ReturPenjualanDetail::where('nomor_akun', '1-1220')->get();
+        $CashBankIns                = CashBankIn::all();
+        $CashBankInDetails          = CashBankInDetails::where('nomor_akun', '1-1220')->get();
+
+        $sum_debet                  = SaldoPiutang::sum('debet');
+        $sum_kredit                 = SaldoPiutang::sum('kredit');
+        $distinct_pc                = DataCustomer::distinct('kode')->select('id', 'kode', 'nama')->get();
+        $distinct_pcc                = SaldoPiutang::distinct('customers_id')->select('debet', 'kredit', 'customers_id')->get();
+        // dd($salesjournaldetails);
+
+        $pdf = PDF::loadview('reports.piutang_pelanggan.print', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'sum_debet', 'sum_kredit', 'distinct_pc', 'distinct_pcc'));
+        return $pdf->setPaper('a4', 'landscape')->stream('laporan-piutang-pelanggan.pdf');
     }
 }
