@@ -12,6 +12,7 @@ use App\Model\ReturPembelian;
 use App\Model\ReturPembelianDetail;
 use App\Model\CashBankOut;
 use App\Model\CashBankOutDetails;
+use PDF;
 
 class HutangController extends Controller
 {
@@ -39,7 +40,7 @@ class HutangController extends Controller
         $sum_kredit                 = SaldoHutang::sum('kredit');
         $distinct_pc                = DataSupplier::distinct('kode')->select('id', 'kode', 'nama')->get();
         $distinct_pcc                = SaldoHutang::distinct('suppliers_id')->select('debet', 'kredit', 'suppliers_id')->get();
-        
+
 
         return view('reports.hutang_supplier.index', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails', 'sum_debet', 'sum_kredit', 'distinct_pc', 'purchasejournaldetailss', 'distinct_pcc'));
     }
@@ -108,5 +109,26 @@ class HutangController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function print()
+    {
+        $DataSuppliers              = DataSupplier::all();
+        $SaldoHutangs               = SaldoHutang::all();
+        $PurchaseJournals           = PurchaseJournal::all();
+        $purchasejournaldetails     = purchasejournaldetail::where('nomor_akun', '2-1210')->get();
+        $ReturPembelians            = ReturPembelian::all();
+        $ReturPembelianDetails      = ReturPembelianDetail::where('nomor_akun', '2-1210')->get();
+        $CashBankOuts               = CashBankOut::all();
+        $CashBankOutDetails         = CashBankOutDetails::where('nomor_akun', '2-1210')->get();
+
+        $sum_debet                  = SaldoHutang::sum('debet');
+        $sum_kredit                 = SaldoHutang::sum('kredit');
+        $distinct_pc                = DataSupplier::distinct('kode')->select('id', 'kode', 'nama')->get();
+        $distinct_pcc                = SaldoHutang::distinct('suppliers_id')->select('debet', 'kredit', 'suppliers_id')->get();
+
+
+        $pdf = PDF::loadview('reports.hutang_supplier.print', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails', 'sum_debet', 'sum_kredit', 'distinct_pc', 'purchasejournaldetailss', 'distinct_pcc'));
+        return $pdf->setPaper('a4', 'landscape')->stream('laporan-hutang-supplier.pdf');
     }
 }

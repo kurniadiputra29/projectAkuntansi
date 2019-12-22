@@ -32,44 +32,41 @@
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-12">
-          <div class="row py-3">
-            <div class="col-md-6">
-              <form class="forms-sample" action="#" method="post">
-                <label for="filter">Tanggal Mulai</label>
-                <input type="date" name="tanggal" id="filter">
-                <label for="filter2">Tanggal Akhir</label>
-                <input type="date" name="tanggal" id="filter2">
-                <button class="btn btn-primary" type="submit" name="button">Filter</button>
-              </form>
+          <div class="card">
+            <div class="card-header d-flex justify-content-between flex-row">
+              <div class="left-container">
+                <h3>Hutang Supplier</h3>
+                <span>use class <code>table-hover</code> inside table element</span>
+              </div>
+              <div class="right-container">
+                <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
+                <button type="button" class="btn btn-info mr-5" data-toggle="modal" data-target="#createModal"><i class="ik ik-filter"></i>Filter</button>
+                <a type="button" class="btn btn-primary mr-5" href="{{route('hutang.print')}}"><i class="ik ik-printer"></i>Print</a>
+              </div>
             </div>
-            <div class="col-md-6 d-flex justify-content-end">
-              <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
-              <a type="button" class="btn btn-primary" href="#"><i class="ik ik-printer"></i>Print</a>
-            </div>
-          </div>
-          <div class="table-container list-table">
-            <div class="report-title">
+            <div class="card-body">
               <div class="table-responsive">
                 @foreach ($DataSuppliers as $DataSupplier)
-                <h5 style="margin-top: 30px;">Customers Name : {{ $DataSupplier->nama }}</h5>
-                <table class="account-transactions report-table table" id="account-entry">
-                  <thead class="report-header">
-                    <tr class="bg-secondary font-weight-bold">
-                      <th class="text-center text-light">Tanggal</th>
-                      <th class="text-center text-light">Kode Customers</th>
-                      <th class="text-center text-light">Deskripsi</th>
-                      <th class="text-center text-light">Debet</th>
-                      <th class="text-center text-light">Kredit</th>
-                      <th class="text-center text-light">Debet</th>
-                      <th class="text-center text-light">Kredit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                        @foreach ($SaldoHutangs as $SaldoHutang)
-                          <tr>
-                            @if ($SaldoHutang->suppliers_id == $DataSupplier->id)
+                  <h5 style="margin-top: 30px;">Customers Name : {{ $DataSupplier->nama }}</h5>
+                  <table class="account-transactions report-table table" id="account-entry">
+                    <thead class="report-header">
+                      <tr class="bg-secondary font-weight-bold">
+                        <th class="text-center text-light">Tanggal</th>
+                        <th class="text-center text-light">Kode Customers</th>
+                        <th class="text-center text-light">Deskripsi</th>
+                        <th class="text-center text-light">Debet</th>
+                        <th class="text-center text-light">Kredit</th>
+                        <th class="text-center text-light">Debet</th>
+                        <th class="text-center text-light">Kredit</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($SaldoHutangs as $SaldoHutang)
+                        <tr>
+                          @if ($SaldoHutang->suppliers_id == $DataSupplier->id)
                             <td class="text-center">{{date('d F Y', strtotime($DataSupplier->created_at ))}}</td>
                             <td class="text-center">{{ $DataSupplier->kode }}</td>
                             <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Saldo Awal</span></td>
@@ -77,61 +74,61 @@
                             <td class="text-center">{{ $DataSupplier->status }}</td>
                             <td class="text-right">Rp {{ number_format($SaldoHutang->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($SaldoHutang->kredit, 0, " ", ".")}}</td>
+                          @endif
+                        </tr>
+                      @endforeach
+                      @foreach ($PurchaseJournals as $PurchaseJournal)
+                        @foreach ($purchasejournaldetails as $purchasejournaldetail)
+                          <tr>
+                            @if ($PurchaseJournal->suppliers_id == $DataSupplier->id)
+                              @if ($purchasejournaldetail->purchasejournal_id == $PurchaseJournal->id)
+                                <td class="text-center">{{date('d F Y', strtotime($PurchaseJournal->tanggal ))}}</td>
+                                <td class="text-center">{{ $DataSupplier->kode }}</td>
+                                <td class="text-center"><span class="badge badge-pill badge-warning mb-1">Purchase Journal</span></td>
+                                <td class="text-right">Rp {{ number_format($purchasejournaldetail->debet, 0, " ", ".")}}</td>
+                                <td class="text-right">Rp {{ number_format($purchasejournaldetail->kredit, 0, " ", ".")}}</td>
+                              @endif
                             @endif
                           </tr>
                         @endforeach
-                        @foreach ($PurchaseJournals as $PurchaseJournal)
-                          @foreach ($purchasejournaldetails as $purchasejournaldetail)
-                            <tr>
-                              @if ($PurchaseJournal->suppliers_id == $DataSupplier->id)
-                                @if ($purchasejournaldetail->purchasejournal_id == $PurchaseJournal->id)
-                                  <td class="text-center">{{date('d F Y', strtotime($PurchaseJournal->tanggal ))}}</td>
-                                  <td class="text-center">{{ $DataSupplier->kode }}</td>
-                                  <td class="text-center"><span class="badge badge-pill badge-warning mb-1">Purchase Journal</span></td>
-                                  <td class="text-right">Rp {{ number_format($purchasejournaldetail->debet, 0, " ", ".")}}</td>
-                                  <td class="text-right">Rp {{ number_format($purchasejournaldetail->kredit, 0, " ", ".")}}</td>
-                                @endif
+                      @endforeach
+                      @foreach ($ReturPembelians as $ReturPembelian)
+                        @foreach ($ReturPembelianDetails as $ReturPembelianDetail)
+                          <tr>
+                            @if ($ReturPembelian->suppliers_id == $DataSupplier->id)
+                              @if ($ReturPembelianDetail->retur_pembelian_id == $ReturPembelian->id)
+                                <td class="text-center">{{date('d F Y', strtotime($ReturPembelian->tanggal ))}}</td>
+                                <td class="text-center">{{ $DataSupplier->kode }}</td>
+                                <td class="text-center"><span class="badge badge-pill badge-success mb-1">Retur Pembelian</span></td>
+                                <td class="text-right">Rp {{ number_format($ReturPembelianDetail->debet, 0, " ", ".")}}</td>
+                                <td class="text-right">Rp {{ number_format($ReturPembelianDetail->kredit, 0, " ", ".")}}</td>
                               @endif
-                            </tr>
-                          @endforeach
+                            @endif
+                          </tr>
                         @endforeach
-                        @foreach ($ReturPembelians as $ReturPembelian)
-                          @foreach ($ReturPembelianDetails as $ReturPembelianDetail)
-                            <tr>
-                              @if ($ReturPembelian->suppliers_id == $DataSupplier->id)
-                                @if ($ReturPembelianDetail->retur_pembelian_id == $ReturPembelian->id)
-                                  <td class="text-center">{{date('d F Y', strtotime($ReturPembelian->tanggal ))}}</td>
-                                  <td class="text-center">{{ $DataSupplier->kode }}</td>
-                                  <td class="text-center"><span class="badge badge-pill badge-success mb-1">Retur Pembelian</span></td>
-                                  <td class="text-right">Rp {{ number_format($ReturPembelianDetail->debet, 0, " ", ".")}}</td>
-                                  <td class="text-right">Rp {{ number_format($ReturPembelianDetail->kredit, 0, " ", ".")}}</td>
-                                @endif
+                      @endforeach
+                      @foreach ($CashBankOuts as $CashBankOut)
+                        @foreach ($CashBankOutDetails as $CashBankOutDetail)
+                          <tr>
+                            @if ($CashBankOut->suppliers_id == $DataSupplier->id)
+                              @if ($CashBankOutDetail->cash_bank_outs_id == $CashBankOut->id)
+                                <td class="text-center">{{date('d F Y', strtotime($CashBankOut->tanggal ))}}</td>
+                                <td class="text-center">{{ $DataSupplier->kode }}</td>
+                                <td class="text-center"><span class="badge badge-pill badge-warning mb-1">Cash & Bank</span></td>
+                                <td class="text-right">Rp {{ number_format($CashBankOutDetail->debet, 0, " ", ".")}}</td>
+                                <td class="text-right">Rp {{ number_format($CashBankOutDetail->kredit, 0, " ", ".")}}</td>
                               @endif
-                            </tr>
-                          @endforeach
+                            @endif
+                          </tr>
                         @endforeach
-                        @foreach ($CashBankOuts as $CashBankOut)
-                          @foreach ($CashBankOutDetails as $CashBankOutDetail)
-                            <tr>
-                              @if ($CashBankOut->suppliers_id == $DataSupplier->id)
-                                @if ($CashBankOutDetail->cash_bank_outs_id == $CashBankOut->id)
-                                  <td class="text-center">{{date('d F Y', strtotime($CashBankOut->tanggal ))}}</td>
-                                  <td class="text-center">{{ $DataSupplier->kode }}</td>
-                                  <td class="text-center"><span class="badge badge-pill badge-warning mb-1">Cash & Bank</span></td>
-                                  <td class="text-right">Rp {{ number_format($CashBankOutDetail->debet, 0, " ", ".")}}</td>
-                                  <td class="text-right">Rp {{ number_format($CashBankOutDetail->kredit, 0, " ", ".")}}</td>
-                                @endif
-                              @endif
-                            </tr>
-                          @endforeach
-                        @endforeach
-                        <tr class="bg-success text-light">
-                          <td class="text-center grand-total" colspan="10">
-                            {{ $DataSupplier->kode }}
-                          </td>
-                        </tr>
-                  </tbody>
-                </table>
+                      @endforeach
+                      <tr class="bg-success text-light">
+                        <td class="text-center grand-total" colspan="10">
+                          {{ $DataSupplier->kode }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 @endforeach
               </div>
               <div class="dt-responsive">
@@ -160,14 +157,14 @@
                         </td>
                       </tr>
                       <!-- @foreach ($PurchaseJournals as $PurchaseJournal)
-                        @foreach ($purchasejournaldetails as $purchasejournaldetail)
-                          <tr>
-                            @if ($PurchaseJournal->suppliers_id == $rekap->id)
-                              @if ($purchasejournaldetail->purchasejournal_id == $PurchaseJournal->id)
-                                <td>{{$rekap->kode}}</td>
-                                <td>{{$rekap->nama}}</td>
-                                <td class="text-right">Rp {{ number_format($purchasejournaldetail->where('nomor_akun', '2-1210')->where('purchasejournal_id', $PurchaseJournal->id)->sum('debet'))}}</td>
-                                <td class="text-right">Rp {{ number_format($purchasejournaldetail->where('nomor_akun', '2-1210')->where('purchasejournal_id', $PurchaseJournal->id)->sum('kredit'))}}</td>
+                      @foreach ($purchasejournaldetails as $purchasejournaldetail)
+                      <tr>
+                      @if ($PurchaseJournal->suppliers_id == $rekap->id)
+                      @if ($purchasejournaldetail->purchasejournal_id == $PurchaseJournal->id)
+                      <td>{{$rekap->kode}}</td>
+                      <td>{{$rekap->nama}}</td>
+                      <td class="text-right">Rp {{ number_format($purchasejournaldetail->where('nomor_akun', '2-1210')->where('purchasejournal_id', $PurchaseJournal->id)->sum('debet'))}}</td>
+                      <td class="text-right">Rp {{ number_format($purchasejournaldetail->where('nomor_akun', '2-1210')->where('purchasejournal_id', $PurchaseJournal->id)->sum('kredit'))}}</td>
                               @endif
                             @endif
                           </tr>
