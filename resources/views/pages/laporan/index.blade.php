@@ -290,7 +290,7 @@
                             </a>
                           </h3>
                           <p>
-                            Menampilkan daftar kuantitas inventory per produk/item, termasuk jumlah retur, net pembelian, net penjualan, dan harga pokok penjualan (Mothod: rata-rata).
+                            Menampilkan daftar kuantitas inventory per produk/item, termasuk jumlah retur, net pembelian, net penjualan, dan harga pokok penjualan (Method: rata-rata).
                           </p>
                           <a class="btn btn-outline-primary btn-rounded" href="{{route('inventory.index')}}">
                             Lihat Laporan
