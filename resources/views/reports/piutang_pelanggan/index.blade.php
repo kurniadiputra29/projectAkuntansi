@@ -49,17 +49,19 @@
             <div class="card-body">
               <div class="table-responsive">
                 @foreach ($DataCustomers as $DataCustomer)
-                  <h5 style="margin-top: 30px;">Customers Name : {{ $DataCustomer->nama }}</h5>
-                  <table class="account-transactions report-table table" id="account-entry">
+                  <table class="table table-striped table-bordered nowrap" id="account-entry">
                     <thead class="report-header">
                       <tr class="bg-secondary font-weight-bold">
-                        <th class="text-center text-light">Tanggal</th>
-                        <th class="text-center text-light">Kode Customers</th>
-                        <th class="text-center text-light">Deskripsi</th>
-                        <th class="text-center text-light">Debet</th>
-                        <th class="text-center text-light">Kredit</th>
-                        <th class="text-center text-light">Debet</th>
-                        <th class="text-center text-light">Kredit</th>
+                        <th class="col-8 text-light" colspan="4">Customers Name: {{$DataCustomer->nama}}</th>
+                        <th class="col-4 text-light" colspan="2">Customers Kode: {{$DataCustomer->kode}}</th>
+                      </tr>
+                      <tr>
+                        <th class="col-2">Tanggal</th>
+                        <th class="col-2">Deskripsi</th>
+                        <th class="col-2">Debet</th>
+                        <th class="col-2">Kredit</th>
+                        <th class="col-2">Debet</th>
+                        <th class="col-2">Kredit</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -67,7 +69,6 @@
                         <tr>
                           @if ($SaldoPiutang->customers_id == $DataCustomer->id)
                             <td class="text-center">{{date('d F Y', strtotime($DataCustomer->created_at ))}}</td>
-                            <td class="text-center">{{ $DataCustomer->kode }}</td>
                             <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Saldo Awal</span></td>
                             <td class="text-center">{{ $DataCustomer->status }}</td>
                             <td class="text-center">{{ $DataCustomer->status }}</td>
@@ -82,7 +83,6 @@
                             @if ($SalesJournal->customers_id == $DataCustomer->id)
                               @if ($salesjournaldetail->salesjournal_id == $SalesJournal->id)
                                 <td class="text-center">{{date('d F Y', strtotime($SalesJournal->tanggal ))}}</td>
-                                <td class="text-center">{{ $DataCustomer->kode }}</td>
                                 <td class="text-center"><span class="badge badge-pill badge-success mb-1">Sales Journal</span></td>
                                 <td class="text-right">Rp {{ number_format($salesjournaldetail->debet, 0, " ", ".")}}</td>
                                 <td class="text-right">Rp {{ number_format($salesjournaldetail->kredit, 0, " ", ".")}}</td>
@@ -97,7 +97,6 @@
                             @if ($ReturPenjualan->customers_id == $DataCustomer->id)
                               @if ($ReturPenjualanDetail->retur_penjualan_id == $ReturPenjualan->id)
                                 <td class="text-center">{{date('d F Y', strtotime($ReturPenjualan->tanggal ))}}</td>
-                                <td class="text-center">{{ $DataCustomer->kode }}</td>
                                 <td class="text-center"><span class="badge badge-pill badge-warning mb-1">Retur Penjualan</span></td>
                                 <td class="text-right">Rp {{ number_format($ReturPenjualanDetail->debet, 0, " ", ".")}}</td>
                                 <td class="text-right">Rp {{ number_format($ReturPenjualanDetail->kredit, 0, " ", ".")}}</td>
@@ -112,7 +111,6 @@
                             @if ($CashBankIn->customers_id == $DataCustomer->id)
                               @if ($CashBankInDetail->cash_bank_ins_id == $CashBankIn->id)
                                 <td class="text-center">{{date('d F Y', strtotime($CashBankIn->tanggal ))}}</td>
-                                <td class="text-center">{{ $DataCustomer->kode }}</td>
                                 <td class="text-center"><span class="badge badge-pill badge-success mb-1">Cash & Bank</span></td>
                                 <td class="text-right">Rp {{ number_format($CashBankInDetail->debet, 0, " ", ".")}}</td>
                                 <td class="text-right">Rp {{ number_format($CashBankInDetail->kredit, 0, " ", ".")}}</td>
@@ -121,11 +119,6 @@
                           </tr>
                         @endforeach
                       @endforeach
-                      <tr class="bg-success text-light">
-                        <td class="text-center grand-total" colspan="10">
-                          {{ $DataCustomer->kode }}
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 @endforeach
@@ -155,31 +148,17 @@
                           Rp {{number_format($distinct_pcc->where('customers_id', $rekap->id)->sum('kredit'))}}
                         </td>
                       </tr>
-                      <!-- @foreach ($SalesJournals as $SalesJournal)
-                      @foreach ($salesjournaldetails as $salesjournaldetail)
-                      <tr>
-                      @if ($SalesJournal->customers_id == $rekap->id)
-                      @if ($salesjournaldetail->salesjournal_id == $SalesJournal->id)
-                      <td>{{$rekap->kode}}</td>
-                      <td>{{$rekap->nama}}</td>
-                      <td class="text-right">Rp {{ number_format($salesjournaldetail->where('nomor_akun', '1-1220')->where('salesjournal_id', $SalesJournal->id)->sum('debet'))}}</td>
-                      <td class="text-right">Rp {{ number_format($salesjournaldetail->where('nomor_akun', '1-1220')->where('salesjournal_id', $SalesJournal->id)->sum('kredit'))}}</td>
-                    @endif
-                  @endif
-                </tr>
-              @endforeach
-            @endforeach -->
-          @endforeach
-        </tbody>
-        <tfoot>
-          <tr class="bg-success font-weight-bold">
-            <td class="text-light text-right" colspan="2">Total</td>
-            <td class="text-light text-right"></td>
-            <td class="text-light text-right"></td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+                    @endforeach
+                  </tbody>
+                  <tfoot>
+                    <tr class="bg-success font-weight-bold">
+                      <td class="text-light text-right" colspan="2">Total</td>
+                      <td class="text-light text-right"></td>
+                      <td class="text-light text-right"></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
             </div>
           </div>
         </div>

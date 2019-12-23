@@ -51,22 +51,23 @@
                   <div class="dt-responsive">
                     @foreach ($items as $item)
                       {{-- <h5 style="margin-top: 30px;">Item Name : {{ $item->nama }}</h5> --}}
-                      <table id="complex-dt" class="table table-bordered nowrap">
+                      <table class="table table-bordered nowrap">
                         <thead class="report-header">
-                          <tr>
-                            <th colspan="10">Item Name : {{ $item->nama }}</th>
-                          </tr>
                           <tr class="bg-secondary font-weight-bold">
-                            <th class="text-light text-center">Date</th>
-                            <th class="text-light text-center">Kode Produk</th>
-                            <th class="text-light text-center">Deskripsi</th>
-                            <th class="text-light text-center">Status</th>
-                            <th class="text-light text-center">QTY</th>
-                            <th class="text-center text-light">Price/ Unit</th>
-                            <th class="text-center text-light">Amount</th>
-                            <th class="text-center text-light">QTY</th>
-                            <th class="text-center text-light">Price/ Unit</th>
-                            <th class="text-center text-light">Amount</th>
+                            <th class="text-light" colspan="8">Item Name : {{ $item->nama }}</th>
+                            <th class="text-light" colspan="2">Item Name : {{ $item->kode }}</th>
+                          </tr>
+                          <tr>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">Kode Produk</th>
+                            <th class="text-center">Deskripsi</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">QTY</th>
+                            <th class="text-center">Price/ Unit</th>
+                            <th class="text-center">Amount</th>
+                            <th class="text-center">QTY</th>
+                            <th class="text-center">Price/ Unit</th>
+                            <th class="text-center">Amount</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -114,11 +115,6 @@
                           @endif
                         </tr>
                       @endforeach
-                      <tr class="bg-success text-light">
-                        <td class="text-center grand-total" colspan="10">
-                          {{ $item->kode }}
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 @endforeach

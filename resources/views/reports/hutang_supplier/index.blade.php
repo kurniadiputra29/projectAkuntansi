@@ -50,17 +50,19 @@
             <div class="card-body">
               <div class="table-responsive">
                 @foreach ($DataSuppliers as $DataSupplier)
-                  <h5 style="margin-top: 30px;">Customers Name : {{ $DataSupplier->nama }}</h5>
-                  <table class="account-transactions report-table table" id="account-entry">
+                  <table class="table table-striped table-bordered nowrap" id="account-entry">
                     <thead class="report-header">
                       <tr class="bg-secondary font-weight-bold">
-                        <th class="text-center text-light">Tanggal</th>
-                        <th class="text-center text-light">Kode Customers</th>
-                        <th class="text-center text-light">Deskripsi</th>
-                        <th class="text-center text-light">Debet</th>
-                        <th class="text-center text-light">Kredit</th>
-                        <th class="text-center text-light">Debet</th>
-                        <th class="text-center text-light">Kredit</th>
+                        <th class="col-8 text-light" colspan="4">Customers Name: {{$DataSupplier->nama}}</th>
+                        <th class="col-4 text-light" colspan="2">Customers Kode: {{$DataSupplier->kode}}</th>
+                      </tr>
+                      <tr>
+                        <th class="col-2">Tanggal</th>
+                        <th class="col-2">Deskripsi</th>
+                        <th class="col-2">Debet</th>
+                        <th class="col-2">Kredit</th>
+                        <th class="col-2">Debet</th>
+                        <th class="col-2">Kredit</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -68,7 +70,6 @@
                         <tr>
                           @if ($SaldoHutang->suppliers_id == $DataSupplier->id)
                             <td class="text-center">{{date('d F Y', strtotime($DataSupplier->created_at ))}}</td>
-                            <td class="text-center">{{ $DataSupplier->kode }}</td>
                             <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Saldo Awal</span></td>
                             <td class="text-center">{{ $DataSupplier->status }}</td>
                             <td class="text-center">{{ $DataSupplier->status }}</td>
@@ -83,7 +84,6 @@
                             @if ($PurchaseJournal->suppliers_id == $DataSupplier->id)
                               @if ($purchasejournaldetail->purchasejournal_id == $PurchaseJournal->id)
                                 <td class="text-center">{{date('d F Y', strtotime($PurchaseJournal->tanggal ))}}</td>
-                                <td class="text-center">{{ $DataSupplier->kode }}</td>
                                 <td class="text-center"><span class="badge badge-pill badge-warning mb-1">Purchase Journal</span></td>
                                 <td class="text-right">Rp {{ number_format($purchasejournaldetail->debet, 0, " ", ".")}}</td>
                                 <td class="text-right">Rp {{ number_format($purchasejournaldetail->kredit, 0, " ", ".")}}</td>
@@ -98,7 +98,6 @@
                             @if ($ReturPembelian->suppliers_id == $DataSupplier->id)
                               @if ($ReturPembelianDetail->retur_pembelian_id == $ReturPembelian->id)
                                 <td class="text-center">{{date('d F Y', strtotime($ReturPembelian->tanggal ))}}</td>
-                                <td class="text-center">{{ $DataSupplier->kode }}</td>
                                 <td class="text-center"><span class="badge badge-pill badge-success mb-1">Retur Pembelian</span></td>
                                 <td class="text-right">Rp {{ number_format($ReturPembelianDetail->debet, 0, " ", ".")}}</td>
                                 <td class="text-right">Rp {{ number_format($ReturPembelianDetail->kredit, 0, " ", ".")}}</td>
@@ -113,7 +112,6 @@
                             @if ($CashBankOut->suppliers_id == $DataSupplier->id)
                               @if ($CashBankOutDetail->cash_bank_outs_id == $CashBankOut->id)
                                 <td class="text-center">{{date('d F Y', strtotime($CashBankOut->tanggal ))}}</td>
-                                <td class="text-center">{{ $DataSupplier->kode }}</td>
                                 <td class="text-center"><span class="badge badge-pill badge-warning mb-1">Cash & Bank</span></td>
                                 <td class="text-right">Rp {{ number_format($CashBankOutDetail->debet, 0, " ", ".")}}</td>
                                 <td class="text-right">Rp {{ number_format($CashBankOutDetail->kredit, 0, " ", ".")}}</td>
@@ -122,11 +120,6 @@
                           </tr>
                         @endforeach
                       @endforeach
-                      <tr class="bg-success text-light">
-                        <td class="text-center grand-total" colspan="10">
-                          {{ $DataSupplier->kode }}
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 @endforeach
