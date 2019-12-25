@@ -98,6 +98,14 @@
                         @include('pages.saldo_awal.edit')
                       @endforeach
                     </tbody>
+                    <tfoot>
+                      <tr class="bg-success font-weight-bold">
+                        <td colspan="2" class="text-right text-light">Total</td>
+                        <td class="text-right text-light">{{number_format($dataSaldoAwal->sum('debet'), 0, " ", ".")}}</td>
+                        <td class="text-right text-light">{{number_format($dataSaldoAwal->sum('kredit'), 0, " ", ".")}}</td>
+                        <td></td>
+                      </tr>
+                    </tfoot>
                   </table>
                 </div>
               </div>
