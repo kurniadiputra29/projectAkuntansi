@@ -59,30 +59,23 @@
                 }
                 @endphp
                 @foreach ($saldo_awal as $awal)
-                  <table class="table table-striped table-bordered nowrap" v-for="(item,index) in items" :key="index">
+                  <table class="table table-striped table-bordered nowrap">
                     <thead>
                       <tr class="bg-secondary font-weight-bold">
-                        <th class="col-8 text-light" colspan="4">Nama Akun: {{$awal->account->nama}}</th>
-                        <th class="col-4 text-light" colspan="2">Nomor Akun: {{$awal->account->nomor}}</th>
+                        <th class="text-light" colspan="3">Nama Akun: {{$awal->account->nama}}</th>
+                        <th class="text-light">Nomor Akun: {{$awal->account->nomor}}</th>
                       </tr>
                       <tr>
-                        <th class="col-2" rowspan="2">Tanggal</th>
-                        <th class="col-2" rowspan="2">Deskripsi</th>
-                        <th class="col-2" rowspan="2">Debet</th>
-                        <th class="col-2" rowspan="2">Kredit</th>
-                        <th class="col-4" colspan="2" style="text-align: center;">Balance</th>
-                      </tr>
-                      <tr>
-                        <th class="col-2">Debet</th>
-                        <th class="col-2">Kredit</th>
+                        <th class="col-3">Tanggal</th>
+                        <th class="col-3">Deskripsi</th>
+                        <th class="col-3">Debet</th>
+                        <th class="col-3">Kredit</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         <td>{{date('d F Y', strtotime($awal->created_at ))}}</td>
                         <td>Saldo Awal</td>
-                        <td></td>
-                        <td></td>
                         <td>
                           Rp{{format_uang($awal->debet)}}
                         </td>
@@ -95,11 +88,9 @@
                         @if ($key->nomor_akun == $awal->account->nomor)
                           <tr>
                             <td>{{date('d F Y', strtotime($key->CashBankIn->created_at ))}}</td>
-                            <td></td>
+                            <td>{{$key->CashBankIn->description}}</td>
                             <td>Rp{{format_uang($key->debet)}}</td>
                             <td>Rp{{format_uang($key->kredit)}}</td>
-                            <td name="debetCBI[]"></td>
-                            <td name="kreditCBI[]"></td>
                           </tr>
                         @endif
                       @endforeach
@@ -107,11 +98,9 @@
                         @if ($key->nomor_akun == $awal->account->nomor)
                           <tr>
                             <td>{{date('d F Y', strtotime($key->CashBankOut->created_at ))}}</td>
-                            <td></td>
+                            <td>{{$key->CashBankOut->description}}</td>
                             <td>Rp{{format_uang($key->debet)}}</td>
                             <td>Rp{{format_uang($key->kredit)}}</td>
-                            <td name="debetCBO[]"></td>
-                            <td name="kreditCBO[]"></td>
                           </tr>
                         @endif
                       @endforeach
@@ -122,8 +111,6 @@
                             <td></td>
                             <td>Rp{{format_uang($key->debet)}}</td>
                             <td>Rp{{format_uang($key->kredit)}}</td>
-                            <td name="debetCPJ[]"></td>
-                            <td name="kreditCPJ[]"></td>
                           </tr>
                         @endif
                       @endforeach
@@ -134,8 +121,6 @@
                             <td></td>
                             <td>Rp{{format_uang($key->debet)}}</td>
                             <td>Rp{{format_uang($key->kredit)}}</td>
-                            <td name="debetCRJ[]"></td>
-                            <td name="kreditCRJ[]"></td>
                           </tr>
                         @endif
                       @endforeach
@@ -146,8 +131,6 @@
                             <td></td>
                             <td>Rp{{format_uang($key->debet)}}</td>
                             <td>Rp{{format_uang($key->kredit)}}</td>
-                            <td name="debetJP[]"></td>
-                            <td name="kreditJP[]"></td>
                           </tr>
                         @endif
                       @endforeach
@@ -158,48 +141,16 @@
                             <td></td>
                             <td>Rp{{format_uang($key->debet)}}</td>
                             <td>Rp{{format_uang($key->kredit)}}</td>
-                            <td name="debetJU[]"></td>
-                            <td name="kreditJU[]"></td>
                           </tr>
                         @endif
                       @endforeach
-                      @foreach ($pc_detail as $key => $val)
-                        @if ($val->nomor_akun == $awal->account->nomor)
+                      @foreach ($pc_detail as $key)
+                        @if ($key->nomor_akun == $awal->account->nomor)
                           <tr>
-                            <td>{{date('d F Y', strtotime($val->pettycash->created_at ))}}</td>
-                            <td>{{$val->pettycash->description}}</td>
-                            <td>Rp{{format_uang($val->debet)}}</td>
-                            <td>Rp{{format_uang($val->kredit)}}</td>
-                            @if ($awal->debet > 0)
-                              <td>
-                                @if ($val->kredit > 0)
-                                  Rp{{format_uang(($awal->debet)-($val->kredit))}}
-                                @elseif ($val->debet > 0)
-                                  Rp{{format_uang(($awal->debet)+($val->debet))}}
-                                @endif
-                              </td>
-                              <td>
-                                Rp{{format_uang(0)}}
-                              </td>
-                            @elseif ($awal->kredit > 0)
-                              <td>
-                                Rp{{format_uang(0)}}
-                              </td>
-                              <td>
-                                @if ($val->debet > 0)
-                                  Rp{{format_uang(($awal->kredit)-($val->debet))}}
-                                @elseif ($val->kredit > 0)
-                                  Rp{{format_uang(($awal->kredit)+($val->kredit))}}
-                                @endif
-                              </td>
-                            @elseif ($awal->debet == 0 && $awal->kredit == 0)
-                              <td>
-                                Rp{{format_uang(($awal->debet)+($val->debet))}}
-                              </td>
-                              <td>
-                                Rp{{format_uang(($awal->kredit)+($val->kredit))}}
-                              </td>
-                            @endif
+                            <td>{{date('d F Y', strtotime($key->pettycash->created_at ))}}</td>
+                            <td>{{$key->pettycash->description}}</td>
+                            <td>Rp{{format_uang($key->debet)}}</td>
+                            <td>Rp{{format_uang($key->kredit)}}</td>
                           </tr>
                         @endif
                       @endforeach
@@ -210,8 +161,6 @@
                             <td></td>
                             <td>Rp{{format_uang($key->debet)}}</td>
                             <td>Rp{{format_uang($key->kredit)}}</td>
-                            <td name="debetPJ[]"></td>
-                            <td name="kreditPJ[]"></td>
                           </tr>
                         @endif
                       @endforeach
@@ -222,8 +171,6 @@
                             <td></td>
                             <td>Rp{{format_uang($key->debet)}}</td>
                             <td>Rp{{format_uang($key->kredit)}}</td>
-                            <td name="debetSJ[]"></td>
-                            <td name="kreditSJ[]"></td>
                           </tr>
                         @endif
                       @endforeach
@@ -234,8 +181,6 @@
                             <td></td>
                             <td>Rp{{format_uang($key->debet)}}</td>
                             <td>Rp{{format_uang($key->kredit)}}</td>
-                            <td name="debetRPB[]"></td>
-                            <td name="kreditRPB[]"></td>
                           </tr>
                         @endif
                       @endforeach
@@ -246,12 +191,23 @@
                             <td></td>
                             <td>Rp{{format_uang($key->debet)}}</td>
                             <td>Rp{{format_uang($key->kredit)}}</td>
-                            <td name="debetRPJ[]"></td>
-                            <td name="kreditRPJ[]"></td>
                           </tr>
                         @endif
                       @endforeach
                     </tbody>
+                    <tfoot>
+                      <tr class="bg-success font-weight-bold text-light">
+                        <td></td>
+                        <td>Total</td>
+                        <td>Rp{{format_uang($awal->debet + $key->where('nomor_akun', $awal->account->nomor)->sum('debet'))}}</td>
+                        <td>Rp{{format_uang($awal->kredit + $key->where('nomor_akun', $awal->account->nomor)->sum('kredit'))}}</td>
+                      </tr>
+                      <tr class="bg-primary font-weight-bold text-light">
+                        <td></td>
+                        <td>Balance</td>
+                        <td class="text-center" colspan="2">Rp{{format_uang(($awal->debet + $key->where('nomor_akun', $awal->account->nomor)->sum('debet'))-($awal->kredit + $key->where('nomor_akun', $awal->account->nomor)->sum('kredit')))}}</td>
+                      </tr>
+                    </tfoot>
                   </table>
                 @endforeach
               </div>
@@ -269,12 +225,7 @@
     new Vue({
       el: '#app',
       data: {
-        items: [
-          {
-            debet: 1,
-            kredit: 1,
-          }
-        ],
+        pesan: 'Gek rampung'
       }
     });
   </script>
