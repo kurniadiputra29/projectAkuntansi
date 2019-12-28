@@ -23,4 +23,8 @@ class crj extends Model
     {
       return $this->hasMany(Inventory::class, "crj_id");
     }
+    public function ReturPenjualan()
+    {
+        return $this->hasMany(ReturPenjualan::class, "crj_id");
+    }
 }

@@ -8,7 +8,9 @@ use App\Model\Account;
 use App\Model\DataCustomer;
 use App\Model\Item;
 use App\Model\crjdetail;
+use App\Model\ReturPenjualan;
 use App\Model\Inventory;
+use App\Model\ReturPenjualanDetail;
 
 class CrjController extends Controller
 {
@@ -66,11 +68,12 @@ class CrjController extends Controller
         $crj              = crj::create($dataCRJ);
 
         //insert data crj detail
-        $detailcrj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+        $detailcrj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'nomor_akun_inventory', 'nama_akun2_inventory', 'nomor_akun_cost', 'nama_akun2_cost', 'cost', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
         $countKasBank1 = count($detailcrj['total']);
         $countKasBank2 = count($detailcrj['subtotal']);
         $countKasBank3 = count($detailcrj['PPN']);
         $countKasBank4 = count($detailcrj['jasa_pengiriman']);
+        $countKasBank5 = count($detailcrj['cost']);
 
         for ($a=0; $a < $countKasBank1; $a++) { 
             $detail                     = new crjdetail();
@@ -78,6 +81,14 @@ class CrjController extends Controller
             $detail->nomor_akun         = $detailcrj['nomor_akun2'][$a];
             $detail->nama_akun          = $detailcrj['nama_akun2'][$a];
             $detail->debet              = $detailcrj['total'][$a];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank5; $i++) { 
+            $detail                     = new crjdetail();
+            $detail->crj_id             = $crj->id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_cost'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_cost'][$i];
+            $detail->debet             = $detailcrj['cost'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank2; $i++) { 
@@ -104,9 +115,17 @@ class CrjController extends Controller
             $detail->kredit             = $detailcrj['jasa_pengiriman'][$i];
             $detail->save();
         }
+        for ($i=0; $i < $countKasBank5; $i++) { 
+            $detail                     = new crjdetail();
+            $detail->crj_id             = $crj->id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_inventory'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_inventory'][$i];
+            $detail->kredit             = $detailcrj['cost'][$i];
+            $detail->save();
+        }
 
         //insert data Inventory
-        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
+        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status', 'sales');
         $countinventory1 = count($inventory['jumlah']);
 
         for ($x=0; $x < $countinventory1; $x++) { 
@@ -116,7 +135,8 @@ class CrjController extends Controller
             $detail->status             = $inventory['status'][$x];
             $detail->unit               = $inventory['unit'][$x];
             $detail->price              = $inventory['harga'][$x];
-            $detail->total              = $inventory['jumlah'][$x];
+            $detail->total              = $inventory['sales'][$x];
+            $detail->sales              = $inventory['jumlah'][$x];
             $detail->save();
         }
         return redirect('/crj')->with('Success', 'Data anda telah berhasil di Input !');
@@ -148,7 +168,7 @@ class CrjController extends Controller
         $items          = Item::all();
         $cashbanks      = crj::find($id);
         $crjdetails     = crjdetail::all();
-        $debets         = crjdetail::where('crj_id', $id)->where('kredit', null)->get();
+        $debets         = crjdetail::where('crj_id', $id)->where('kredit', null)->first();
         $inventories    = Inventory::where('crj_id', $id)->get();
         $jasa           = crjdetail::where('crj_id', $id)->where('nomor_akun', '4-2200')->first();
         $ppn            = crjdetail::where('crj_id', $id)
@@ -184,11 +204,12 @@ class CrjController extends Controller
         $crj              = crj::find($id)->update($dataCRJ);
 
         //insert data crj detail
-        $detailcrj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+        $detailcrj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'nomor_akun_inventory', 'nama_akun2_inventory', 'nomor_akun_cost', 'nama_akun2_cost', 'cost', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
         $countKasBank1 = count($detailcrj['total']);
         $countKasBank2 = count($detailcrj['subtotal']);
         $countKasBank3 = count($detailcrj['PPN']);
         $countKasBank4 = count($detailcrj['jasa_pengiriman']);
+        $countKasBank5 = count($detailcrj['cost']);
 
         crjdetail::where('crj_id', $id)->delete();
 
@@ -198,6 +219,14 @@ class CrjController extends Controller
             $detail->nomor_akun         = $detailcrj['nomor_akun2'][$a];
             $detail->nama_akun          = $detailcrj['nama_akun2'][$a];
             $detail->debet              = $detailcrj['total'][$a];
+            $detail->save();
+        }
+        for ($i=0; $i < $countKasBank5; $i++) { 
+            $detail                     = new crjdetail();
+            $detail->crj_id             = $id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_cost'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_cost'][$i];
+            $detail->debet              = $detailcrj['cost'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank2; $i++) { 
@@ -224,10 +253,18 @@ class CrjController extends Controller
             $detail->kredit             = $detailcrj['jasa_pengiriman'][$i];
             $detail->save();
         }
+        for ($i=0; $i < $countKasBank5; $i++) { 
+            $detail                     = new crjdetail();
+            $detail->crj_id             = $id;
+            $detail->nomor_akun         = $detailcrj['nomor_akun_inventory'][$i];
+            $detail->nama_akun          = $detailcrj['nama_akun2_inventory'][$i];
+            $detail->kredit             = $detailcrj['cost'][$i];
+            $detail->save();
+        }
 
         Inventory::where('crj_id', $id)->delete();
         //insert data Inventory
-        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
+        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status', 'sales');
         $countinventory1 = count($inventory['jumlah']);
 
         for ($x=0; $x < $countinventory1; $x++) { 
@@ -237,7 +274,8 @@ class CrjController extends Controller
             $detail->status             = $inventory['status'][$x];
             $detail->unit               = $inventory['unit'][$x];
             $detail->price              = $inventory['harga'][$x];
-            $detail->total              = $inventory['jumlah'][$x];
+            $detail->total              = $inventory['sales'][$x];
+            $detail->sales              = $inventory['jumlah'][$x];
             $detail->save();
         }
         return redirect('/crj')->with('Success', 'Data anda telah berhasil di Edit !');
@@ -253,5 +291,26 @@ class CrjController extends Controller
     {
         crj::find($id)->delete();
         return redirect('/crj')->with('Success', 'Data anda telah berhasil di Hapus !');
+    }
+
+    public function retur($id)
+    {
+
+        $akun           = Account::all();
+        $customers      = DataCustomer::all();
+        $items          = Item::all();
+        $cashbanks      = crj::find($id);
+        $crjdetails     = crjdetail::all();
+        $returns        = ReturPenjualan::orderBy('id', 'desc')->paginate(1);
+        $returns_count  = ReturPenjualan::all()->count();
+        $debets         = crjdetail::where('crj_id', $id)->where('kredit', null)->first();
+        $inventories    = Inventory::where('crj_id', $id)->get();
+        $jasa           = crjdetail::where('crj_id', $id)->where('nomor_akun', '4-2200')->first();
+        $ppn            = crjdetail::where('crj_id', $id)
+                                    ->where('nomor_akun', '2-1310')
+                                    ->where('kredit', '>', '0')
+                                    ->exists();
+        // dd($ppn);
+        return view('pages.crj.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'returns_count','returns'));
     }
 }

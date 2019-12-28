@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Edit Retur Penjualan')
+@section('title', 'AccountMin - Create Retur Penjualan')
 
 @section('content')
 
@@ -12,7 +12,7 @@
           <div class="page-header-title">
             <i class="ik ik-menu bg-blue"></i>
             <div class="d-inline">
-              <h5>Edit Retur Penjualan</h5>
+              <h5>Create Retur Penjualan</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
             </div>
           </div>
@@ -24,7 +24,7 @@
                 <a href="/dasbor"><i class="ik ik-home"></i></a>
               </li>
               <li class="breadcrumb-item active" aria-current="page">Retur Penjualan</li>
-              <li class="breadcrumb-item active" aria-current="page">Edit</li>
+              <li class="breadcrumb-item active" aria-current="page">Create</li>
             </ol>
           </nav>
         </div>
@@ -42,9 +42,8 @@
             </ul>
           </div>
           @endif
-        <form class="forms-sample" action="{{route('retur_penjualan.update', $cashbanks->id)}}" method="post">
+        <form class="forms-sample" action="{{route('retur_penjualan.store')}}" method="post">
           @csrf
-          @method('PUT')
           <div class="card">
             <div class="card-header" style="background: #2dce89;"><h3 style="color: white">Retur Penjualan</h3>
             </div>
@@ -59,7 +58,7 @@
                       <label for="setor_ke">Setor Ke</label>
                       <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
                         @foreach ($akun as $key)
-                        <option value="{{$key->nomor}}" {{$kredits->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
+                        <option value="{{$key->nomor}}" {{$debets->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -84,24 +83,30 @@
                       </select>
                   </div>
                 </div>
-                <input class="form-control" name="crj_id" type="hidden" value="{{$cashbanks->crj_id}}">
-                <input class="form-control" name="salesjournal_id" type="hidden" value="{{$cashbanks->salesjournal_id}}">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="tanggal_transaksi">Tanggal Transaksi</label>
-                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{$cashbanks->tanggal}}">
+                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi">
                   </div>
                 </div>
+                <input class="form-control" name="crj_id" type="hidden" value="{{$cashbanks->id}}">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="no_transaksi">Nomor Transaksi</label>
-                    <input class="form-control" name="kode" type="text" id="no_transaksi" value="{{$cashbanks->kode}}">
+                    @if ($returns_count <= 0)
+                      <input class="form-control" name="kode" type="text" id="no_transaksi">
+                    @else
+                      @foreach ($returns as $key)
+                      <input class="form-control" name="kode" type="text" id="no_transaksi" placeholder="
+                      {{$key->kode}}">
+                      @endforeach
+                    @endif
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="description">Deskripsi</label>
-                    <textarea class="form-control" name="description" type="text" id="description" rows="3">{{$cashbanks->description}}</textarea>
+                    <textarea class="form-control" name="description" type="text" id="description" rows="3"></textarea>
                   </div>
                 </div>
               </div>
@@ -132,7 +137,7 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label for="harga">Harga Satuan</label>
-                    <input class="form-control" type="number" id="harga" name="harga[]" :value="harga(cashbank.id_item, index)" readonly="">
+                    <input class="form-control" type="number" id="harga" name="harga[]" :value="harga(cashbank.id_item, index)"  readonly="">
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -172,19 +177,11 @@
               <input type="hidden" name="nama_akun2_sales[]" value="Sales Of Merchandise">
             </div>
           </div>
-          @if ($cashbanks->crj_id == null)
-            <input type="hidden" class="form-control" id="exampleInputUsername2" name="cost[]" :value="cost" readonly>
-            <input type="hidden" name="nomor_akun_inventory[]" value="1-1310">
-            <input type="hidden" name="nama_akun2_inventory[]" value="Merchandise Inventory">
-            <input type="hidden" name="nomor_akun_cost[]" value="5-1200">
-            <input type="hidden" name="nama_akun2_cost[]" value="Coft of Goods Sold of Instalment">
-          @else
-            <input type="hidden" class="form-control" id="exampleInputUsername2" name="cost[]" :value="cost" readonly>
-            <input type="hidden" name="nomor_akun_inventory[]" value="1-1310">
-            <input type="hidden" name="nama_akun2_inventory[]" value="Merchandise Inventory">
-            <input type="hidden" name="nomor_akun_cost[]" value="5-1100">
-            <input type="hidden" name="nama_akun2_cost[]" value="Coft of Goods Sold">
-          @endif
+          <input type="hidden" class="form-control" id="exampleInputUsername2" name="cost[]" :value="cost" readonly>
+          <input type="hidden" name="nomor_akun_inventory[]" value="1-1310">
+          <input type="hidden" name="nama_akun2_inventory[]" value="Merchandise Inventory">
+          <input type="hidden" name="nomor_akun_cost[]" value="5-1100">
+          <input type="hidden" name="nama_akun2_cost[]" value="Coft of Goods Sold">
           <div class="form-group row justify-content-end" >
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">PPN 10% : Rp</label>
             <div class="col-sm-4">
@@ -215,8 +212,8 @@
           </div>
 
           <div class="forms-sample" style="margin-bottom: 10px; margin-top: 30px; justify-content: space-between; display: flex;">
-            <a href="{{route('retur_penjualan.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
-            <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Edit</button>
+            <a href="{{route('crj.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
+            <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Create</button>
           </div>
         </div>
       </div>
@@ -235,15 +232,13 @@
    el: '#app',
    data: {
     cashbanks2: [
-    {id_akun2:"{{$kredits->nomor_akun}}"},
+    {id_akun2:"{{$debets->nomor_akun}}", description:"", jumlah: 0},
     ],
     cashbanks: [
     {id_item:0, harga:0, laba:0, description:"", unit:1, jumlah: 0, sales:0},
     ],
-    jasa_pengiriman: [
-      {jasa_pengiriman:0, subtotal:0}
-    ],
-    ppn: [],
+    jasa_pengiriman: null,
+    ppn: false,
   },
   methods: {
     add() {
@@ -292,6 +287,7 @@
       },
   },
   computed: {
+
     nomor_akuns() {
       var akun = [];
       akun[0] = 0;
@@ -316,14 +312,14 @@
       @endforeach
       return items;
     },
-    subtotal() {
-      return this.cashbanks
-      .map( cashbank => cashbank.jumlah)
-      .reduce( (prev, next) => prev + next );
-    },
     cost() {
       return this.cashbanks
       .map( cashbank => cashbank.sales)
+      .reduce( (prev, next) => prev + next );
+    },
+    subtotal() {
+      return this.cashbanks
+      .map( cashbank => cashbank.jumlah)
       .reduce( (prev, next) => prev + next );
     },
     ppns() {
@@ -351,6 +347,7 @@
   },
   created(){
     var cashbanks = [];
+
     @foreach($cashbanks->Inventory as $index => $detail)
     cashbanks [{{$index}}] = {
       id_item: "{{$detail->items_id}}",
@@ -362,9 +359,11 @@
     };
     @endforeach
     this.cashbanks = cashbanks;
+
     @if(isset($jasa))
-      this.jasa_pengiriman = parseInt('{{ $jasa->debet }}');
+      this.jasa_pengiriman = parseInt('{{ $jasa->kredit }}');
     @endif
+
     @if(isset($ppn) && $ppn == true)
       this.ppn = true;
     @endif

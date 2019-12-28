@@ -9,6 +9,8 @@ use App\Model\Account;
 use App\Model\DataSupplier;
 use App\Model\Item;
 use App\Model\Inventory;
+use App\Model\cpj;
+use App\Model\PurchaseJournal;
 
 class ReturPembelianController extends Controller
 {
@@ -39,7 +41,9 @@ class ReturPembelianController extends Controller
         $items            = Item::all();
         $returns          = ReturPembelian::orderBy('id', 'desc')->paginate(1);
         $returns_count    = ReturPembelian::all()->count();
-        return view('pages.retur_pembelian.create', compact('akun', 'suppliers', 'items', 'returns', 'returns_count'));
+        $cpjs             = cpj::all();
+        $PurchaseJournals = PurchaseJournal::all();
+        return view('pages.retur_pembelian.create', compact('akun', 'suppliers', 'items', 'returns', 'returns_count', 'cpjs', 'PurchaseJournals'));
     }
 
     /**
@@ -62,7 +66,7 @@ class ReturPembelianController extends Controller
       ],$messages);
 
       //insert data ReturnPembelian
-      $dataReturnPembelian          = $request->only('id','tanggal', 'kode', 'suppliers_id', 'description');
+      $dataReturnPembelian          = $request->only('id','tanggal', 'kode', 'suppliers_id', 'cpj_id', 'purchasejournal_id', 'description');
       $ReturnPembelian              = ReturPembelian::create($dataReturnPembelian);
 
       //insert data ReturnPembelian detail
@@ -180,7 +184,7 @@ class ReturPembelianController extends Controller
       ],$messages);
 
       //insert data ReturnPembelian
-      $dataReturnPembelian          = $request->only('id','tanggal', 'kode', 'suppliers_id', 'description');
+      $dataReturnPembelian          = $request->only('id','tanggal', 'kode', 'suppliers_id','cpj_id', 'purchasejournal_id', 'description');
       $ReturnPembelian              = ReturPembelian::find($id)->update($dataReturnPembelian);
 
       //insert data ReturnPembelian detail
