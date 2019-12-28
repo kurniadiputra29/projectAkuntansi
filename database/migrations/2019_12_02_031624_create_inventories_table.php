@@ -26,6 +26,7 @@ class CreateInventoriesTable extends Migration
             $table->integer('unit');
             $table->integer('price');
             $table->integer('total');
+            $table->integer('sales');
             $table->timestamps();
 
             $table->foreign('items_id')->references('id')->on('items')->onDelete('cascade');

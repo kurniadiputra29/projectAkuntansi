@@ -37,7 +37,9 @@ Route::resource('dasbor', 'DasborController');
 Route::get('/dasbor/cobaChart', 'DasborController@cobaChart')->name('dasbor.cobaChart');
 Route::resource('akun', 'AkunController');
 Route::resource('cpj', 'CpjController');
+Route::get('cpj/{id}/retur', 'CpjController@retur')->name('cpj.retur');
 Route::resource('crj', 'CrjController');
+Route::get('crj/{id}/retur', 'CrjController@retur')->name('crj.retur');
 Route::resource('customer', 'CustomerController');
 Route::resource('item', 'ItemController');
 Route::resource('jp', 'JpController');
@@ -45,10 +47,12 @@ Route::resource('ju', 'JuController');
 Route::resource('kas_kecil', 'KasKecilController');
 Route::resource('laporan', 'LaporanController');
 Route::resource('purchase_journal', 'PurchaseJournalController');
+Route::get('purchase_journal/{id}/retur', 'PurchaseJournalController@retur')->name('purchase_journal.retur');
 Route::resource('saldo_awal', 'SaldoAwalController');
 Route::resource('saldo_hutang', 'SaldoHutangController');
 Route::resource('saldo_piutang', 'SaldoPiutangController');
 Route::resource('sales_journal', 'SalesJournalController');
+Route::get('sales_journal/{id}/retur', 'SalesJournalController@retur')->name('sales_journal.retur');
 Route::resource('stock_opname', 'StockOpnameController');
 Route::resource('supplier', 'SupplierController');
 Route::resource('retur_penjualan', 'ReturPenjualanController');
@@ -66,10 +70,7 @@ Route::get('/print/neraca_saldo', 'PrintController@neraca_saldo')->name('laporan
 Route::get('/print/buku_besar', 'PrintController@buku_besar')->name('laporan.buku_besar');
 Route::get('/print/laba_rugi', 'PrintController@laba_rugi')->name('laporan.laba_rugi');
 Route::get('/print/alur_kas', 'PrintController@alur_kas')->name('laporan.alur_kas');
-Route::get('/print/daftar_penjualan', 'PrintController@daftar_penjualan')->name('laporan.daftar_penjualan');
-Route::get('/print/penjualan_per_produk', 'PrintController@penjualan_per_produk')->name('laporan.penjualan_per_produk');
-Route::get('/print/daftar_pembelian', 'PrintController@daftar_pembelian')->name('laporan.daftar_pembelian');
-Route::get('/print/pembelian_per_produk', 'PrintController@pembelian_per_produk')->name('laporan.pembelian_per_produk');
+
 
 //for print
 Route::get('/print/print_neraca', 'PrintController@print_neraca')->name('print.neraca');
@@ -81,6 +82,8 @@ Route::get('buku_besar', 'Reports\BukuBesarController@index')->name('buku_besar.
 Route::get('buku_besar/alternative', 'Reports\BukuBesarController@alt')->name('buku_besar.alternative');
 Route::get('neraca', 'Reports\NeracaController@index')->name('neraca.index');
 Route::get('neraca/print', 'Reports\NeracaController@print')->name('neraca.print');
+
+
 Route::get('petty_cash_book', 'Reports\PettyCashBookController@index')->name('petty_cash_book.index');
 Route::post('petty_cash_book/filter', 'Reports\PettyCashBookController@filter')->name('petty_cash_book.filter');
 Route::post('petty_cash_book/print', 'Reports\PettyCashBookController@print')->name('petty_cash_book.print');
@@ -89,7 +92,15 @@ Route::get('inventory_card/print', 'Reports\InventoryController@print')->name('i
 Route::get('hutang/print', 'Reports\HutangController@print')->name('hutang.print');
 Route::get('piutang/print', 'Reports\PiutangController@print')->name('piutang.print');
 
+
 Route::get('/piutang_pelanggan', 'Reports\PiutangController@index')->name('piutang_pelanggan.index');
 Route::get('/hutang', 'Reports\HutangController@index')->name('hutang.index');
 Route::get('neraca_saldo', 'Reports\NeracaSaldoController@index')->name('neraca_saldo.index');
 Route::get('neraca_saldo/print', 'Reports\NeracaSaldoController@print')->name('neraca_saldo.print');
+Route::get('daftar_penjualan', 'Reports\Daftar_PenjualanController@index')->name('laporan.daftar_penjualan');
+Route::get('daftar_penjualan_cash', 'Reports\Daftar_Penjualan_CashController@index')->name('laporan.daftar_penjualan_cash');
+Route::get('daftar_penjualan_kredit', 'Reports\Daftar_Penjualan_KreditController@index')->name('laporan.daftar_penjualan_kredit');
+
+Route::get('daftar_pembelian', 'Reports\Daftar_PembelianController@index')->name('laporan.daftar_pembelian');
+Route::get('daftar_pembelian_cash', 'Reports\Daftar_Pembelian_CashController@index')->name('laporan.daftar_pembelian_cash');
+Route::get('daftar_pembelian_kredit', 'Reports\Daftar_Pembelian_KreditController@index')->name('laporan.daftar_pembelian_kredit');

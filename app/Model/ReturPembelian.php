@@ -9,7 +9,7 @@ class ReturPembelian extends Model
     protected $table = 'retur_pembelians';
 
     protected $fillable = [
-      'id', 'tanggal', 'kode', 'suppliers_id', 'description'
+      'id', 'tanggal', 'kode', 'suppliers_id', 'cpj_id', 'purchasejournal_id', 'description'
     ];
 
     public function data_suppliers()
@@ -24,5 +24,13 @@ class ReturPembelian extends Model
     public function Inventory()
     {
       return $this->hasMany(Inventory::class, "retur_pembelian_id");
+    }
+    public function cpj()
+    {
+        return $this->belongsTo(cpj::class, "cpj_id");
+    }
+    public function purchase_journals()
+    {
+        return $this->belongsTo(PurchaseJournal::class, "purchasejournal_id");
     }
 }

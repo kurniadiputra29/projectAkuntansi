@@ -18,10 +18,14 @@ class CreateReturPenjualansTable extends Migration
           $table->date('tanggal');
           $table->string('kode')->unique();
           $table->unsignedInteger('customers_id');
+          $table->unsignedInteger('crj_id')->nullable();
+          $table->unsignedInteger('salesjournal_id')->nullable();
           $table->text('description')->nullable();
           $table->timestamps();
 
           $table->foreign('customers_id')->references('id')->on('data_customers')->onDelete('cascade');
+          $table->foreign('crj_id')->references('id')->on('crjs')->onDelete('cascade');
+          $table->foreign('salesjournal_id')->references('id')->on('sales_journals')->onDelete('cascade');
         });
     }
 

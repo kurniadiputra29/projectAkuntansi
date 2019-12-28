@@ -24,4 +24,8 @@ class cpj extends Model
     {
       return $this->hasMany(Inventory::class, "cpj_id");
     }
+    public function ReturPembelian()
+    {
+        return $this->hasMany(ReturPembelian::class, "cpj_id");
+    }
 }

@@ -58,10 +58,8 @@
                     <div class="form-group">
                       <label for="setor_ke">Setor Ke</label>
                       <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
-                        @foreach ($debets as $debet)
                         @foreach ($akun as $key)
-                        <option value="{{$key->nomor}}" {{$debet->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
-                        @endforeach
+                        <option value="{{$key->nomor}}" {{$debets->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -129,18 +127,25 @@
                     <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="0">
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label for="harga">Harga Satuan</label>
-                    <input class="form-control" type="number" id="harga" name="harga[]" :value="harga(cashbank.id_item, index)">
+                    <input class="form-control" type="number" id="harga" name="harga[]" :value="harga(cashbank.id_item, index)" readonly="">
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="laba">Laba</label>
+                    <input class="form-control" type="number" id="laba" name="laba[]" v-model.number="cashbank.laba">
+                  </div>
+                </div>
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="jumlah">Jumlah</label>
-                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" :value="jumlah(cashbank.id_item, cashbank.unit, index)" readonly="">
+                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" :value="jumlah(cashbank.id_item, cashbank.unit, cashbank.laba, index)" readonly="">
                   </div>
                 </div>
+                <input class="form-control" type="hidden" name="sales[]" :value="sales(cashbank.id_item, cashbank.unit, cashbank.laba, index)" readonly="">
                 <div class="col-md-1">
                   <div class="form-group">
                     <label for="jumlah">Delete</label>
@@ -165,6 +170,11 @@
               <input type="hidden" name="nama_akun2_sales[]" value="Sales of Installment">
             </div>
           </div>
+          <input type="hidden" class="form-control" id="exampleInputUsername2" name="cost[]" :value="cost" readonly>
+          <input type="hidden" name="nomor_akun_inventory[]" value="1-1310">
+          <input type="hidden" name="nama_akun2_inventory[]" value="Merchandise Inventory">
+          <input type="hidden" name="nomor_akun_cost[]" value="5-1200">
+          <input type="hidden" name="nama_akun2_cost[]" value="Coft of Goods Sold of Instalment">
           <div class="form-group row justify-content-end" >
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">PPN 10% : Rp</label>
             <div class="col-sm-4">
@@ -215,17 +225,17 @@
    el: '#app',
    data: {
     cashbanks2: [
-    {id_akun2:"{{$debet->nomor_akun}}", description:"", jumlah: 0},
+    {id_akun2:"{{$debets->nomor_akun}}", description:"", jumlah: 0},
     ],
     cashbanks: [
-    {id_item:0, harga:0, description:"", unit:1, jumlah: 0},
+    {id_item:0, harga:0, laba:0, description:"", unit:1, jumlah: 0, sales:0},
     ],
     jasa_pengiriman: null,
     ppn: false,
   },
   methods: {
     add() {
-       var cashbanks = {id_item:0, description:"", unit:1, jumlah: 0};
+       var cashbanks = {id_item:0, harga:0, laba:0, description:"", unit:1, jumlah: 0, sales:0};
        this.cashbanks.push(cashbanks);
      },
      del(index) {
@@ -258,11 +268,16 @@
         this.cashbanks[index].nama_akun = nama_akun;
         return nama_akun;
       },
-      jumlah(id_item, unit, index){
-        var jumlah =  this.items[id_item]*unit;
+      jumlah(id_item, unit, laba, index){
+        var jumlah =  (parseInt(this.items[id_item]) + parseInt(laba))*unit;
         this.cashbanks[index].jumlah = jumlah;
         return jumlah;
       }, 
+      sales(id_item, unit, laba, index){
+        var sales =  this.items[id_item]*unit;
+        this.cashbanks[index].sales = sales;
+        return sales;
+      },
   },
   computed: {
     
@@ -289,6 +304,11 @@
         items[ {{ $key->id }} ] = "{{ $key->harga }}"
       @endforeach
       return items;
+    },
+    cost() {
+      return this.cashbanks
+      .map( cashbank => cashbank.sales)
+      .reduce( (prev, next) => prev + next );
     },
     subtotal() {
       return this.cashbanks
@@ -327,6 +347,8 @@
       unit: "{{$detail->unit}}",
       price: "{{$detail->price}}",
       jumlah: "{{$detail->total}}",
+      sales: "{{$detail->total}}",
+      laba: "{{$detail->sales}}"/"{{$detail->unit}}"-"{{$detail->price}}",
     };
     @endforeach
     this.cashbanks = cashbanks;
