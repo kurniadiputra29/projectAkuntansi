@@ -118,7 +118,7 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.laba_rugi')}}">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('laba_rugi.index')}}">
                               {{-- <i class="ik ik-check"></i> --}}
                               Income Statement / Laporan Laba-Rugi
                             </a>
@@ -126,7 +126,7 @@
                           <p>
                             Menampilkan laporan transaksi pendapatan penjualan, hpp, biaya, pendapatan lain-lain dan biaya lain-lain.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.laba_rugi')}}">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laba_rugi.index')}}">
                             Lihat Laporan
                           </a>
                         </div>
