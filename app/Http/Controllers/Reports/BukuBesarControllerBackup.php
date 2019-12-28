@@ -36,13 +36,11 @@ class BukuBesarController extends Controller
         $crj_detail   = crjdetail::all();
         $jp_detail    = jurnalpenyesuaiandetail::all();
         $ju_detail    = jurnalumumdetail::all();
-        $pc_detail    = PettycashDetail::where('nomor_akun', '1-1120')->get();
+        $pc_detail    = PettycashDetail::all();
         $pj_detail    = purchasejournaldetail::all();
         $sj_detail    = salesjournaldetail::all();
         $rpb_detail   = ReturPembelianDetail::all();
         $rpj_detail   = ReturPenjualanDetail::all();
-
-        return response()->json($pc_detail);
 
         return view('reports.buku_besar.index', compact('saldo_awal', 'account', 'cbi_detail', 'cbo_detail', 'cpj_detail', 'crj_detail', 'jp_detail', 'ju_detail', 'pc_detail', 'pj_detail', 'sj_detail', 'rpb_detail', 'rpj_detail'));
     }

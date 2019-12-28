@@ -109,13 +109,13 @@
                 <table id="simpletable" class="table table-bordered nowrap">
                   <thead>
                     <tr class="bg-secondary font-weight-bold">
-                      <td class="text-light text-center" colspan="4">Rekapitulasi</td>
+                      <td class="col-12 text-light text-center" colspan="4">Rekapitulasi</td>
                     </tr>
                     <tr>
-                      <td>Nomor Akun</td>
-                      <td>Nama Akun</td>
-                      <td>Debet</td>
-                      <td>Kredit</td>
+                      <td class="col-3">Nomor Akun</td>
+                      <td class="col-3">Nama Akun</td>
+                      <td class="col-3">Debet</td>
+                      <td class="col-3">Kredit</td>
                     </tr>
                   </thead>
                   <tbody>
