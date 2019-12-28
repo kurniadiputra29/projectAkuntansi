@@ -90,6 +90,7 @@
                                       @method('GET')
                                       <button class="dropdown-item" type="submit"><i class="ik ik-eye"></i> Journal</button>
                                     </form>
+                                    <a href="{{route('purchase_journal.retur', $key->id)}}" class="dropdown-item"><i class="ik ik-rotate-ccw"> </i>Retur Pembelian</a>
                                     <form method="post" action="{{ route('purchase_journal.destroy', $key->id) }}">
                                       @csrf
                                       @method('DELETE')

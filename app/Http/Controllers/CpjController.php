@@ -9,6 +9,8 @@ use App\Model\Account;
 use App\Model\DataSupplier;
 use App\Model\Item;
 use App\Model\Inventory;
+use App\Model\ReturPembelian;
+use App\Model\ReturPembelianDetail;
 
 class CpjController extends Controller
 {
@@ -252,5 +254,24 @@ class CpjController extends Controller
     {
         cpj::find($id)->delete();
         return redirect('/cpj')->with('Success', 'Data anda telah berhasil di Hapus !');
+    }
+
+    public function retur($id)
+    {
+        $akun           = Account::all();
+        $suppliers      = DataSupplier::all();
+        $items          = Item::all();
+        $cashbanks      = cpj::find($id);
+        $inventories    = Inventory::where('cpj_id', $id)->get();
+        $kredits        = cpjdetail::where('cpj_id', $id)->where('debet', null)->get();
+        $jasa           = cpjdetail::where('cpj_id', $id)->where('nomor_akun', '5-1300')->first();
+        $returns          = ReturPembelian::orderBy('id', 'desc')->paginate(1);
+        $returns_count    = ReturPembelian::all()->count();
+        $ppn            = cpjdetail::where('cpj_id', $id)
+                                    ->where('nomor_akun', '2-1320')
+                                    ->where('debet', '>', '0')
+                                    ->exists();
+
+        return view('pages.cpj.retur', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'returns', 'returns_count'));
     }
 }

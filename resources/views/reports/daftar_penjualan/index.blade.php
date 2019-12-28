@@ -32,139 +32,92 @@
           </div>
         </div>
       </div>
+
+
       <div class="row">
         <div class="col-md-12">
-          <div class="row py-3">
-            <div class="col-md-6">
-              <form class="forms-sample" action="#" method="post">
-                <label for="filter">Tanggal Mulai</label>
-                <input type="date" name="tanggal" id="filter">
-                <label for="filter2">Tanggal Akhir</label>
-                <input type="date" name="tanggal" id="filter2">
-                <button class="btn btn-primary" type="submit" name="button">Filter</button>
-              </form>
+          <div class="card">
+            <div class="card-header d-flex justify-content-between flex-row">
+              <div class="left-container">
+                <h3>Petty Cash Book</h3>
+                <span>use class <code>table-hover</code> inside table element</span>
+              </div>
+              <div class="right-container">
+                <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
+                <button type="button" class="btn btn-info mr-5" data-toggle="modal" data-target="#createModal"><i class="ik ik-filter"></i>Filter</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal"><i class="ik ik-printer"></i>Print</button>
+              </div>
             </div>
-            <div class="col-md-6 d-flex justify-content-end">
-              <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
-              <a type="button" class="btn btn-primary" href="#"><i class="ik ik-printer"></i>Print</a>
-            </div>
-          </div>
-          <div class="table-container list-table bg-white">
-            <div class="report-title">
-              <div class="table-responsive dragscroll">
-                <table class="report-table table">
-                  <thead class="report-header new-report">
-                    <tr class="bg-light">
-                      <th>Tanggal</th>
-                      <th>Transaksi</th>
-                      <th>Nomor</th>
-                      <th>Pelanggan</th>
-                      <th>Status</th>
-                      <th>Keterangan</th>
-                      <th>Total tagihan</th>
-                      <th>Sisa tagihan</th>
+            <div class="card-body">
+              @if (session('Success'))
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{ session('Success') }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <i class="ik ik-x"></i>
+                  </button>
+              </div>
+              @endif
+              <div class="dt-responsive">
+                <table id="complex-dt" class="table table-bordered nowrap">
+                  <thead>
+                    <tr class="bg-secondary font-weight-bold">
+                      <th class="col-2 text-light">Tanggal</th>
+                      <th class="col-2 text-light">Transaksi</th>
+                      <th class="col-2 text-light">Nomor</th>
+                      <th class="col-2 text-light">Pelanggan</th>
+                      <th class="col-2 text-light">Status</th>
+                      <th class="col-2 text-light">Keterangan</th>
+                      <th class="col-2 text-light">Total tagihan</th>
+                      <th class="col-2 text-light">Sisa tagihan</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @php
-                    function format_uang($angka){
-                      $hasil =  number_format($angka,2, ',' , '.');
-                      return $hasil;
-                    }
-                    @endphp
-                    <tr>
-                      <td>01/05/2016</td>
-                      <td>Invoice</td>
-                      <td>100018</td>
-                      <td>Walk in Costumer</td>
-                      <td>Paid</td>
-                      <td></td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                    </tr>
-                    <tr>
-                      <td>01/05/2016</td>
-                      <td>Invoice</td>
-                      <td>100018</td>
-                      <td>Walk in Costumer</td>
-                      <td>Paid</td>
-                      <td></td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                    </tr>
-                    <tr>
-                      <td>01/05/2016</td>
-                      <td>Invoice</td>
-                      <td>100018</td>
-                      <td>Walk in Costumer</td>
-                      <td>Paid</td>
-                      <td></td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                    </tr>
-                    <tr>
-                      <td>01/05/2016</td>
-                      <td>Invoice</td>
-                      <td>100018</td>
-                      <td>Walk in Costumer</td>
-                      <td>Paid</td>
-                      <td></td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                    </tr>
-                    <tr>
-                      <td>01/05/2016</td>
-                      <td>Invoice</td>
-                      <td>100018</td>
-                      <td>Walk in Costumer</td>
-                      <td>Paid</td>
-                      <td></td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                    </tr>
-                    <tr>
-                      <td>01/05/2016</td>
-                      <td>Invoice</td>
-                      <td>100018</td>
-                      <td>Walk in Costumer</td>
-                      <td>Paid</td>
-                      <td></td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                    </tr>
-                    <tr>
-                      <td>01/05/2016</td>
-                      <td>Invoice</td>
-                      <td>100018</td>
-                      <td>Walk in Costumer</td>
-                      <td>Paid</td>
-                      <td></td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                    </tr>
-                    <tr>
-                      <td>01/05/2016</td>
-                      <td>Invoice</td>
-                      <td>100018</td>
-                      <td>Walk in Costumer</td>
-                      <td>Paid</td>
-                      <td></td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                      <td>Rp{{format_uang(3000000)}}</td>
-                    </tr>
-                    <tr class="bg-success text-light">
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <th>Total</th>
-                      <td>Rp{{format_uang(24000000)}}</td>
-                      <td>Rp{{format_uang(24000000)}}</td>
-                    </tr>
+                    @foreach ($crjs as $crj)
+                      <tr>
+                        <td>{{date('d F Y', strtotime($crj->tanggal ))}}</td>
+                        <td class="text-center"><span class="badge badge-pill badge-primary mb-1">CRJ</span></td>
+                        <td>{{$crj->kode}}</td>
+                        <td>{{$crj->data_customers->nama}}</td>
+                        <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Penjualan Tunai</span></td>
+                        <td>{{$crj->description}}</td>
+                        <td class="text-right">
+                          Rp {{number_format($crjdetails->where('crj_id', $crj->id)->sum('debet'))}}
+                        </td>
+                        <td class="text-right">
+                          Rp 0
+                        </td>
+                      </tr>
+                    @endforeach
+                    @foreach ($SalesJournals as $SalesJournal)
+                      <tr>
+                        <td>{{date('d F Y', strtotime($SalesJournal->tanggal ))}}</td>
+                        <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Sales Journal</span></td>
+                        <td>{{$SalesJournal->kode}}</td>
+                        <td>{{$SalesJournal->data_customers->nama}}</td>
+                        <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Penjualan Kredit</span></td>
+                        <td>{{$SalesJournal->description}}</td>
+                        <td class="text-right">
+                          Rp {{number_format($salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('debet'))}}
+                        </td>
+                        <td class="text-right">
+                          Rp {{number_format($salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('kredit'))}}
+                        </td>
+                      </tr>
+                    @endforeach
                   </tbody>
+                  <tfoot>
+                    <tr class="bg-success font-weight-bold">
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td class="text-light" colspan="3">Total</td>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
+              <div style="margin-bottom: 40px;"></div>
             </div>
           </div>
         </div>

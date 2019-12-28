@@ -37,9 +37,6 @@
                   <h3>Retur Pembelian</h3>
                   <span>use class <code>table-hover</code> inside table element</span>
                 </div>
-                <div class="right-container">
-                  <a class="btn btn-outline-primary btn-rounded" href="{{ route('retur_pembelian.create') }}">Create</a>
-                </div>
               </div>
               <div class="card-body">
                 @if (count($errors) > 0)

@@ -9,7 +9,7 @@ class ReturPenjualan extends Model
     protected $table = 'retur_penjualans';
 
     protected $fillable = [
-      'id', 'tanggal', 'kode', 'customers_id', 'description'
+      'id', 'tanggal', 'kode', 'customers_id', 'crj_id', 'salesjournal_id', 'description'
     ];
 
     public function data_customers()
@@ -24,5 +24,13 @@ class ReturPenjualan extends Model
     public function Inventory()
     {
       return $this->hasMany(Inventory::class, "retur_penjualan_id");
+    }
+    public function cpj()
+    {
+        return $this->belongsTo(cpj::class, "cpj_id");
+    }
+    public function Sales_Journal()
+    {
+        return $this->belongsTo(SalesJournal::class, "salesjournal_id");
     }
 }

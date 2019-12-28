@@ -88,6 +88,8 @@
                       </select>
                   </div>
                 </div>
+                <input class="form-control" name="cpj_id" type="hidden" value="{{$cashbanks->cpj_id}}">
+                <input class="form-control" name="purchasejournal_id" type="hidden" value="{{$cashbanks->purchasejournal_id}}">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="tanggal_transaksi">Tanggal Transaksi</label>
@@ -107,7 +109,6 @@
                   </div>
                 </div>
               </div>
-
               <div
                 class="row"
                 v-for="(cashbank, index) in cashbanks"
