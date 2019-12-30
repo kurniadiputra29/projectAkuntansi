@@ -165,15 +165,15 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.alur_kas')}}">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('arus_kas.index')}}">
                               {{-- <i class="ik ik-check"></i> --}}
-                              Cash Flow / Alur Kas
+                              Cash Flow / Arus Kas
                             </a>
                           </h3>
                           <p>
                             Laporan ini mengukur kas yang telah dihasilkan atau digunakan oleh suatu perusahaan dan menunjukkan detail pergerakannya dalam suatu periode.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.alur_kas')}}">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('arus_kas.index')}}">
                             Lihat Laporan
                           </a>
                         </div>

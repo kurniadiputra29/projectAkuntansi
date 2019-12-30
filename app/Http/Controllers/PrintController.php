@@ -36,9 +36,9 @@ class PrintController extends Controller
       return view('reports.laba_rugi.index');
     }
 
-    public function alur_kas()
+    public function arus_kas()
     {
-      return view('reports.alur_kas.index');
+      return view('reports.arus_kas.index');
     }
 
     public function daftar_penjualan()
