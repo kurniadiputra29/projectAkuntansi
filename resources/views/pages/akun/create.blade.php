@@ -30,35 +30,39 @@
         </div>
       </div>
 
-      <div class="row" id="app">
+      <div class="row">
         <div class="col-md-12">
-          @if (count($errors) > 0)
-            <div class="alert alert-danger">
-              <ul>
-                @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-                @endforeach
-              </ul>
+          <div class="card">
+            <div class="card-body">
+              @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                  <ul>
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                </div>
+              @endif
+              <form class="forms-sample" id="a" action="{{route('akun.store')}}" method="post">
+                @csrf
+                <div class="form-group">
+                  <label for="nomor">Nomor Akun</label>
+                  <input type="text" class="form-control" name="nomor" id="nomor" placeholder="X-XXXXX">
+                </div>
+                <div class="form-group">
+                  <label for="nama">Nama Akun</label>
+                  <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Akun">
+                </div>
+                <div class="form-group">
+                  <label for="keterangan">Keterangan</label>
+                  <input type="text" class="form-control" name="keterangan" id="keterangan">
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                </div>
+              </form>
             </div>
-          @endif
-          <form class="forms-sample" id="a" action="{{route('akun.store')}}" method="post">
-            @csrf
-            <div class="form-group">
-                <label for="nomor">Nomor Akun</label>
-                <input type="text" class="form-control" name="nomor" id="nomor" placeholder="X-XXXXX">
-            </div>
-            <div class="form-group">
-                <label for="nama">Nama Akun</label>
-                <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Akun">
-            </div>
-            <div class="form-group">
-                <label for="keterangan">Keterangan</label>
-                <input type="text" class="form-control" name="keterangan" id="keterangan">
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary mr-2">Submit</button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

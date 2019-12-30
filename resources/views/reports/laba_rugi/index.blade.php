@@ -222,7 +222,7 @@
                 <table class="table table-bordered nowrap">
                   <thead>
                     <tr class="bg-secondary font-weight-bold">
-                      <td class="text-light text-center" colspan="4">Neraca</td>
+                      <td class="text-light text-center" colspan="4">Laba / Rugi</td>
                     </tr>
                     <tr>
                       <th>Kategori</th>

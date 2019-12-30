@@ -81,8 +81,8 @@
                           <td>{{ $key->customers->kode }}</td>
                           <td>{{ $key->customers->nama }}</td>
                           <td>{{ $key->keterangan }}</td>
-                          <td class="text-right">Rp {{ number_format($key->debet, 0, " ", ".")}}</td>
-                          <td class="text-right">Rp {{ number_format($key->kredit, 0, " ", ".")}}</td>
+                          <td class="text-right">{{ number_format($key->debet, 0, " ", ".")}}</td>
+                          <td class="text-right">{{ number_format($key->kredit, 0, " ", ".")}}</td>
                           <td class="text-right">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
@@ -100,6 +100,14 @@
                         @include('pages.saldo_piutang.edit')
                       @endforeach
                     </tbody>
+                    <tfoot>
+                      <tr class="bg-success font-weight-bold">
+                        <td colspan="3" class="text-right text-light">Total</td>
+                        <td class="text-right text-light">{{number_format($dataSaldoPiutang->sum('debet'), 0, " ", ".")}}</td>
+                        <td class="text-right text-light">{{number_format($dataSaldoPiutang->sum('kredit'), 0, " ", ".")}}</td>
+                        <td></td>
+                      </tr>
+                    </tfoot>
                   </table>
                 </div>
               </div>
