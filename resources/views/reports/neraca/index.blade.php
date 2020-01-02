@@ -62,10 +62,10 @@
                       <td class="text-light text-center" colspan="4">Aset</td>
                     </tr>
                     <tr>
-                      <th>Nomor Akun</th>
-                      <th>Nama Akun</th>
-                      <th>Debet</th>
-                      <th>Kredit</th>
+                      <th class="col-3">Nomor Akun</th>
+                      <th class="col-3">Nama Akun</th>
+                      <th class="col-3">Debet</th>
+                      <th class="col-3">Kredit</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -95,10 +95,10 @@
                       <td class="text-light text-center" colspan="4">Liabilitas</td>
                     </tr>
                     <tr>
-                      <th>Nomor Akun</th>
-                      <th>Nama Akun</th>
-                      <th>Debet</th>
-                      <th>Kredit</th>
+                      <th class="col-3">Nomor Akun</th>
+                      <th class="col-3">Nama Akun</th>
+                      <th class="col-3">Debet</th>
+                      <th class="col-3">Kredit</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -113,7 +113,7 @@
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
-                      <td class="text-light text-right" colspan="2">Total Aset</td>
+                      <td class="text-light text-right" colspan="2">Total Liabilitas</td>
                       <td class="text-light text-right">{{format_uang($sum_debet_liability)}}</td>
                       <td class="text-light text-right">{{format_uang($sum_kredit_liability)}}</td>
                     </tr>
@@ -128,10 +128,10 @@
                       <td class="text-light text-center" colspan="4">Ekuitas</td>
                     </tr>
                     <tr>
-                      <th>Nomor Akun</th>
-                      <th>Nama Akun</th>
-                      <th>Debet</th>
-                      <th>Kredit</th>
+                      <th class="col-3">Nomor Akun</th>
+                      <th class="col-3">Nama Akun</th>
+                      <th class="col-3">Debet</th>
+                      <th class="col-3">Kredit</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -146,7 +146,7 @@
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
-                      <td class="text-light text-right" colspan="2">Total Aset</td>
+                      <td class="text-light text-right" colspan="2">Total Ekuitas</td>
                       <td class="text-light text-right">{{format_uang($sum_debet_equity)}}</td>
                       <td class="text-light text-right">{{format_uang($sum_kredit_equity)}}</td>
                     </tr>
@@ -161,9 +161,9 @@
                       <td class="text-light text-center" colspan="4">Neraca</td>
                     </tr>
                     <tr>
-                      <th>Kategori</th>
-                      <th>Debet</th>
-                      <th>Kredit</th>
+                      <th class="col-6">Kategori</th>
+                      <th class="col-3">Debet</th>
+                      <th class="col-3">Kredit</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -185,7 +185,7 @@
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
-                      <td class="text-light">Total Aset</td>
+                      <td class="text-light">Total</td>
                       <td class="text-light text-right">{{format_uang($sum_debet_asset+$sum_debet_liability+$sum_debet_equity)}}</td>
                       <td class="text-light text-right">{{format_uang($sum_kredit_asset+$sum_kredit_liability+$sum_kredit_equity)}}</td>
                     </tr>
