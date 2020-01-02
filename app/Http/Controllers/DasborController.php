@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Model\SaldoAwal;
 use App\Model\Account;
 use Illuminate\Database\Eloquent\Collection;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class DasborController extends Controller
@@ -37,9 +37,16 @@ class DasborController extends Controller
         $db = $key->debet;
       }
 
-      // dd($ai);
+      $asset          = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '1-%')->get();
+      $liability      = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '2-%')->get();
+      $equity         = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '3-%')->get();
+      $tot_deb_ner    = $asset->sum('debet')+$liability->sum('debet')+$equity->sum('debet');
+      $tot_kre_ner    = $asset->sum('kredit')+$liability->sum('kredit')+$equity->sum('kredit');
+      $balance_ner    = $tot_deb_ner-$tot_kre_ner;
 
-        return view('pages.dasbor.index', compact('saldo_awal','kredit','debet','ai','db','account'));
+      // dd($tot_deb_ner);
+
+        return view('pages.dasbor.index', compact('asset','liability','equity','tot_deb_ner','tot_kre_ner','balance_ner'));
     }
 
     public function cobaChart()

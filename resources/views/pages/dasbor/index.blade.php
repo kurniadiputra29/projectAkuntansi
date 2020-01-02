@@ -29,6 +29,12 @@
         </div>
       </div>
       <div class="row">
+        @php
+          function format_uang($angka){
+            $hasil =  number_format($angka,0, ',' , '.');
+            return $hasil;
+          }
+        @endphp
         <!-- product profit start -->
         <div class="col-xl-3 col-md-6">
           <div class="card prod-p-card card-red">
@@ -99,24 +105,14 @@
         <div class="col-xl-12 col-md-12">
           <div class="card">
             <div class="card-header">
-              <h3>Coba Bikin Chart</h3>
+              <h3>Neraca</h3>
             </div>
-            <div class="card-block">
-              <div class="charet">
-                <canvas id="tryChart" width="400" height="100" aria-label="Hello ARIA World" role="img"></canvas>
+            <div class="card-block d-flex flex-row">
+              <div class="charet col-6">
+                <canvas id="neracaChart" width="400" height="200" aria-label="Hello ARIA World" role="img"></canvas>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xl-12 col-md-12">
-          <div class="card">
-            <div class="card-header">
-              <h3>Coba Bikin Chart 2</h3>
-            </div>
-            <div class="card-block">
-              <div class="charet">
-                <canvas id="tryChart2" height="150" aria-label="Hello ARIA World" role="img"></canvas>
+              <div class="charet col-6">
+                <canvas id="neraca2" height="150" aria-label="Hello ARIA World" role="img"></canvas>
               </div>
             </div>
           </div>
@@ -681,21 +677,23 @@
 @section('chart-script')
 
   <script>
-      var ctx = document.getElementById("tryChart").getContext('2d');
-      var tryChart = new Chart(ctx, {
+      var ctx = document.getElementById("neracaChart").getContext('2d');
+      var neracaChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ["Kredit", "Debet"],
+          labels: ["Total Debet", "Total Kredit", "Selisih"],
           datasets: [{
             label: '# Rupiah',
-            data: [{{$kredit}},{{$debet}}],
+            data: [{{$tot_deb_ner}},{{$tot_kre_ner}},{{$balance_ner}}],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
+              'rgba(28, 255, 28, 0.2)'
             ],
             borderColor: [
               'rgba(255,99,132,1)',
               'rgba(54, 162, 235, 1)',
+              'rgba(28, 255, 28, 1)'
             ],
             borderWidth: 1
           }]
@@ -712,21 +710,19 @@
       });
   </script>
   <script>
-      var kvd = document.getElementById('tryChart2').getContext('2d');
-      var tryChart2 = new Chart(kvd, {
+      var kvd = document.getElementById('neraca2').getContext('2d');
+      var neraca2 = new Chart(kvd, {
         type: 'line',
         data: {
           labels: [
-            @foreach ($saldo_awal as $key)
-              "{{$key->account->nama}}",
-            @endforeach
+            "Aset", "Liabilitas", "Ekuitas"
           ],
           datasets: [{
             label: 'Debet Dataset',
             data: [
-              @foreach ($saldo_awal as $key)
-                {{$key->debet}},
-              @endforeach
+              {{$asset->sum('debet')}},
+              {{$liability->sum('debet')}},
+              {{$equity->sum('debet')}}
             ],
             order: 1,
             borderWidth: 1,
@@ -735,9 +731,9 @@
           }, {
             label: 'Kredit Dataset',
             data: [
-              @foreach ($saldo_awal as $key)
-                {{$key->kredit}},
-              @endforeach
+              {{$asset->sum('kredit')}},
+              {{$liability->sum('kredit')}},
+              {{$equity->sum('kredit')}}
             ],
             type: 'line',
             order: 2,
