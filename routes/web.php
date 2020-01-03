@@ -42,6 +42,7 @@ Route::resource('crj', 'CrjController');
 Route::get('crj/{id}/retur', 'CrjController@retur')->name('crj.retur');
 Route::resource('customer', 'CustomerController');
 Route::resource('item', 'ItemController');
+Route::resource('saldo_item', 'SaldoItemController');
 Route::resource('jp', 'JpController');
 Route::resource('ju', 'JuController');
 Route::resource('kas_kecil', 'KasKecilController');

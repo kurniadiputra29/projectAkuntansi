@@ -14,7 +14,7 @@ class SaldoAwalsTableSeeder extends Seeder
         $data = [
           [
             'account_id' => 1,
-            'debet'      => 276120000,
+            'debet'      => 264463000,
             'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),
@@ -142,7 +142,7 @@ class SaldoAwalsTableSeeder extends Seeder
           [
             'account_id' => 19,
             'debet'      => 0,
-            'kredit'     => 2600000,
+            'kredit'     => 1875000,
             'created_at' => now(),
     				'updated_at' => now(),
           ],
@@ -372,21 +372,21 @@ class SaldoAwalsTableSeeder extends Seeder
           ],
           [
             'account_id' => 52,
-            'debet'      => 0,
-            'kredit'     => 8140000,
+            'debet'      => 8140000,
+            'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),
           ],
           [
             'account_id' => 53,
-            'debet'      => 0,
-            'kredit'     => 15000000,
+            'debet'      => 15000000,
+            'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),
           ],
           [
             'account_id' => 54,
-            'debet'      => 0,
+            'debet'      => 10932000,
             'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),

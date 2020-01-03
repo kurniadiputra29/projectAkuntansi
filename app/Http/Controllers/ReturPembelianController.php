@@ -152,7 +152,9 @@ class ReturPembelianController extends Controller
         $items          = Item::all();
         $cashbanks      = ReturPembelian::find($id);
         $returndetails  = ReturPembelianDetail::all();
-        $inventories    = Inventory::where('retur_pembelian_id', $id)->get();
+        $inventories    = Inventory::where('retur_pembelian_id', $id)->first();
+        $inventoriess   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
+        $Item_count     = Item::all()->count();
         $debets         = ReturPembelianDetail::where('retur_pembelian_id', $id)->where('kredit', null)->get();
         $jasa           = ReturPembelianDetail::where('retur_pembelian_id', $id)->where('nomor_akun', '5-1300')->first();
         $ppn            = ReturPembelianDetail::where('retur_pembelian_id', $id)
@@ -160,7 +162,7 @@ class ReturPembelianController extends Controller
                                     ->where('kredit', '>', '0')
                                     ->exists();
         
-        return view('pages.retur_pembelian.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'returndetails', 'debets', 'inventories', 'jasa', 'ppn'));
+        return view('pages.retur_pembelian.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'returndetails', 'debets', 'inventories', 'jasa', 'ppn', 'inventoriess', 'Item_count'));
     }
 
     /**

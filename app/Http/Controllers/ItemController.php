@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Item;
+use App\Model\Inventory;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -40,20 +42,25 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        // Item::create($request->all());
+        $messages = [
+            'required'  => ':attribute wajib diisi !!!',
+        ];
+        $this->validate($request,[
+            'kode'      => 'unique:items,kode|required',
+            'nama'      => 'required',
+            'foto'      => 'required',
+        ],$messages);
+        
         $data           = new Item;
         $data->kode     = $request->kode;
         $data->nama     = $request->nama;
-        $data->unit     = $request->unit;
-        $data->harga    = $request->harga;
-        $data->nilai_persediaan    = $request->nilai_persediaan;
 
-        $nama_file = $request->file('gambar');
-        $path = $nama_file->store('public/item'); // ini akan tersimpan pada storage, app, public, files.
-        $data->gambar = $path;
+        $nama_file = $request->file('foto');
+        $path = $nama_file->store('public/foto_items'); // ini akan tersimpan pada storage, app, public, files.
+        $data->foto = $path;
         $data->save();
 
-        return redirect('item');
+        return redirect('item')->with('Success', 'Data anda telah berhasil di input !');
     }
 
     /**
@@ -88,31 +95,43 @@ class ItemController extends Controller
     public function update(Request $request, $id)
     {
       if (empty($request->foto)) {
-          $data = Item::find($id);
-          $data->kode     = $request->kode;
-          $data->nama     = $request->nama;
-          $data->unit     = $request->unit;
-          $data->harga    = $request->harga;
-          $data->nilai_persediaan    = $request->nilai_persediaan;
-          $data->save();
-          return redirect('item');
-      } else {
-          $data = Item::find($id);
-          $data->kode     = $request->kode;
-          $data->nama     = $request->nama;
-          $data->unit     = $request->unit;
-          $data->harga    = $request->harga;
-          $data->nilai_persediaan    = $request->nilai_persediaan;
+          $messages = [
+            'required'  => ':attribute wajib diisi !!!',
+          ];
+          $this->validate($request,[
+              'kode'      => 'unique:items,kode,'.$id,
+              'nama'      => 'required',
+          ],$messages);
 
-          $nama_file = $request->file('gambar');
-          $path = $nama_file->store('public/item'); // ini akan tersimpan pada storage, app, public, files.
+          $data           = Item::find($id);
+          $data->kode     = $request->kode;
+          $data->nama     = $request->nama;
+          $data->save();
+
+          return redirect('item')->with('Success', 'Data anda telah berhasil di Edit !');
+      } else {
+          $messages = [
+            'required'  => ':attribute wajib diisi !!!',
+          ];
+          $this->validate($request,[
+              'kode'      => 'unique:items,kode,'.$id,
+              'nama'      => 'required',
+              'foto'      => 'required',
+          ],$messages);
+          
+          $data           = Item::find($id);
+          $data->kode     = $request->kode;
+          $data->nama     = $request->nama;
+
+          $nama_file = $request->file('foto');
+          $path = $nama_file->store('public/foto_items'); // ini akan tersimpan pada storage, app, public, files.
 
           // hapus file
-          Storage::delete($data->gambar);
-
-          $data->gambar = $path;
+          Storage::delete($data->foto);
+          $data->foto = $path;
           $data->save();
-          return redirect('item');
+
+          return redirect('item')->with('Success', 'Data anda telah berhasil di Edit !');
         }
     }
 

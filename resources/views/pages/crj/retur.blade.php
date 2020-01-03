@@ -76,7 +76,6 @@
                   <div class="form-group">
                     <label for="setor_ke">Customers</label>
                       <select class="form-control" id="setor_ke" name="customers_id">
-                        <option value="0"> ~~ Pilih Customers ~~ </option>
                         @foreach ($customers as $customer)
                         <option value="{{$customer->id}}" {{$cashbanks->customers_id == $customer->id ? 'selected' : ''}}>{{$customer->nama}}</option>
                         @endforeach
@@ -308,7 +307,11 @@
       var items = [];
       items[0] = 0;
       @foreach($items as $key)
-        items[ {{ $key->id }} ] = "{{ $key->harga }}"
+        @if($inventories->where('items_id',$key->id)->where('crj_id', $cashbanks->id)->sum('total') < $Item_count)
+          items[ {{ $key->id }} ] = '{{$inventoriess->where('items_id',$key->id)->sum('total') / $inventoriess->where('items_id',$key->id)->sum('unit')}}'
+        @else
+          items[ {{ $key->id }} ] = '{{$inventories->where('items_id',$key->id)->where('crj_id', $cashbanks->id)->sum('total') / $inventories->where('items_id',$key->id)->where('crj_id', $cashbanks->id)->sum('unit')}}'
+        @endif
       @endforeach
       return items;
     },

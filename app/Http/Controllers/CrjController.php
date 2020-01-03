@@ -25,8 +25,10 @@ class CrjController extends Controller
      */
     public function index()
     {
-        $data = crj::orderBy('id', 'desc')->get();
-        return view('pages.crj.index', compact('data'));
+        $data           = crj::orderBy('id', 'desc')->get();
+        $inventories    = Inventory::get();
+        $items          = Item::all();
+        return view('pages.crj.index', compact('data', 'inventories', 'items', 'inventoriess', 'itemss'));
     }
 
     /**
@@ -36,12 +38,15 @@ class CrjController extends Controller
      */
     public function create()
     {
-        $akun = Account::all();
-        $customers = DataCustomer::all();
-        $items = Item::all();
-        $crjs     = crj::orderBy('id', 'desc')->paginate(1);
-        $crjs_count = crj::all()->count();
-        return view('pages.crj.create', compact('akun', 'customers', 'items', 'crjs', 'crjs_count'));
+        $akun           = Account::all();
+        $customers      = DataCustomer::all();
+        $items          = Item::all();
+        $crjs           = crj::orderBy('id', 'desc')->paginate(1);
+        $crjs_count     = crj::all()->count();
+
+        $inventories   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
+
+        return view('pages.crj.create', compact('akun', 'customers', 'items', 'crjs', 'crjs_count', 'inventories'));
     }
 
     /**
@@ -170,13 +175,15 @@ class CrjController extends Controller
         $crjdetails     = crjdetail::all();
         $debets         = crjdetail::where('crj_id', $id)->where('kredit', null)->first();
         $inventories    = Inventory::where('crj_id', $id)->get();
+        $inventoriess   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
+        $Item_count         = Item::all()->count();
         $jasa           = crjdetail::where('crj_id', $id)->where('nomor_akun', '4-2200')->first();
         $ppn            = crjdetail::where('crj_id', $id)
                                     ->where('nomor_akun', '2-1310')
                                     ->where('kredit', '>', '0')
                                     ->exists();
         // dd($ppn);
-        return view('pages.crj.edit', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn'));
+        return view('pages.crj.edit', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count'));
     }
 
     /**
@@ -305,12 +312,14 @@ class CrjController extends Controller
         $returns_count  = ReturPenjualan::all()->count();
         $debets         = crjdetail::where('crj_id', $id)->where('kredit', null)->first();
         $inventories    = Inventory::where('crj_id', $id)->get();
+        $inventoriess   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
+        $Item_count         = Item::all()->count();
         $jasa           = crjdetail::where('crj_id', $id)->where('nomor_akun', '4-2200')->first();
         $ppn            = crjdetail::where('crj_id', $id)
                                     ->where('nomor_akun', '2-1310')
                                     ->where('kredit', '>', '0')
                                     ->exists();
         // dd($ppn);
-        return view('pages.crj.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'returns_count','returns'));
+        return view('pages.crj.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'returns_count','returns', 'inventoriess', 'Item_count'));
     }
 }

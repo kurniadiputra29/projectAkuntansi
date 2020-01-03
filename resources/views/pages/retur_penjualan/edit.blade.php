@@ -312,7 +312,11 @@
       var items = [];
       items[0] = 0;
       @foreach($items as $key)
-        items[ {{ $key->id }} ] = "{{ $key->harga }}"
+        @if($inventories->where('items_id',$key->id)->where('retur_penjualan_id', $cashbanks->id)->sum('total') < $Item_count)
+          items[ {{ $key->id }} ] = '{{$inventoriess->where('items_id',$key->id)->sum('total') / $inventoriess->where('items_id',$key->id)->sum('unit')}}'
+        @else
+          items[ {{ $key->id }} ] = '{{$inventories->where('items_id',$key->id)->where('retur_penjualan_id', $cashbanks->id)->sum('total') / $inventories->where('items_id',$key->id)->where('retur_penjualan_id', $cashbanks->id)->sum('unit')}}'
+        @endif
       @endforeach
       return items;
     },

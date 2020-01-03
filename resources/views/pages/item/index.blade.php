@@ -41,6 +41,23 @@
                   <button type="button" class="btn btn-outline-primary btn-rounded" data-toggle="modal" data-target="#createModal">Create</button>
                 </div>
               </div>
+              @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                  <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                </div>
+              @endif
+              @if (session('Success'))
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{ session('Success') }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <i class="ik ik-x"></i>
+                  </button>
+              </div>
+              @endif
               <div class="card-body">
                 <div class="dt-responsive">
                   <table id="simpletable" class="table table-striped table-bordered nowrap">
@@ -48,9 +65,7 @@
                       <tr>
                         <th>Kode</th>
                         <th>Nama</th>
-                        <th>Unit</th>
-                        <th>Harga/unit</th>
-                        <th>Nilai Persediaan</th>
+                        <th>Foto</th>
                         <th class="text-right">Aksi</th>
                       </tr>
                     </thead>
@@ -59,16 +74,17 @@
                         <tr>
                           <td>{{ $key->kode }}</td>
                           <td>{{ $key->nama }}</td>
-                          <td>{{ $key->unit }}</td>
-                          <td>Rp {{ number_format($key->harga, 0, " ", ".")}}</td>
-                          <td>Rp {{ number_format($key->nilai_persediaan, 0, " ", ".")}}</td>
-                          {{-- <td><span class="badge badge-pill badge-success mb-1">Aktif</span></td> --}}
+                          @if($key->foto == null)
+                          <td>Foto Not Found !</td>
+                          @else
+                          <td><img width="150px" height="150px" src="{{Storage::url($key->foto) }}"></td>
+                          @endif
                           <td class="text-right">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="aksiDropdown">
                                     <button class="dropdown-item" data-toggle="modal" data-target="#editModal_{{ $key->id }}"><i class="ik ik-edit-2"></i> Edit</button>
-                                    <form method="post" action="{{ route('item.destroy', $key->id) }}">
+                                    <form method="post" action="{{ route('saldo_item.destroy', $key->id) }}">
                                       @csrf
                                       @method('DELETE')
                                       <button class="dropdown-item" type="submit" onclick='javascript:return confirm("Apakah anda yakin ingin menghapus data ini?")'><i class="ik ik-trash-2"></i> Delete</button>

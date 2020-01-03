@@ -165,13 +165,15 @@ class ReturPenjualanController extends Controller
         $cashbanks      = ReturPenjualan::find($id);
         $kredits        = ReturPenjualanDetail::where('retur_penjualan_id', $id)->where('debet', null)->first();
         $inventories    = Inventory::where('retur_penjualan_id', $id)->get();
+        $inventoriess   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
+        $Item_count         = Item::all()->count();
         $jasa           = ReturPenjualanDetail::where('retur_penjualan_id', $id)->where('nomor_akun', '4-2200')->first();
         $ppn            = ReturPenjualanDetail::where('retur_penjualan_id', $id)
                                     ->where('nomor_akun', '2-1310')
                                     ->where('debet', '>', '0')
                                     ->exists();
 
-        return view('pages.retur_penjualan.edit', compact('akun', 'customers', 'items', 'cashbanks', 'kredits', 'inventories', 'jasa', 'ppn'));
+        return view('pages.retur_penjualan.edit', compact('akun', 'customers', 'items', 'cashbanks', 'kredits', 'inventories', 'jasa', 'ppn', 'inventoriess', 'Item_count'));
     }
 
     /**

@@ -55,7 +55,7 @@
               <a href="{{ route('ju.index') }}"><i class="ik ik-book"></i><span>Jurnal Umum</span></a>
           </div>
           <div class="nav-item has-sub {{ Request::is('cashbank_in') || Request::is('cashbank_in/*') || Request::is('cashbank_out') || Request::is('cashbank_out/*') ? 'active open' : '' }}">
-              <a href="#"><i class="ik ik-credit-card"></i></i><span>Cash & Bank</span></a>
+              <a href="#"><i class="ik ik-credit-card"></i><span>Cash & Bank</span></a>
               <div class="submenu-content">
                   <a href="{{ route('cashbank_in.index') }}" class="menu-item {{ Request::is('cashbank_in') || Request::is('cashbank_in/*') ? 'active':'' }}">Cash & Bank In</a>
                   <a href="{{ route('cashbank_out.index') }}" class="menu-item {{ Request::is('cashbank_out') || Request::is('cashbank_out/*') ? 'active':'' }}">Cash & Bank Out</a>
@@ -68,8 +68,13 @@
               <a href="{{ route('jp.index') }}"><i class="ik ik-activity"></i><span>Jurnal Penyesuaian</span></a>
           </div>
           <div class="nav-lavel">Inventory</div>
-          <div class="nav-item {{ Request::is('item') ? 'active' : '' }}">
-              <a href="{{ route('item.index') }}"><i class="ik ik-box"></i><span>Item</span></a>
+
+          <div class="nav-item has-sub {{ Request::is('item') || Request::is('item/*') || Request::is('saldo_item') || Request::is('saldo_item/*') ? 'active open' : '' }}">
+              <a href="#"><i class="ik ik-box"></i><span>Item</span></a>
+              <div class="submenu-content">
+                  <a href="{{ route('item.index') }}" class="menu-item {{ Request::is('item') || Request::is('item/*') ? 'active':'' }}">Daftar Item</a>
+                  <a href="{{ route('saldo_item.index') }}" class="menu-item {{ Request::is('saldo_item') || Request::is('saldo_item/*') ? 'active':'' }}">Saldo Item</a>
+              </div>
           </div>
           <div class="nav-item {{ Request::is('stock_opname') ? 'active' : '' }}">
               <a href="{{ route('stock_opname.index') }}"><i class="ik ik-truck"></i><span>Stock Opname</span></a>
