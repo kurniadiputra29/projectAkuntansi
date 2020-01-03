@@ -34,8 +34,13 @@
                   </div>
               </div>
               <div class="form-group">
-                <label for="nomor">Role User</label>
-                <input type="text" name="role" class="form-control" placeholder="Jika Dia Operator, Cukup Kosongi Saja !. Jika Admin Cukup Tulis 'admin'">
+                <label for="role_id">Role User</label>
+                <select class="form-control" id="role_id" name="role_id">
+                  <option class="col-sm-10" value=""> ~~ Pilih Role ~~ </option>
+                  @foreach ($role as $key)
+                  <option value="{{$key->id}}">{{$key->nama}}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
         </div>

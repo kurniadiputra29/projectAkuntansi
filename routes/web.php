@@ -63,6 +63,7 @@ Route::resource('cashbank_out', 'CashBankOutController');
 Route::resource('profile', 'ProfileController');
 
 Route::resource('users', 'UserController');
+Route::resource('role', 'RoleController');
 
 // index Laporan
 Route::get('/print/neraca', 'PrintController@neraca')->name('laporan.neraca');

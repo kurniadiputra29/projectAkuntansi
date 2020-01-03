@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\User;
+use App\Model\Role;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -20,8 +21,9 @@ class UserController extends Controller
     public function index()
     {
         $data = User::orderBy('created_at', 'asc')->get();
+        $role = Role::all();
 
-        return view('pages.users.index', compact('data'));
+        return view('pages.users.index', compact('data','role'));
     }
 
     /**
@@ -50,9 +52,9 @@ class UserController extends Controller
             'foto' => 'required',
             'nama' => 'required',
             'email' => 'unique:users,email|required',
-            'password' => 'required|min:5', 
+            'password' => 'required|min:5',
         ],$messages);
-        
+
         $data           = new User;
         $data->nama     = $request->nama;
         $data->email    = $request->email;
@@ -105,7 +107,7 @@ class UserController extends Controller
             $this->validate($request,[
                 'nama' => 'required',
                 'email' => 'unique:users,email,'.$id,
-                'password' => 'nullable|min:5', 
+                'password' => 'nullable|min:5',
             ],$messages);
 
             $data = User::find($id);
@@ -113,7 +115,7 @@ class UserController extends Controller
             $data->email = $request->email;
             $data->role    = $request->role;
             $data->password = bcrypt($request->password);
-            $data->save(); 
+            $data->save();
             return redirect('users')->with('Success', 'Data anda telah berhasil di edit !');
         } else {
             $messages = [
@@ -124,7 +126,7 @@ class UserController extends Controller
                 'foto' => 'required',
                 'nama' => 'required',
                 'email' => 'unique:users,email,'.$id,
-                'password' => 'nullable|min:5', 
+                'password' => 'nullable|min:5',
             ],$messages);
 
             $data = User::find($id);
