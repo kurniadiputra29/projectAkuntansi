@@ -80,6 +80,9 @@
             <div class="nav-item {{ Request::is('users') ? 'active' : '' }}">
                 <a href="{{ route('users.index') }}"><i class="ik ik-user"></i><span>Users</span></a>
             </div>
+            <div class="nav-item {{ Request::is('role') ? 'active' : '' }}">
+                <a href="{{ route('role.index') }}"><i class="ik ik-user-plus"></i><span>Roles</span></a>
+            </div>
           @endif
       </nav>
     </div>
