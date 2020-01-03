@@ -36,7 +36,16 @@
               </div>
               <div class="form-group">
                 <label for="nomor">Role User</label>
-                <input type="text" name="role" class="form-control" value="{{ $key->role }}" placeholder="Jika Dia Operator, Cukup Kosongi Saja !. Jika Admin Cukup Tulis 'admin'">
+                <select class="form-control" name="account_id">
+                  @foreach($role as $item)
+                    <option
+                    value="{{ $item->id }}"
+                    {{ $key->role_id == $item->id ? 'selected' : '' }}
+                    >
+                      {{ $item->nama }}
+                    </option>
+                  @endforeach
+                </select>
               </div>
             </div>
           </div>
