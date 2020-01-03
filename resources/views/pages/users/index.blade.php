@@ -86,7 +86,7 @@
 										<td>{{$nomor++}}</td>
 										<td>{{ $key->nama }}</td>
 										<td>{{ $key->email }}</td>
-										<td>{{ $key->role }}</td>
+										<td>{{ $key->role->nama }}</td>
 										@if( $key->password  == null)
                     	<td><img width="150px" src="{{$key->foto}}"></td>
                     @else
