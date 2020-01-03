@@ -71,24 +71,13 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td class="text-center">{{date('d F Y', strtotime($item->created_at ))}}</td>
-                            <td class="text-center">{{ $item->kode }}</td>
-                            <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Saldo Awal</span></td>
-                            <td class="text-center">{{ $item->status }}</td>
-                            <td class="text-center">{{ $item->status }}</td>
-                            <td class="text-center">{{ $item->status }}</td>
-                            <td class="text-center">{{ $item->status }}</td>
-                            <td class="text-center">{{ $item->unit }}</td>
-                            <td class="text-right">Rp {{ number_format($item->harga, 0, " ", ".")}}</td>
-                            <td class="text-right">Rp {{ number_format($item->nilai_persediaan, 0, " ", ".")}}</td>
-                          </tr>
                           @foreach ($inventories as $inventory)
                             <tr>
                               @if ($inventory->items_id == $item->id)
                                 <td class="text-center">{{date('d F Y', strtotime($inventory->created_at ))}}</td>
                                 <td class="text-center">{{ $inventory->Items->kode }}</td>
-                                <td class="text-center">@if ($inventory->crj_id != null)
+                                <td class="text-center">
+                                @if ($inventory->crj_id != null)
                                   <span class="badge badge-pill badge-warning mb-1">CRJ</span>
                                 @elseif($inventory->salesjournal_id != null)
                                   <span class="badge badge-pill badge-warning mb-1">Sales Journal</span>
@@ -98,20 +87,27 @@
                                   <span class="badge badge-pill badge-success mb-1">CPJ</span>
                                 @elseif($inventory->purchasejournal_id != null)
                                   <span class="badge badge-pill badge-success mb-1">Purchase Journal</span>
-
                                 @elseif($inventory->retur_pembelian_id != null)
                                   <span class="badge badge-pill badge-warning mb-1">Retur Pembelian</span>
+                                @elseif($inventory->saldo_items_id != null)
+                                  <span class="badge badge-pill badge-primary mb-1">Saldo Awal</span>
                                 @endif
                               </td>
-                              <td class="text-center">@if ($inventory->status == 0)
-                                <span class="badge badge-pill badge-warning mb-1">~ Out ~</span>
-                              @else
+                              <td class="text-center">
+                              @if ($inventory->status == 1 )
                                 <span class="badge badge-pill badge-success mb-1">~ In ~</span>
+                              @elseif($inventory->saldo_items_id !== null)
+                                <span class="badge badge-pill badge-primary mb-1">~ In ~</span>
+                              @elseif ($inventory->status == 0 )
+                                <span class="badge badge-pill badge-warning mb-1">~ Out ~</span>
                               @endif
                             </td>
                             <td class="text-center">{{ $inventory->unit }}</td>
                             <td class="text-right">Rp {{ number_format($inventory->price, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($inventory->total, 0, " ", ".")}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                           @endif
                         </tr>
                       @endforeach

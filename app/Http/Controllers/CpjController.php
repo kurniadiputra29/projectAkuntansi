@@ -36,12 +36,14 @@ class CpjController extends Controller
      */
     public function create()
     {
-        $akun = Account::all();
-        $suppliers = DataSupplier::all();
-        $items = Item::all();
-        $cpjs     = cpj::orderBy('id', 'desc')->paginate(1);
-        $cpjs_count = cpj::all()->count();
-        return view('pages.cpj.create', compact('akun', 'suppliers', 'items', 'cpjs', 'cpjs_count'));
+        $akun           = Account::all();
+        $suppliers      = DataSupplier::all();
+        $items          = Item::all();
+        $cpjs           = cpj::orderBy('id', 'desc')->paginate(1);
+        $cpjs_count     = cpj::all()->count();
+
+        $inventories   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
+        return view('pages.cpj.create', compact('akun', 'suppliers', 'items', 'cpjs', 'cpjs_count', 'inventories'));
     }
 
     /**
@@ -149,6 +151,8 @@ class CpjController extends Controller
         $items          = Item::all();
         $cashbanks      = cpj::find($id);
         $inventories    = Inventory::where('cpj_id', $id)->get();
+        $inventoriess   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
+        $Item_count         = Item::all()->count();
         $kredits        = cpjdetail::where('cpj_id', $id)->where('debet', null)->get();
         $jasa           = cpjdetail::where('cpj_id', $id)->where('nomor_akun', '5-1300')->first();
         $ppn            = cpjdetail::where('cpj_id', $id)
@@ -156,7 +160,7 @@ class CpjController extends Controller
                                     ->where('debet', '>', '0')
                                     ->exists();
 
-        return view('pages.cpj.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn'));
+        return view('pages.cpj.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count'));
     }
 
     /**
@@ -263,7 +267,9 @@ class CpjController extends Controller
         $items          = Item::all();
         $cashbanks      = cpj::find($id);
         $inventories    = Inventory::where('cpj_id', $id)->get();
-        $kredits        = cpjdetail::where('cpj_id', $id)->where('debet', null)->get();
+        $inventoriess   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
+        $Item_count         = Item::all()->count();
+        $kredits        = cpjdetail::where('cpj_id', $id)->where('debet', null)->first();
         $jasa           = cpjdetail::where('cpj_id', $id)->where('nomor_akun', '5-1300')->first();
         $returns          = ReturPembelian::orderBy('id', 'desc')->paginate(1);
         $returns_count    = ReturPembelian::all()->count();
@@ -272,6 +278,6 @@ class CpjController extends Controller
                                     ->where('debet', '>', '0')
                                     ->exists();
 
-        return view('pages.cpj.retur', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'returns', 'returns_count'));
+        return view('pages.cpj.retur', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'returns', 'returns_count', 'inventoriess', 'Item_count'));
     }
 }

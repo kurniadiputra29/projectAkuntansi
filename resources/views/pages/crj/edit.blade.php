@@ -31,6 +31,7 @@
       </div>
     </div>
 
+
     <div class="row" id="app">
       <div class="col-md-12">
         @if (count($errors) > 0)
@@ -300,7 +301,11 @@
       var items = [];
       items[0] = 0;
       @foreach($items as $key)
-        items[ {{ $key->id }} ] = "{{ $key->harga }}"
+        @if($inventories->where('items_id',$key->id)->where('crj_id', $cashbanks->id)->sum('total') < $Item_count)
+          items[ {{ $key->id }} ] = '{{$inventoriess->where('items_id',$key->id)->sum('total') / $inventoriess->where('items_id',$key->id)->sum('unit')}}'
+        @else
+          items[ {{ $key->id }} ] = '{{$inventories->where('items_id',$key->id)->where('crj_id', $cashbanks->id)->sum('total') / $inventories->where('items_id',$key->id)->where('crj_id', $cashbanks->id)->sum('unit')}}'
+        @endif
       @endforeach
       return items;
     },
@@ -356,6 +361,7 @@
       id_item: "{{$detail->items_id}}",
       unit: "{{$detail->unit}}",
       price: "{{$detail->price}}",
+      harga: "{{$detail->price}}",
       jumlah: "{{$detail->total}}",
       sales: "{{$detail->total}}",
       laba: "{{$detail->sales}}"/"{{$detail->unit}}"-"{{$detail->price}}",

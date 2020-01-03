@@ -20,22 +20,10 @@
                   <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Item">
               </div>
               <div class="form-group">
-                  <label for="unit">Banyak Unit</label>
-                  <input type="number" class="form-control" name="unit" id="unit" placeholder="Masukkan Banyak Unit">
-              </div>
-              <div class="form-group">
-                  <label for="harga">Harga per Unit</label>
-                  <input type="number" class="form-control" name="harga" id="harga" placeholder="Masukkan Harga/Unit">
-              </div>
-              <div class="form-group">
-                  <label for="nilai_persediaan">Nilai Persediaan</label>
-                  <input type="number" class="form-control" name="nilai_persediaan" id="nilai_persediaan" placeholder="Nilai Persediaan">
-              </div>
-              <div class="form-group">
                   <label for="gambar">Foto Item</label>
-                  <input type="file" name="gambar" class="file-upload-default">
+                  <input type="file" name="foto" class="file-upload-default">
                   <div class="input-group col-xs-12">
-                      <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                      <input type="text" class="form-control file-upload-info" placeholder="Upload Image">
                       <span class="input-group-append">
                       <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                       </span>

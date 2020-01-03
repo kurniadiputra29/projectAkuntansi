@@ -9,7 +9,7 @@ class Item extends Model
     protected $table = 'items';
 
     protected $fillable = [
-      'id','kode','nama','unit','harga','nilai_persediaan','gambar'
+      'id','kode','nama','foto'
     ];
     public function Inventory()
     {

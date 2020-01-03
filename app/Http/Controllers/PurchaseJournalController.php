@@ -41,7 +41,9 @@ class PurchaseJournalController extends Controller
         $items = Item::all();
         $purchase_count = PurchaseJournal::all()->count();
         $purchase     = PurchaseJournal::orderBy('id', 'desc')->paginate(1);
-        return view('pages.purchase_journal.create', compact('akun', 'suppliers', 'items', 'purchase_count','purchase'));
+
+        $inventories   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
+        return view('pages.purchase_journal.create', compact('akun', 'suppliers', 'items', 'purchase_count','purchase', 'inventories'));
     }
 
     /**
@@ -149,6 +151,8 @@ class PurchaseJournalController extends Controller
         $items              = Item::all();
         $cashbanks          = PurchaseJournal::find($id);
         $inventories        = Inventory::where('purchasejournal_id', $id)->get();
+        $inventoriess       = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
+        $Item_count         = Item::all()->count();
         $kredits            = purchasejournaldetail::where('purchasejournal_id', $id)->where('debet', null)->get();
         $jasa               = purchasejournaldetail::where('purchasejournal_id', $id)->where('nomor_akun', '5-1300')->first();
         $ppn                = purchasejournaldetail::where('purchasejournal_id', $id)
@@ -156,7 +160,7 @@ class PurchaseJournalController extends Controller
                                     ->where('debet', '>', '0')
                                     ->exists();
         
-        return view('pages.purchase_journal.edit', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn'));
+        return view('pages.purchase_journal.edit', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count'));
     }
 
     /**
@@ -262,7 +266,9 @@ class PurchaseJournalController extends Controller
         $items              = Item::all();
         $cashbanks          = PurchaseJournal::find($id);
         $inventories        = Inventory::where('purchasejournal_id', $id)->get();
-        $kredits            = purchasejournaldetail::where('purchasejournal_id', $id)->where('debet', null)->get();
+        $inventoriess       = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
+        $Item_count         = Item::all()->count();
+        $kredits            = purchasejournaldetail::where('purchasejournal_id', $id)->where('debet', null)->first();
         $jasa               = purchasejournaldetail::where('purchasejournal_id', $id)->where('nomor_akun', '5-1300')->first();
         $returns          = ReturPembelian::orderBy('id', 'desc')->paginate(1);
         $returns_count    = ReturPembelian::all()->count();
@@ -271,6 +277,6 @@ class PurchaseJournalController extends Controller
                                     ->where('debet', '>', '0')
                                     ->exists();
         
-        return view('pages.purchase_journal.retur', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'returns', 'returns_count'));
+        return view('pages.purchase_journal.retur', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'returns', 'returns_count', 'inventoriess', 'Item_count'));
     }
 }

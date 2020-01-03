@@ -136,7 +136,7 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label for="harga">Harga Satuan</label>
-                    <input class="form-control" type="number" id="harga" name="harga[]" :value="harga(cashbank.id_item, index)" readonly>
+                    <input class="form-control" type="text" id="harga" name="harga[]" :value="harga(cashbank.id_item, index)" readonly>
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -307,7 +307,7 @@
       var items = [];
       items[0] = 0;
       @foreach($items as $key)
-        items[ {{ $key->id }} ] = "{{ $key->harga }}"
+        items[ {{ $key->id }} ] = '{{$inventories->where('items_id',$key->id)->sum('total') / $inventories->where('items_id',$key->id)->sum('unit')}}'
       @endforeach
       return items;
     },

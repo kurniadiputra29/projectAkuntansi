@@ -129,19 +129,25 @@
                   <div class="form-group">
                     <label for="unit">QTY</label>
                     <input class="form-control" type="number" id="unit" name="unit[]" v-model="cashbank.unit">
-                    <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="0">
                   </div>
                 </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="harga_beli">Harga Pembelian</label>
+                    <input class="form-control" type="number" id="harga_beli" name="harga[]" v-model.number="cashbank.harga_beli">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="harga">Harga Barang</label>
+                    <input class="form-control" type="number" id="harga" name="harga_i[]" :value="harga(cashbank.id_item, index)" readonly="">
+                  </div>
+                </div>
+                <input class="form-control" type="hidden" id="yang_membayar" name="status[]" value="0">
                 <div class="col-md-3">
                   <div class="form-group">
-                    <label for="harga">Harga Satuan</label>
-                    <input class="form-control" type="number" id="harga" name="harga[]" :value="harga(cashbank.id_item, index)">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
                     <label for="jumlah">Jumlah</label>
-                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" :value="jumlah(cashbank.id_item, cashbank.unit, index)" readonly="">
+                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" :value="jumlah(cashbank.harga_beli, cashbank.unit, index)" readonly="">
                   </div>
                 </div>
                 <div class="col-md-1">
@@ -261,11 +267,11 @@
         this.cashbanks[index].nama_akun = nama_akun;
         return nama_akun;
       },
-      jumlah(id_item, unit, index){
-        var jumlah =  this.items[id_item]*unit;
+      jumlah(harga_beli, unit, index){
+        var jumlah =  harga_beli*unit;
         this.cashbanks[index].jumlah = jumlah;
         return jumlah;
-      },
+      }, 
   },
   computed: {
 
@@ -289,7 +295,11 @@
       var items = [];
       items[0] = 0;
       @foreach($items as $key)
-        items[ {{ $key->id }} ] = "{{ $key->harga }}"
+        @if($inventories->where('items_id',$key->id)->where('retur_pembelian_id', $cashbanks->id)->sum('total') < $Item_count)
+          items[ {{ $key->id }} ] = '{{$inventoriess->where('items_id',$key->id)->sum('total') / $inventoriess->where('items_id',$key->id)->sum('unit')}}'
+        @else
+          items[ {{ $key->id }} ] = '{{$inventoriess->where('items_id',$key->id)->sum('total') / $inventoriess->where('items_id',$key->id)->sum('unit')}}'
+        @endif
       @endforeach
       return items;
     },
@@ -328,7 +338,7 @@
     cashbanks [{{$index}}] = {
       id_item: "{{$detail->items_id}}",
       unit: "{{$detail->unit}}",
-      price: "{{$detail->price}}",
+      harga_beli: "{{$detail->price}}",
       jumlah: "{{$detail->total}}",
     };
     @endforeach

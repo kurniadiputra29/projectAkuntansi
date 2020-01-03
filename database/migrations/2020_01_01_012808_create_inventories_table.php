@@ -15,21 +15,23 @@ class CreateInventoriesTable extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->Increments('id');
-            $table->unsignedInteger('items_id');
-            $table->unsignedInteger('cpj_id')->nullable();
+            $table->unsignedInteger('items_id')->nullable();
+            $table->unsignedInteger('saldo_items_id')->nullable();
             $table->unsignedInteger('crj_id')->nullable();
+            $table->unsignedInteger('cpj_id')->nullable();
             $table->unsignedInteger('purchasejournal_id')->nullable();
             $table->unsignedInteger('salesjournal_id')->nullable();
             $table->unsignedInteger('retur_penjualan_id')->nullable();
             $table->unsignedInteger('retur_pembelian_id')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->integer('unit');
             $table->integer('price');
             $table->integer('total');
-            $table->integer('sales');
+            $table->integer('sales')->nullable();
             $table->timestamps();
 
             $table->foreign('items_id')->references('id')->on('items')->onDelete('cascade');
+            $table->foreign('saldo_items_id')->references('id')->on('saldo_items')->onDelete('cascade');
             $table->foreign('cpj_id')->references('id')->on('cpjs')->onDelete('cascade');
             $table->foreign('crj_id')->references('id')->on('crjs')->onDelete('cascade');
             $table->foreign('purchasejournal_id')->references('id')->on('purchase_journals')->onDelete('cascade');
