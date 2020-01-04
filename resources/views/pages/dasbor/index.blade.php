@@ -42,7 +42,7 @@
               <div class="row align-items-center mb-30">
                 <div class="col">
                   <h6 class="mb-5 text-white">Debet Neraca Saldo</h6>
-                  <h4 class="mb-0 fw-700 text-white">Rp{{format_uang($deb_ner_sal)}}</h4>
+                  <h5 class="mb-0 fw-700 text-white">Rp{{format_uang($deb_ner_sal)}}</h5>
                 </div>
                 <div class="col-auto">
                   <i class="fa fa-money-bill-alt text-red f-18"></i>
@@ -58,7 +58,7 @@
               <div class="row align-items-center mb-30">
                 <div class="col">
                   <h6 class="mb-5 text-white">Balance</h6>
-                  <h4 class="mb-0 fw-700 text-white">Rp{{format_uang($deb_ner_sal-$kre_ner_sal)}}</h4>
+                  <h5 class="mb-0 fw-700 text-white">Rp{{format_uang($deb_ner_sal-$kre_ner_sal)}}</h5>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-database text-blue f-18"></i>
@@ -74,7 +74,7 @@
               <div class="row align-items-center mb-30">
                 <div class="col">
                   <h6 class="mb-5 text-white">Kredit Neraca Saldo</h6>
-                  <h4 class="mb-0 fw-700 text-white">Rp{{format_uang($kre_ner_sal)}}</h4>
+                  <h5 class="mb-0 fw-700 text-white">Rp{{format_uang($kre_ner_sal)}}</h5>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-dollar-sign text-green f-18"></i>
