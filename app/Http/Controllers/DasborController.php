@@ -20,33 +20,18 @@ class DasborController extends Controller
      */
     public function index()
     {
-      $account = Account::all();
-      $saldo_awal = SaldoAwal::orderBy('account_id', 'asc')->get();
-      // untuk coba chart
-      $kredit = $saldo_awal->sum('kredit');
-      $debet = $saldo_awal->sum('debet');
+        $asset          = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '1-%')->get();
+        $liability      = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '2-%')->get();
+        $equity         = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '3-%')->get();
+        $tot_deb_ner    = $asset->sum('debet')+$liability->sum('debet')+$equity->sum('debet');
+        $tot_kre_ner    = $asset->sum('kredit')+$liability->sum('kredit')+$equity->sum('kredit');
+        $balance_ner    = $tot_deb_ner-$tot_kre_ner;
+        $deb_ner_sal    = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->sum('debet');
+        $kre_ner_sal    = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->sum('kredit');
 
-      $a1 = SaldoAwal::get('account_id');
-      $a2 = SaldoAwal::get('debet');
+        // dd($tot_deb_ner);
 
-      $count = SaldoAwal::get('id')->count();
-
-      foreach ($saldo_awal as $key) {
-        // code...
-        $ai = $key->account_id;
-        $db = $key->debet;
-      }
-
-      $asset          = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '1-%')->get();
-      $liability      = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '2-%')->get();
-      $equity         = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '3-%')->get();
-      $tot_deb_ner    = $asset->sum('debet')+$liability->sum('debet')+$equity->sum('debet');
-      $tot_kre_ner    = $asset->sum('kredit')+$liability->sum('kredit')+$equity->sum('kredit');
-      $balance_ner    = $tot_deb_ner-$tot_kre_ner;
-
-      // dd($tot_deb_ner);
-
-        return view('pages.dasbor.index', compact('asset','liability','equity','tot_deb_ner','tot_kre_ner','balance_ner'));
+        return view('pages.dasbor.index', compact('asset','liability','equity','tot_deb_ner','tot_kre_ner','balance_ner','deb_ner_sal','kre_ner_sal'));
     }
 
     public function cobaChart()

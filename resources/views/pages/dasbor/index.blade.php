@@ -31,18 +31,18 @@
       <div class="row">
         @php
           function format_uang($angka){
-            $hasil =  number_format($angka,0, ',' , '.');
+            $hasil =  number_format($angka,2, ',' , '.');
             return $hasil;
           }
         @endphp
         <!-- product profit start -->
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl-4 col-md-6">
           <div class="card prod-p-card card-red">
             <div class="card-body">
               <div class="row align-items-center mb-30">
                 <div class="col">
-                  <h6 class="mb-5 text-white">Total Profit</h6>
-                  <h3 class="mb-0 fw-700 text-white">$1,783</h3>
+                  <h6 class="mb-5 text-white">Debet Neraca Saldo</h6>
+                  <h4 class="mb-0 fw-700 text-white">Rp{{format_uang($deb_ner_sal)}}</h4>
                 </div>
                 <div class="col-auto">
                   <i class="fa fa-money-bill-alt text-red f-18"></i>
@@ -52,13 +52,13 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl-4 col-md-6">
           <div class="card prod-p-card card-blue">
             <div class="card-body">
               <div class="row align-items-center mb-30">
                 <div class="col">
-                  <h6 class="mb-5 text-white">Total Orders</h6>
-                  <h3 class="mb-0 fw-700 text-white">15,830</h3>
+                  <h6 class="mb-5 text-white">Balance</h6>
+                  <h4 class="mb-0 fw-700 text-white">Rp{{format_uang($deb_ner_sal-$kre_ner_sal)}}</h4>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-database text-blue f-18"></i>
@@ -68,35 +68,19 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl-4 col-md-6">
           <div class="card prod-p-card card-green">
             <div class="card-body">
               <div class="row align-items-center mb-30">
                 <div class="col">
-                  <h6 class="mb-5 text-white">Average Price</h6>
-                  <h3 class="mb-0 fw-700 text-white">$6,780</h3>
+                  <h6 class="mb-5 text-white">Kredit Neraca Saldo</h6>
+                  <h4 class="mb-0 fw-700 text-white">Rp{{format_uang($kre_ner_sal)}}</h4>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-dollar-sign text-green f-18"></i>
                 </div>
               </div>
               <p class="mb-0 text-white"><span class="label label-success mr-10">+52%</span>From Previous Month</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-          <div class="card prod-p-card card-yellow">
-            <div class="card-body">
-              <div class="row align-items-center mb-30">
-                <div class="col">
-                  <h6 class="mb-5 text-white">Product Sold</h6>
-                  <h3 class="mb-0 fw-700 text-white">6,784</h3>
-                </div>
-                <div class="col-auto">
-                  <i class="fas fa-tags text-warning f-18"></i>
-                </div>
-              </div>
-              <p class="mb-0 text-white"><span class="label label-warning mr-10">+52%</span>From Previous Month</p>
             </div>
           </div>
         </div>
@@ -113,6 +97,30 @@
               </div>
               <div class="charet col-6">
                 <canvas id="neraca2" height="150" aria-label="Hello ARIA World" role="img"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h3>Neraca Saldo</h3>
+            </div>
+            <div class="card-body">
+              <div class="charet">
+                <canvas id="neracaSaldoChart" height="150"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h3>Neraca Saldo 2</h3>
+            </div>
+            <div class="card-body">
+              <div class="charet">
+                <canvas id="neracaSaldoChart2" height="150"></canvas>
               </div>
             </div>
           </div>
@@ -405,56 +413,40 @@
         </div>
         <!-- top contact and member performance end -->
 
-        <!-- ticket, proj, clent start -->
-        <div class="col-xl-3 col-md-6">
+
+        <div class="col-xl-4 col-md-6">
           <div class="card ticket-card">
             <div class="card-body">
               <p class="mb-30 bg-red lbl-card"><i class="fas fa-folder-open"></i> Open Tickets</p>
               <div class="text-center">
-                <h2 class="mb-0 d-inline-block text-red">128</h2>
-                <p class="mb-0 d-inline-block">Tickets</p>
+                <h2 class="mb-0 d-inline-block text-red">Rp{{format_uang($deb_ner_sal)}}</h2>
                 <p class="mb-0 mt-15"><i class="fas fa-caret-down mr-10 f-18 text-red"></i>From Previous Month</p>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl-4 col-md-6">
           <div class="card ticket-card">
             <div class="card-body">
               <p class="mb-30 bg-blue lbl-card"><i class="fas fa-file-archive"></i> Close Tickets</p>
               <div class="text-center">
-                <h2 class="mb-0 d-inline-block text-blue">134</h2>
-                <p class="mb-0 d-inline-block">Tickets</p>
+                <h2 class="mb-0 d-inline-block text-blue">Rp{{format_uang($deb_ner_sal-$kre_ner_sal)}}</h2>
                 <p class="mb-0 mt-15"><i class="fas fa-caret-up mr-10 f-18 text-blue"></i>From Previous Month</p>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-md-6">
+        <div class="col-xl-4 col-md-6">
           <div class="card ticket-card">
             <div class="card-body">
               <p class="mb-30 bg-green lbl-card"><i class="fas fa-users"></i> New Clients</p>
               <div class="text-center">
-                <h2 class="mb-0 d-inline-block text-green">307</h2>
-                <p class="mb-0 d-inline-block">Clients</p>
+                <h2 class="mb-0 d-inline-block text-green">Rp{{format_uang($kre_ner_sal)}}</h2>
                 <p class="mb-0 mt-15"><i class="fas fa-caret-up mr-10 f-18 text-green"></i>From Previous Month</p>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-md-6">
-          <div class="card ticket-card">
-            <div class="card-body">
-              <p class="mb-30 bg-warning lbl-card"><i class="fas fa-database"></i> New Orders</p>
-              <div class="text-center">
-                <h2 class="mb-0 d-inline-block text-warning">231</h2>
-                <p class="mb-0 d-inline-block">Orders</p>
-                <p class="mb-0 mt-15"><i class="fas fa-caret-up mr-10 f-18 text-warning"></i>From Previous Month</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- ticket, proj, clent end -->
 
         <div class="col-xl-12">
           <div class="card table-card">
@@ -695,7 +687,7 @@
               'rgba(54, 162, 235, 1)',
               'rgba(28, 255, 28, 1)'
             ],
-            borderWidth: 1
+            borderWidth: 1.5
           }]
         },
         options: {
@@ -725,7 +717,7 @@
               {{$equity->sum('debet')}}
             ],
             order: 1,
-            borderWidth: 1,
+            borderWidth: 1.5,
             borderColor: '#ce5456',
             backgroundColor: 'rgba(54, 162, 235, 0.2)'
           }, {
@@ -737,7 +729,80 @@
             ],
             type: 'line',
             order: 2,
-            borderWidth: 1,
+            borderWidth: 1.5,
+            borderColor: '#adad23',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)'
+          }],
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
+        }
+      });
+  </script>
+  <script>
+      var ctx = document.getElementById("neracaSaldoChart").getContext('2d');
+      var neracaChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ["Total Debet", "Total Kredit", "Selisih"],
+          datasets: [{
+            label: '# Rupiah',
+            data: [{{$deb_ner_sal}},{{$kre_ner_sal}},{{$deb_ner_sal-$kre_ner_sal}}],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(28, 255, 28, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(28, 255, 28, 1)'
+            ],
+            borderWidth: 1.5
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
+        }
+      });
+  </script>
+  <script>
+      var kvd = document.getElementById('neracaSaldoChart2').getContext('2d');
+      var neraca2 = new Chart(kvd, {
+        type: 'bar',
+        data: {
+          labels: [
+            "Balance",
+          ],
+          datasets: [{
+            label: 'Debet Dataset',
+            data: [
+              {{$deb_ner_sal}},
+            ],
+            order: 1,
+            borderWidth: 1.5,
+            borderColor: '#ce5456',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)'
+          }, {
+            label: 'Kredit Dataset',
+            data: [
+              {{$kre_ner_sal}},
+            ],
+            type: 'line',
+            order: 2,
+            borderWidth: 1.5,
             borderColor: '#adad23',
             backgroundColor: 'rgba(255, 99, 132, 0.2)'
           }],
