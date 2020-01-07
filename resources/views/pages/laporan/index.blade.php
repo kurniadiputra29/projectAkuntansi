@@ -188,43 +188,13 @@
                         <div class="report-item">
                           <h3>
                             <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.daftar_penjualan')}}">
-                              Daftar Penjualan Cash & Kredit
+                              Daftar Laporan Penjualan
                             </a>
                           </h3>
                           <p>
                             Menunjukkan daftar kronologis Penjualan barang dagang secara kredit dan cash.
                           </p>
                           <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.daftar_penjualan')}}">
-                            Lihat Laporan
-                          </a>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6">
-                        <div class="report-item">
-                          <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.daftar_penjualan_cash')}}">
-                              Daftar Penjualan Cash
-                            </a>
-                          </h3>
-                          <p>
-                            Menunjukkan daftar kronologis Penjualan barang dagang secara Cash.
-                          </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.daftar_penjualan_cash')}}">
-                            Lihat Laporan
-                          </a>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6">
-                        <div class="report-item">
-                          <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.daftar_penjualan_kredit')}}">
-                              Daftar Penjualan Kredit
-                            </a>
-                          </h3>
-                          <p>
-                            Menunjukkan daftar kronologis Penjualan barang dagang secara Kredit.
-                          </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.daftar_penjualan_kredit')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -252,43 +222,13 @@
                         <div class="report-item">
                           <h3>
                             <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.daftar_pembelian')}}">
-                              Daftar Pembelian Cash & Kredit
+                              Daftar Laporan Pembelian
                             </a>
                           </h3>
                           <p>
                             Menunjukkan daftar kronologis Pembelian barang dagang secara kredit dan cash.
                           </p>
                           <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.daftar_pembelian')}}">
-                            Lihat Laporan
-                          </a>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6">
-                        <div class="report-item">
-                          <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.daftar_pembelian_cash')}}">
-                              Daftar Pembelian Cash
-                            </a>
-                          </h3>
-                          <p>
-                            Menunjukkan daftar kronologis Pembelian barang dagang secara Cash.
-                          </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.daftar_pembelian_cash')}}">
-                            Lihat Laporan
-                          </a>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6">
-                        <div class="report-item">
-                          <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.daftar_pembelian_kredit')}}">
-                              Daftar Pembelian Kredit
-                            </a>
-                          </h3>
-                          <p>
-                            Menunjukkan daftar kronologis Pembelian barang dagang secara Kredit.
-                          </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.daftar_pembelian_kredit')}}">
                             Lihat Laporan
                           </a>
                         </div>

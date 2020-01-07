@@ -29,7 +29,7 @@ class InventoryController extends Controller
     public function index()
     {
         $items                  = Item::all();
-        $SaldoItems                  = SaldoItem::all();
+        $SaldoItems             = SaldoItem::all();
         $inventories            = Inventory::all();
         $cpjs                   = cpj::all();
         $crjs                   = crj::all();
@@ -39,8 +39,7 @@ class InventoryController extends Controller
         $ReturPenjualans        = ReturPenjualan::all();
 
         $distinct_pc            = Item::distinct('id')->select('id', 'kode', 'nama')->get();
-        $distinct_pcc           = Inventory::distinct('items_id')->select('unit', 'price', 'total', 'items_id')->get();
-
+        $distinct_pcc           = Inventory::distinct('items_id')->select('unit', 'price', 'total', 'items_id', 'status')->get();
         return view('reports.inventory_card.index', compact('items', 'inventories', 'cpjs', 'crjs', 'PurchaseJournals', 'SalesJournals', 'ReturPembelians', 'ReturPenjualans', 'distinct_pc', 'distinct_pcc', 'SaldoItems'));
     }
 

@@ -47,21 +47,18 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="table-responsive">
+              <div class="dt-responsive">
                 @foreach ($DataCustomers as $DataCustomer)
-                  <table class="table table-striped table-bordered nowrap" id="account-entry">
+                  <table class="table table-bordered nowrap">
                     <thead class="report-header">
                       <tr class="bg-secondary font-weight-bold">
-                        <th class="col-8 text-light" colspan="4">Customers Name: {{$DataCustomer->nama}}</th>
-                        <th class="col-4 text-light" colspan="2">Customers Kode: {{$DataCustomer->kode}}</th>
+                        <th class="col-8 text-light" colspan="4">Customers Name: {{$DataCustomer->nama}} ( {{$DataCustomer->kode}} )</th>
                       </tr>
                       <tr>
-                        <th class="col-2">Tanggal</th>
-                        <th class="col-2">Deskripsi</th>
-                        <th class="col-2">Debet</th>
-                        <th class="col-2">Kredit</th>
-                        <th class="col-2">Debet</th>
-                        <th class="col-2">Kredit</th>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">Deskripsi</th>
+                        <th class="text-center">Debet</th>
+                        <th class="text-center">Kredit</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -70,8 +67,6 @@
                           @if ($SaldoPiutang->customers_id == $DataCustomer->id)
                             <td class="text-center">{{date('d F Y', strtotime($DataCustomer->created_at ))}}</td>
                             <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Saldo Awal</span></td>
-                            <td class="text-center">{{ $DataCustomer->status }}</td>
-                            <td class="text-center">{{ $DataCustomer->status }}</td>
                             <td class="text-right">Rp {{ number_format($SaldoPiutang->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($SaldoPiutang->kredit, 0, " ", ".")}}</td>
                           @endif

@@ -39,7 +39,7 @@
           <div class="card">
             <div class="card-header d-flex justify-content-between flex-row">
               <div class="left-container">
-                <h3>Petty Cash Book</h3>
+                <h3>Daftar Penjualan</h3>
                 <span>use class <code>table-hover</code> inside table element</span>
               </div>
               <div class="right-container">
@@ -81,7 +81,7 @@
                         <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Penjualan Tunai</span></td>
                         <td>{{$crj->description}}</td>
                         <td class="text-right">
-                          Rp {{number_format($crjdetails->where('crj_id', $crj->id)->sum('debet'))}}
+                          Rp {{number_format($crjdetails->where('crj_id', $crj->id)->sum('debet'), 0, " ", ".")}}
                         </td>
                         <td class="text-right">
                           Rp 0
@@ -94,25 +94,42 @@
                         <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Sales Journal</span></td>
                         <td>{{$SalesJournal->kode}}</td>
                         <td>{{$SalesJournal->data_customers->nama}}</td>
-                        <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Penjualan Kredit</span></td>
+                        <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Penjualan Kredit</span></td> 
                         <td>{{$SalesJournal->description}}</td>
                         <td class="text-right">
-                          Rp {{number_format($salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('debet'))}}
+                          Rp {{number_format($salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('debet'), 0, " ", ".")}}
                         </td>
                         <td class="text-right">
-                          Rp {{number_format($salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('kredit'))}}
+                          Rp {{number_format($salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('kredit'), 0, " ", ".")}}
+                        </td>
+                      </tr>
+                    @endforeach
+                    @foreach ($ReturPenjualans as $ReturPenjualan)
+                      <tr>
+                        <td>{{date('d F Y', strtotime($ReturPenjualan->tanggal ))}}</td>
+                        <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Retur Penjualan</span></td>
+                        <td>{{$ReturPenjualan->kode}}</td>
+                        <td>{{$ReturPenjualan->data_customers->nama}}</td>
+                        <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Retur</span></td> 
+                        <td>{{$ReturPenjualan->description}}</td>
+                        <td class="text-right">
+                          Rp {{number_format($ReturPenjualanDetails->where('retur_penjualan_id', $ReturPenjualan->id)->sum('debet'), 0, " ", ".")}}
+                        </td>
+                        <td class="text-right">
+                          Rp {{number_format($ReturPenjualanDetails->where('retur_penjualan_id', $ReturPenjualan->id)->sum('kredit'), 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="text-light" colspan="3">Total</td>
+                      <td class="text-light text-center" colspan="6">Total</td>
+                      <td class="text-light text-right">Rp
+                        {{number_format($ReturPenjualanDetails->where('retur_penjualan_id', $ReturPenjualan->id)->sum('debet') + $salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('debet'), 0, " ", ".")}}
+                      </td>
+                      <td class="text-light text-right">Rp 
+                        {{number_format($ReturPenjualanDetails->where('retur_penjualan_id', $ReturPenjualan->id)->sum('kredit') + $salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('kredit'), 0, " ", ".")}}
+                      </td>
                     </tr>
                   </tfoot>
                 </table>

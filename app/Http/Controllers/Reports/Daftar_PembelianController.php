@@ -8,9 +8,17 @@ use App\Model\cpj;
 use App\Model\PurchaseJournal;
 use App\Model\ReturPembelian;
 use App\Model\CashBankOut;
+use App\Model\cpjdetail;
+use App\Model\ReturPembelianDetail;
+use App\Model\purchasejournaldetail;
+use App\Model\CashBankOutDetails;
 
 class Daftar_PembelianController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +26,16 @@ class Daftar_PembelianController extends Controller
      */
     public function index()
     {
-        return view('reports.daftar_pembelian.index');
+        $cpjs                       = cpj::all();
+        $cpjdetails                 = cpjdetail::all();
+        $PurchaseJournals           = PurchaseJournal::all();
+        $ReturPembelians            = ReturPembelian::all();
+        $CashBankOuts               = CashBankOut::all();
+        $purchasejournaldetails     = purchasejournaldetail::all();
+        $ReturPembelianDetails      = ReturPembelianDetail::all();
+        $CashBankOutDetailss        = CashBankOutDetails::all();
+
+        return view('reports.daftar_pembelian.index', compact('cpjs', 'cpjdetails', 'PurchaseJournals', 'ReturPembelians', 'CashBankOuts', 'purchasejournaldetails', 'ReturPembelianDetails', 'CashBankOutDetailss'));
     }
 
     /**

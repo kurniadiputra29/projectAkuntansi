@@ -63,6 +63,7 @@ class SaldoItemController extends Controller
         $data                   = new Inventory;
         $data->items_id         = $request->items_id;
         $data->saldo_items_id   = $datas->id;
+        $data->status            = $request->status;
         $data->unit             = $request->unit;
         $data->price            = $request->price;
         $data->total            = $request->total;
@@ -126,6 +127,7 @@ class SaldoItemController extends Controller
         $data                   = new Inventory;
         $data->items_id         = $request->items_id;
         $data->saldo_items_id   = $id;
+        $data->status            = $request->status;
         $data->unit             = $request->unit;
         $data->price            = $request->price;
         $data->total            = $request->total;
