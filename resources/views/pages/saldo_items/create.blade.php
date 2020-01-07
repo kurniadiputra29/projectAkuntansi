@@ -31,6 +31,7 @@
                   <label for="total">Total</label>
                   <input type="text" class="form-control" name="total" id="total" readonly="" :value="totals">
               </div>
+              <input class="form-control" type="hidden" id="yang_membayar" name="status" value="1">
             </div>
         </div>
       </div>

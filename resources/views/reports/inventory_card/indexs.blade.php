@@ -54,14 +54,17 @@
                       <table class="table table-bordered nowrap">
                         <thead class="report-header">
                           <tr class="bg-secondary font-weight-bold">
-                            <th class="text-light" colspan="6">Item Name : {{ $item->nama }}</th>
-                            <th class="text-light" colspan="1">Item Kode : {{ $item->kode }}</th>
+                            <th class="text-light" colspan="8">Item Name : {{ $item->nama }}</th>
+                            <th class="text-light" colspan="2">Item Kode : {{ $item->kode }}</th>
                           </tr>
                           <tr>
                             <th class="text-center">Date</th>
                             <th class="text-center">Kode Produk</th>
                             <th class="text-center">Deskripsi</th>
                             <th class="text-center">Status</th>
+                            <th class="text-center">QTY</th>
+                            <th class="text-center">Price/ Unit</th>
+                            <th class="text-center">Amount</th>
                             <th class="text-center">QTY</th>
                             <th class="text-center">Price/ Unit</th>
                             <th class="text-center">Amount</th>
@@ -92,10 +95,10 @@
                                 @endif
                                 </td>
                                 <td class="text-center">
-                                  @if ($inventory->saldo_items_id !== null)
-                                    <span class="badge badge-pill badge-primary mb-1">~ In ~</span>
-                                  @elseif($inventory->status == 1 )
+                                  @if ($inventory->status == 1 )
                                     <span class="badge badge-pill badge-success mb-1">~ In ~</span>
+                                  @elseif($inventory->saldo_items_id !== null)
+                                    <span class="badge badge-pill badge-primary mb-1">~ In ~</span>
                                   @elseif ($inventory->status == 0 )
                                     <span class="badge badge-pill badge-warning mb-1">~ Out ~</span>
                                   @endif
@@ -103,6 +106,9 @@
                                 <td class="text-center">{{ $inventory->unit }}</td>
                                 <td class="text-right">Rp {{ number_format($inventory->price, 0, " ", ".")}}</td>
                                 <td class="text-right">Rp {{ number_format($inventory->total, 0, " ", ".")}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                               @endif
                             </tr>
                           @endforeach
@@ -130,14 +136,14 @@
                         <td>{{$rekap->kode}}</td>
                         <td>{{$rekap->nama}}</td>
                         <td class="text-right">
-                          {{$distinct_pcc->where('items_id', $rekap->id)->where('status', 1)->sum('unit')-$distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('unit')}}
+                          {{$distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('unit')}}
                         </td>
                         <td class="text-right">
-                          Rp {{number_format(($distinct_pcc->where('items_id', $rekap->id)->where('status', 1)->sum('total') - $distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('total')) / ($distinct_pcc->where('items_id', $rekap->id)->where('status', 1)->sum('unit')-$distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('unit')), 0, " ", ".")}}
+                          Rp {{number_format($inventories->where('items_id',$rekap->id)->sum('total') / $inventories->where('items_id',$rekap->id)->sum('unit'), 0, " ", ".")}}
                         </td>
 
                         <td class="text-right">
-                          Rp {{number_format($distinct_pcc->where('items_id', $rekap->id)->where('status', 1)->sum('total') - $distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('total'), 0, " ", ".")}}
+                          Rp {{number_format($distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('total'), 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach

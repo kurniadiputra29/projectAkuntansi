@@ -48,21 +48,18 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="table-responsive">
+              <div class="dt-responsive">
                 @foreach ($DataSuppliers as $DataSupplier)
-                  <table class="table table-striped table-bordered nowrap" id="account-entry">
+                  <table class="table table-bordered nowrap">
                     <thead class="report-header">
                       <tr class="bg-secondary font-weight-bold">
-                        <th class="col-8 text-light" colspan="4">Customers Name: {{$DataSupplier->nama}}</th>
-                        <th class="col-4 text-light" colspan="2">Customers Kode: {{$DataSupplier->kode}}</th>
+                        <th class="col-8 text-light" colspan="4">Customers Name: {{$DataSupplier->nama}} ( {{$DataSupplier->kode}} )</th>
                       </tr>
                       <tr>
-                        <th class="col-2">Tanggal</th>
-                        <th class="col-2">Deskripsi</th>
-                        <th class="col-2">Debet</th>
-                        <th class="col-2">Kredit</th>
-                        <th class="col-2">Debet</th>
-                        <th class="col-2">Kredit</th>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">Deskripsi</th>
+                        <th class="text-center">Debet</th>
+                        <th class="text-center">Kredit</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -71,8 +68,6 @@
                           @if ($SaldoHutang->suppliers_id == $DataSupplier->id)
                             <td class="text-center">{{date('d F Y', strtotime($DataSupplier->created_at ))}}</td>
                             <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Saldo Awal</span></td>
-                            <td class="text-center">{{ $DataSupplier->status }}</td>
-                            <td class="text-center">{{ $DataSupplier->status }}</td>
                             <td class="text-right">Rp {{ number_format($SaldoHutang->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($SaldoHutang->kredit, 0, " ", ".")}}</td>
                           @endif
@@ -143,26 +138,16 @@
                         <td>{{$rekap->kode}}</td>
                         <td>{{$rekap->nama}}</td>
                         <td class="text-right">
-                          Rp {{number_format($distinct_pcc->where('suppliers_id', $rekap->id)->sum('debet'))}}
+                          Rp {{number_format($distinct_pcc->where('suppliers_id', $rekap->id)->sum('debet'), 0, " ", ".")}}
                         </td>
+                        
                         <td class="text-right">
-                          Rp {{number_format($distinct_pcc->where('suppliers_id', $rekap->id)->sum('kredit'))}}
+                          Rp {{number_format($distinct_pcc->where('suppliers_id', $rekap->id)->sum('kredit'), 0, " ", ".")}}
                         </td>
+                        <!-- <td class="text-right">
+                          Rp {{number_format($distinct_pccc->where($purchasejournaldetailss->purchase_journals->suppliers_id, $rekap->id)->sum('kredit'), 0, " ", ".")}}
+                        </td> -->
                       </tr>
-                      <!-- @foreach ($PurchaseJournals as $PurchaseJournal)
-                      @foreach ($purchasejournaldetails as $purchasejournaldetail)
-                      <tr>
-                      @if ($PurchaseJournal->suppliers_id == $rekap->id)
-                      @if ($purchasejournaldetail->purchasejournal_id == $PurchaseJournal->id)
-                      <td>{{$rekap->kode}}</td>
-                      <td>{{$rekap->nama}}</td>
-                      <td class="text-right">Rp {{ number_format($purchasejournaldetail->where('nomor_akun', '2-1210')->where('purchasejournal_id', $PurchaseJournal->id)->sum('debet'))}}</td>
-                      <td class="text-right">Rp {{ number_format($purchasejournaldetail->where('nomor_akun', '2-1210')->where('purchasejournal_id', $PurchaseJournal->id)->sum('kredit'))}}</td>
-                              @endif
-                            @endif
-                          </tr>
-                        @endforeach
-                      @endforeach -->
                     @endforeach
                   </tbody>
                   <tfoot>
@@ -173,6 +158,7 @@
                     </tr>
                   </tfoot>
                 </table>
+                {{$purchasejournaldetailss->purchase_journals->suppliers_id}}
               </div>
             </div>
           </div>
