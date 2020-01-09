@@ -10,7 +10,7 @@ class cpjdetail extends Model
     protected $fillable = ['cpj_id', 'nomor_akun', 'nama_akun' ,'debet', 'kredit'];
     public function cpjs()
     {
-    	return $this->belongsTo(cpj::class);
+    	return $this->belongsTo(cpj::class, "cpj_id");
     }
     public function account()
     {

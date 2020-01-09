@@ -22,75 +22,68 @@
   </style>
 </head>
 <body>
-  <h1>Inventory Card</h1>
-  <h3>Periode {{date('d F Y', strtotime($tanggal_mulai))}} sampai {{date('d F Y', strtotime($tanggal_akhir))}}</h3>
   <div class="container-fluid mt-2">
-    @php
-    function format_uang($angka){
-      $hasil =  number_format($angka,0, ',' , '.');
-      return $hasil;
-    }
-    @endphp
-    <div class="dt-responsive">
+    <h1>Inventory Card</h1>
+    <h3>Periode {{date('d F Y', strtotime($tanggal_mulai))}} sampai {{date('d F Y', strtotime($tanggal_akhir))}}</h3>
+    <div class="page-break"></div>
+    <div style="display: block;">
       @foreach ($items as $item)
-        <div class="sck">
-          <table class="table table-bordered nowrap" width="100%" border="1">
-            <thead class="report-header">
-              <tr class="bg-secondary font-weight-bold">
-                <th class="text-light" colspan="6">Item Name : {{ $item->nama }}</th>
-                <th class="text-light" colspan="1">Item Kode : {{ $item->kode }}</th>
-              </tr>
+        <table class="table table-bordered nowrap" border="1">
+          <thead class="report-header">
+            <tr class="bg-secondary font-weight-bold">
+              <th class="text-light" colspan="6">Item Name : {{ $item->nama }}</th>
+              <th class="text-light" colspan="1">Item Kode : {{ $item->kode }}</th>
+            </tr>
+            <tr>
+              <th class="text-center">Date</th>
+              <th class="text-center">Kode Produk</th>
+              <th class="text-center">Deskripsi</th>
+              <th class="text-center">Status</th>
+              <th class="text-center">QTY</th>
+              <th class="text-center">Price/ Unit</th>
+              <th class="text-center">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($inventories as $inventory)
               <tr>
-                <th class="text-center">Date</th>
-                <th class="text-center">Kode Produk</th>
-                <th class="text-center">Deskripsi</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">QTY</th>
-                <th class="text-center">Price/ Unit</th>
-                <th class="text-center">Amount</th>
+                @if ($inventory->items_id === $item->id)
+                  <td class="text-center">{{date('d F Y', strtotime($inventory->created_at ))}}</td>
+                  <td class="text-center">{{ $inventory->Items->kode }}</td>
+                  <td class="text-center">
+                    @if ($inventory->crj_id != null)
+                      <span>CRJ</span>
+                    @elseif($inventory->salesjournal_id != null)
+                      <span>Sales Journal</span>
+                    @elseif($inventory->retur_penjualan_id != null)
+                      <span>Retur Penjualan</span>
+                    @elseif($inventory->cpj_id != null)
+                      <span>CPJ</span>
+                    @elseif($inventory->purchasejournal_id != null)
+                      <span>Purchase Journal</span>
+                    @elseif($inventory->retur_pembelian_id != null)
+                      <span>Retur Pembelian</span>
+                    @elseif($inventory->saldo_items_id != null)
+                      <span>Saldo Awal</span>
+                    @endif
+                  </td>
+                  <td class="text-center">
+                    @if ($inventory->saldo_items_id !== null)
+                      <span>~ In ~</span>
+                    @elseif($inventory->status == 1 )
+                      <span>~ In ~</span>
+                    @elseif ($inventory->status == 0 )
+                      <span>~ Out ~</span>
+                    @endif
+                  </td>
+                  <td class="text-center">{{ $inventory->unit }}</td>
+                  <td class="text-right">Rp {{ number_format($inventory->price, 0, " ", ".")}}</td>
+                  <td class="text-right">Rp {{ number_format($inventory->total, 0, " ", ".")}}</td>
+                @endif
               </tr>
-            </thead>
-            <tbody>
-              @foreach ($inventories as $inventory)
-                <tr>
-                  @if ($inventory->items_id == $item->id)
-                    <td class="text-center">{{date('d F Y', strtotime($inventory->created_at ))}}</td>
-                    <td class="text-center">{{ $inventory->Items->kode }}</td>
-                    <td class="text-center">
-                      @if ($inventory->crj_id != null)
-                        <span>CRJ</span>
-                      @elseif($inventory->salesjournal_id != null)
-                        <span>Sales Journal</span>
-                      @elseif($inventory->retur_penjualan_id != null)
-                        <span>Retur Penjualan</span>
-                      @elseif($inventory->cpj_id != null)
-                        <span>CPJ</span>
-                      @elseif($inventory->purchasejournal_id != null)
-                        <span>Purchase Journal</span>
-                      @elseif($inventory->retur_pembelian_id != null)
-                        <span>Retur Pembelian</span>
-                      @elseif($inventory->saldo_items_id != null)
-                        <span>Saldo Awal</span>
-                      @endif
-                    </td>
-                    <td class="text-center">
-                      @if ($inventory->saldo_items_id !== null)
-                        <span>~ In ~</span>
-                      @elseif($inventory->status == 1 )
-                        <span>~ In ~</span>
-                      @elseif ($inventory->status == 0 )
-                        <span>~ Out ~</span>
-                      @endif
-                    </td>
-                    <td class="text-center">{{ $inventory->unit }}</td>
-                    <td class="text-right">Rp {{ number_format($inventory->price, 0, " ", ".")}}</td>
-                    <td class="text-right">Rp {{ number_format($inventory->total, 0, " ", ".")}}</td>
-                  @endif
-                </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
+            @endforeach
+          </tbody>
+        </table>
       @endforeach
     </div>
     <div class="page-break"></div>
@@ -127,9 +120,16 @@
         </tbody>
         <tfoot>
           <tr class="bg-success font-weight-bold">
-            <td class="text-light text-right" colspan="3">Total</td>
-            <td class="text-light text-right"></td>
-            <td class="text-light text-right"></td>
+            <td class="text-light text-right" colspan="2">Total</td>
+            <td class="text-light text-right">
+              {{$distinct_pcc->where('status', 1)->sum('unit')-$distinct_pcc->where('status', 0)->sum('unit')}}
+            </td>
+            <td class="text-light text-right">
+              Rp {{number_format(($distinct_pcc->where('status', 1)->sum('total') - $distinct_pcc->where('status', 0)->sum('total')) / ($distinct_pcc->where('status', 1)->sum('unit')-$distinct_pcc->where('status', 0)->sum('unit')), 0, " ", ".")}}
+            </td>
+            <td class="text-light text-right">
+              Rp {{number_format($distinct_pcc->where('status', 1)->sum('total') - $distinct_pcc->where('status', 0)->sum('total'), 0, " ", ".")}}
+            </td>
           </tr>
         </tfoot>
       </table>
