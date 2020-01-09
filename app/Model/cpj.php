@@ -18,7 +18,7 @@ class cpj extends Model
     }
     public function cpjdetail()
     {
-      return $this->hasMany(cpjdetail::class);
+      return $this->hasMany(cpjdetail::class, "cpj_id");
     }
     public function Inventory()
     {

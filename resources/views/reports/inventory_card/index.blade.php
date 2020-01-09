@@ -44,7 +44,7 @@
                   <div class="right-container">
                     <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
                     <button type="button" class="btn btn-info mr-5" data-toggle="modal" data-target="#createModal"><i class="ik ik-filter"></i>Filter</button>
-                    <a type="button" class="btn btn-primary mr-5" href="{{route('inventory_card.print')}}"><i class="ik ik-printer"></i>Print</a>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal"><i class="ik ik-printer"></i>Print</button>
                   </div>
                 </div>
                 <div class="card-body">
@@ -68,7 +68,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          
+
                           @foreach ($inventories as $inventory)
                             <tr>
                               @if ($inventory->items_id == $item->id)
@@ -144,9 +144,16 @@
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
-                      <td class="text-light text-right" colspan="3">Total</td>
-                      <td class="text-light text-right"></td>
-                      <td class="text-light text-right"></td>
+                      <td class="text-light text-right" colspan="2">Total</td>
+                      <td class="text-light text-right">
+                        {{$distinct_pcc->where('status', 1)->sum('unit')-$distinct_pcc->where('status', 0)->sum('unit')}}
+                      </td>
+                      <td class="text-light text-right">
+                        Rp {{number_format(($distinct_pcc->where('status', 1)->sum('total') - $distinct_pcc->where('status', 0)->sum('total')) / ($distinct_pcc->where('status', 1)->sum('unit')-$distinct_pcc->where('status', 0)->sum('unit')), 0, " ", ".")}}
+                      </td>
+                      <td class="text-light text-right">
+                        Rp {{number_format($distinct_pcc->where('status', 1)->sum('total') - $distinct_pcc->where('status', 0)->sum('total'), 0, " ", ".")}}
+                      </td>
                     </tr>
                   </tfoot>
                 </table>
@@ -157,5 +164,7 @@
       </div>
     </div>
   </div>
+  @include('reports.inventory_card.show')
+  @include('reports.inventory_card.pdf')
 
 @endsection

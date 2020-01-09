@@ -42,7 +42,7 @@ class BukuBesarController extends Controller
         $rpb_detail   = ReturPembelianDetail::all();
         $rpj_detail   = ReturPenjualanDetail::all();
 
-        return response()->json($pc_detail);
+        // return response()->json($pc_detail);
 
         return view('reports.buku_besar.index', compact('saldo_awal', 'account', 'cbi_detail', 'cbo_detail', 'cpj_detail', 'crj_detail', 'jp_detail', 'ju_detail', 'pc_detail', 'pj_detail', 'sj_detail', 'rpb_detail', 'rpj_detail'));
     }
