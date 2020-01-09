@@ -166,7 +166,7 @@
 
           <div class="forms-sample" style="margin-bottom: 10px; margin-top: 10px; justify-content: space-between; display: flex;">
             <a href="{{route('cashbank_out.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
-            <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Create</button>
+            <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Edit</button>
           </div>
         </div>
       </div>

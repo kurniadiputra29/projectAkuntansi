@@ -68,7 +68,6 @@
                       <th class="col-2 text-light">Status</th>
                       <th class="col-2 text-light">Keterangan</th>
                       <th class="col-2 text-light">Total tagihan</th>
-                      <th class="col-2 text-light">Sisa tagihan</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -83,9 +82,6 @@
                         <td class="text-right">
                           Rp {{number_format($crjdetails->where('crj_id', $crj->id)->sum('debet'), 0, " ", ".")}}
                         </td>
-                        <td class="text-right">
-                          Rp 0
-                        </td>
                       </tr>
                     @endforeach
                     @foreach ($SalesJournals as $SalesJournal)
@@ -98,9 +94,6 @@
                         <td>{{$SalesJournal->description}}</td>
                         <td class="text-right">
                           Rp {{number_format($salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('debet'), 0, " ", ".")}}
-                        </td>
-                        <td class="text-right">
-                          Rp {{number_format($salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('kredit'), 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach
@@ -115,21 +108,13 @@
                         <td class="text-right">
                           Rp {{number_format($ReturPenjualanDetails->where('retur_penjualan_id', $ReturPenjualan->id)->sum('debet'), 0, " ", ".")}}
                         </td>
-                        <td class="text-right">
-                          Rp {{number_format($ReturPenjualanDetails->where('retur_penjualan_id', $ReturPenjualan->id)->sum('kredit'), 0, " ", ".")}}
-                        </td>
                       </tr>
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
                       <td class="text-light text-center" colspan="6">Total</td>
-                      <td class="text-light text-right">Rp
-                        {{number_format($ReturPenjualanDetails->where('retur_penjualan_id', $ReturPenjualan->id)->sum('debet') + $salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('debet'), 0, " ", ".")}}
-                      </td>
-                      <td class="text-light text-right">Rp 
-                        {{number_format($ReturPenjualanDetails->where('retur_penjualan_id', $ReturPenjualan->id)->sum('kredit') + $salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('kredit'), 0, " ", ".")}}
-                      </td>
+                      <td class="text-light text-center"></td>
                     </tr>
                   </tfoot>
                 </table>
