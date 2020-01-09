@@ -115,6 +115,17 @@
                         @endforeach
                       @endforeach
                     </tbody>
+                    <tfoot>
+                      <tr class="bg-success font-weight-bold">
+                        <td class="text-light text-center" colspan="2">Total</td>
+                        <td class="text-light text-right">
+                          Rp {{number_format($distinct_laporan->where('customers_id', $DataCustomer->id)->sum('debet'), 0, " ", ".")}}
+                        </td>
+                        <td class="text-light text-right">
+                          Rp {{number_format($distinct_laporan->where('customers_id', $DataCustomer->id)->sum('kredit'), 0, " ", ".")}}
+                        </td>
+                      </tr>
+                    </tfoot>
                   </table>
                 @endforeach
               </div>
@@ -125,10 +136,9 @@
                       <td class="text-light text-center" colspan="4">Rekapitulasi</td>
                     </tr>
                     <tr>
-                      <td>Kode</td>
-                      <td>Customers Name</td>
-                      <td>Debet</td>
-                      <td>Kredit</td>
+                      <td class="text-center">Kode</td>
+                      <td class="text-center">Customers Name</td>
+                      <td class="text-center">Balance</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -137,19 +147,17 @@
                         <td>{{$rekap->kode}}</td>
                         <td>{{$rekap->nama}}</td>
                         <td class="text-right">
-                          Rp {{number_format($distinct_pcc->where('customers_id', $rekap->id)->sum('debet'))}}
-                        </td>
-                        <td class="text-right">
-                          Rp {{number_format($distinct_pcc->where('customers_id', $rekap->id)->sum('kredit'))}}
+                          Rp {{number_format($distinct_laporan->where('customers_id', $rekap->id)->sum('debet') - $distinct_laporan->where('customers_id', $rekap->id)->sum('kredit'), 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
-                      <td class="text-light text-right" colspan="2">Total</td>
-                      <td class="text-light text-right"></td>
-                      <td class="text-light text-right"></td>
+                      <td class="text-light text-center" colspan="2">Total</td>
+                      <td class="text-light text-right">
+                        Rp {{number_format($distinct_laporan->sum('debet') - $distinct_laporan->sum('kredit'), 0, " ", ".")}}
+                      </td>
                     </tr>
                   </tfoot>
                 </table>

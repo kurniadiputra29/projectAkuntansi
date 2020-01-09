@@ -11,6 +11,7 @@ use App\Model\Item;
 use App\Model\Inventory;
 use App\Model\ReturPembelian;
 use App\Model\ReturPembelianDetail;
+use App\Model\LaporanHutang;
 
 class PurchaseJournalController extends Controller
 {
@@ -109,6 +110,16 @@ class PurchaseJournalController extends Controller
             $detail->save();
         }
 
+        //insert data Laporan
+        for ($b=0; $b < $countKasBank1; $b++) { 
+            $detail = new LaporanHutang();
+            $detail->suppliers_id     = $request->suppliers_id;
+            $detail->purchasejournal_id = $PurchaseJournal->id;
+            $detail->kredit = $detailcrj['total'][$b];
+            $detail->save();
+        }
+
+
         //insert data Inventory
         $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
         $countinventory1 = count($inventory['jumlah']);
@@ -123,6 +134,7 @@ class PurchaseJournalController extends Controller
             $detail->total              = $inventory['jumlah'][$x];
             $detail->save();
         }
+
         return redirect('/purchase_journal')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
@@ -226,6 +238,16 @@ class PurchaseJournalController extends Controller
             $detail->nomor_akun             = $detailcrj['nomor_akun_jasa'][$i];
             $detail->nama_akun              = $detailcrj['nama_akun2_jasa'][$i];
             $detail->debet                  = $detailcrj['jasa_pengiriman'][$i];
+            $detail->save();
+        }
+
+        LaporanHutang::where('purchasejournal_id', $id)->delete();
+        //insert data Laporan
+        for ($b=0; $b < $countKasBank1; $b++) { 
+            $detail = new LaporanHutang();
+            $detail->suppliers_id     = $request->suppliers_id;
+            $detail->purchasejournal_id = $id;
+            $detail->kredit = $detailcrj['total'][$b];
             $detail->save();
         }
 

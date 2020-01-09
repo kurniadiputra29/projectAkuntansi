@@ -7,6 +7,7 @@ use App\Model\Account;
 use App\Model\CashBankOut;
 use App\Model\CashBankOutDetails;
 use App\Model\DataSupplier;
+use App\Model\LaporanHutang;
 
 class CashBankOutController extends Controller
 {
@@ -81,6 +82,15 @@ class CashBankOutController extends Controller
             $detail->nomor_akun         = $detailcashinbank['nomor_akun'][$i];
             $detail->nama_akun          = $detailcashinbank['nama_akun'][$i];
             $detail->debet              = $detailcashinbank['jumlah'][$i];
+            $detail->save();
+        }
+
+        //insert data Laporan
+        for ($b=0; $b < $countKasBank2; $b++) { 
+            $detail = new LaporanHutang();
+            $detail->suppliers_id     = $request->suppliers_id;
+            $detail->cash_bank_outs_id  = $cashinbank->id;
+            $detail->debet = $detailcashinbank['total'][$b];
             $detail->save();
         }
 
@@ -162,6 +172,15 @@ class CashBankOutController extends Controller
             $detail->save();
         }
 
+        LaporanHutang::where('cash_bank_outs_id', $id)->delete();
+        //insert data Laporan
+        for ($b=0; $b < $countKasBank2; $b++) { 
+            $detail = new LaporanHutang();
+            $detail->suppliers_id     = $request->suppliers_id;
+            $detail->cash_bank_outs_id = $id;
+            $detail->debet = $detailcashinbank['total'][$b];
+            $detail->save();
+        }
         return redirect('/cashbank_out')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 

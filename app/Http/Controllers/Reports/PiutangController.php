@@ -12,6 +12,7 @@ use App\Model\ReturPenjualan;
 use App\Model\ReturPenjualanDetail;
 use App\Model\CashBankIn;
 use App\Model\CashBankInDetails;
+use App\Model\LaporanPiutang;
 use PDF;
 
 class PiutangController extends Controller
@@ -40,9 +41,10 @@ class PiutangController extends Controller
         $sum_kredit                 = SaldoPiutang::sum('kredit');
         $distinct_pc                = DataCustomer::distinct('kode')->select('id', 'kode', 'nama')->get();
         $distinct_pcc                = SaldoPiutang::distinct('customers_id')->select('debet', 'kredit', 'customers_id')->get();
+        $distinct_laporan           = LaporanPiutang::distinct('customers_id')->select('debet', 'kredit', 'customers_id')->get();
         // dd($salesjournaldetails);
 
-        return view('reports.piutang_pelanggan.index', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'sum_debet', 'sum_kredit', 'distinct_pc', 'distinct_pcc'));
+        return view('reports.piutang_pelanggan.index', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'sum_debet', 'sum_kredit', 'distinct_pc', 'distinct_pcc', 'distinct_laporan'));
     }
 
     /**
