@@ -26,9 +26,9 @@
     <h1>Inventory Card</h1>
     <h3>Periode {{date('d F Y', strtotime($tanggal_mulai))}} sampai {{date('d F Y', strtotime($tanggal_akhir))}}</h3>
     <div class="page-break"></div>
-    <div style="display: block;">
+    <div>
       @foreach ($items as $item)
-        <table class="table table-bordered nowrap" border="1">
+        <table class="table table-bordered nowrap" width="100%" border="1">
           <thead class="report-header">
             <tr class="bg-secondary font-weight-bold">
               <th class="text-light" colspan="6">Item Name : {{ $item->nama }}</th>
@@ -46,8 +46,8 @@
           </thead>
           <tbody>
             @foreach ($inventories as $inventory)
+              @if ($inventory->items_id === $item->id)
               <tr>
-                @if ($inventory->items_id === $item->id)
                   <td class="text-center">{{date('d F Y', strtotime($inventory->created_at ))}}</td>
                   <td class="text-center">{{ $inventory->Items->kode }}</td>
                   <td class="text-center">
@@ -79,8 +79,8 @@
                   <td class="text-center">{{ $inventory->unit }}</td>
                   <td class="text-right">Rp {{ number_format($inventory->price, 0, " ", ".")}}</td>
                   <td class="text-right">Rp {{ number_format($inventory->total, 0, " ", ".")}}</td>
-                @endif
               </tr>
+              @endif
             @endforeach
           </tbody>
         </table>
