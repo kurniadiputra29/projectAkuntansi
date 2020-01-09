@@ -14,6 +14,7 @@ use App\Model\SalesJournal;
 use App\Model\ReturPenjualan;
 use App\Model\ReturPembelian;
 use PDF;
+use Carbon\Carbon;
 
 class InventoryController extends Controller
 {
@@ -41,6 +42,24 @@ class InventoryController extends Controller
         $distinct_pc            = Item::distinct('id')->select('id', 'kode', 'nama')->get();
         $distinct_pcc           = Inventory::distinct('items_id')->select('unit', 'price', 'total', 'items_id', 'status')->get();
         return view('reports.inventory_card.index', compact('items', 'inventories', 'cpjs', 'crjs', 'PurchaseJournals', 'SalesJournals', 'ReturPembelians', 'ReturPenjualans', 'distinct_pc', 'distinct_pcc', 'SaldoItems'));
+    }
+
+    /**
+     * Show hasil filteran dari filter modal.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function filter(Request $request)
+    {
+        $tanggal_mulai  = $request->tanggal_mulai;
+        $tanggal_akhir  = $request->tanggal_akhir;
+        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
+
+        $items = Item::all();
+        $inventories = Inventory::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        $distinct_pc = Item::distinct('id')->select('id', 'kode', 'nama')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        $distinct_pcc = Inventory::distinct('items_id')->select('unit', 'price', 'total', 'items_id', 'status')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        return view('reports.inventory_card.filter', compact('items','inventories','distinct_pc','distinct_pcc','tanggal_mulai','tanggal_akhir','add_day'));
     }
 
     /**
