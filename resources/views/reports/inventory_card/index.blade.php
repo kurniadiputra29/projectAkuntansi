@@ -144,9 +144,16 @@
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
-                      <td class="text-light text-right" colspan="3">Total</td>
-                      <td class="text-light text-right"></td>
-                      <td class="text-light text-right"></td>
+                      <td class="text-light text-right" colspan="2">Total</td>
+                      <td class="text-light text-right">
+                        {{$distinct_pcc->where('status', 1)->sum('unit')-$distinct_pcc->where('status', 0)->sum('unit')}}
+                      </td>
+                      <td class="text-light text-right">
+                        Rp {{number_format(($distinct_pcc->where('status', 1)->sum('total') - $distinct_pcc->where('status', 0)->sum('total')) / ($distinct_pcc->where('status', 1)->sum('unit')-$distinct_pcc->where('status', 0)->sum('unit')), 0, " ", ".")}}
+                      </td>
+                      <td class="text-light text-right">
+                        Rp {{number_format($distinct_pcc->where('status', 1)->sum('total') - $distinct_pcc->where('status', 0)->sum('total'), 0, " ", ".")}}
+                      </td>
                     </tr>
                   </tfoot>
                 </table>

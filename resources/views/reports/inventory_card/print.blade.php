@@ -33,62 +33,64 @@
     @endphp
     <div class="dt-responsive">
       @foreach ($items as $item)
-        <table class="table table-bordered nowrap" width="100%" border="1">
-          <thead class="report-header">
-            <tr class="bg-secondary font-weight-bold">
-              <th class="text-light" colspan="6">Item Name : {{ $item->nama }}</th>
-              <th class="text-light" colspan="1">Item Kode : {{ $item->kode }}</th>
-            </tr>
-            <tr>
-              <th class="text-center">Date</th>
-              <th class="text-center">Kode Produk</th>
-              <th class="text-center">Deskripsi</th>
-              <th class="text-center">Status</th>
-              <th class="text-center">QTY</th>
-              <th class="text-center">Price/ Unit</th>
-              <th class="text-center">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($inventories as $inventory)
-              <tr>
-                @if ($inventory->items_id == $item->id)
-                  <td class="text-center">{{date('d F Y', strtotime($inventory->created_at ))}}</td>
-                  <td class="text-center">{{ $inventory->Items->kode }}</td>
-                  <td class="text-center">
-                    @if ($inventory->crj_id != null)
-                      <span class="badge badge-pill badge-warning mb-1">CRJ</span>
-                    @elseif($inventory->salesjournal_id != null)
-                      <span class="badge badge-pill badge-warning mb-1">Sales Journal</span>
-                    @elseif($inventory->retur_penjualan_id != null)
-                      <span class="badge badge-pill badge-success mb-1">Retur Penjualan</span>
-                    @elseif($inventory->cpj_id != null)
-                      <span class="badge badge-pill badge-success mb-1">CPJ</span>
-                    @elseif($inventory->purchasejournal_id != null)
-                      <span class="badge badge-pill badge-success mb-1">Purchase Journal</span>
-                    @elseif($inventory->retur_pembelian_id != null)
-                      <span class="badge badge-pill badge-warning mb-1">Retur Pembelian</span>
-                    @elseif($inventory->saldo_items_id != null)
-                      <span class="badge badge-pill badge-primary mb-1">Saldo Awal</span>
-                    @endif
-                  </td>
-                  <td class="text-center">
-                    @if ($inventory->saldo_items_id !== null)
-                      <span class="badge badge-pill badge-primary mb-1">~ In ~</span>
-                    @elseif($inventory->status == 1 )
-                      <span class="badge badge-pill badge-success mb-1">~ In ~</span>
-                    @elseif ($inventory->status == 0 )
-                      <span class="badge badge-pill badge-warning mb-1">~ Out ~</span>
-                    @endif
-                  </td>
-                  <td class="text-center">{{ $inventory->unit }}</td>
-                  <td class="text-right">Rp {{ number_format($inventory->price, 0, " ", ".")}}</td>
-                  <td class="text-right">Rp {{ number_format($inventory->total, 0, " ", ".")}}</td>
-                @endif
+        <div class="sck">
+          <table class="table table-bordered nowrap" width="100%" border="1">
+            <thead class="report-header">
+              <tr class="bg-secondary font-weight-bold">
+                <th class="text-light" colspan="6">Item Name : {{ $item->nama }}</th>
+                <th class="text-light" colspan="1">Item Kode : {{ $item->kode }}</th>
               </tr>
-            @endforeach
-          </tbody>
-        </table>
+              <tr>
+                <th class="text-center">Date</th>
+                <th class="text-center">Kode Produk</th>
+                <th class="text-center">Deskripsi</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">QTY</th>
+                <th class="text-center">Price/ Unit</th>
+                <th class="text-center">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($inventories as $inventory)
+                <tr>
+                  @if ($inventory->items_id == $item->id)
+                    <td class="text-center">{{date('d F Y', strtotime($inventory->created_at ))}}</td>
+                    <td class="text-center">{{ $inventory->Items->kode }}</td>
+                    <td class="text-center">
+                      @if ($inventory->crj_id != null)
+                        <span>CRJ</span>
+                      @elseif($inventory->salesjournal_id != null)
+                        <span>Sales Journal</span>
+                      @elseif($inventory->retur_penjualan_id != null)
+                        <span>Retur Penjualan</span>
+                      @elseif($inventory->cpj_id != null)
+                        <span>CPJ</span>
+                      @elseif($inventory->purchasejournal_id != null)
+                        <span>Purchase Journal</span>
+                      @elseif($inventory->retur_pembelian_id != null)
+                        <span>Retur Pembelian</span>
+                      @elseif($inventory->saldo_items_id != null)
+                        <span>Saldo Awal</span>
+                      @endif
+                    </td>
+                    <td class="text-center">
+                      @if ($inventory->saldo_items_id !== null)
+                        <span>~ In ~</span>
+                      @elseif($inventory->status == 1 )
+                        <span>~ In ~</span>
+                      @elseif ($inventory->status == 0 )
+                        <span>~ Out ~</span>
+                      @endif
+                    </td>
+                    <td class="text-center">{{ $inventory->unit }}</td>
+                    <td class="text-right">Rp {{ number_format($inventory->price, 0, " ", ".")}}</td>
+                    <td class="text-right">Rp {{ number_format($inventory->total, 0, " ", ".")}}</td>
+                  @endif
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
       @endforeach
     </div>
     <div class="page-break"></div>
