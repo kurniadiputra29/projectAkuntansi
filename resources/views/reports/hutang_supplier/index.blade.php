@@ -172,6 +172,6 @@
     </div>
   </div>
   @include('reports.hutang_supplier.show')
-  {{-- @include('reports.hutang_supplier.pdf') --}}
+  @include('reports.hutang_supplier.pdf')
 
 @endsection

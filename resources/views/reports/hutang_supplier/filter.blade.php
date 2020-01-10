@@ -169,8 +169,8 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>filter
   @include('reports.hutang_supplier.show')
-  {{-- @include('reports.hutang_supplier.pdf') --}}
+  @include('reports.hutang_supplier.pdf')
 
 @endsection
