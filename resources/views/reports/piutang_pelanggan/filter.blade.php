@@ -41,8 +41,7 @@
                 <span>use class <code>table-hover</code> inside table element</span>
               </div>
               <div class="right-container">
-                <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
-                <button type="button" class="btn btn-info mr-5" data-toggle="modal" data-target="#createModal"><i class="ik ik-filter"></i>Filter</button>
+                <a type="button" class="btn btn-success mr-5" href="/piutang_pelanggan"><i class="ik ik-arrow-left"></i>Back</a>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal"><i class="ik ik-printer"></i>Print</button>
               </div>
             </div>
@@ -168,7 +167,6 @@
       </div>
     </div>
   </div>
-  @include('reports.piutang_pelanggan.show')
   @include('reports.piutang_pelanggan.pdf')
 
 @endsection

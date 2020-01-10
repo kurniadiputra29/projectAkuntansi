@@ -94,16 +94,17 @@ Route::get('petty_cash_book', 'Reports\PettyCashBookController@index')->name('pe
 Route::post('petty_cash_book/filter', 'Reports\PettyCashBookController@filter')->name('petty_cash_book.filter');
 Route::post('petty_cash_book/print', 'Reports\PettyCashBookController@print')->name('petty_cash_book.print');
 Route::get('petty_cash_book/{petty_cash_book}', 'Reports\PettyCashBookController@show')->name('petty_cash_book.show');
-Route::get('inventory_card/print', 'Reports\InventoryController@print')->name('inventory_card.print');
-Route::get('hutang/print', 'Reports\HutangController@print')->name('hutang.print');
-Route::get('piutang/print', 'Reports\PiutangController@print')->name('piutang.print');
 
 
-Route::get('/piutang_pelanggan', 'Reports\PiutangController@index')->name('piutang_pelanggan.index');
-Route::get('/hutang', 'Reports\HutangController@index')->name('hutang.index');
+Route::get('piutang_pelanggan', 'Reports\PiutangController@index')->name('piutang_pelanggan.index');
+Route::post('piutang_pelanggan/print', 'Reports\PiutangController@print')->name('piutang_pelanggan.print');
+Route::post('piutang_pelanggan/filter', 'Reports\PiutangController@filter')->name('piutang_pelanggan.filter');
+Route::get('hutang', 'Reports\HutangController@index')->name('hutang.index');
+Route::post('hutang/print', 'Reports\HutangController@print')->name('hutang.print');
+Route::post('hutang/filter', 'Reports\HutangController@filter')->name('hutang.filter');
 Route::get('neraca_saldo', 'Reports\NeracaSaldoController@index')->name('neraca_saldo.index');
 Route::get('neraca_saldo/print', 'Reports\NeracaSaldoController@print')->name('neraca_saldo.print');
 
 Route::get('daftar_penjualan', 'Reports\Daftar_PenjualanController@index')->name('laporan.daftar_penjualan');
 
-Route::get('daftar_pembelian', 'Reports\Daftar_PembelianController@index')->name('laporan.daftar_pembelian');
+Route::get('daftar_pembelian', 'Reports\Daftar_PembrlianController@index')->name('laporan.daftar_pembelian');
