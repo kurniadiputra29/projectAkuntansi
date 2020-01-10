@@ -26,7 +26,7 @@
 
     <div class="dt-responsive">
       @foreach ($DataCustomers as $DataCustomer)
-        <table class="table table-bordered nowrap">
+        <table class="table table-bordered nowrap" width="100%" border="1">
           <thead class="report-header">
             <tr class="bg-secondary font-weight-bold">
               <th class="col-8 text-light" colspan="4">Customers Name: {{$DataCustomer->nama}} ( {{$DataCustomer->kode}} )</th>
@@ -108,7 +108,7 @@
     </div>
     <div class="page-break"></div>
     <div class="dt-responsive">
-      <table id="simpletable" class="table table-bordered nowrap">
+      <table id="simpletable" class="table table-bordered nowrap" width="100%" border="1">
         <thead>
           <tr class="bg-secondary font-weight-bold">
             <td class="text-light text-center" colspan="3">Rekapitulasi</td>
