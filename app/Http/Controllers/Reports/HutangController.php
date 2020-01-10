@@ -64,7 +64,7 @@ class HutangController extends Controller
         $ReturPembelianDetails      = ReturPembelianDetail::where('nomor_akun', '2-1210')->get();
         $CashBankOuts               = CashBankOut::all();
         $CashBankOutDetails         = CashBankOutDetails::where('nomor_akun', '2-1210')->get();
-        $distinct_pc                = DataSupplier::distinct('kode')->select('id', 'kode', 'nama')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        $distinct_pc                = DataSupplier::distinct('kode')->select('id', 'kode', 'nama')->get();
         return view('reports.hutang_supplier.filter', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails','distinct_pc', 'distinct_laporan','tanggal_mulai','tanggal_akhir','add_day'));
     }
 

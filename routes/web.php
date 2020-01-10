@@ -97,7 +97,8 @@ Route::get('petty_cash_book/{petty_cash_book}', 'Reports\PettyCashBookController
 
 
 Route::get('piutang_pelanggan', 'Reports\PiutangController@index')->name('piutang_pelanggan.index');
-Route::get('piutang_pelanggan/print', 'Reports\PiutangController@print')->name('piutang_pelanggan.print');
+Route::post('piutang_pelanggan/print', 'Reports\PiutangController@print')->name('piutang_pelanggan.print');
+Route::post('piutang_pelanggan/filter', 'Reports\PiutangController@filter')->name('piutang_pelanggan.filter');
 Route::get('hutang', 'Reports\HutangController@index')->name('hutang.index');
 Route::post('hutang/print', 'Reports\HutangController@print')->name('hutang.print');
 Route::post('hutang/filter', 'Reports\HutangController@filter')->name('hutang.filter');
