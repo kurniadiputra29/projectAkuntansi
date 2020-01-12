@@ -108,4 +108,5 @@ Route::get('neraca_saldo/print', 'Reports\NeracaSaldoController@print')->name('n
 Route::get('daftar_penjualan', 'Reports\Daftar_PenjualanController@index')->name('daftar_penjualan.index');
 Route::post('daftar_penjualan/filter', 'Reports\Daftar_PenjualanController@filter')->name('daftar_penjualan.filter');
 Route::post('daftar_penjualan/print', 'Reports\Daftar_PenjualanController@print')->name('daftar_penjualan.print');
+Route::get('daftar_penjualan/printF', 'Reports\Daftar_PenjualanController@printFilter')->name('daftar_penjualan.printF');
 Route::get('daftar_pembelian', 'Reports\Daftar_PembelianController@index')->name('daftar_pembelian.index');

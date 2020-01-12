@@ -65,6 +65,25 @@ class Daftar_PenjualanController extends Controller
         return view('reports.daftar_penjualan.filter', compact('crjs', 'SalesJournals', 'ReturPenjualans', 'CashBankIns', 'salesjournaldetails', 'ReturPenjualanDetails', 'CashBankInDetailss', 'crjdetails', 'LaporanPenjualans','tanggal_mulai','tanggal_akhir','add_day'));
     }
 
+    public function printFilter(Request $request)
+    {
+        $tanggal_mulai  = $request->tanggal_mulai;
+        $tanggal_akhir  = $request->tanggal_akhir;
+        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
+        $crjs                       = crj::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        $crjdetails                 = crjdetail::all();
+        $SalesJournals              = SalesJournal::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        $ReturPenjualans            = ReturPenjualan::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        $CashBankIns                = CashBankIn::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        $salesjournaldetails        = salesjournaldetail::all();
+        $ReturPenjualanDetails      = ReturPenjualanDetail::all();
+        $CashBankInDetailss         = CashBankInDetails::all();
+        $LaporanPenjualans         = LaporanPenjualan::all();
+
+        $pdf = PDF::loadview('reports.daftar_penjualan.print', compact('crjs', 'SalesJournals', 'ReturPenjualans', 'CashBankIns', 'salesjournaldetails', 'ReturPenjualanDetails', 'CashBankInDetailss', 'crjdetails', 'LaporanPenjualans','tanggal_mulai','tanggal_akhir','add_day'));
+        return $pdf->setPaper('a4', 'landscape')->stream('laporan-penjualan.pdf');
+    }
+
     /**
      * Print hasil filteran dari filter modal.
      *

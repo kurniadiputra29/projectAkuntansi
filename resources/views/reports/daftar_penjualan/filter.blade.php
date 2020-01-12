@@ -44,7 +44,8 @@
               </div>
               <div class="right-container">
                 <a type="button" class="btn btn-success mr-5" href="/daftar_penjualan"><i class="ik ik-arrow-left"></i>Back</a>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal"><i class="ik ik-printer"></i>Print</button>
+                <a type="button" class="btn btn-primary" href="{{route('daftar_penjualan.printF')}}"><i class="ik ik-printer"></i>Print</a>
+                {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal"><i class="ik ik-printer"></i>Print</button> --}}
               </div>
             </div>
             <div class="card-body">
