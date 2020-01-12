@@ -187,14 +187,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.daftar_penjualan')}}">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('daftar_penjualan.index')}}">
                               Daftar Laporan Penjualan
                             </a>
                           </h3>
                           <p>
                             Menunjukkan daftar kronologis Penjualan barang dagang secara kredit dan cash.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.daftar_penjualan')}}">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('daftar_penjualan.index')}}">
                             Lihat Laporan
                           </a>
                         </div>
@@ -221,14 +221,14 @@
                       <div class="col-sm-12 col-md-6">
                         <div class="report-item">
                           <h3>
-                            <a data-placement="left" data-toggle="tooltop" href="{{route('laporan.daftar_pembelian')}}">
+                            <a data-placement="left" data-toggle="tooltop" href="{{route('daftar_pembelian.index')}}">
                               Daftar Laporan Pembelian
                             </a>
                           </h3>
                           <p>
                             Menunjukkan daftar kronologis Pembelian barang dagang secara kredit dan cash.
                           </p>
-                          <a class="btn btn-outline-primary btn-rounded" href="{{route('laporan.daftar_pembelian')}}">
+                          <a class="btn btn-outline-primary btn-rounded" href="{{route('daftar_pembelian.index')}}">
                             Lihat Laporan
                           </a>
                         </div>

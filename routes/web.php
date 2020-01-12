@@ -105,6 +105,7 @@ Route::post('hutang/filter', 'Reports\HutangController@filter')->name('hutang.fi
 Route::get('neraca_saldo', 'Reports\NeracaSaldoController@index')->name('neraca_saldo.index');
 Route::get('neraca_saldo/print', 'Reports\NeracaSaldoController@print')->name('neraca_saldo.print');
 
-Route::get('daftar_penjualan', 'Reports\Daftar_PenjualanController@index')->name('laporan.daftar_penjualan');
-
-Route::get('daftar_pembelian', 'Reports\Daftar_PembelianController@index')->name('laporan.daftar_pembelian');
+Route::get('daftar_penjualan', 'Reports\Daftar_PenjualanController@index')->name('daftar_penjualan.index');
+Route::post('daftar_penjualan/filter', 'Reports\Daftar_PenjualanController@filter')->name('daftar_penjualan.filter');
+Route::post('daftar_penjualan/print', 'Reports\Daftar_PenjualanController@print')->name('daftar_penjualan.print');
+Route::get('daftar_pembelian', 'Reports\Daftar_PembelianController@index')->name('daftar_pembelian.index');
