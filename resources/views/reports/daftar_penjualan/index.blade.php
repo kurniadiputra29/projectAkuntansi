@@ -80,7 +80,7 @@
                         <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Penjualan Tunai</span></td>
                         <td>{{$crj->description}}</td>
                         <td class="text-right">
-                          Rp {{number_format($crjdetails->where('crj_id', $crj->id)->sum('debet'), 0, " ", ".")}}
+                          Rp {{number_format($LaporanPenjualans->where('crj_id', $crj->id)->sum('total'), 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach
@@ -93,7 +93,7 @@
                         <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Penjualan Kredit</span></td> 
                         <td>{{$SalesJournal->description}}</td>
                         <td class="text-right">
-                          Rp {{number_format($salesjournaldetails->where('salesjournal_id', $SalesJournal->id)->sum('debet'), 0, " ", ".")}}
+                          Rp {{number_format($LaporanPenjualans->where('salesjournal_id', $SalesJournal->id)->sum('total'), 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach
@@ -106,15 +106,14 @@
                         <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Retur</span></td> 
                         <td>{{$ReturPenjualan->description}}</td>
                         <td class="text-right">
-                          Rp {{number_format($ReturPenjualanDetails->where('retur_penjualan_id', $ReturPenjualan->id)->sum('debet'), 0, " ", ".")}}
+                          Rp {{number_format($LaporanPenjualans->where('retur_penjualan_id', $ReturPenjualan->id)->sum('total'), 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
-                      <td class="text-light text-center" colspan="6">Total</td>
-                      <td class="text-light text-center"></td>
+                      <td class="text-light text-center" colspan="7">Daftar Penjualan</td>
                     </tr>
                   </tfoot>
                 </table>

@@ -12,6 +12,7 @@ use App\Model\cpjdetail;
 use App\Model\ReturPembelianDetail;
 use App\Model\purchasejournaldetail;
 use App\Model\CashBankOutDetails;
+use App\Model\LaporanPembelian;
 
 class Daftar_PembelianController extends Controller
 {
@@ -33,9 +34,10 @@ class Daftar_PembelianController extends Controller
         $CashBankOuts               = CashBankOut::all();
         $purchasejournaldetails     = purchasejournaldetail::all();
         $ReturPembelianDetails      = ReturPembelianDetail::all();
-        $CashBankOutDetailss        = CashBankOutDetails::all();
+        $CashBankOutDetailss        = CashBankOutDetails::all(); 
+        $LaporanPembelians        = LaporanPembelian::all(); 
 
-        return view('reports.daftar_pembelian.index', compact('cpjs', 'cpjdetails', 'PurchaseJournals', 'ReturPembelians', 'CashBankOuts', 'purchasejournaldetails', 'ReturPembelianDetails', 'CashBankOutDetailss'));
+        return view('reports.daftar_pembelian.index', compact('cpjs', 'cpjdetails', 'PurchaseJournals', 'ReturPembelians', 'CashBankOuts', 'purchasejournaldetails', 'ReturPembelianDetails', 'CashBankOutDetailss', 'LaporanPembelians'));
     }
 
     /**

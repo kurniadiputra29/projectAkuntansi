@@ -12,6 +12,7 @@ use App\Model\Inventory;
 use App\Model\cpj;
 use App\Model\PurchaseJournal;
 use App\Model\LaporanHutang;
+use App\Model\LaporanPembelian;
 
 class ReturPembelianController extends Controller
 {
@@ -109,6 +110,14 @@ class ReturPembelianController extends Controller
           $detail->kredit             = $detailReturnPembelian['jasa_pengiriman'][$i];
           $detail->save();
       }
+
+      //insert data Laporan Pembelian
+        for ($b=0; $b < $countKasBank1; $b++) { 
+            $detail = new LaporanPembelian();
+            $detail->retur_pembelian_id = $ReturnPembelian->id;
+            $detail->total = $detailReturnPembelian['total'][$b];
+            $detail->save();
+        }
 
       //insert data Laporan
       if (empty($request->cpj_id)) {
@@ -242,6 +251,15 @@ class ReturPembelianController extends Controller
           $detail->kredit             = $detailReturnPembelian['jasa_pengiriman'][$i];
           $detail->save();
       }
+
+      LaporanPembelian::where('retur_pembelian_id', $id)->delete();
+      //insert data Laporan Pembelian
+        for ($b=0; $b < $countKasBank1; $b++) { 
+            $detail = new LaporanPembelian();
+            $detail->retur_pembelian_id = $id;
+            $detail->total = $detailReturnPembelian['total'][$b];
+            $detail->save();
+        }
 
       LaporanHutang::where('retur_pembelian_id', $id)->delete();
       //insert data Laporan

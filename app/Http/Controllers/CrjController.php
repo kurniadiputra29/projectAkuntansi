@@ -11,6 +11,7 @@ use App\Model\crjdetail;
 use App\Model\ReturPenjualan;
 use App\Model\Inventory;
 use App\Model\ReturPenjualanDetail;
+use App\Model\LaporanPenjualan;
 
 class CrjController extends Controller
 {
@@ -126,6 +127,14 @@ class CrjController extends Controller
             $detail->nomor_akun         = $detailcrj['nomor_akun_inventory'][$i];
             $detail->nama_akun          = $detailcrj['nama_akun2_inventory'][$i];
             $detail->kredit             = $detailcrj['cost'][$i];
+            $detail->save();
+        }
+
+        //insert data Laporan Penjualan
+        for ($b=0; $b < $countKasBank1; $b++) { 
+            $detail = new LaporanPenjualan();
+            $detail->crj_id = $crj->id;
+            $detail->total = $detailcrj['total'][$b];
             $detail->save();
         }
 
@@ -266,6 +275,15 @@ class CrjController extends Controller
             $detail->nomor_akun         = $detailcrj['nomor_akun_inventory'][$i];
             $detail->nama_akun          = $detailcrj['nama_akun2_inventory'][$i];
             $detail->kredit             = $detailcrj['cost'][$i];
+            $detail->save();
+        }
+
+        LaporanPenjualan::where('crj_id', $id)->delete();
+        //insert data Laporan Penjualan
+        for ($b=0; $b < $countKasBank1; $b++) { 
+            $detail = new LaporanPenjualan();
+            $detail->crj_id = $id;
+            $detail->total = $detailcrj['total'][$b];
             $detail->save();
         }
 

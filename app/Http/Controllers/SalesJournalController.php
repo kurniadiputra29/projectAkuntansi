@@ -12,6 +12,7 @@ use App\Model\Inventory;
 use App\Model\ReturPenjualan;
 use App\Model\ReturPenjualanDetail;
 use App\Model\LaporanPiutang;
+use App\Model\LaporanPenjualan;
 
 class SalesJournalController extends Controller
 {
@@ -126,6 +127,14 @@ class SalesJournalController extends Controller
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_inventory'][$i];
             $detail->nama_akun          = $detailsalesjournal['nama_akun2_inventory'][$i];
             $detail->kredit             = $detailsalesjournal['cost'][$i];
+            $detail->save();
+        }
+
+        //insert data Laporan Penjualan
+        for ($b=0; $b < $countKasBank1; $b++) { 
+            $detail = new LaporanPenjualan();
+            $detail->salesjournal_id = $salesjournal->id;
+            $detail->total = $detailsalesjournal['total'][$b];
             $detail->save();
         }
 
@@ -274,6 +283,15 @@ class SalesJournalController extends Controller
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_inventory'][$i];
             $detail->nama_akun          = $detailsalesjournal['nama_akun2_inventory'][$i];
             $detail->kredit             = $detailsalesjournal['cost'][$i];
+            $detail->save();
+        }
+
+        LaporanPenjualan::where('salesjournal_id', $id)->delete();
+        //insert data Laporan Penjualan
+        for ($b=0; $b < $countKasBank1; $b++) { 
+            $detail = new LaporanPenjualan();
+            $detail->salesjournal_id = $id;
+            $detail->total = $detailsalesjournal['total'][$b];
             $detail->save();
         }
 

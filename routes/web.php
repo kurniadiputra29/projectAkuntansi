@@ -107,4 +107,4 @@ Route::get('neraca_saldo/print', 'Reports\NeracaSaldoController@print')->name('n
 
 Route::get('daftar_penjualan', 'Reports\Daftar_PenjualanController@index')->name('laporan.daftar_penjualan');
 
-Route::get('daftar_pembelian', 'Reports\Daftar_PembrlianController@index')->name('laporan.daftar_pembelian');
+Route::get('daftar_pembelian', 'Reports\Daftar_PembelianController@index')->name('laporan.daftar_pembelian');

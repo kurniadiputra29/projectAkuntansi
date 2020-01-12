@@ -12,6 +12,7 @@ use App\Model\CashBankIn;
 use App\Model\salesjournaldetail;
 use App\Model\ReturPenjualanDetail;
 use App\Model\CashBankInDetails;
+use App\Model\LaporanPenjualan;
 
 class Daftar_PenjualanController extends Controller
 {
@@ -34,8 +35,9 @@ class Daftar_PenjualanController extends Controller
         $salesjournaldetails        = salesjournaldetail::all();
         $ReturPenjualanDetails      = ReturPenjualanDetail::all();
         $CashBankInDetailss         = CashBankInDetails::all();
+        $LaporanPenjualans         = LaporanPenjualan::all();
 
-        return view('reports.daftar_penjualan.index', compact('crjs', 'SalesJournals', 'ReturPenjualans', 'CashBankIns', 'salesjournaldetails', 'ReturPenjualanDetails', 'CashBankInDetailss', 'crjdetails'));
+        return view('reports.daftar_penjualan.index', compact('crjs', 'SalesJournals', 'ReturPenjualans', 'CashBankIns', 'salesjournaldetails', 'ReturPenjualanDetails', 'CashBankInDetailss', 'crjdetails', 'LaporanPenjualans'));
     }
 
     /**

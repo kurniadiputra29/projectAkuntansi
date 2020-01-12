@@ -10,6 +10,7 @@ use App\Model\DataCustomer;
 use App\Model\Item;
 use App\Model\Inventory;
 use App\Model\LaporanPiutang;
+use App\Model\LaporanPenjualan;
 
 class ReturPenjualanController extends Controller
 {
@@ -122,6 +123,14 @@ class ReturPenjualanController extends Controller
             $detail->debet                = $detailReturPenjualan['cost'][$i];
             $detail->save();
         }
+
+      //insert data Laporan
+      for ($b=0; $b < $countKasBank1; $b++) { 
+        $detail = new LaporanPenjualan();
+        $detail->retur_penjualan_id   = $ReturPenjualan->id;
+        $detail->total = $detailReturPenjualan['total'][$b];
+        $detail->save();
+      }
 
       //insert data Laporan
       if (empty($request->crj_id)) {
@@ -272,6 +281,14 @@ class ReturPenjualanController extends Controller
             $detail->save();
         }
 
+      LaporanPenjualan::where('retur_penjualan_id', $id)->delete();
+      //insert data Laporan
+      for ($b=0; $b < $countKasBank1; $b++) { 
+        $detail = new LaporanPenjualan();
+        $detail->retur_penjualan_id = $id;
+        $detail->total = $detailReturPenjualan['total'][$b];
+        $detail->save();
+      }
 
       LaporanPiutang::where('retur_penjualan_id', $id)->delete();
       //insert data Laporan
