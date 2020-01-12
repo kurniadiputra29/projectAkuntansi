@@ -11,6 +11,7 @@ use App\Model\Item;
 use App\Model\Inventory;
 use App\Model\ReturPembelian;
 use App\Model\ReturPembelianDetail;
+use App\Model\LaporanPembelian;
 
 class CpjController extends Controller
 {
@@ -70,42 +71,50 @@ class CpjController extends Controller
         $cpj              = cpj::create($dataCPJ);
 
         //insert data cpj detail
-        $detailcrj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
-        $countKasBank1 = count($detailcrj['total']);
-        $countKasBank2 = count($detailcrj['subtotal']);
-        $countKasBank3 = count($detailcrj['PPN']);
-        $countKasBank4 = count($detailcrj['jasa_pengiriman']);
+        $detailcpj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+        $countKasBank1 = count($detailcpj['total']);
+        $countKasBank2 = count($detailcpj['subtotal']);
+        $countKasBank3 = count($detailcpj['PPN']);
+        $countKasBank4 = count($detailcpj['jasa_pengiriman']);
 
         for ($a=0; $a < $countKasBank1; $a++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $cpj->id;
-            $detail->nomor_akun         = $detailcrj['nomor_akun2'][$a];
-            $detail->nama_akun          = $detailcrj['nama_akun2'][$a];
-            $detail->kredit             = $detailcrj['total'][$a];
+            $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
+            $detail->nama_akun          = $detailcpj['nama_akun2'][$a];
+            $detail->kredit             = $detailcpj['total'][$a];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank2; $i++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $cpj->id;
-            $detail->nomor_akun         = $detailcrj['nomor_akun_sales'][$i];
-            $detail->nama_akun          = $detailcrj['nama_akun2_sales'][$i];
-            $detail->debet              = $detailcrj['subtotal'][$i];
+            $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
+            $detail->nama_akun          = $detailcpj['nama_akun2_sales'][$i];
+            $detail->debet              = $detailcpj['subtotal'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank3; $i++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $cpj->id;
-            $detail->nomor_akun         = $detailcrj['nomor_akun_ppn'][$i];
-            $detail->nama_akun          = $detailcrj['nama_akun2_ppn'][$i];
-            $detail->debet              = $detailcrj['PPN'][$i];
+            $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
+            $detail->nama_akun          = $detailcpj['nama_akun2_ppn'][$i];
+            $detail->debet              = $detailcpj['PPN'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank4; $i++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $cpj->id;
-            $detail->nomor_akun         = $detailcrj['nomor_akun_jasa'][$i];
-            $detail->nama_akun          = $detailcrj['nama_akun2_jasa'][$i];
-            $detail->debet              = $detailcrj['jasa_pengiriman'][$i];
+            $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
+            $detail->nama_akun          = $detailcpj['nama_akun2_jasa'][$i];
+            $detail->debet              = $detailcpj['jasa_pengiriman'][$i];
+            $detail->save();
+        }
+
+        //insert data Laporan Penjualan
+        for ($b=0; $b < $countKasBank1; $b++) { 
+            $detail = new LaporanPembelian();
+            $detail->cpj_id = $cpj->id;
+            $detail->total = $detailcpj['total'][$b];
             $detail->save();
         }
 
@@ -188,49 +197,57 @@ class CpjController extends Controller
         $cpj              = cpj::find($id)->update($dataCPJ);
 
         //insert data cpj detail
-        $detailcrj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
-        $countKasBank1 = count($detailcrj['total']);
-        $countKasBank2 = count($detailcrj['subtotal']);
-        $countKasBank3 = count($detailcrj['PPN']);
-        $countKasBank4 = count($detailcrj['jasa_pengiriman']);
+        $detailcpj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+        $countKasBank1 = count($detailcpj['total']);
+        $countKasBank2 = count($detailcpj['subtotal']);
+        $countKasBank3 = count($detailcpj['PPN']);
+        $countKasBank4 = count($detailcpj['jasa_pengiriman']);
 
         cpjdetail::where('cpj_id', $id)->delete();
 
         for ($a=0; $a < $countKasBank1; $a++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $id;
-            $detail->nomor_akun         = $detailcrj['nomor_akun2'][$a];
-            $detail->nama_akun          = $detailcrj['nama_akun2'][$a];
-            $detail->kredit             = $detailcrj['total'][$a];
+            $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
+            $detail->nama_akun          = $detailcpj['nama_akun2'][$a];
+            $detail->kredit             = $detailcpj['total'][$a];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank2; $i++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $id;
-            $detail->nomor_akun         = $detailcrj['nomor_akun_sales'][$i];
-            $detail->nama_akun          = $detailcrj['nama_akun2_sales'][$i];
-            $detail->debet              = $detailcrj['subtotal'][$i];
+            $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
+            $detail->nama_akun          = $detailcpj['nama_akun2_sales'][$i];
+            $detail->debet              = $detailcpj['subtotal'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank3; $i++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $id;
-            $detail->nomor_akun         = $detailcrj['nomor_akun_ppn'][$i];
-            $detail->nama_akun          = $detailcrj['nama_akun2_ppn'][$i];
-            $detail->debet              = $detailcrj['PPN'][$i];
+            $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
+            $detail->nama_akun          = $detailcpj['nama_akun2_ppn'][$i];
+            $detail->debet              = $detailcpj['PPN'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank4; $i++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $id;
-            $detail->nomor_akun         = $detailcrj['nomor_akun_jasa'][$i];
-            $detail->nama_akun          = $detailcrj['nama_akun2_jasa'][$i];
-            $detail->debet              = $detailcrj['jasa_pengiriman'][$i];
+            $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
+            $detail->nama_akun          = $detailcpj['nama_akun2_jasa'][$i];
+            $detail->debet              = $detailcpj['jasa_pengiriman'][$i];
+            $detail->save();
+        }
+
+        LaporanPembelian::where('cpj_id', $id)->delete();
+        //insert data Laporan Penjualan
+        for ($b=0; $b < $countKasBank1; $b++) { 
+            $detail = new LaporanPembelian();
+            $detail->cpj_id = $id;
+            $detail->total = $detailcpj['total'][$b];
             $detail->save();
         }
 
         Inventory::where('cpj_id', $id)->delete();
-
         //insert data Inventory
         $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
         $countinventory1 = count($inventory['jumlah']);

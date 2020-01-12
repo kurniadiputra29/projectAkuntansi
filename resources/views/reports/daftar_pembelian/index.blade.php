@@ -80,7 +80,7 @@
                         <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Pembelian Tunai</span></td>
                         <td>{{$cpj->description}}</td>
                         <td class="text-right">
-                          Rp {{number_format($cpjdetails->where('cpj_id', $cpj->id)->sum('debet'), 0, " ", ".")}}
+                          Rp {{number_format($LaporanPembelians->where('cpj_id', $cpj->id)->sum('total'), 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach
@@ -93,7 +93,7 @@
                         <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Pembelian Kredit</span></td> 
                         <td>{{$PurchaseJournal->description}}</td>
                         <td class="text-right">
-                          Rp {{number_format($purchasejournaldetails->where('purchasejournal_id', $PurchaseJournal->id)->sum('debet'), 0, " ", ".")}}
+                          Rp {{number_format($LaporanPembelians->where('purchasejournal_id', $PurchaseJournal->id)->sum('total'), 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach
@@ -106,15 +106,14 @@
                         <td class="text-center"><span class="badge badge-pill badge-primary mb-1">Retur</span></td> 
                         <td>{{$ReturPembelian->description}}</td>
                         <td class="text-right">
-                          Rp {{number_format($ReturPembelianDetails->where('retur_pembelians_id', $ReturPembelian->id)->sum('debet'), 0, " ", ".")}}
+                          Rp {{number_format($LaporanPembelians->where('retur_pembelian_id', $ReturPembelian->id)->sum('total'), 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
-                      <td class="text-light text-center" colspan="6">Total</td>
-                      <td class="text-light text-right">
+                      <td class="text-light text-center" colspan="7">Daftar Pembelian</td>
                       </td>
                     </tr>
                   </tfoot>
