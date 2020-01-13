@@ -110,3 +110,6 @@ Route::post('daftar_penjualan/filter', 'Reports\Daftar_PenjualanController@filte
 Route::post('daftar_penjualan/print', 'Reports\Daftar_PenjualanController@print')->name('daftar_penjualan.print');
 Route::post('daftar_penjualan/printF', 'Reports\Daftar_PenjualanController@printFilter')->name('daftar_penjualan.printF');
 Route::get('daftar_pembelian', 'Reports\Daftar_PembelianController@index')->name('daftar_pembelian.index');
+Route::post('daftar_pembelian/filter', 'Reports\Daftar_PembelianController@filter')->name('daftar_pembelian.filter');
+Route::post('daftar_pembelian/print', 'Reports\Daftar_PembelianController@print')->name('daftar_pembelian.print');
+Route::post('daftar_pembelian/printF', 'Reports\Daftar_PembelianController@printFilter')->name('daftar_pembelian.printF');
