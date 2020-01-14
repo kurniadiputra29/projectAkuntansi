@@ -101,6 +101,7 @@ Route::post('piutang_pelanggan/print', 'Reports\PiutangController@print')->name(
 Route::post('piutang_pelanggan/filter', 'Reports\PiutangController@filter')->name('piutang_pelanggan.filter');
 Route::get('hutang', 'Reports\HutangController@index')->name('hutang.index');
 Route::post('hutang/print', 'Reports\HutangController@print')->name('hutang.print');
+Route::post('hutang/printF', 'Reports\HutangController@printFilter')->name('hutang.printF');
 Route::post('hutang/filter', 'Reports\HutangController@filter')->name('hutang.filter');
 Route::get('neraca_saldo', 'Reports\NeracaSaldoController@index')->name('neraca_saldo.index');
 Route::get('neraca_saldo/print', 'Reports\NeracaSaldoController@print')->name('neraca_saldo.print');
