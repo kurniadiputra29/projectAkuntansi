@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Inventory Card</title>
+  <title>Hutang Supplier</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
 

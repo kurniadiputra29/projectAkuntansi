@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Inventory Card</title>
+  <title>Piutang Pelanggan</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
 
@@ -23,7 +23,11 @@
 </head>
 <body>
   <div class="container-fluid mt-2">
-
+    <div class="text-center">
+      <h1>PT OEMAR TECHNO DISTRIBUTOR</h1>
+      <h2>Piutang Pelanggan</h2>
+      <h3>Periode {{date('d F Y', strtotime($tanggal_mulai))}} sampai {{date('d F Y', strtotime($tanggal_akhir))}}</h3>
+    </div>
     <div class="dt-responsive">
       @foreach ($DataCustomers as $DataCustomer)
         <table class="table table-bordered nowrap" width="100%" border="1">
@@ -106,7 +110,7 @@
         </table>
       @endforeach
     </div>
-    <div class="page-break"></div>
+    <br>
     <div class="dt-responsive">
       <table id="simpletable" class="table table-bordered nowrap" width="100%" border="1">
         <thead>
