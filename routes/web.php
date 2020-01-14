@@ -85,6 +85,9 @@ Route::post('inventory/print', 'Reports\InventoryController@print')->name('inven
 Route::post('inventory/printF', 'Reports\InventoryController@printFilter')->name('inventory.printF');
 Route::get('inventory/{inventory}', 'Reports\InventoryController@show')->name('inventory.show');
 Route::get('buku_besar', 'Reports\BukuBesarController@index')->name('buku_besar.index');
+Route::post('buku_besar/filter', 'Reports\BukuBesarController@filter')->name('buku_besar.filter');
+Route::post('buku_besar/print', 'Reports\BukuBesarController@print')->name('buku_besar.print');
+Route::post('buku_besar/printF', 'Reports\BukuBesarController@printFilter')->name('buku_besar.printF');
 Route::get('neraca', 'Reports\NeracaController@index')->name('neraca.index');
 Route::get('neraca/print', 'Reports\NeracaController@print')->name('neraca.print');
 Route::get('neraca_lajur', 'Reports\NeracaLajurController@index')->name('neraca_lajur.index');
