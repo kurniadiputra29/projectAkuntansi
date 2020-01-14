@@ -94,6 +94,7 @@ Route::get('arus_kas', 'Reports\ArusKasController@index')->name('arus_kas.index'
 Route::get('petty_cash_book', 'Reports\PettyCashBookController@index')->name('petty_cash_book.index');
 Route::post('petty_cash_book/filter', 'Reports\PettyCashBookController@filter')->name('petty_cash_book.filter');
 Route::post('petty_cash_book/print', 'Reports\PettyCashBookController@print')->name('petty_cash_book.print');
+Route::post('petty_cash_book/printF', 'Reports\PettyCashBookController@printFilter')->name('petty_cash_book.printF');
 Route::get('petty_cash_book/{petty_cash_book}', 'Reports\PettyCashBookController@show')->name('petty_cash_book.show');
 
 

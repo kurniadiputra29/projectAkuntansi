@@ -41,9 +41,14 @@
                 <h3>Petty Cash Book</h3>
                 <span>Periode <code>transaksi</code> {{date('d F Y', strtotime($tanggal_mulai))}} sampai {{date('d F Y', strtotime($tanggal_akhir))}}</span>
               </div>
-              <div class="right-container">
+              <div class="right-container d-flex flex-row">
                 <a type="button" class="btn btn-success mr-5" href="/petty_cash_book"><i class="ik ik-arrow-left"></i>Back</a>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal"><i class="ik ik-printer"></i>Print</button>
+                <form class="" action="{{route('petty_cash_book.printF')}}" method="post">
+                  @csrf
+                  <input type="hidden" name="tanggal_mulai" value="{{$tanggal_mulai}}">
+                  <input type="hidden" name="tanggal_akhir" value="{{$tanggal_akhir}}">
+                  <button type="submit" class="btn btn-primary"><i class="ik ik-printer"></i>Print</button>
+                </form>
               </div>
             </div>
             <div class="card-body">
