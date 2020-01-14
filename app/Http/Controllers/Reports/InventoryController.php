@@ -62,6 +62,20 @@ class InventoryController extends Controller
         return view('reports.inventory_card.filter', compact('items','inventories','distinct_pc','distinct_pcc','tanggal_mulai','tanggal_akhir','add_day'));
     }
 
+    public function printFilter(Request $request)
+    {
+        $tanggal_mulai  = $request->tanggal_mulai;
+        $tanggal_akhir  = $request->tanggal_akhir;
+        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
+        $items = Item::all();
+        $inventories = Inventory::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        $distinct_pc = Item::distinct('id')->select('id', 'kode', 'nama')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        $distinct_pcc = Inventory::distinct('items_id')->select('unit', 'price', 'total', 'items_id', 'status')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+
+        $pdf = PDF::loadview('reports.inventory_card.print', compact('items','inventories','distinct_pc','distinct_pcc','tanggal_mulai','tanggal_akhir','add_day'));
+        return $pdf->setPaper('a4', 'landscape')->stream('inventory_card.pdf');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
