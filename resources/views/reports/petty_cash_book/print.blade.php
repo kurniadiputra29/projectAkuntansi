@@ -22,8 +22,12 @@
   </style>
 </head>
 <body>
-  <h1>Laporan Petty Cash Book</h1>
-  <h3>Periode {{date('d F Y', strtotime($tanggal_mulai))}} sampai {{date('d F Y', strtotime($tanggal_akhir))}}</h3>
+  <div class="text-center">
+    <h1>PT OEMAR TECHNO DISTRIBUTOR</h1>
+    <h2>Laporan Petty Cash Book</h2>
+    <h3>Periode {{date('d F Y', strtotime($tanggal_mulai))}} sampai {{date('d F Y', strtotime($tanggal_akhir))}}</h3>
+  </div>
+  <br>
   <div class="container-fluid mt-2">
     <div class="dt-responsive">
       @php
@@ -73,7 +77,7 @@
         </tfoot>
       </table>
     </div>
-    <div class="page-break"></div>
+    <br>
     <div class="dt-responsive">
       <table id="simpletable" class="table table-bordered nowrap" width="100%" style="width:100%" border="1">
         <thead>

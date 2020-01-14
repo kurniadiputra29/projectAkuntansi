@@ -82,6 +82,7 @@ Route::get('/print/print_neraca_saldo', 'PrintController@print_neraca_saldo')->n
 Route::get('/inventory/', 'Reports\InventoryController@index')->name('inventory.index');
 Route::post('inventory/filter', 'Reports\InventoryController@filter')->name('inventory.filter');
 Route::post('inventory/print', 'Reports\InventoryController@print')->name('inventory.print');
+Route::post('inventory/printF', 'Reports\InventoryController@printFilter')->name('inventory.printF');
 Route::get('inventory/{inventory}', 'Reports\InventoryController@show')->name('inventory.show');
 Route::get('buku_besar', 'Reports\BukuBesarController@index')->name('buku_besar.index');
 Route::get('buku_besar/alternative', 'Reports\BukuBesarController@alt')->name('buku_besar.alternative');
@@ -93,14 +94,17 @@ Route::get('arus_kas', 'Reports\ArusKasController@index')->name('arus_kas.index'
 Route::get('petty_cash_book', 'Reports\PettyCashBookController@index')->name('petty_cash_book.index');
 Route::post('petty_cash_book/filter', 'Reports\PettyCashBookController@filter')->name('petty_cash_book.filter');
 Route::post('petty_cash_book/print', 'Reports\PettyCashBookController@print')->name('petty_cash_book.print');
+Route::post('petty_cash_book/printF', 'Reports\PettyCashBookController@printFilter')->name('petty_cash_book.printF');
 Route::get('petty_cash_book/{petty_cash_book}', 'Reports\PettyCashBookController@show')->name('petty_cash_book.show');
 
 
 Route::get('piutang_pelanggan', 'Reports\PiutangController@index')->name('piutang_pelanggan.index');
 Route::post('piutang_pelanggan/print', 'Reports\PiutangController@print')->name('piutang_pelanggan.print');
+Route::post('piutang_pelanggan/printF', 'Reports\PiutangController@printFilter')->name('piutang_pelanggan.printF');
 Route::post('piutang_pelanggan/filter', 'Reports\PiutangController@filter')->name('piutang_pelanggan.filter');
 Route::get('hutang', 'Reports\HutangController@index')->name('hutang.index');
 Route::post('hutang/print', 'Reports\HutangController@print')->name('hutang.print');
+Route::post('hutang/printF', 'Reports\HutangController@printFilter')->name('hutang.printF');
 Route::post('hutang/filter', 'Reports\HutangController@filter')->name('hutang.filter');
 Route::get('neraca_saldo', 'Reports\NeracaSaldoController@index')->name('neraca_saldo.index');
 Route::get('neraca_saldo/print', 'Reports\NeracaSaldoController@print')->name('neraca_saldo.print');
