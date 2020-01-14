@@ -9,7 +9,7 @@ class DataSupplier extends Model
     protected $table = 'data_suppliers';
 
     protected $fillable = [
-      'id', 'kode', 'nama', 'npwp', 'alamat', 'termin', 'created_at', 'update_at'
+      'id', 'kode', 'nama', 'npwp', 'alamat', 'telepon', 'termin', 'created_at', 'update_at'
     ];
 
     public function saldo_hutang()

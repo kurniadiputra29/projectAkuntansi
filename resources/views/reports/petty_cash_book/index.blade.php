@@ -57,20 +57,10 @@
               </div>
               @endif
               <div class="dt-responsive">
-                @php
-                function format_uang($angka){
-                  $hasil =  number_format($angka,2, ',' , '.');
-                  return $hasil;
-                }
-                function format_uang2($angka){
-                  $hasil =  number_format($angka,0, ',' , '.');
-                  return $hasil;
-                }
-                @endphp
                 <table id="complex-dt" class="table table-bordered nowrap">
                   <thead>
                     <tr class="bg-secondary font-weight-bold">
-                      <th class="col-2 text-light">Tanggal</th>
+                      <th class="col-2 text-light text-center">Tanggal</th>
                       <th class="col-2 text-light">Deskripsi</th>
                       <th class="col-2 text-light">Nomor Akun</th>
                       <th class="col-2 text-light">Nama Akun</th>
@@ -81,25 +71,24 @@
                   <tbody>
                     @foreach ($pc_detail as $data)
                       <tr>
-                        <td>{{date('d F Y', strtotime($data->pettycash->tanggal ))}}</td>
+                        <td class="text-center">{{date('d F Y', strtotime($data->pettycash->tanggal ))}}</td>
                         <td>{{$data->pettycash->description}}</td>
                         <td>{{$data->nomor_akun}}</td>
                         <td>{{$data->nama_akun}}</td>
                         <td class="text-right">
-                          {{format_uang2($data->debet)}}
+                          Rp {{ number_format($data->debet, 0, " ", ".")}}
                         </td>
                         <td class="text-right">
-                          {{format_uang2($data->kredit)}}
+                          Rp {{ number_format($data->kredit, 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
-                      <td></td>
-                      <td class="text-light" colspan="3">Total</td>
-                      <td class="text-light text-right">{{format_uang2($sum_debet)}}</td>
-                      <td class="text-light text-right">{{format_uang2($sum_kredit)}}</td>
+                      <td class="text-light text-center" colspan="4">Total</td>
+                      <td class="text-light text-right">Rp {{ number_format($sum_debet, 0, " ", ".")}}</td>
+                      <td class="text-light text-right">Rp {{ number_format($sum_kredit, 0, " ", ".")}}</td>
                     </tr>
                   </tfoot>
                 </table>
@@ -112,7 +101,7 @@
                       <td class="col-12 text-light text-center" colspan="4">Rekapitulasi</td>
                     </tr>
                     <tr>
-                      <td class="col-3">Nomor Akun</td>
+                      <td class="col-3 text-center">Nomor Akun</td>
                       <td class="col-3">Nama Akun</td>
                       <td class="col-3">Debet</td>
                       <td class="col-3">Kredit</td>
@@ -121,18 +110,18 @@
                   <tbody>
                     @foreach ($distinct_pc as $rekap)
                       <tr>
-                        <td>{{$rekap->nomor_akun}}</td>
+                        <td class="text-center">{{$rekap->nomor_akun}}</td>
                         <td>{{$rekap->nama_akun}}</td>
-                        <td class="text-right">{{format_uang2($rekap->where('nomor_akun', $rekap->nomor_akun)->sum('debet'))}}</td>
-                        <td class="text-right">{{format_uang2($rekap->where('nomor_akun', $rekap->nomor_akun)->sum('kredit'))}}</td>
+                        <td class="text-right">Rp {{ number_format($rekap->where('nomor_akun', $rekap->nomor_akun)->sum('debet'), 0, " ", ".")}}</td>
+                        <td class="text-right">Rp {{ number_format($rekap->where('nomor_akun', $rekap->nomor_akun)->sum('kredit'), 0, " ", ".")}}</td>
                       </tr>
                     @endforeach
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
-                      <td class="text-light text-right" colspan="2">Total</td>
-                      <td class="text-light text-right">{{format_uang2($sum_debet)}}</td>
-                      <td class="text-light text-right">{{format_uang2($sum_kredit)}}</td>
+                      <td class="text-light text-center" colspan="2">Total</td>
+                      <td class="text-light text-right">Rp {{ number_format($sum_debet, 0, " ", ".")}}</td>
+                      <td class="text-light text-right">Rp {{ number_format($sum_kredit, 0, " ", ".")}}</td>
                     </tr>
                   </tfoot>
                 </table>

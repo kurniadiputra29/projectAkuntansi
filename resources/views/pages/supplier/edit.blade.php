@@ -24,6 +24,10 @@
                   <input type="text" class="form-control" name="npwp" id="npwp" value="{{ $key->npwp }}">
               </div>
               <div class="form-group">
+                  <label for="telepon">Telepon Supplier</label>
+                  <input type="text" class="form-control" name="telepon" id="telepon" value="{{ $key->telepon }}">
+              </div>
+              <div class="form-group">
                   <label for="alamat">Alamat Supplier</label>
                   <input type="text" class="form-control" name="alamat" id="alamat" value="{{ $key->alamat }}">
               </div>

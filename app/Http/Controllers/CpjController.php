@@ -12,6 +12,7 @@ use App\Model\Inventory;
 use App\Model\ReturPembelian;
 use App\Model\ReturPembelianDetail;
 use App\Model\LaporanPembelian;
+use App\Model\LaporanBukuBesar;
 
 class CpjController extends Controller
 {
@@ -84,6 +85,13 @@ class CpjController extends Controller
             $detail->nama_akun          = $detailcpj['nama_akun2'][$a];
             $detail->kredit             = $detailcpj['total'][$a];
             $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail                     = new LaporanBukuBesar();
+            $detail->cpj_id             = $cpj->id;
+            $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
+            $detail->kredit             = $detailcpj['total'][$a];
+            $detail->save();
         }
         for ($i=0; $i < $countKasBank2; $i++) {
             $detail                     = new cpjdetail();
@@ -91,6 +99,13 @@ class CpjController extends Controller
             $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
             $detail->nama_akun          = $detailcpj['nama_akun2_sales'][$i];
             $detail->debet              = $detailcpj['subtotal'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail                     = new LaporanBukuBesar();
+            $detail->cpj_id             = $cpj->id;
+            $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
+            $detail->debet             = $detailcpj['subtotal'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank3; $i++) {
@@ -100,6 +115,13 @@ class CpjController extends Controller
             $detail->nama_akun          = $detailcpj['nama_akun2_ppn'][$i];
             $detail->debet              = $detailcpj['PPN'][$i];
             $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail                     = new LaporanBukuBesar();
+            $detail->cpj_id             = $cpj->id;
+            $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
+            $detail->debet             = $detailcpj['PPN'][$i];
+            $detail->save();
         }
         for ($i=0; $i < $countKasBank4; $i++) {
             $detail                     = new cpjdetail();
@@ -107,6 +129,13 @@ class CpjController extends Controller
             $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
             $detail->nama_akun          = $detailcpj['nama_akun2_jasa'][$i];
             $detail->debet              = $detailcpj['jasa_pengiriman'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail                     = new LaporanBukuBesar();
+            $detail->cpj_id             = $cpj->id;
+            $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
+            $detail->debet             = $detailcpj['jasa_pengiriman'][$i];
             $detail->save();
         }
 
@@ -204,12 +233,20 @@ class CpjController extends Controller
         $countKasBank4 = count($detailcpj['jasa_pengiriman']);
 
         cpjdetail::where('cpj_id', $id)->delete();
+        LaporanBukuBesar::where('cpj_id', $id)->delete();
 
         for ($a=0; $a < $countKasBank1; $a++) {
             $detail                     = new cpjdetail();
             $detail->cpj_id             = $id;
             $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
             $detail->nama_akun          = $detailcpj['nama_akun2'][$a];
+            $detail->kredit             = $detailcpj['total'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail                     = new LaporanBukuBesar();
+            $detail->cpj_id             = $id;
+            $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
             $detail->kredit             = $detailcpj['total'][$a];
             $detail->save();
         }
@@ -220,6 +257,13 @@ class CpjController extends Controller
             $detail->nama_akun          = $detailcpj['nama_akun2_sales'][$i];
             $detail->debet              = $detailcpj['subtotal'][$i];
             $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail                     = new LaporanBukuBesar();
+            $detail->cpj_id             = $id;
+            $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
+            $detail->debet             = $detailcpj['subtotal'][$i];
+            $detail->save();
         }
         for ($i=0; $i < $countKasBank3; $i++) {
             $detail                     = new cpjdetail();
@@ -228,6 +272,13 @@ class CpjController extends Controller
             $detail->nama_akun          = $detailcpj['nama_akun2_ppn'][$i];
             $detail->debet              = $detailcpj['PPN'][$i];
             $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail                     = new LaporanBukuBesar();
+            $detail->cpj_id             = $id;
+            $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
+            $detail->debet             = $detailcpj['PPN'][$i];
+            $detail->save();
         }
         for ($i=0; $i < $countKasBank4; $i++) {
             $detail                     = new cpjdetail();
@@ -235,6 +286,13 @@ class CpjController extends Controller
             $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
             $detail->nama_akun          = $detailcpj['nama_akun2_jasa'][$i];
             $detail->debet              = $detailcpj['jasa_pengiriman'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail                     = new LaporanBukuBesar();
+            $detail->cpj_id             = $id;
+            $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
+            $detail->debet             = $detailcpj['jasa_pengiriman'][$i];
             $detail->save();
         }
 

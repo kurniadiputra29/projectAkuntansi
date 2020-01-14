@@ -69,6 +69,7 @@
                         <th>Kode</th>
                         <th>Nama</th>
                         <th>NPWP</th>
+                        <th>Telepon</th>
                         <th>Alamat</th>
                         <th>Termin</th>
                         <th class="text-right">Aksi</th>
@@ -80,6 +81,7 @@
                           <td>{{ $key->kode }}</td>
                           <td>{{ $key->nama }}</td>
                           <td>{{ $key->npwp }}</td>
+                          <td>{{ $key->telepon }}</td>
                           <td>{{ $key->alamat }}</td>
                           <td>{{ $key->termin }}</td>
                           <td class="text-right">

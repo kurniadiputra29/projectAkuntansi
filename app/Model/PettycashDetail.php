@@ -14,6 +14,6 @@ class PettycashDetail extends Model
 
     public function pettycash()
     {
-      return $this->belongsTo(Pettycash::class);
+      return $this->belongsTo(Pettycash::class, "pettycash_id");
     }
 }

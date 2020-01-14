@@ -25,14 +25,6 @@ class SaldoAwalsTableSeeder extends Seeder
             'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),
-
-          ],
-          [
-            'account_id' => 3,
-            'debet'      => 0,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
           ],
           [
             'account_id' => 4,
@@ -63,13 +55,6 @@ class SaldoAwalsTableSeeder extends Seeder
     				'updated_at' => now(),
           ],
           [
-            'account_id' => 8,
-            'debet'      => 0,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
             'account_id' => 9,
             'debet'      => 8000000,
             'kredit'     => 0,
@@ -79,13 +64,6 @@ class SaldoAwalsTableSeeder extends Seeder
           [
             'account_id' => 10,
             'debet'      => 670000000,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
-            'account_id' => 11,
-            'debet'      => 0,
             'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),
@@ -147,20 +125,6 @@ class SaldoAwalsTableSeeder extends Seeder
     				'updated_at' => now(),
           ],
           [
-            'account_id' => 20,
-            'debet'      => 0,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
-            'account_id' => 21,
-            'debet'      => 0,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
             'account_id' => 22,
             'debet'      => 0,
             'kredit'     => 133000000,
@@ -203,13 +167,6 @@ class SaldoAwalsTableSeeder extends Seeder
     				'updated_at' => now(),
           ],
           [
-            'account_id' => 28,
-            'debet'      => 0,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
             'account_id' => 29,
             'debet'      => 0,
             'kredit'     => 1093200000,
@@ -217,23 +174,9 @@ class SaldoAwalsTableSeeder extends Seeder
     				'updated_at' => now(),
           ],
           [
-            'account_id' => 30,
-            'debet'      => 0,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
             'account_id' => 31,
             'debet'      => 0,
             'kredit'     => 15000000,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
-            'account_id' => 32,
-            'debet'      => 0,
-            'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),
           ],
@@ -247,13 +190,6 @@ class SaldoAwalsTableSeeder extends Seeder
           [
             'account_id' => 34,
             'debet'      => 674880000,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
-            'account_id' => 35,
-            'debet'      => 0,
             'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),
@@ -280,29 +216,8 @@ class SaldoAwalsTableSeeder extends Seeder
     				'updated_at' => now(),
           ],
           [
-            'account_id' => 39,
-            'debet'      => 0,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
             'account_id' => 40,
             'debet'      => 10800000,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
-            'account_id' => 41,
-            'debet'      => 0,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
-            'account_id' => 42,
-            'debet'      => 0,
             'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),
@@ -316,21 +231,14 @@ class SaldoAwalsTableSeeder extends Seeder
           ],
           [
             'account_id' => 44,
-            'debet'      => 9750000,//20000000
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
-            'account_id' => 45,
-            'debet'      => 0,//4000000
+            'debet'      => 9750000,
             'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),
           ],
           [
             'account_id' => 46,
-            'debet'      => 40250000,//27500000
+            'debet'      => 40250000,
             'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),
@@ -338,13 +246,6 @@ class SaldoAwalsTableSeeder extends Seeder
           [
             'account_id' => 47,
             'debet'      => 13000000,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
-            'account_id' => 48,
-            'debet'      => 0,
             'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),
@@ -387,13 +288,6 @@ class SaldoAwalsTableSeeder extends Seeder
           [
             'account_id' => 54,
             'debet'      => 10932000,
-            'kredit'     => 0,
-            'created_at' => now(),
-    				'updated_at' => now(),
-          ],
-          [
-            'account_id' => 55,
-            'debet'      => 0,
             'kredit'     => 0,
             'created_at' => now(),
     				'updated_at' => now(),

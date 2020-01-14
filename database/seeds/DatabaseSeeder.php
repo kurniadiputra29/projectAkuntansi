@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(InventoriesTableSeeder::class);
         $this->call(LaporanHutangsTableSeeder::class);
         $this->call(LaporanPiutangsTableSeeder::class);
+        $this->call(LaporanBukuBesarsTableSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

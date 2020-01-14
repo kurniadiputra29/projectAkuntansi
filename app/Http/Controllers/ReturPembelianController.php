@@ -13,6 +13,7 @@ use App\Model\cpj;
 use App\Model\PurchaseJournal;
 use App\Model\LaporanHutang;
 use App\Model\LaporanPembelian;
+use App\Model\LaporanBukuBesar;
 
 class ReturPembelianController extends Controller
 {
@@ -79,35 +80,63 @@ class ReturPembelianController extends Controller
       $countKasBank4 = count($detailReturnPembelian['jasa_pengiriman']);
 
       for ($a=0; $a < $countKasBank1; $a++) { 
-          $detail                     = new ReturPembelianDetail();
-          $detail->retur_pembelian_id             = $ReturnPembelian->id;
-          $detail->nomor_akun         = $detailReturnPembelian['nomor_akun2'][$a];
-          $detail->nama_akun          = $detailReturnPembelian['nama_akun2'][$a];
-          $detail->debet              = $detailReturnPembelian['total'][$a];
+          $detail = new ReturPembelianDetail();
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun2'][$a];
+          $detail->nama_akun = $detailReturnPembelian['nama_akun2'][$a];
+          $detail->debet = $detailReturnPembelian['total'][$a];
+          $detail->save();
+
+          //insert Laporan Buku Besar
+          $detail = new LaporanBukuBesar();
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun2'][$a];
+          $detail->debet = $detailReturnPembelian['total'][$a];
           $detail->save();
       }
       for ($i=0; $i < $countKasBank2; $i++) { 
-          $detail                     = new ReturPembelianDetail();
-          $detail->retur_pembelian_id             = $ReturnPembelian->id;
-          $detail->nomor_akun         = $detailReturnPembelian['nomor_akun_sales'][$i];
-          $detail->nama_akun          = $detailReturnPembelian['nama_akun2_sales'][$i];
-          $detail->kredit             = $detailReturnPembelian['subtotal'][$i];
+          $detail = new ReturPembelianDetail();
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_sales'][$i];
+          $detail->nama_akun = $detailReturnPembelian['nama_akun2_sales'][$i];
+          $detail->kredit = $detailReturnPembelian['subtotal'][$i];
+          $detail->save();
+
+          //insert Laporan Buku Besar
+          $detail = new LaporanBukuBesar();
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_sales'][$i];
+          $detail->kredit = $detailReturnPembelian['subtotal'][$i];
           $detail->save();
       }
       for ($i=0; $i < $countKasBank3; $i++) { 
-          $detail                     = new ReturPembelianDetail();
-          $detail->retur_pembelian_id             = $ReturnPembelian->id;
-          $detail->nomor_akun         = $detailReturnPembelian['nomor_akun_ppn'][$i];
-          $detail->nama_akun          = $detailReturnPembelian['nama_akun2_ppn'][$i];
-          $detail->kredit             = $detailReturnPembelian['PPN'][$i];
+          $detail = new ReturPembelianDetail();
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_ppn'][$i];
+          $detail->nama_akun = $detailReturnPembelian['nama_akun2_ppn'][$i];
+          $detail->kredit = $detailReturnPembelian['PPN'][$i];
+          $detail->save();
+
+          //insert Laporan Buku Besar
+          $detail = new LaporanBukuBesar();
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_ppn'][$i];
+          $detail->kredit = $detailReturnPembelian['PPN'][$i];
           $detail->save();
       }
       for ($i=0; $i < $countKasBank4; $i++) { 
-          $detail                     = new ReturPembelianDetail();
-          $detail->retur_pembelian_id             = $ReturnPembelian->id;
-          $detail->nomor_akun         = $detailReturnPembelian['nomor_akun_jasa'][$i];
-          $detail->nama_akun          = $detailReturnPembelian['nama_akun2_jasa'][$i];
-          $detail->kredit             = $detailReturnPembelian['jasa_pengiriman'][$i];
+          $detail = new ReturPembelianDetail();
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_jasa'][$i];
+          $detail->nama_akun = $detailReturnPembelian['nama_akun2_jasa'][$i];
+          $detail->kredit = $detailReturnPembelian['jasa_pengiriman'][$i];
+          $detail->save();
+
+          //insert Laporan Buku Besar
+          $detail = new LaporanBukuBesar();
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_jasa'][$i];
+          $detail->kredit = $detailReturnPembelian['jasa_pengiriman'][$i];
           $detail->save();
       }
 
@@ -218,37 +247,66 @@ class ReturPembelianController extends Controller
       $countKasBank4 = count($detailReturnPembelian['jasa_pengiriman']);
 
       ReturPembelianDetail::where('retur_pembelian_id', $id)->delete();
+      LaporanBukuBesar::where('retur_pembelian_id', $id)->delete();
 
       for ($a=0; $a < $countKasBank1; $a++) { 
-          $detail                     = new ReturPembelianDetail();
+          $detail = new ReturPembelianDetail();
           $detail->retur_pembelian_id = $id;
-          $detail->nomor_akun         = $detailReturnPembelian['nomor_akun2'][$a];
-          $detail->nama_akun          = $detailReturnPembelian['nama_akun2'][$a];
-          $detail->debet              = $detailReturnPembelian['total'][$a];
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun2'][$a];
+          $detail->nama_akun = $detailReturnPembelian['nama_akun2'][$a];
+          $detail->debet = $detailReturnPembelian['total'][$a];
+          $detail->save();
+
+          //insert Laporan Buku Besar
+          $detail = new LaporanBukuBesar();
+          $detail->retur_pembelian_id = $id;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun2'][$a];
+          $detail->debet = $detailReturnPembelian['total'][$a];
           $detail->save();
       }
       for ($i=0; $i < $countKasBank2; $i++) { 
-          $detail                     = new ReturPembelianDetail();
+          $detail = new ReturPembelianDetail();
           $detail->retur_pembelian_id = $id;
-          $detail->nomor_akun         = $detailReturnPembelian['nomor_akun_sales'][$i];
-          $detail->nama_akun          = $detailReturnPembelian['nama_akun2_sales'][$i];
-          $detail->kredit             = $detailReturnPembelian['subtotal'][$i];
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_sales'][$i];
+          $detail->nama_akun = $detailReturnPembelian['nama_akun2_sales'][$i];
+          $detail->kredit = $detailReturnPembelian['subtotal'][$i];
+          $detail->save();
+
+          //insert Laporan Buku Besar
+          $detail = new LaporanBukuBesar();
+          $detail->retur_pembelian_id = $id;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_sales'][$i];
+          $detail->kredit = $detailReturnPembelian['subtotal'][$i];
           $detail->save();
       }
       for ($i=0; $i < $countKasBank3; $i++) { 
-          $detail                     = new ReturPembelianDetail();
+          $detail = new ReturPembelianDetail();
           $detail->retur_pembelian_id = $id;
-          $detail->nomor_akun         = $detailReturnPembelian['nomor_akun_ppn'][$i];
-          $detail->nama_akun          = $detailReturnPembelian['nama_akun2_ppn'][$i];
-          $detail->kredit             = $detailReturnPembelian['PPN'][$i];
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_ppn'][$i];
+          $detail->nama_akun = $detailReturnPembelian['nama_akun2_ppn'][$i];
+          $detail->kredit = $detailReturnPembelian['PPN'][$i];
+          $detail->save();
+
+          //insert Laporan Buku Besar
+          $detail = new LaporanBukuBesar();
+          $detail->retur_pembelian_id = $id;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_ppn'][$i];
+          $detail->kredit = $detailReturnPembelian['PPN'][$i];
           $detail->save();
       }
       for ($i=0; $i < $countKasBank4; $i++) { 
-          $detail                     = new ReturPembelianDetail();
+          $detail = new ReturPembelianDetail();
           $detail->retur_pembelian_id = $id;
-          $detail->nomor_akun         = $detailReturnPembelian['nomor_akun_jasa'][$i];
-          $detail->nama_akun          = $detailReturnPembelian['nama_akun2_jasa'][$i];
-          $detail->kredit             = $detailReturnPembelian['jasa_pengiriman'][$i];
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_jasa'][$i];
+          $detail->nama_akun = $detailReturnPembelian['nama_akun2_jasa'][$i];
+          $detail->kredit = $detailReturnPembelian['jasa_pengiriman'][$i];
+          $detail->save();
+
+          //insert Laporan Buku Besar
+          $detail = new LaporanBukuBesar();
+          $detail->retur_pembelian_id = $id;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_jasa'][$i];
+          $detail->kredit = $detailReturnPembelian['jasa_pengiriman'][$i];
           $detail->save();
       }
 
