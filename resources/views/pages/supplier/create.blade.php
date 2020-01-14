@@ -24,6 +24,10 @@
                   <input type="text" class="form-control" name="npwp" id="npwp" placeholder="Masukkan 15 digit NPWP">
               </div>
               <div class="form-group">
+                  <label for="telepon">Telepon Supplier</label>
+                  <input type="text" class="form-control" name="telepon" id="telepon">
+              </div>
+              <div class="form-group">
                   <label for="alamat">Alamat Supplier</label>
                   <input type="text" class="form-control" name="alamat" id="alamat">
               </div>

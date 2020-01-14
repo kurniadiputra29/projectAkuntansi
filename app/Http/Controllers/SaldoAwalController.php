@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Account;
 use App\Model\SaldoAwal;
+use App\Model\LaporanBukuBesar;
 use App\Http\Requests\SaldoAwalRequest;
 
 class SaldoAwalController extends Controller
@@ -56,6 +57,13 @@ class SaldoAwalController extends Controller
         $data->kredit           = $request->kredit;
         $data->save();
 
+        $datas = new LaporanBukuBesar;
+        $datas->account_id = $request->account_id;
+        $datas->saldo_awals_id = $data->id;
+        $datas->debet = $request->debet;
+        $datas->kredit = $request->kredit;
+        $datas->save();
+
         return redirect('saldo_awal')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
@@ -88,9 +96,29 @@ class SaldoAwalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SaldoAwalRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        SaldoAwal::find($id)->update($request->all());
+        $messages = [
+                'required' => ':attribute wajib diisi !!!',
+        ];
+        $this->validate($request,[
+                'account_id'  => 'required',
+        ],$messages);
+
+        $data                   = SaldoAwal::find($id);
+        $data->account_id       = $request->account_id;
+        $data->debet            = $request->debet;
+        $data->kredit           = $request->kredit;
+        $data->save();
+
+        LaporanBukuBesar::where('saldo_awals_id', $id)->delete();
+        $datas = new LaporanBukuBesar;
+        $datas->account_id = $request->account_id;
+        $datas->saldo_awals_id = $id;
+        $datas->debet = $request->debet;
+        $datas->kredit = $request->kredit;
+        $datas->save();
+
         return redirect('saldo_awal')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 

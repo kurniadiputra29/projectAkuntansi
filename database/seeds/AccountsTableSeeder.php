@@ -295,7 +295,7 @@ public function run()
 			],
 			[
 				// 36
-				'nomor'         => '5-2000',
+				'nomor'         => '5-1300',
 				'nama'          => 'Freight Paid',
 				'keterangan'    => 'Beban Transportasi Pembelian',
 				'created_at'    => now(),
@@ -305,7 +305,7 @@ public function run()
 				// 37
 				'nomor'         => '5-3000',
 				'nama'          => 'Purchase Discount',
-				'keterangan'    => '?',
+				'keterangan'    => 'Diskon Pembelian',
 				'created_at'    => now(),
 				'updated_at'    => now(),
 			],

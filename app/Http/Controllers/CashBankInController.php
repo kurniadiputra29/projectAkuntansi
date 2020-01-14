@@ -8,6 +8,7 @@ use App\Model\CashBankIn;
 use App\Model\CashBankInDetails;
 use App\Model\DataCustomer;
 use App\Model\LaporanPiutang;
+use App\Model\LaporanBukuBesar;
 
 class CashBankInController extends Controller
 {
@@ -69,19 +70,33 @@ class CashBankInController extends Controller
         $countKasBank2 = count($detailcashinbank['total']);
 
         for ($a=0; $a < $countKasBank2; $a++) {
-            $detail                     = new CashBankInDetails();
-            $detail->cash_bank_ins_id   = $cashinbank->id;
-            $detail->nomor_akun         = $detailcashinbank['nomor_akun2'][$a];
-            $detail->nama_akun          = $detailcashinbank['nama_akun2'][$a];
-            $detail->debet              = $detailcashinbank['total'][$a];
+            $detail = new CashBankInDetails();
+            $detail->cash_bank_ins_id = $cashinbank->id;
+            $detail->nomor_akun = $detailcashinbank['nomor_akun2'][$a];
+            $detail->nama_akun = $detailcashinbank['nama_akun2'][$a];
+            $detail->debet = $detailcashinbank['total'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->cash_bank_ins_id = $cashinbank->id;
+            $detail->nomor_akun = $detailcashinbank['nomor_akun2'][$a];
+            $detail->debet = $detailcashinbank['total'][$a];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank; $i++) {
-            $detail                     = new CashBankInDetails();
-            $detail->cash_bank_ins_id   = $cashinbank->id;
-            $detail->nomor_akun         = $detailcashinbank['nomor_akun'][$i];
-            $detail->nama_akun          = $detailcashinbank['nama_akun'][$i];
-            $detail->kredit             = $detailcashinbank['jumlah'][$i];
+            $detail = new CashBankInDetails();
+            $detail->cash_bank_ins_id = $cashinbank->id;
+            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
+            $detail->nama_akun = $detailcashinbank['nama_akun'][$i];
+            $detail->kredit = $detailcashinbank['jumlah'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->cash_bank_ins_id = $cashinbank->id;
+            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
+            $detail->kredit = $detailcashinbank['jumlah'][$i];
             $detail->save();
         }
 
@@ -154,21 +169,36 @@ class CashBankInController extends Controller
         $countKasBank2 = count($detailcashinbank['total']);
 
         CashBankInDetails::where('cash_bank_ins_id', $id)->delete();
+        LaporanBukuBesar::where('cash_bank_ins_id', $id)->delete();
 
         for ($a=0; $a < $countKasBank2; $a++) {
-            $detail                     = new CashBankInDetails();
-            $detail->cash_bank_ins_id   = $id;
-            $detail->nomor_akun         = $detailcashinbank['nomor_akun2'][$a];
-            $detail->nama_akun          = $detailcashinbank['nama_akun2'][$a];
-            $detail->debet              = $detailcashinbank['total'][$a];
+            $detail = new CashBankInDetails();
+            $detail->cash_bank_ins_id = $id;
+            $detail->nomor_akun = $detailcashinbank['nomor_akun2'][$a];
+            $detail->nama_akun = $detailcashinbank['nama_akun2'][$a];
+            $detail->debet = $detailcashinbank['total'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->cash_bank_ins_id = $id;
+            $detail->nomor_akun = $detailcashinbank['nomor_akun2'][$a];
+            $detail->debet = $detailcashinbank['total'][$a];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank; $i++) {
-            $detail                     = new CashBankInDetails();
-            $detail->cash_bank_ins_id   = $id;
-            $detail->nomor_akun         = $detailcashinbank['nomor_akun'][$i];
-            $detail->nama_akun          = $detailcashinbank['nama_akun'][$i];
-            $detail->kredit             = $detailcashinbank['jumlah'][$i];
+            $detail = new CashBankInDetails();
+            $detail->cash_bank_ins_id = $id;
+            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
+            $detail->nama_akun = $detailcashinbank['nama_akun'][$i];
+            $detail->kredit = $detailcashinbank['jumlah'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->cash_bank_ins_id = $id;
+            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
+            $detail->kredit = $detailcashinbank['jumlah'][$i];
             $detail->save();
         }
 

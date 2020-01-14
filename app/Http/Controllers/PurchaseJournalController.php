@@ -13,6 +13,7 @@ use App\Model\ReturPembelian;
 use App\Model\ReturPembelianDetail;
 use App\Model\LaporanHutang;
 use App\Model\LaporanPembelian;
+use App\Model\LaporanBukuBesar;
 
 class PurchaseJournalController extends Controller
 {
@@ -79,35 +80,63 @@ class PurchaseJournalController extends Controller
         $countKasBank4 = count($detailpurchase['jasa_pengiriman']);
 
         for ($a=0; $a < $countKasBank1; $a++) { 
-            $detail                     = new purchasejournaldetail();
-            $detail->purchasejournal_id             = $PurchaseJournal->id;
-            $detail->nomor_akun         = $detailpurchase['nomor_akun2'][$a];
-            $detail->nama_akun          = $detailpurchase['nama_akun2'][$a];
-            $detail->kredit              = $detailpurchase['total'][$a];
+            $detail = new purchasejournaldetail();
+            $detail->purchasejournal_id = $PurchaseJournal->id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun2'][$a];
+            $detail->nama_akun = $detailpurchase['nama_akun2'][$a];
+            $detail->kredit = $detailpurchase['total'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->purchasejournal_id = $PurchaseJournal->id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun2'][$a];
+            $detail->kredit = $detailpurchase['total'][$a];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank2; $i++) { 
-            $detail                     = new purchasejournaldetail();
-            $detail->purchasejournal_id             = $PurchaseJournal->id;
-            $detail->nomor_akun         = $detailpurchase['nomor_akun_sales'][$i];
-            $detail->nama_akun          = $detailpurchase['nama_akun2_sales'][$i];
-            $detail->debet             = $detailpurchase['subtotal'][$i];
+            $detail = new purchasejournaldetail();
+            $detail->purchasejournal_id = $PurchaseJournal->id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun_sales'][$i];
+            $detail->nama_akun = $detailpurchase['nama_akun2_sales'][$i];
+            $detail->debet = $detailpurchase['subtotal'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->purchasejournal_id = $PurchaseJournal->id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun_sales'][$i];
+            $detail->debet = $detailpurchase['subtotal'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank3; $i++) { 
-            $detail                     = new purchasejournaldetail();
-            $detail->purchasejournal_id             = $PurchaseJournal->id;
-            $detail->nomor_akun         = $detailpurchase['nomor_akun_ppn'][$i];
-            $detail->nama_akun          = $detailpurchase['nama_akun2_ppn'][$i];
-            $detail->debet             = $detailpurchase['PPN'][$i];
+            $detail = new purchasejournaldetail();
+            $detail->purchasejournal_id = $PurchaseJournal->id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun_ppn'][$i];
+            $detail->nama_akun = $detailpurchase['nama_akun2_ppn'][$i];
+            $detail->debet = $detailpurchase['PPN'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->purchasejournal_id = $PurchaseJournal->id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun_ppn'][$i];
+            $detail->debet = $detailpurchase['PPN'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank4; $i++) { 
-            $detail                     = new purchasejournaldetail();
+            $detail = new purchasejournaldetail();
             $detail->purchasejournal_id = $PurchaseJournal->id;
-            $detail->nomor_akun         = $detailpurchase['nomor_akun_jasa'][$i];
-            $detail->nama_akun          = $detailpurchase['nama_akun2_jasa'][$i];
-            $detail->debet             = $detailpurchase['jasa_pengiriman'][$i];
+            $detail->nomor_akun = $detailpurchase['nomor_akun_jasa'][$i];
+            $detail->nama_akun = $detailpurchase['nama_akun2_jasa'][$i];
+            $detail->debet = $detailpurchase['jasa_pengiriman'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->purchasejournal_id = $PurchaseJournal->id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun_jasa'][$i];
+            $detail->debet = $detailpurchase['jasa_pengiriman'][$i];
             $detail->save();
         }
 
@@ -216,37 +245,66 @@ class PurchaseJournalController extends Controller
         $countKasBank4 = count($detailpurchase['jasa_pengiriman']);
 
         purchasejournaldetail::where('purchasejournal_id', $id)->delete();
+        LaporanBukuBesar::where('purchasejournal_id', $id)->delete();
 
         for ($a=0; $a < $countKasBank1; $a++) { 
-            $detail                         = new purchasejournaldetail();
-            $detail->purchasejournal_id     = $id;
-            $detail->nomor_akun             = $detailpurchase['nomor_akun2'][$a];
-            $detail->nama_akun              = $detailpurchase['nama_akun2'][$a];
-            $detail->kredit                 = $detailpurchase['total'][$a];
+            $detail = new purchasejournaldetail();
+            $detail->purchasejournal_id = $id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun2'][$a];
+            $detail->nama_akun = $detailpurchase['nama_akun2'][$a];
+            $detail->kredit = $detailpurchase['total'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->purchasejournal_id = $id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun2'][$a];
+            $detail->kredit = $detailpurchase['total'][$a];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank2; $i++) { 
-            $detail                         = new purchasejournaldetail();
-            $detail->purchasejournal_id     = $id;
-            $detail->nomor_akun             = $detailpurchase['nomor_akun_sales'][$i];
-            $detail->nama_akun              = $detailpurchase['nama_akun2_sales'][$i];
-            $detail->debet                  = $detailpurchase['subtotal'][$i];
+            $detail = new purchasejournaldetail();
+            $detail->purchasejournal_id = $id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun_sales'][$i];
+            $detail->nama_akun = $detailpurchase['nama_akun2_sales'][$i];
+            $detail->debet = $detailpurchase['subtotal'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->purchasejournal_id = $id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun_sales'][$i];
+            $detail->debet = $detailpurchase['subtotal'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank3; $i++) { 
-            $detail                         = new purchasejournaldetail();
-            $detail->purchasejournal_id     = $id;
-            $detail->nomor_akun             = $detailpurchase['nomor_akun_ppn'][$i];
-            $detail->nama_akun              = $detailpurchase['nama_akun2_ppn'][$i];
-            $detail->debet                  = $detailpurchase['PPN'][$i];
+            $detail = new purchasejournaldetail();
+            $detail->purchasejournal_id = $id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun_ppn'][$i];
+            $detail->nama_akun = $detailpurchase['nama_akun2_ppn'][$i];
+            $detail->debet = $detailpurchase['PPN'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->purchasejournal_id = $id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun_ppn'][$i];
+            $detail->debet = $detailpurchase['PPN'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank4; $i++) { 
-            $detail                         = new purchasejournaldetail();
-            $detail->purchasejournal_id     = $id;
-            $detail->nomor_akun             = $detailpurchase['nomor_akun_jasa'][$i];
-            $detail->nama_akun              = $detailpurchase['nama_akun2_jasa'][$i];
-            $detail->debet                  = $detailpurchase['jasa_pengiriman'][$i];
+            $detail = new purchasejournaldetail();
+            $detail->purchasejournal_id = $id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun_jasa'][$i];
+            $detail->nama_akun = $detailpurchase['nama_akun2_jasa'][$i];
+            $detail->debet = $detailpurchase['jasa_pengiriman'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->purchasejournal_id = $id;
+            $detail->nomor_akun = $detailpurchase['nomor_akun_jasa'][$i];
+            $detail->debet = $detailpurchase['jasa_pengiriman'][$i];
             $detail->save();
         }
 

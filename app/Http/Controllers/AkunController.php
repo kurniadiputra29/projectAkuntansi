@@ -43,6 +43,16 @@ class AkunController extends Controller
      */
     public function store(AkunStoreRequest $request)
     {
+        $messages = [
+                'required' => ':attribute wajib diisi !!!',
+                'unique' => ':attribute Account Sudah Ada !!!',
+        ];
+        $this->validate($request,[
+                'nama' => 'unique:accounts,nama|required',
+                'keterangan' => 'required',
+                'nomor' => 'unique:accounts,nomor|required',
+        ],$messages); 
+        
         Account::create($request->all());
 
         return redirect('akun')->with('Success', 'Data anda telah berhasil di input !');
@@ -80,6 +90,16 @@ class AkunController extends Controller
      */
     public function update(AkunStoreRequest $request, $id)
     {
+        $messages = [
+                'required' => ':attribute wajib diisi !!!',
+                'unique' => ':attribute Account Sudah Ada !!!',
+        ];
+        $this->validate($request,[
+                'nama' => 'unique:accounts,nama,'.$id,
+                'keterangan' => 'required',
+                'nomor' => 'unique:accounts,nomor,'.$id,
+        ],$messages);
+
         Account::find($id)->update($request->all());
 
         return redirect('akun')->with('Success', 'Data anda telah berhasil di Edit !');
@@ -95,6 +115,6 @@ class AkunController extends Controller
     {
         Account::find($id)->delete();
 
-        return redirect('akun')->with('Success', 'Data anda telah berhasil di delete !');
+        return redirect('akun')->with('Success', 'Data anda telah berhasil di Delete !');
     }
 }

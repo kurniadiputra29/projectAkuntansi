@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Account;
 use App\Model\JurnalUmum;
 use App\Model\jurnalumumdetail;
+use App\Model\LaporanBukuBesar;
 
 class JuController extends Controller
 {
@@ -65,12 +66,20 @@ class JuController extends Controller
         $countKasBank = count($detailjurnalumum['nomor_akun']);
 
         for ($a=0; $a < $countKasBank; $a++) { 
-            $detail                     = new jurnalumumdetail();
-            $detail->jurnal_umums_id      = $jurnalumum->id;
-            $detail->nomor_akun         = $detailjurnalumum['nomor_akun'][$a];
-            $detail->nama_akun               = $detailjurnalumum['nama_akun'][$a];
-            $detail->debet              = $detailjurnalumum['debet'][$a];
-            $detail->kredit             = $detailjurnalumum['kredit'][$a];
+            $detail = new jurnalumumdetail();
+            $detail->jurnal_umums_id = $jurnalumum->id;
+            $detail->nomor_akun = $detailjurnalumum['nomor_akun'][$a];
+            $detail->nama_akun = $detailjurnalumum['nama_akun'][$a];
+            $detail->debet = $detailjurnalumum['debet'][$a];
+            $detail->kredit = $detailjurnalumum['kredit'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->jurnal_umums_id = $jurnalumum->id;
+            $detail->nomor_akun = $detailjurnalumum['nomor_akun'][$a];
+            $detail->debet = $detailjurnalumum['debet'][$a];
+            $detail->kredit = $detailjurnalumum['kredit'][$a];
             $detail->save();
         }
 
@@ -132,6 +141,7 @@ class JuController extends Controller
         $countKasBank = count($detailjurnalumum['nomor_akun']);
 
         jurnalumumdetail::where('jurnal_umums_id', $id)->delete();
+        LaporanBukuBesar::where('jurnal_umums_id', $id)->delete();
 
         for ($a=0; $a < $countKasBank; $a++) { 
             $detail                     = new jurnalumumdetail();
@@ -140,6 +150,14 @@ class JuController extends Controller
             $detail->nama_akun          = $detailjurnalumum['nama_akun'][$a];
             $detail->debet              = $detailjurnalumum['debet'][$a];
             $detail->kredit             = $detailjurnalumum['kredit'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->jurnal_umums_id = $id;
+            $detail->nomor_akun = $detailjurnalumum['nomor_akun'][$a];
+            $detail->debet = $detailjurnalumum['debet'][$a];
+            $detail->kredit = $detailjurnalumum['kredit'][$a];
             $detail->save();
         }
 

@@ -36,12 +36,9 @@
           <form class="forms-sample" id="a" action="{{route('kas_kecil.store')}}" method="post">
             @csrf
             <div class="card">
-              <div class="card-header d-flex justify-content-between flex-row bg-primary">
+              <div class="card-header d-flex justify-content-between flex-row bg-success">
                 <div class="left-container">
                   <h3 style="color: white">Pengeluaran Pettycash</h3>
-                </div>
-                <div class="right-container">
-                  <a class="btn btn-light btn-rounded" href="/kas_kecil"><i class="ik ik-arrow-left"></i> Back</a>
                 </div>
               </div>
               <div class="card-body">

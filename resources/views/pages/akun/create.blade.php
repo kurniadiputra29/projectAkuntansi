@@ -57,8 +57,9 @@
                   <label for="keterangan">Keterangan</label>
                   <input type="text" class="form-control" name="keterangan" id="keterangan">
                 </div>
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                <div class="forms-sample" style="margin-bottom: 10px; margin-top: 10px; justify-content: space-between; display: flex;">
+                  <a class="btn btn-secondary btn-rounded" href="/akun"><i class="ik ik-arrow-left"></i> Back</a>
+                  <button class="btn btn-success btn-rounded" type="submit"><i class="ik ik-plus-circle"></i> Create</button>
                 </div>
               </form>
             </div>
