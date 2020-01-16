@@ -35,8 +35,11 @@ class KasKecilController extends Controller
 		{
 			$akun 			= Account::all();
 			$pettycashs 	= Pettycash::orderBy('id', 'desc')->paginate(1);
-        	$pettycashs_count 	= Pettycash::all()->count();
-			return view('pages.kas_kecil.create', compact('akun', 'pettycashs', 'pettycashs_count'));
+      $pettycashs_count 	= Pettycash::all()->count();
+			// Get the last created order
+    	$lastOrder = Pettycash::orderBy('created_at', 'desc')->first();
+
+			return view('pages.kas_kecil.create', compact('akun', 'pettycashs', 'pettycashs_count','lastOrder'));
 		}
 
 		/**
