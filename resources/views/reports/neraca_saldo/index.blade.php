@@ -44,48 +44,79 @@
                 <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
                 <button type="button" class="btn btn-info mr-5" data-toggle="modal" data-target="#createModal"><i class="ik ik-filter"></i>Filter</button>
                 <a type="button" class="btn btn-primary mr-5" href="{{route('neraca_saldo.print')}}"><i class="ik ik-printer"></i>Print</a>
-                {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal"><i class="ik ik-printer"></i>Print</button> --}}
               </div>
             </div>
             <div class="card-body">
-              @php
-                function format_uang($angka){
-                  $hasil =  number_format($angka,0, ',' , '.');
-                  return $hasil;
-                }
-              @endphp
               <div class="dt-responsive">
-                <table class="table table-bordered nowrap">
+                <table id="simpletable" class="table table-bordered nowrap">
                   <thead>
                     <tr class="bg-secondary font-weight-bold">
-                      <td class="text-light text-center" colspan="4">Akun</td>
+                      <td class="text-light text-center" colspan="4">Rekapitulasi</td>
                     </tr>
                     <tr>
-                      <th>Nomor Akun</th>
-                      <th>Nama Akun</th>
-                      <th>Debet</th>
-                      <th>Kredit</th>
+                      <td class="text-center">Nomor Akun</td>
+                      <td class="text-center">Nama Akun</td>
+                      <td class="text-center">Debet</td>
+                      <td class="text-center">Kredit</td>
                     </tr>
                   </thead>
                   <tbody>
-                  @foreach ($neraca_saldo as $value)
-                    <tr>
-                      <td>{{$value->nomor}}</td>
-                      <td>{{$value->nama}}</td>
-                      <td class="text-right">{{format_uang($value->debet)}}</td>
-                      <td class="text-right">{{format_uang($value->kredit)}}</td>
-                    </tr>
-                  @endforeach
+                    @foreach ($accounts as $account)
+                      <tr>
+                        <td class="text-center">{{$account->nomor}}</td>
+                        <td class="text-left">{{$account->nama}}</td>
+                        @if( ($distinct_laporan->where('nomor_akun', $account->nomor)->sum('debet') + $distinct_laporan->where('account_id', $account->id)->sum('debet')) - ($distinct_laporan->where('account_id', $account->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $account->nomor)->sum('kredit')) > 0)
+                        <td class="text-right">
+                            Rp {{number_format(($distinct_laporan->where('nomor_akun', $account->nomor)->sum('debet') + $distinct_laporan->where('account_id', $account->id)->sum('debet')) - ($distinct_laporan->where('account_id', $account->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $account->nomor)->sum('kredit')), 0, " ", ".")}}
+                        </td>
+                        <td class="text-right">
+                        </td>
+                        @else
+                        <td class="text-right">
+                        </td>
+                        <td class="text-right">
+                            Rp {{number_format(($distinct_laporan->where('nomor_akun', $account->nomor)->sum('kredit') + $distinct_laporan->where('account_id', $account->id)->sum('kredit')) - ($distinct_laporan->where('account_id', $account->id)->sum('debet')  + $distinct_laporan->where('nomor_akun', $account->nomor)->sum('debet')), 0, " ", ".")}}
+                        </td>
+                        @endif
+                      </tr>
+                    @endforeach
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
-                      <td class="text-light text-right" colspan="2">Total</td>
-                      <td class="text-light text-right">{{format_uang($debet_neraca_saldo)}}</td>
-                      <td class="text-light text-right">{{format_uang($kredit_neraca_saldo)}}</td>
+                      <td class="text-light text-center" colspan="2">Total</td>
+                      <td class="text-light text-right">
+                        @php 
+                          $sum_tot_Price_Debet = 0 
+                        @endphp
+                        @foreach ($accounts as $accoun)
+                        @if( ($distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('debet') + $distinct_laporan->where('account_id', $accoun->id)->sum('debet')) - ($distinct_laporan->where('account_id', $accoun->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('kredit')) > 0)
+                          @php 
+                            $sum_tot_Price_Debet += ($distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('debet') + $distinct_laporan->where('account_id', $accoun->id)->sum('debet')) - ($distinct_laporan->where('account_id', $accoun->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('kredit')) 
+                          @endphp
+                        @endif
+                        @endforeach
+
+                        Rp {{number_format($sum_tot_Price_Debet, 0, " ", ".")}}
+                      </td>
+                      <td class="text-light text-right">
+                        @php 
+                          $sum_tot_Price_Kredit = 0 
+                        @endphp
+                        @foreach ($accounts as $accoun)
+                        @if( ($distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('debet') + $distinct_laporan->where('account_id', $accoun->id)->sum('debet')) - ($distinct_laporan->where('account_id', $accoun->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('kredit')) < 0)
+                          @php 
+                            $sum_tot_Price_Kredit += ($distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('kredit') + $distinct_laporan->where('account_id', $accoun->id)->sum('kredit')) - ($distinct_laporan->where('account_id', $accoun->id)->sum('debet')  + $distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('debet')) 
+                          @endphp
+                        @endif
+                        @endforeach
+
+                        Rp {{number_format($sum_tot_Price_Kredit, 0, " ", ".")}}
+                      </td>
                     </tr>
-                    <tr class="bg-danger font-weight-bold">
-                      <td class="text-light text-right" colspan="2">Balance</td>
-                      <td class="text-light text-center" colspan="2">{{format_uang(($debet_neraca_saldo)-($kredit_neraca_saldo))}}</td>
+                    <tr class="bg-warning font-weight-bold">
+                      <td class="text-light text-center" colspan="2">Balance</td>
+                      <td class="text-light text-center" colspan="2">Rp {{number_format($distinct_laporan->sum('debet') - $distinct_laporan->sum('kredit'), 0, " ", ".")}}
+                      </td>
                     </tr>
                   </tfoot>
                 </table>
