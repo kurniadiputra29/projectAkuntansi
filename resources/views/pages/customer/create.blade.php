@@ -13,7 +13,17 @@
             <div class="col-md-12">
               <div class="form-group">
                   <label for="kode">Kode Customer</label>
-                  <input type="text" class="form-control" name="kode" id="kode" placeholder="C-XXXXX">
+                  @php
+                    if ( ! $lastOrder ) {
+                      // We get here if there is no order at all
+                      // If there is no number set it to 0, which will be 1 at the end.
+                      $number = 0;
+                    } else {
+                      $number = $lastOrder->id;
+                    }
+                    $hasil = sprintf('%04d', intval($number) + 1);
+                  @endphp
+                  <input type="text" class="form-control" name="kode" id="kode" value="C-{{$hasil}}" readonly>
               </div>
               <div class="form-group">
                   <label for="nama">Nama Customer</label>
