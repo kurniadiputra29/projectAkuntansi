@@ -47,18 +47,18 @@
               </div>
             </div>
             <div class="card-body">
-              <div id="app">
+              <div id="app" class="dt-responsive">
                 @foreach ($accounts as $account)
                   <table class="table table-bordered nowrap">
                     <thead class="report-header">
                       <tr class="bg-secondary font-weight-bold">
-                        <th class="text-light" colspan="4">Nama Akun: {{$account->nama}} ( {{$account->nomor}} )</th>
+                        <th class="col-8 text-light" colspan="4">Nama Akun: {{$account->nama}} ( {{$account->nomor}} )</th>
                       </tr>
                       <tr>
-                        <th class="text-center col-3">Tanggal</th>
-                        <th class="text-center col-3">Deskripsi</th>
-                        <th class="text-center col-3">Debet</th>
-                        <th class="text-center col-3">Kredit</th>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">Deskripsi</th>
+                        <th class="text-center">Debet</th>
+                        <th class="text-center">Kredit</th>
                       </tr>
                     </thead>
                     <tbody>
