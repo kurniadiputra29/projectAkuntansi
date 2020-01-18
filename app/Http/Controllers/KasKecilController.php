@@ -37,7 +37,8 @@ class KasKecilController extends Controller
 			$pettycashs 	= Pettycash::orderBy('id', 'desc')->paginate(1);
       $pettycashs_count 	= Pettycash::all()->count();
 			// Get the last created order
-    	$lastOrder = Pettycash::orderBy('created_at', 'desc')->first();
+    	$lastOrder = Pettycash::orderBy('id', 'desc')->first();
+			// return response()->json($lastOrder->id);
 
 			return view('pages.kas_kecil.create', compact('akun', 'pettycashs', 'pettycashs_count','lastOrder'));
 		}
@@ -59,6 +60,7 @@ class KasKecilController extends Controller
 						'penerima' => 'required',
 						'description' => 'required',
 						'kode' => 'unique:pettycashes,kode|required',
+						'nama_akun' => 'required',
 				],$messages);
 
 
