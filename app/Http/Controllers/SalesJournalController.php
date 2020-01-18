@@ -43,12 +43,11 @@ class SalesJournalController extends Controller
         $akun           = Account::all();
         $customers      = DataCustomer::all();
         $items          = Item::all();
-        $sales_count    = SalesJournal::all()->count();
-        $sales          = SalesJournal::orderBy('id', 'desc')->paginate(1);
+        $lastOrder      = SalesJournal::orderBy('id', 'desc')->first();
 
         $inventories   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
 
-        return view('pages.sales_journal.create', compact('akun', 'customers', 'items', 'sales_count', 'sales', 'inventories'));
+        return view('pages.sales_journal.create', compact('akun', 'customers', 'items', 'inventories','lastOrder'));
     }
 
     /**
@@ -82,7 +81,7 @@ class SalesJournalController extends Controller
         $countKasBank4 = count($detailsalesjournal['jasa_pengiriman']);
         $countKasBank5 = count($detailsalesjournal['cost']);
 
-        for ($a=0; $a < $countKasBank1; $a++) { 
+        for ($a=0; $a < $countKasBank1; $a++) {
             $detail                     = new salesjournaldetail();
             $detail->salesjournal_id    = $salesjournal->id;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun2'][$a];
@@ -97,7 +96,7 @@ class SalesJournalController extends Controller
             $detail->debet              = $detailsalesjournal['total'][$a];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank5; $i++) { 
+        for ($i=0; $i < $countKasBank5; $i++) {
             $detail                     = new salesjournaldetail();
             $detail->salesjournal_id    = $salesjournal->id;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_cost'][$i];
@@ -112,7 +111,7 @@ class SalesJournalController extends Controller
             $detail->debet              = $detailsalesjournal['cost'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank2; $i++) { 
+        for ($i=0; $i < $countKasBank2; $i++) {
             $detail                     = new salesjournaldetail();
             $detail->salesjournal_id    = $salesjournal->id;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_sales'][$i];
@@ -127,7 +126,7 @@ class SalesJournalController extends Controller
             $detail->kredit             = $detailsalesjournal['subtotal'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank3; $i++) { 
+        for ($i=0; $i < $countKasBank3; $i++) {
             $detail                     = new salesjournaldetail();
             $detail->salesjournal_id    = $salesjournal->id;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_ppn'][$i];
@@ -142,7 +141,7 @@ class SalesJournalController extends Controller
             $detail->kredit             = $detailsalesjournal['PPN'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank4; $i++) { 
+        for ($i=0; $i < $countKasBank4; $i++) {
             $detail                     = new salesjournaldetail();
             $detail->salesjournal_id    = $salesjournal->id;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_jasa'][$i];
@@ -157,7 +156,7 @@ class SalesJournalController extends Controller
             $detail->kredit             = $detailsalesjournal['jasa_pengiriman'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank5; $i++) { 
+        for ($i=0; $i < $countKasBank5; $i++) {
             $detail                     = new salesjournaldetail();
             $detail->salesjournal_id    = $salesjournal->id;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_inventory'][$i];
@@ -174,7 +173,7 @@ class SalesJournalController extends Controller
         }
 
         //insert data Laporan Penjualan
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
             $detail = new LaporanPenjualan();
             $detail->salesjournal_id = $salesjournal->id;
             $detail->total = $detailsalesjournal['total'][$b];
@@ -182,7 +181,7 @@ class SalesJournalController extends Controller
         }
 
         //insert data Laporan
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
             $detail = new LaporanPiutang();
             $detail->customers_id = $request->customers_id;
             $detail->salesjournal_id = $salesjournal->id;
@@ -194,7 +193,7 @@ class SalesJournalController extends Controller
         $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status', 'sales');
         $countinventory1 = count($inventory['jumlah']);
 
-        for ($x=0; $x < $countinventory1; $x++) { 
+        for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
             $detail->salesjournal_id    = $salesjournal->id;
             $detail->items_id           = $inventory['items'][$x];
@@ -281,7 +280,7 @@ class SalesJournalController extends Controller
         salesjournaldetail::where('salesjournal_id', $id)->delete();
         LaporanBukuBesar::where('salesjournal_id', $id)->delete();
 
-        for ($a=0; $a < $countKasBank1; $a++) { 
+        for ($a=0; $a < $countKasBank1; $a++) {
             $detail                     = new salesjournaldetail();
             $detail->salesjournal_id    = $id;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun2'][$a];
@@ -296,7 +295,7 @@ class SalesJournalController extends Controller
             $detail->debet              = $detailsalesjournal['total'][$a];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank5; $i++) { 
+        for ($i=0; $i < $countKasBank5; $i++) {
             $detail                     = new salesjournaldetail();
             $detail->salesjournal_id    = $id;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_cost'][$i];
@@ -311,7 +310,7 @@ class SalesJournalController extends Controller
             $detail->debet              = $detailsalesjournal['cost'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank2; $i++) { 
+        for ($i=0; $i < $countKasBank2; $i++) {
             $detail                     = new salesjournaldetail();
             $detail->salesjournal_id    = $id;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_sales'][$i];
@@ -326,7 +325,7 @@ class SalesJournalController extends Controller
             $detail->kredit             = $detailsalesjournal['subtotal'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank3; $i++) { 
+        for ($i=0; $i < $countKasBank3; $i++) {
             $detail                     = new salesjournaldetail();
             $detail->salesjournal_id    = $id;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_ppn'][$i];
@@ -341,7 +340,7 @@ class SalesJournalController extends Controller
             $detail->kredit             = $detailsalesjournal['PPN'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank4; $i++) { 
+        for ($i=0; $i < $countKasBank4; $i++) {
             $detail                     = new salesjournaldetail();
             $detail->salesjournal_id    = $id;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_jasa'][$i];
@@ -356,7 +355,7 @@ class SalesJournalController extends Controller
             $detail->kredit             = $detailsalesjournal['jasa_pengiriman'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank5; $i++) { 
+        for ($i=0; $i < $countKasBank5; $i++) {
             $detail                     = new salesjournaldetail();
             $detail->salesjournal_id    = $id;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_inventory'][$i];
@@ -374,7 +373,7 @@ class SalesJournalController extends Controller
 
         LaporanPenjualan::where('salesjournal_id', $id)->delete();
         //insert data Laporan Penjualan
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
             $detail = new LaporanPenjualan();
             $detail->salesjournal_id = $id;
             $detail->total = $detailsalesjournal['total'][$b];
@@ -383,7 +382,7 @@ class SalesJournalController extends Controller
 
         LaporanPiutang::where('salesjournal_id', $id)->delete();
         //insert data Laporan
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
             $detail = new LaporanPiutang();
             $detail->customers_id = $request->customers_id;
             $detail->salesjournal_id = $id;
@@ -396,7 +395,7 @@ class SalesJournalController extends Controller
         $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status', 'sales');
         $countinventory1 = count($inventory['jumlah']);
 
-        for ($x=0; $x < $countinventory1; $x++) { 
+        for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
             $detail->salesjournal_id    = $id;
             $detail->items_id           = $inventory['items'][$x];

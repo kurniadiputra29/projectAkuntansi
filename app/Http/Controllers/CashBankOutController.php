@@ -34,12 +34,11 @@ class CashBankOutController extends Controller
      */
     public function create()
     {
-        $akun                   = Account::all();
-        $CashBankOut            = CashBankOut::orderBy('id', 'desc')->paginate(1);
-        $CashBankOut_count      = CashBankOut::all()->count();
-        $suppliers              = DataSupplier::all();
+        $akun      = Account::all();
+        $lastOrder = CashBankOut::orderBy('id', 'desc')->first();
+        $suppliers = DataSupplier::all();
 
-        return view('pages.cashbankout.create', compact('akun', 'CashBankOut', 'CashBankOut_count', 'suppliers'));
+        return view('pages.cashbankout.create', compact('akun', 'lastOrder', 'suppliers'));
     }
 
     /**
@@ -101,7 +100,7 @@ class CashBankOutController extends Controller
         }
 
         //insert data Laporan
-        for ($b=0; $b < $countKasBank2; $b++) { 
+        for ($b=0; $b < $countKasBank2; $b++) {
             $detail = new LaporanHutang();
             $detail->suppliers_id     = $request->suppliers_id;
             $detail->cash_bank_outs_id  = $cashinbank->id;
@@ -204,7 +203,7 @@ class CashBankOutController extends Controller
 
         LaporanHutang::where('cash_bank_outs_id', $id)->delete();
         //insert data Laporan
-        for ($b=0; $b < $countKasBank2; $b++) { 
+        for ($b=0; $b < $countKasBank2; $b++) {
             $detail = new LaporanHutang();
             $detail->suppliers_id     = $request->suppliers_id;
             $detail->cash_bank_outs_id = $id;

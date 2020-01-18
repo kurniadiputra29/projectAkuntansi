@@ -43,12 +43,11 @@ class CrjController extends Controller
         $akun           = Account::all();
         $customers      = DataCustomer::all();
         $items          = Item::all();
-        $crjs           = crj::orderBy('id', 'desc')->paginate(1);
-        $crjs_count     = crj::all()->count();
+        $lastOrder      = crj::orderBy('id', 'desc')->first();
 
         $inventories   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
 
-        return view('pages.crj.create', compact('akun', 'customers', 'items', 'crjs', 'crjs_count', 'inventories'));
+        return view('pages.crj.create', compact('akun', 'customers', 'items', 'inventories', 'lastOrder'));
     }
 
     /**
@@ -82,7 +81,7 @@ class CrjController extends Controller
         $countKasBank4 = count($detailcrj['jasa_pengiriman']);
         $countKasBank5 = count($detailcrj['cost']);
 
-        for ($a=0; $a < $countKasBank1; $a++) { 
+        for ($a=0; $a < $countKasBank1; $a++) {
             $detail                     = new crjdetail();
             $detail->crj_id             = $crj->id;
             $detail->nomor_akun         = $detailcrj['nomor_akun2'][$a];
@@ -97,7 +96,7 @@ class CrjController extends Controller
             $detail->debet             = $detailcrj['total'][$a];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank5; $i++) { 
+        for ($i=0; $i < $countKasBank5; $i++) {
             $detail                     = new crjdetail();
             $detail->crj_id             = $crj->id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_cost'][$i];
@@ -112,7 +111,7 @@ class CrjController extends Controller
             $detail->debet             = $detailcrj['cost'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank2; $i++) { 
+        for ($i=0; $i < $countKasBank2; $i++) {
             $detail                     = new crjdetail();
             $detail->crj_id             = $crj->id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_sales'][$i];
@@ -127,7 +126,7 @@ class CrjController extends Controller
             $detail->kredit             = $detailcrj['subtotal'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank3; $i++) { 
+        for ($i=0; $i < $countKasBank3; $i++) {
             $detail                     = new crjdetail();
             $detail->crj_id             = $crj->id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_ppn'][$i];
@@ -142,7 +141,7 @@ class CrjController extends Controller
             $detail->kredit             = $detailcrj['PPN'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank4; $i++) { 
+        for ($i=0; $i < $countKasBank4; $i++) {
             $detail                     = new crjdetail();
             $detail->crj_id             = $crj->id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_jasa'][$i];
@@ -157,7 +156,7 @@ class CrjController extends Controller
             $detail->kredit             = $detailcrj['jasa_pengiriman'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank5; $i++) { 
+        for ($i=0; $i < $countKasBank5; $i++) {
             $detail                     = new crjdetail();
             $detail->crj_id             = $crj->id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_inventory'][$i];
@@ -174,7 +173,7 @@ class CrjController extends Controller
         }
 
         //insert data Laporan Penjualan
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
             $detail = new LaporanPenjualan();
             $detail->crj_id = $crj->id;
             $detail->total = $detailcrj['total'][$b];
@@ -185,7 +184,7 @@ class CrjController extends Controller
         $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status', 'sales');
         $countinventory1 = count($inventory['jumlah']);
 
-        for ($x=0; $x < $countinventory1; $x++) { 
+        for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
             $detail->crj_id             = $crj->id;
             $detail->items_id           = $inventory['items'][$x];
@@ -273,7 +272,7 @@ class CrjController extends Controller
         crjdetail::where('crj_id', $id)->delete();
         LaporanBukuBesar::where('crj_id', $id)->delete();
 
-        for ($a=0; $a < $countKasBank1; $a++) { 
+        for ($a=0; $a < $countKasBank1; $a++) {
             $detail                     = new crjdetail();
             $detail->crj_id             = $id;
             $detail->nomor_akun         = $detailcrj['nomor_akun2'][$a];
@@ -288,7 +287,7 @@ class CrjController extends Controller
             $detail->debet             = $detailcrj['total'][$a];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank5; $i++) { 
+        for ($i=0; $i < $countKasBank5; $i++) {
             $detail                     = new crjdetail();
             $detail->crj_id             = $id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_cost'][$i];
@@ -303,7 +302,7 @@ class CrjController extends Controller
             $detail->debet             = $detailcrj['cost'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank2; $i++) { 
+        for ($i=0; $i < $countKasBank2; $i++) {
             $detail                     = new crjdetail();
             $detail->crj_id             = $id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_sales'][$i];
@@ -318,7 +317,7 @@ class CrjController extends Controller
             $detail->kredit             = $detailcrj['subtotal'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank3; $i++) { 
+        for ($i=0; $i < $countKasBank3; $i++) {
             $detail                     = new crjdetail();
             $detail->crj_id             = $id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_ppn'][$i];
@@ -333,7 +332,7 @@ class CrjController extends Controller
             $detail->kredit             = $detailcrj['PPN'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank4; $i++) { 
+        for ($i=0; $i < $countKasBank4; $i++) {
             $detail                     = new crjdetail();
             $detail->crj_id             = $id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_jasa'][$i];
@@ -348,7 +347,7 @@ class CrjController extends Controller
             $detail->kredit             = $detailcrj['jasa_pengiriman'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank5; $i++) { 
+        for ($i=0; $i < $countKasBank5; $i++) {
             $detail                     = new crjdetail();
             $detail->crj_id             = $id;
             $detail->nomor_akun         = $detailcrj['nomor_akun_inventory'][$i];
@@ -366,7 +365,7 @@ class CrjController extends Controller
 
         LaporanPenjualan::where('crj_id', $id)->delete();
         //insert data Laporan Penjualan
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
             $detail = new LaporanPenjualan();
             $detail->crj_id = $id;
             $detail->total = $detailcrj['total'][$b];
@@ -378,7 +377,7 @@ class CrjController extends Controller
         $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status', 'sales');
         $countinventory1 = count($inventory['jumlah']);
 
-        for ($x=0; $x < $countinventory1; $x++) { 
+        for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
             $detail->crj_id             = $id;
             $detail->items_id           = $inventory['items'][$x];

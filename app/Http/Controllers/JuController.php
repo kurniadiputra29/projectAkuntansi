@@ -33,10 +33,9 @@ class JuController extends Controller
     public function create()
     {
         $akun = Account::all();
-        $jus_count = JurnalUmum::all()->count();
-        $jus     = JurnalUmum::orderBy('id', 'desc')->paginate(1);
+        $lastOrder = JurnalUmum::orderBy('id', 'desc')->first();
 
-        return view('pages.ju.create', compact('akun', 'jus', 'jus_count'));
+        return view('pages.ju.create', compact('akun', 'lastOrder'));
     }
 
     /**
@@ -65,7 +64,7 @@ class JuController extends Controller
         $detailjurnalumum                 = $request->only('nomor_akun', 'nama_akun', 'debet', 'kredit');
         $countKasBank = count($detailjurnalumum['nomor_akun']);
 
-        for ($a=0; $a < $countKasBank; $a++) { 
+        for ($a=0; $a < $countKasBank; $a++) {
             $detail = new jurnalumumdetail();
             $detail->jurnal_umums_id = $jurnalumum->id;
             $detail->nomor_akun = $detailjurnalumum['nomor_akun'][$a];
@@ -143,7 +142,7 @@ class JuController extends Controller
         jurnalumumdetail::where('jurnal_umums_id', $id)->delete();
         LaporanBukuBesar::where('jurnal_umums_id', $id)->delete();
 
-        for ($a=0; $a < $countKasBank; $a++) { 
+        for ($a=0; $a < $countKasBank; $a++) {
             $detail                     = new jurnalumumdetail();
             $detail->jurnal_umums_id    = $id;
             $detail->nomor_akun         = $detailjurnalumum['nomor_akun'][$a];

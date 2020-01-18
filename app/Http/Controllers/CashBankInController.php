@@ -34,12 +34,11 @@ class CashBankInController extends Controller
      */
     public function create()
     {
-        $akun               = Account::all();
-        $CashBankIn         = CashBankIn::orderBy('id', 'desc')->paginate(1);
-        $CashBankIn_count   = CashBankIn::all()->count();
-        $customers          = DataCustomer::all();
+        $akun      = Account::all();
+        $lastOrder = CashBankIn::orderBy('id', 'desc')->first();
+        $customers = DataCustomer::all();
 
-        return view('pages.cashbankin.create', compact('akun', 'CashBankIn', 'CashBankIn_count', 'customers'));
+        return view('pages.cashbankin.create', compact('akun', 'lastOrder', 'customers'));
     }
 
     /**
@@ -101,7 +100,7 @@ class CashBankInController extends Controller
         }
 
         //insert data Laporan
-        for ($b=0; $b < $countKasBank2; $b++) { 
+        for ($b=0; $b < $countKasBank2; $b++) {
             $detail = new LaporanPiutang();
             $detail->customers_id     = $request->customers_id;
             $detail->cash_bank_ins_id  = $cashinbank->id;
@@ -204,7 +203,7 @@ class CashBankInController extends Controller
 
         LaporanPiutang::where('cash_bank_ins_id', $id)->delete();
         //insert data Laporan
-        for ($b=0; $b < $countKasBank2; $b++) { 
+        for ($b=0; $b < $countKasBank2; $b++) {
             $detail = new LaporanPiutang();
             $detail->customers_id     = $request->customers_id;
             $detail->cash_bank_ins_id  = $id;

@@ -85,13 +85,13 @@
                     <tr class="bg-success font-weight-bold">
                       <td class="text-light text-center" colspan="2">Total</td>
                       <td class="text-light text-right">
-                        @php 
-                          $sum_tot_Price_Debet = 0 
+                        @php
+                          $sum_tot_Price_Debet = 0
                         @endphp
                         @foreach ($accounts as $accoun)
                         @if( ($distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('debet') + $distinct_laporan->where('account_id', $accoun->id)->sum('debet')) - ($distinct_laporan->where('account_id', $accoun->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('kredit')) > 0)
-                          @php 
-                            $sum_tot_Price_Debet += ($distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('debet') + $distinct_laporan->where('account_id', $accoun->id)->sum('debet')) - ($distinct_laporan->where('account_id', $accoun->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('kredit')) 
+                          @php
+                            $sum_tot_Price_Debet += ($distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('debet') + $distinct_laporan->where('account_id', $accoun->id)->sum('debet')) - ($distinct_laporan->where('account_id', $accoun->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('kredit'))
                           @endphp
                         @endif
                         @endforeach
@@ -99,13 +99,13 @@
                         Rp {{number_format($sum_tot_Price_Debet, 0, " ", ".")}}
                       </td>
                       <td class="text-light text-right">
-                        @php 
-                          $sum_tot_Price_Kredit = 0 
+                        @php
+                          $sum_tot_Price_Kredit = 0
                         @endphp
                         @foreach ($accounts as $accoun)
                         @if( ($distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('debet') + $distinct_laporan->where('account_id', $accoun->id)->sum('debet')) - ($distinct_laporan->where('account_id', $accoun->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('kredit')) < 0)
-                          @php 
-                            $sum_tot_Price_Kredit += ($distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('kredit') + $distinct_laporan->where('account_id', $accoun->id)->sum('kredit')) - ($distinct_laporan->where('account_id', $accoun->id)->sum('debet')  + $distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('debet')) 
+                          @php
+                            $sum_tot_Price_Kredit += ($distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('kredit') + $distinct_laporan->where('account_id', $accoun->id)->sum('kredit')) - ($distinct_laporan->where('account_id', $accoun->id)->sum('debet')  + $distinct_laporan->where('nomor_akun', $accoun->nomor)->sum('debet'))
                           @endphp
                         @endif
                         @endforeach

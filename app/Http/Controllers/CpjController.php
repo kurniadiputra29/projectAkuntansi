@@ -41,11 +41,10 @@ class CpjController extends Controller
         $akun           = Account::all();
         $suppliers      = DataSupplier::all();
         $items          = Item::all();
-        $cpjs           = cpj::orderBy('id', 'desc')->paginate(1);
-        $cpjs_count     = cpj::all()->count();
+        $lastOrder      = cpj::orderBy('id', 'desc')->first();
 
         $inventories   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
-        return view('pages.cpj.create', compact('akun', 'suppliers', 'items', 'cpjs', 'cpjs_count', 'inventories'));
+        return view('pages.cpj.create', compact('akun', 'suppliers', 'items', 'lastOrder', 'inventories'));
     }
 
     /**
@@ -140,7 +139,7 @@ class CpjController extends Controller
         }
 
         //insert data Laporan Penjualan
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
             $detail = new LaporanPembelian();
             $detail->cpj_id = $cpj->id;
             $detail->total = $detailcpj['total'][$b];
@@ -151,7 +150,7 @@ class CpjController extends Controller
         $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
         $countinventory1 = count($inventory['jumlah']);
 
-        for ($x=0; $x < $countinventory1; $x++) { 
+        for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
             $detail->cpj_id             = $cpj->id;
             $detail->items_id           = $inventory['items'][$x];
@@ -298,7 +297,7 @@ class CpjController extends Controller
 
         LaporanPembelian::where('cpj_id', $id)->delete();
         //insert data Laporan Penjualan
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
             $detail = new LaporanPembelian();
             $detail->cpj_id = $id;
             $detail->total = $detailcpj['total'][$b];
@@ -310,7 +309,7 @@ class CpjController extends Controller
         $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
         $countinventory1 = count($inventory['jumlah']);
 
-        for ($x=0; $x < $countinventory1; $x++) { 
+        for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
             $detail->cpj_id             = $id;
             $detail->items_id           = $inventory['items'][$x];

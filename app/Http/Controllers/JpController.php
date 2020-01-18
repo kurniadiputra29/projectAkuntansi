@@ -32,10 +32,9 @@ class JpController extends Controller
     public function create()
     {
         $akun = Account::all();
-        $jps     = Jurnalpenyesuaian::orderBy('id', 'desc')->paginate(1);
-        $jps_count = Jurnalpenyesuaian::all()->count();
+        $lastOrder = Jurnalpenyesuaian::orderBy('id', 'desc')->first();
 
-        return view('pages.jp.create', compact('akun', 'jps', 'jps_count'));
+        return view('pages.jp.create', compact('akun', 'lastOrder'));
     }
 
     /**
@@ -64,7 +63,7 @@ class JpController extends Controller
         $detailJurnalpenyesuaian                 = $request->only('nomor_akun', 'nama_akun', 'debet', 'kredit');
         $countKasBank = count($detailJurnalpenyesuaian['nomor_akun']);
 
-        for ($a=0; $a < $countKasBank; $a++) { 
+        for ($a=0; $a < $countKasBank; $a++) {
             $detail                     = new jurnalpenyesuaiandetail();
             $detail->jurnalpenyesuaians_id      = $Jurnalpenyesuaian->id;
             $detail->nomor_akun         = $detailJurnalpenyesuaian['nomor_akun'][$a];
@@ -133,7 +132,7 @@ class JpController extends Controller
 
         jurnalpenyesuaiandetail::where('jurnalpenyesuaians_id', $id)->delete();
 
-        for ($a=0; $a < $countKasBank; $a++) { 
+        for ($a=0; $a < $countKasBank; $a++) {
             $detail                     = new jurnalpenyesuaiandetail();
             $detail->jurnalpenyesuaians_id      = $id;
             $detail->nomor_akun         = $detailJurnalpenyesuaian['nomor_akun'][$a];
