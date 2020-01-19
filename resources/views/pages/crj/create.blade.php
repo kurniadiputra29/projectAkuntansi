@@ -86,7 +86,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="tanggal_transaksi">Tanggal Transaksi</label>
-                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi">
+                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{date("Y-m-d")}}">
                   </div>
                 </div>
                 <div class="col-md-4">
