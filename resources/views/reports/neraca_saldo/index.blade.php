@@ -42,7 +42,7 @@
               </div>
               <div class="right-container">
                 <a type="button" class="btn btn-success mr-5" href="/laporan"><i class="ik ik-arrow-left"></i>Back</a>
-                <button type="button" class="btn btn-info mr-5" data-toggle="modal" data-target="#createModal"><i class="ik ik-filter"></i>Filter</button>
+                {{-- <button type="button" class="btn btn-info mr-5" data-toggle="modal" data-target="#createModal"><i class="ik ik-filter"></i>Filter</button> --}}
                 <a type="button" class="btn btn-primary mr-5" href="{{route('neraca_saldo.print')}}"><i class="ik ik-printer"></i>Print</a>
               </div>
             </div>
