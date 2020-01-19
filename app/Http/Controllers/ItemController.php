@@ -21,7 +21,8 @@ class ItemController extends Controller
     public function index()
     {
       $data = Item::orderBy('created_at', 'desc')->get();
-        return view('pages.item.index', compact('data'));
+      $lastOrder = Item::orderBy('id', 'desc')->first();
+        return view('pages.item.index', compact('data','lastOrder'));
     }
 
     /**
@@ -50,7 +51,7 @@ class ItemController extends Controller
             'nama'      => 'required',
             'foto'      => 'required',
         ],$messages);
-        
+
         $data           = new Item;
         $data->kode     = $request->kode;
         $data->nama     = $request->nama;
@@ -118,7 +119,7 @@ class ItemController extends Controller
               'nama'      => 'required',
               'foto'      => 'required',
           ],$messages);
-          
+
           $data           = Item::find($id);
           $data->kode     = $request->kode;
           $data->nama     = $request->nama;
