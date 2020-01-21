@@ -86,20 +86,23 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="tanggal_transaksi">Tanggal Transaksi</label>
-                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi">
+                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{date("Y-m-d")}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="no_transaksi">Nomor Transaksi</label>
-                    @if ($sales_count <= 0)
-                      <input class="form-control" name="kode" type="text" id="no_transaksi">
-                    @else
-                      @foreach ($sales as $key)
-                      <input class="form-control" name="kode" type="text" id="no_transaksi" placeholder="
-                      {{$key->kode}}">
-                      @endforeach
-                    @endif
+                    @php
+                      if ( ! $lastOrder ) {
+                        // We get here if there is no order at all
+                        // If there is no number set it to 0, which will be 1 at the end.
+                        $number = 0;
+                      } else {
+                        $number = $lastOrder->id;
+                      }
+                      $hasil = sprintf('%06d', intval($number) + 1);
+                    @endphp
+                    <input class="form-control" type="text" name="kode" id="no_transaksi" value="SJ-{{$hasil}}" readonly>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -110,7 +113,7 @@
                 </div>
               </div>
 
-              <div 
+              <div
                 class="row"
                 v-for="(cashbank, index) in cashbanks"
                 :key="index"
@@ -280,7 +283,7 @@
         var jumlah =  (parseInt(this.items[id_item]) + parseInt(laba))*unit;
         this.cashbanks[index].jumlah = jumlah;
         return jumlah;
-      }, 
+      },
       sales(id_item, unit, laba, index){
         var sales =  this.items[id_item]*unit;
         this.cashbanks[index].sales = sales;
@@ -288,7 +291,7 @@
       },
   },
   computed: {
-    
+
     nomor_akuns() {
       var akun = [];
       akun[0] = 0;

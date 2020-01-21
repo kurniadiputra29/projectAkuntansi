@@ -43,11 +43,10 @@ class PurchaseJournalController extends Controller
         $akun = Account::all();
         $suppliers = DataSupplier::all();
         $items = Item::all();
-        $purchase_count = PurchaseJournal::all()->count();
-        $purchase     = PurchaseJournal::orderBy('id', 'desc')->paginate(1);
+        $lastOrder = PurchaseJournal::orderBy('id', 'desc')->first();
 
         $inventories   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
-        return view('pages.purchase_journal.create', compact('akun', 'suppliers', 'items', 'purchase_count','purchase', 'inventories'));
+        return view('pages.purchase_journal.create', compact('akun', 'suppliers', 'items', 'lastOrder', 'inventories'));
     }
 
     /**
@@ -80,7 +79,7 @@ class PurchaseJournalController extends Controller
         $countKasBank3 = count($detailpurchase['PPN']);
         $countKasBank4 = count($detailpurchase['jasa_pengiriman']);
 
-        for ($a=0; $a < $countKasBank1; $a++) { 
+        for ($a=0; $a < $countKasBank1; $a++) {
             $detail = new purchasejournaldetail();
             $detail->purchasejournal_id = $PurchaseJournal->id;
             $detail->nomor_akun = $detailpurchase['nomor_akun2'][$a];
@@ -104,7 +103,7 @@ class PurchaseJournalController extends Controller
             $detail->kredit = $detailpurchase['total'][$a];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank2; $i++) { 
+        for ($i=0; $i < $countKasBank2; $i++) {
             $detail = new purchasejournaldetail();
             $detail->purchasejournal_id = $PurchaseJournal->id;
             $detail->nomor_akun = $detailpurchase['nomor_akun_sales'][$i];
@@ -128,7 +127,7 @@ class PurchaseJournalController extends Controller
             $detail->debet = $detailpurchase['subtotal'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank3; $i++) { 
+        for ($i=0; $i < $countKasBank3; $i++) {
             $detail = new purchasejournaldetail();
             $detail->purchasejournal_id = $PurchaseJournal->id;
             $detail->nomor_akun = $detailpurchase['nomor_akun_ppn'][$i];
@@ -152,7 +151,7 @@ class PurchaseJournalController extends Controller
             $detail->debet = $detailpurchase['PPN'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank4; $i++) { 
+        for ($i=0; $i < $countKasBank4; $i++) {
             $detail = new purchasejournaldetail();
             $detail->purchasejournal_id = $PurchaseJournal->id;
             $detail->nomor_akun = $detailpurchase['nomor_akun_jasa'][$i];
@@ -178,7 +177,7 @@ class PurchaseJournalController extends Controller
         }
 
         //insert data Laporan Pembelian
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
             $detail = new LaporanPembelian();
             $detail->purchasejournal_id = $PurchaseJournal->id;
             $detail->total = $detailpurchase['total'][$b];
@@ -186,7 +185,7 @@ class PurchaseJournalController extends Controller
         }
 
         //insert data Laporan
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
             $detail = new LaporanHutang();
             $detail->suppliers_id     = $request->suppliers_id;
             $detail->purchasejournal_id = $PurchaseJournal->id;
@@ -199,7 +198,7 @@ class PurchaseJournalController extends Controller
         $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
         $countinventory1 = count($inventory['jumlah']);
 
-        for ($x=0; $x < $countinventory1; $x++) { 
+        for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
             $detail->purchasejournal_id             = $PurchaseJournal->id;
             $detail->items_id           = $inventory['items'][$x];
@@ -246,7 +245,7 @@ class PurchaseJournalController extends Controller
                                     ->where('nomor_akun', '2-1320')
                                     ->where('debet', '>', '0')
                                     ->exists();
-        
+
         return view('pages.purchase_journal.edit', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count'));
     }
 
@@ -285,7 +284,7 @@ class PurchaseJournalController extends Controller
         LaporanBukuBesar::where('purchasejournal_id', $id)->delete();
         LaporanBukuBesarPenyesuaian::where('purchasejournal_id', $id)->delete();
 
-        for ($a=0; $a < $countKasBank1; $a++) { 
+        for ($a=0; $a < $countKasBank1; $a++) {
             $detail = new purchasejournaldetail();
             $detail->purchasejournal_id = $id;
             $detail->nomor_akun = $detailpurchase['nomor_akun2'][$a];
@@ -309,7 +308,7 @@ class PurchaseJournalController extends Controller
             $detail->kredit = $detailpurchase['total'][$a];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank2; $i++) { 
+        for ($i=0; $i < $countKasBank2; $i++) {
             $detail = new purchasejournaldetail();
             $detail->purchasejournal_id = $id;
             $detail->nomor_akun = $detailpurchase['nomor_akun_sales'][$i];
@@ -333,7 +332,7 @@ class PurchaseJournalController extends Controller
             $detail->debet = $detailpurchase['subtotal'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank3; $i++) { 
+        for ($i=0; $i < $countKasBank3; $i++) {
             $detail = new purchasejournaldetail();
             $detail->purchasejournal_id = $id;
             $detail->nomor_akun = $detailpurchase['nomor_akun_ppn'][$i];
@@ -357,7 +356,7 @@ class PurchaseJournalController extends Controller
             $detail->debet = $detailpurchase['PPN'][$i];
             $detail->save();
         }
-        for ($i=0; $i < $countKasBank4; $i++) { 
+        for ($i=0; $i < $countKasBank4; $i++) {
             $detail = new purchasejournaldetail();
             $detail->purchasejournal_id = $id;
             $detail->nomor_akun = $detailpurchase['nomor_akun_jasa'][$i];
@@ -384,7 +383,7 @@ class PurchaseJournalController extends Controller
 
         LaporanPembelian::where('purchasejournal_id', $id)->delete();
         //insert data Laporan Pembelian
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
             $detail = new LaporanPembelian();
             $detail->purchasejournal_id = $id;
             $detail->total = $detailpurchase['total'][$b];
@@ -393,7 +392,7 @@ class PurchaseJournalController extends Controller
 
         LaporanHutang::where('purchasejournal_id', $id)->delete();
         //insert data Laporan
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
             $detail = new LaporanHutang();
             $detail->suppliers_id     = $request->suppliers_id;
             $detail->purchasejournal_id = $id;
@@ -407,7 +406,7 @@ class PurchaseJournalController extends Controller
         $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
         $countinventory1 = count($inventory['jumlah']);
 
-        for ($x=0; $x < $countinventory1; $x++) { 
+        for ($x=0; $x < $countinventory1; $x++) {
             $detail                         = new Inventory();
             $detail->purchasejournal_id     = $id;
             $detail->items_id               = $inventory['items'][$x];
@@ -448,7 +447,7 @@ class PurchaseJournalController extends Controller
                                     ->where('nomor_akun', '2-1320')
                                     ->where('debet', '>', '0')
                                     ->exists();
-        
+
         return view('pages.purchase_journal.retur', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'returns', 'returns_count', 'inventoriess', 'Item_count'));
     }
 }

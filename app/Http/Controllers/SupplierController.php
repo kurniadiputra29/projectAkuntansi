@@ -20,7 +20,8 @@ class SupplierController extends Controller
     public function index()
     {
       $data = DataSupplier::orderBy('created_at', 'desc')->get();
-        return view('pages.supplier.index', compact('data'));
+      $lastOrder = DataSupplier::orderBy('id', 'desc')->first();
+        return view('pages.supplier.index', compact('data','lastOrder'));
     }
 
     /**

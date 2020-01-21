@@ -72,7 +72,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="tanggal_transaksi">Tanggal Transaksi</label>
-                      <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi">
+                      <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{date("Y-m-d")}}">
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -82,28 +82,13 @@
                         if ( ! $lastOrder ) {
                           // We get here if there is no order at all
                           // If there is no number set it to 0, which will be 1 at the end.
-
                           $number = 0;
                         } else {
-                          // If we have ORD000001 in the database then we only want the number
-                          // So the substr returns this 000001
-
-                          // Add the string in front and higher up the number.
-                          // the %05d part makes sure that there are always 6 numbers in the string.
-                          // so it adds the missing zero's when needed.
-                          $number = substr($lastOrder->id, 3);
+                          $number = $lastOrder->id;
                         }
                         $hasil = sprintf('%06d', intval($number) + 1);
                       @endphp
                       <input class="form-control" type="text" name="kode" id="no_transaksi" value="PC-{{$hasil}}" readonly>
-                      {{-- @if ($pettycashs_count <= 0)
-                      <input class="form-control" name="kode" type="text" id="no_transaksi">
-                      @else
-                        @foreach ($pettycashs as $key)
-                        <input class="form-control" name="kode" type="text" id="no_transaksi" placeholder="
-                        {{$key->kode}}">
-                        @endforeach
-                      @endif --}}
                     </div>
                   </div>
                   <div class="col-md-4">

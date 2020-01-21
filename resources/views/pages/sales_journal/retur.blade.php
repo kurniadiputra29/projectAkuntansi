@@ -85,7 +85,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="tanggal_transaksi">Tanggal Transaksi</label>
-                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi">
+                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{date("Y-m-d")}}">
                   </div>
                 </div>
                 <input class="form-control" name="salesjournal_id" type="hidden" value="{{$cashbanks->id}}">
@@ -278,7 +278,7 @@
         var jumlah =  (parseInt(this.items[id_item]) + parseInt(laba))*unit;
         this.cashbanks[index].jumlah = jumlah;
         return jumlah;
-      }, 
+      },
       sales(id_item, unit, laba, index){
         var sales =  this.items[id_item]*unit;
         this.cashbanks[index].sales = sales;

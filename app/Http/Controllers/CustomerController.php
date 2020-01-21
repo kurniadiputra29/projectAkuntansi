@@ -20,8 +20,9 @@ class CustomerController extends Controller
     public function index()
     {
         $data = DataCustomer::orderBy('created_at', 'desc')->get();
+        $lastOrder = DataCustomer::orderBy('id', 'desc')->first();
 
-        return view('pages.customer.index', compact('data'));
+        return view('pages.customer.index', compact('data','lastOrder'));
     }
 
     /**

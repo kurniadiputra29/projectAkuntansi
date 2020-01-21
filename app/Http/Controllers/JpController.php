@@ -33,10 +33,9 @@ class JpController extends Controller
     public function create()
     {
         $akun = Account::all();
-        $jps     = Jurnalpenyesuaian::orderBy('id', 'desc')->paginate(1);
-        $jps_count = Jurnalpenyesuaian::all()->count();
+        $lastOrder = Jurnalpenyesuaian::orderBy('id', 'desc')->first();
 
-        return view('pages.jp.create', compact('akun', 'jps', 'jps_count'));
+        return view('pages.jp.create', compact('akun', 'lastOrder'));
     }
 
     /**
