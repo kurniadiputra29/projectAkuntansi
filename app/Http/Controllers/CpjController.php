@@ -13,6 +13,7 @@ use App\Model\ReturPembelian;
 use App\Model\ReturPembelianDetail;
 use App\Model\LaporanPembelian;
 use App\Model\LaporanBukuBesar;
+use App\Model\LaporanBukuBesarPenyesuaian;
 
 class CpjController extends Controller
 {
@@ -89,6 +90,15 @@ class CpjController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->cpj_id             = $cpj->id;
+            $detail->tanggal             = $request->tanggal;
+            $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
+            $detail->kredit             = $detailcpj['total'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id             = $cpj->id;
+            $detail->tanggal             = $request->tanggal;
             $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
             $detail->kredit             = $detailcpj['total'][$a];
             $detail->save();
@@ -104,6 +114,15 @@ class CpjController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->cpj_id             = $cpj->id;
+            $detail->tanggal             = $request->tanggal;
+            $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
+            $detail->debet             = $detailcpj['subtotal'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id             = $cpj->id;
+            $detail->tanggal             = $request->tanggal;
             $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
             $detail->debet             = $detailcpj['subtotal'][$i];
             $detail->save();
@@ -119,6 +138,15 @@ class CpjController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->cpj_id             = $cpj->id;
+            $detail->tanggal             = $request->tanggal;
+            $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
+            $detail->debet             = $detailcpj['PPN'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id             = $cpj->id;
+            $detail->tanggal             = $request->tanggal;
             $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
             $detail->debet             = $detailcpj['PPN'][$i];
             $detail->save();
@@ -134,6 +162,15 @@ class CpjController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->cpj_id             = $cpj->id;
+            $detail->tanggal             = $request->tanggal;
+            $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
+            $detail->debet             = $detailcpj['jasa_pengiriman'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id             = $cpj->id;
+            $detail->tanggal             = $request->tanggal;
             $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
             $detail->debet             = $detailcpj['jasa_pengiriman'][$i];
             $detail->save();
@@ -234,6 +271,7 @@ class CpjController extends Controller
 
         cpjdetail::where('cpj_id', $id)->delete();
         LaporanBukuBesar::where('cpj_id', $id)->delete();
+        LaporanBukuBesarPenyesuaian::where('cpj_id', $id)->delete();
 
         for ($a=0; $a < $countKasBank1; $a++) {
             $detail                     = new cpjdetail();
@@ -246,6 +284,15 @@ class CpjController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->cpj_id             = $id;
+            $detail->tanggal             = $request->tanggal;
+            $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
+            $detail->kredit             = $detailcpj['total'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id             = $id;
+            $detail->tanggal             = $request->tanggal;
             $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
             $detail->kredit             = $detailcpj['total'][$a];
             $detail->save();
@@ -261,6 +308,15 @@ class CpjController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->cpj_id             = $id;
+            $detail->tanggal             = $request->tanggal;
+            $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
+            $detail->debet             = $detailcpj['subtotal'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id             = $id;
+            $detail->tanggal             = $request->tanggal;
             $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
             $detail->debet             = $detailcpj['subtotal'][$i];
             $detail->save();
@@ -276,6 +332,15 @@ class CpjController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->cpj_id             = $id;
+            $detail->tanggal             = $request->tanggal;
+            $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
+            $detail->debet             = $detailcpj['PPN'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id             = $id;
+            $detail->tanggal             = $request->tanggal;
             $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
             $detail->debet             = $detailcpj['PPN'][$i];
             $detail->save();
@@ -291,6 +356,15 @@ class CpjController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->cpj_id             = $id;
+            $detail->tanggal             = $request->tanggal;
+            $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
+            $detail->debet             = $detailcpj['jasa_pengiriman'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id             = $id;
+            $detail->tanggal             = $request->tanggal;
             $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
             $detail->debet             = $detailcpj['jasa_pengiriman'][$i];
             $detail->save();

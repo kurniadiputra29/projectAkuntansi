@@ -14,6 +14,7 @@ use App\Model\ReturPenjualanDetail;
 use App\Model\LaporanPiutang;
 use App\Model\LaporanPenjualan;
 use App\Model\LaporanBukuBesar;
+use App\Model\LaporanBukuBesarPenyesuaian;
 
 class SalesJournalController extends Controller
 {
@@ -93,6 +94,15 @@ class SalesJournalController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->salesjournal_id    = $salesjournal->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun2'][$a];
+            $detail->debet              = $detailsalesjournal['total'][$a];
+            $detail->save();
+            
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->salesjournal_id    = $salesjournal->id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun2'][$a];
             $detail->debet              = $detailsalesjournal['total'][$a];
             $detail->save();
@@ -108,6 +118,15 @@ class SalesJournalController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->salesjournal_id    = $salesjournal->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_cost'][$i];
+            $detail->debet              = $detailsalesjournal['cost'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->salesjournal_id    = $salesjournal->id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_cost'][$i];
             $detail->debet              = $detailsalesjournal['cost'][$i];
             $detail->save();
@@ -123,6 +142,15 @@ class SalesJournalController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->salesjournal_id    = $salesjournal->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_sales'][$i];
+            $detail->kredit             = $detailsalesjournal['subtotal'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->salesjournal_id    = $salesjournal->id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_sales'][$i];
             $detail->kredit             = $detailsalesjournal['subtotal'][$i];
             $detail->save();
@@ -138,6 +166,15 @@ class SalesJournalController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->salesjournal_id    = $salesjournal->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_ppn'][$i];
+            $detail->kredit             = $detailsalesjournal['PPN'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->salesjournal_id    = $salesjournal->id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_ppn'][$i];
             $detail->kredit             = $detailsalesjournal['PPN'][$i];
             $detail->save();
@@ -153,6 +190,15 @@ class SalesJournalController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->salesjournal_id    = $salesjournal->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_jasa'][$i];
+            $detail->kredit             = $detailsalesjournal['jasa_pengiriman'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->salesjournal_id    = $salesjournal->id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_jasa'][$i];
             $detail->kredit             = $detailsalesjournal['jasa_pengiriman'][$i];
             $detail->save();
@@ -168,6 +214,15 @@ class SalesJournalController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->salesjournal_id    = $salesjournal->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_inventory'][$i];
+            $detail->kredit             = $detailsalesjournal['cost'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->salesjournal_id    = $salesjournal->id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_inventory'][$i];
             $detail->kredit             = $detailsalesjournal['cost'][$i];
             $detail->save();
@@ -280,6 +335,7 @@ class SalesJournalController extends Controller
 
         salesjournaldetail::where('salesjournal_id', $id)->delete();
         LaporanBukuBesar::where('salesjournal_id', $id)->delete();
+        LaporanBukuBesarPenyesuaian::where('salesjournal_id', $id)->delete();
 
         for ($a=0; $a < $countKasBank1; $a++) { 
             $detail                     = new salesjournaldetail();
@@ -292,6 +348,15 @@ class SalesJournalController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->salesjournal_id    = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun2'][$a];
+            $detail->debet              = $detailsalesjournal['total'][$a];
+            $detail->save();
+            
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->salesjournal_id    = $id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun2'][$a];
             $detail->debet              = $detailsalesjournal['total'][$a];
             $detail->save();
@@ -307,6 +372,15 @@ class SalesJournalController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->salesjournal_id    = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_cost'][$i];
+            $detail->debet              = $detailsalesjournal['cost'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->salesjournal_id    = $id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_cost'][$i];
             $detail->debet              = $detailsalesjournal['cost'][$i];
             $detail->save();
@@ -322,6 +396,15 @@ class SalesJournalController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->salesjournal_id    = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_sales'][$i];
+            $detail->kredit             = $detailsalesjournal['subtotal'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->salesjournal_id    = $id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_sales'][$i];
             $detail->kredit             = $detailsalesjournal['subtotal'][$i];
             $detail->save();
@@ -337,6 +420,15 @@ class SalesJournalController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->salesjournal_id    = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_ppn'][$i];
+            $detail->kredit             = $detailsalesjournal['PPN'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->salesjournal_id    = $id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_ppn'][$i];
             $detail->kredit             = $detailsalesjournal['PPN'][$i];
             $detail->save();
@@ -352,6 +444,15 @@ class SalesJournalController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->salesjournal_id    = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_jasa'][$i];
+            $detail->kredit             = $detailsalesjournal['jasa_pengiriman'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->salesjournal_id    = $id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_jasa'][$i];
             $detail->kredit             = $detailsalesjournal['jasa_pengiriman'][$i];
             $detail->save();
@@ -367,6 +468,15 @@ class SalesJournalController extends Controller
             //insert Laporan Buku Besar
             $detail                     = new LaporanBukuBesar();
             $detail->salesjournal_id    = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun         = $detailsalesjournal['nomor_akun_inventory'][$i];
+            $detail->kredit             = $detailsalesjournal['cost'][$i];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail                     = new LaporanBukuBesarPenyesuaian();
+            $detail->salesjournal_id    = $id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun_inventory'][$i];
             $detail->kredit             = $detailsalesjournal['cost'][$i];
             $detail->save();

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLaporanBukuBesarsTable extends Migration
+class CreateLaporanBukuBesarPenyesuaiansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLaporanBukuBesarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('laporan_buku_besars', function (Blueprint $table) {
+        Schema::create('laporan_buku_besar_penyesuaians', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('tanggal');
             $table->unsignedInteger('account_id')->nullable();
@@ -29,6 +29,7 @@ class CreateLaporanBukuBesarsTable extends Migration
             $table->unsignedInteger('cash_bank_outs_id')->nullable();
             $table->unsignedInteger('jurnal_umums_id')->nullable();
             $table->unsignedInteger('pettycash_id')->nullable();
+            $table->unsignedInteger('jurnalpenyesuaians_id')->nullable();
             $table->integer('debet')->nullable();
             $table->integer('kredit')->nullable();
             $table->timestamps();
@@ -45,6 +46,7 @@ class CreateLaporanBukuBesarsTable extends Migration
             $table->foreign('cash_bank_ins_id')->references('id')->on('cash_bank_ins')->onDelete('cascade');
             $table->foreign('jurnal_umums_id')->references('id')->on('jurnal_umums')->onDelete('cascade');
             $table->foreign('pettycash_id')->references('id')->on('pettycashes')->onDelete('cascade');
+            $table->foreign('jurnalpenyesuaians_id')->references('id')->on('jurnalpenyesuaians')->onDelete('cascade');
         });
     }
 
@@ -55,6 +57,6 @@ class CreateLaporanBukuBesarsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('laporan_buku_besars');
+        Schema::dropIfExists('laporan_buku_besar_penyesuaians');
     }
 }

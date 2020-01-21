@@ -7,6 +7,7 @@ use App\Model\Account;
 use App\Model\JurnalUmum;
 use App\Model\jurnalumumdetail;
 use App\Model\LaporanBukuBesar;
+use App\Model\LaporanBukuBesarPenyesuaian;
 
 class JuController extends Controller
 {
@@ -77,6 +78,16 @@ class JuController extends Controller
             //insert Laporan Buku Besar
             $detail = new LaporanBukuBesar();
             $detail->jurnal_umums_id = $jurnalumum->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailjurnalumum['nomor_akun'][$a];
+            $detail->debet = $detailjurnalumum['debet'][$a];
+            $detail->kredit = $detailjurnalumum['kredit'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->jurnal_umums_id = $jurnalumum->id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun = $detailjurnalumum['nomor_akun'][$a];
             $detail->debet = $detailjurnalumum['debet'][$a];
             $detail->kredit = $detailjurnalumum['kredit'][$a];
@@ -142,6 +153,7 @@ class JuController extends Controller
 
         jurnalumumdetail::where('jurnal_umums_id', $id)->delete();
         LaporanBukuBesar::where('jurnal_umums_id', $id)->delete();
+        LaporanBukuBesarPenyesuaian::where('jurnal_umums_id', $id)->delete();
 
         for ($a=0; $a < $countKasBank; $a++) { 
             $detail                     = new jurnalumumdetail();
@@ -155,6 +167,16 @@ class JuController extends Controller
             //insert Laporan Buku Besar
             $detail = new LaporanBukuBesar();
             $detail->jurnal_umums_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailjurnalumum['nomor_akun'][$a];
+            $detail->debet = $detailjurnalumum['debet'][$a];
+            $detail->kredit = $detailjurnalumum['kredit'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->jurnal_umums_id = $id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun = $detailjurnalumum['nomor_akun'][$a];
             $detail->debet = $detailjurnalumum['debet'][$a];
             $detail->kredit = $detailjurnalumum['kredit'][$a];

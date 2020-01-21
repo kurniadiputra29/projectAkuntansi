@@ -25,6 +25,10 @@
               </select>
             </div>
             <div class="form-group">
+              <label for="tanggal_transaksi">Tanggal Transaksi</label>
+              <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{ $key->tanggal }}" >
+            </div>
+            <div class="form-group">
               <label for="debet">Debet</label>
               <input type="number" class="form-control" name="debet" id="debet" value="{{ $key->debet }}">
             </div>

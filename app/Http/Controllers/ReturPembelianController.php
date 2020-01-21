@@ -14,6 +14,7 @@ use App\Model\PurchaseJournal;
 use App\Model\LaporanHutang;
 use App\Model\LaporanPembelian;
 use App\Model\LaporanBukuBesar;
+use App\Model\LaporanBukuBesarPenyesuaian;
 
 class ReturPembelianController extends Controller
 {
@@ -90,6 +91,15 @@ class ReturPembelianController extends Controller
           //insert Laporan Buku Besar
           $detail = new LaporanBukuBesar();
           $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->tanggal = $request->tanggal;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun2'][$a];
+          $detail->debet = $detailReturnPembelian['total'][$a];
+          $detail->save();
+
+          //insert Laporan Buku Besar Penyesuaian
+          $detail = new LaporanBukuBesarPenyesuaian();
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->tanggal = $request->tanggal;
           $detail->nomor_akun = $detailReturnPembelian['nomor_akun2'][$a];
           $detail->debet = $detailReturnPembelian['total'][$a];
           $detail->save();
@@ -105,6 +115,15 @@ class ReturPembelianController extends Controller
           //insert Laporan Buku Besar
           $detail = new LaporanBukuBesar();
           $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->tanggal = $request->tanggal;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_sales'][$i];
+          $detail->kredit = $detailReturnPembelian['subtotal'][$i];
+          $detail->save();
+
+          //insert Laporan Buku Besar Penyesuaian
+          $detail = new LaporanBukuBesarPenyesuaian();
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->tanggal = $request->tanggal;
           $detail->nomor_akun = $detailReturnPembelian['nomor_akun_sales'][$i];
           $detail->kredit = $detailReturnPembelian['subtotal'][$i];
           $detail->save();
@@ -120,6 +139,15 @@ class ReturPembelianController extends Controller
           //insert Laporan Buku Besar
           $detail = new LaporanBukuBesar();
           $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->tanggal = $request->tanggal;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_ppn'][$i];
+          $detail->kredit = $detailReturnPembelian['PPN'][$i];
+          $detail->save();
+
+          //insert Laporan Buku Besar Penyesuaian
+          $detail = new LaporanBukuBesarPenyesuaian();
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->tanggal = $request->tanggal;
           $detail->nomor_akun = $detailReturnPembelian['nomor_akun_ppn'][$i];
           $detail->kredit = $detailReturnPembelian['PPN'][$i];
           $detail->save();
@@ -135,6 +163,15 @@ class ReturPembelianController extends Controller
           //insert Laporan Buku Besar
           $detail = new LaporanBukuBesar();
           $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->tanggal = $request->tanggal;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_jasa'][$i];
+          $detail->kredit = $detailReturnPembelian['jasa_pengiriman'][$i];
+          $detail->save();
+
+          //insert Laporan Buku Besar Penyesuaian
+          $detail = new LaporanBukuBesarPenyesuaian();
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
+          $detail->tanggal = $request->tanggal;
           $detail->nomor_akun = $detailReturnPembelian['nomor_akun_jasa'][$i];
           $detail->kredit = $detailReturnPembelian['jasa_pengiriman'][$i];
           $detail->save();
@@ -248,6 +285,7 @@ class ReturPembelianController extends Controller
 
       ReturPembelianDetail::where('retur_pembelian_id', $id)->delete();
       LaporanBukuBesar::where('retur_pembelian_id', $id)->delete();
+      LaporanBukuBesarPenyesuaian::where('retur_pembelian_id', $id)->delete();
 
       for ($a=0; $a < $countKasBank1; $a++) { 
           $detail = new ReturPembelianDetail();
@@ -260,6 +298,15 @@ class ReturPembelianController extends Controller
           //insert Laporan Buku Besar
           $detail = new LaporanBukuBesar();
           $detail->retur_pembelian_id = $id;
+          $detail->tanggal = $request->tanggal;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun2'][$a];
+          $detail->debet = $detailReturnPembelian['total'][$a];
+          $detail->save();
+
+          //insert Laporan Buku Besar Penyesuaian
+          $detail = new LaporanBukuBesarPenyesuaian();
+          $detail->retur_pembelian_id = $id;
+          $detail->tanggal = $request->tanggal;
           $detail->nomor_akun = $detailReturnPembelian['nomor_akun2'][$a];
           $detail->debet = $detailReturnPembelian['total'][$a];
           $detail->save();
@@ -275,6 +322,15 @@ class ReturPembelianController extends Controller
           //insert Laporan Buku Besar
           $detail = new LaporanBukuBesar();
           $detail->retur_pembelian_id = $id;
+          $detail->tanggal = $request->tanggal;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_sales'][$i];
+          $detail->kredit = $detailReturnPembelian['subtotal'][$i];
+          $detail->save();
+
+          //insert Laporan Buku Besar Penyesuaian
+          $detail = new LaporanBukuBesarPenyesuaian();
+          $detail->retur_pembelian_id = $id;
+          $detail->tanggal = $request->tanggal;
           $detail->nomor_akun = $detailReturnPembelian['nomor_akun_sales'][$i];
           $detail->kredit = $detailReturnPembelian['subtotal'][$i];
           $detail->save();
@@ -290,6 +346,15 @@ class ReturPembelianController extends Controller
           //insert Laporan Buku Besar
           $detail = new LaporanBukuBesar();
           $detail->retur_pembelian_id = $id;
+          $detail->tanggal = $request->tanggal;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_ppn'][$i];
+          $detail->kredit = $detailReturnPembelian['PPN'][$i];
+          $detail->save();
+
+          //insert Laporan Buku Besar Penyesuaian
+          $detail = new LaporanBukuBesarPenyesuaian();
+          $detail->retur_pembelian_id = $id;
+          $detail->tanggal = $request->tanggal;
           $detail->nomor_akun = $detailReturnPembelian['nomor_akun_ppn'][$i];
           $detail->kredit = $detailReturnPembelian['PPN'][$i];
           $detail->save();
@@ -305,6 +370,15 @@ class ReturPembelianController extends Controller
           //insert Laporan Buku Besar
           $detail = new LaporanBukuBesar();
           $detail->retur_pembelian_id = $id;
+          $detail->tanggal = $request->tanggal;
+          $detail->nomor_akun = $detailReturnPembelian['nomor_akun_jasa'][$i];
+          $detail->kredit = $detailReturnPembelian['jasa_pengiriman'][$i];
+          $detail->save();
+
+          //insert Laporan Buku Besar Penyesuaian
+          $detail = new LaporanBukuBesarPenyesuaian();
+          $detail->retur_pembelian_id = $id;
+          $detail->tanggal = $request->tanggal;
           $detail->nomor_akun = $detailReturnPembelian['nomor_akun_jasa'][$i];
           $detail->kredit = $detailReturnPembelian['jasa_pengiriman'][$i];
           $detail->save();

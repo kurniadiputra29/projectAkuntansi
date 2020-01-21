@@ -12,6 +12,7 @@ use App\Model\Inventory;
 use App\Model\LaporanPiutang;
 use App\Model\LaporanPenjualan;
 use App\Model\LaporanBukuBesar;
+use App\Model\LaporanBukuBesarPenyesuaian;
 
 class ReturPenjualanController extends Controller
 {
@@ -77,93 +78,147 @@ public function store(Request $request)
     $countKasBank5 = count($detailReturPenjualan['cost']);
 
     for ($a=0; $a < $countKasBank1; $a++) {
-        $detail                     = new ReturPenjualanDetail();
+        $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun2'][$a];
-        $detail->nama_akun          = $detailReturPenjualan['nama_akun2'][$a];
-        $detail->kredit             = $detailReturPenjualan['total'][$a];
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun2'][$a];
+        $detail->nama_akun = $detailReturPenjualan['nama_akun2'][$a];
+        $detail->kredit = $detailReturPenjualan['total'][$a];
         $detail->save();
 
         //insert Laporan Buku Besar
-        $detail                     = new LaporanBukuBesar();
+        $detail = new LaporanBukuBesar();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun2'][$a];
-        $detail->kredit             = $detailReturPenjualan['total'][$a];
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun2'][$a];
+        $detail->kredit = $detailReturPenjualan['total'][$a];
+        $detail->save();
+
+        //insert Laporan Buku Besar Penyesuaian
+        $detail = new LaporanBukuBesarPenyesuaian();
+        $detail->retur_penjualan_id = $ReturPenjualan->id;
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun2'][$a];
+        $detail->kredit = $detailReturPenjualan['total'][$a];
         $detail->save();
     }
     for ($i=0; $i < $countKasBank5; $i++) { 
-        $detail                       = new ReturPenjualanDetail();
-        $detail->retur_penjualan_id   = $ReturPenjualan->id;
-        $detail->nomor_akun           = $detailReturPenjualan['nomor_akun_cost'][$i];
-        $detail->nama_akun            = $detailReturPenjualan['nama_akun2_cost'][$i];
-        $detail->kredit               = $detailReturPenjualan['cost'][$i];
+        $detail = new ReturPenjualanDetail();
+        $detail->retur_penjualan_id = $ReturPenjualan->id;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_cost'][$i];
+        $detail->nama_akun = $detailReturPenjualan['nama_akun2_cost'][$i];
+        $detail->kredit = $detailReturPenjualan['cost'][$i];
         $detail->save();
 
         //insert Laporan Buku Besar
-        $detail                     = new LaporanBukuBesar();
+        $detail = new LaporanBukuBesar();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
-        $detail->nomor_akun           = $detailReturPenjualan['nomor_akun_cost'][$i];
-        $detail->kredit               = $detailReturPenjualan['cost'][$i];
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_cost'][$i];
+        $detail->kredit = $detailReturPenjualan['cost'][$i];
+        $detail->save();
+
+        //insert Laporan Buku Besar Penyesuaian
+        $detail = new LaporanBukuBesarPenyesuaian();
+        $detail->retur_penjualan_id = $ReturPenjualan->id;
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_cost'][$i];
+        $detail->kredit = $detailReturPenjualan['cost'][$i];
         $detail->save();
     }
     for ($i=0; $i < $countKasBank2; $i++) {
-        $detail                     = new ReturPenjualanDetail();
+        $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_sales'][$i];
-        $detail->nama_akun          = $detailReturPenjualan['nama_akun2_sales'][$i];
-        $detail->debet              = $detailReturPenjualan['subtotal'][$i];
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_sales'][$i];
+        $detail->nama_akun = $detailReturPenjualan['nama_akun2_sales'][$i];
+        $detail->debet = $detailReturPenjualan['subtotal'][$i];
         $detail->save();
 
         //insert Laporan Buku Besar
-        $detail                     = new LaporanBukuBesar();
+        $detail = new LaporanBukuBesar();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_sales'][$i];
-        $detail->debet              = $detailReturPenjualan['subtotal'][$i];
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_sales'][$i];
+        $detail->debet = $detailReturPenjualan['subtotal'][$i];
+        $detail->save();
+
+        //insert Laporan Buku Besar Penyesuaian
+        $detail = new LaporanBukuBesarPenyesuaian();
+        $detail->retur_penjualan_id = $ReturPenjualan->id;
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_sales'][$i];
+        $detail->debet = $detailReturPenjualan['subtotal'][$i];
         $detail->save();
     }
     for ($i=0; $i < $countKasBank3; $i++) {
-        $detail                     = new ReturPenjualanDetail();
+        $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_ppn'][$i];
-        $detail->nama_akun          = $detailReturPenjualan['nama_akun2_ppn'][$i];
-        $detail->debet              = $detailReturPenjualan['PPN'][$i];
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_ppn'][$i];
+        $detail->nama_akun = $detailReturPenjualan['nama_akun2_ppn'][$i];
+        $detail->debet = $detailReturPenjualan['PPN'][$i];
         $detail->save();
 
         //insert Laporan Buku Besar
-        $detail                     = new LaporanBukuBesar();
+        $detail = new LaporanBukuBesar();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_ppn'][$i];
-        $detail->debet              = $detailReturPenjualan['PPN'][$i];
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_ppn'][$i];
+        $detail->debet = $detailReturPenjualan['PPN'][$i];
+        $detail->save();
+
+        //insert Laporan Buku Besar Penyesuaian
+        $detail = new LaporanBukuBesarPenyesuaian();
+        $detail->retur_penjualan_id = $ReturPenjualan->id;
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_ppn'][$i];
+        $detail->debet = $detailReturPenjualan['PPN'][$i];
         $detail->save();
     }
     for ($i=0; $i < $countKasBank4; $i++) {
-        $detail                     = new ReturPenjualanDetail();
+        $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_jasa'][$i];
-        $detail->nama_akun          = $detailReturPenjualan['nama_akun2_jasa'][$i];
-        $detail->debet              = $detailReturPenjualan['jasa_pengiriman'][$i];
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_jasa'][$i];
+        $detail->nama_akun = $detailReturPenjualan['nama_akun2_jasa'][$i];
+        $detail->debet = $detailReturPenjualan['jasa_pengiriman'][$i];
         $detail->save();
 
         //insert Laporan Buku Besar
-        $detail                     = new LaporanBukuBesar();
+        $detail = new LaporanBukuBesar();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_jasa'][$i];
-        $detail->debet              = $detailReturPenjualan['jasa_pengiriman'][$i];
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_jasa'][$i];
+        $detail->debet = $detailReturPenjualan['jasa_pengiriman'][$i];
+        $detail->save();
+
+        //insert Laporan Buku Besar Penyesuaian
+        $detail = new LaporanBukuBesarPenyesuaian();
+        $detail->retur_penjualan_id = $ReturPenjualan->id;
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_jasa'][$i];
+        $detail->debet = $detailReturPenjualan['jasa_pengiriman'][$i];
         $detail->save();
     }
     for ($i=0; $i < $countKasBank5; $i++) { 
-        $detail                       = new ReturPenjualanDetail();
-        $detail->retur_penjualan_id   = $ReturPenjualan->id;
-        $detail->nomor_akun           = $detailReturPenjualan['nomor_akun_inventory'][$i];
-        $detail->nama_akun            = $detailReturPenjualan['nama_akun2_inventory'][$i];
-        $detail->debet                = $detailReturPenjualan['cost'][$i];
+        $detail = new ReturPenjualanDetail();
+        $detail->retur_penjualan_id = $ReturPenjualan->id;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_inventory'][$i];
+        $detail->nama_akun = $detailReturPenjualan['nama_akun2_inventory'][$i];
+        $detail->debet = $detailReturPenjualan['cost'][$i];
         $detail->save();
 
         //insert Laporan Buku Besar
-        $detail                     = new LaporanBukuBesar();
+        $detail = new LaporanBukuBesar();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
-        $detail->nomor_akun           = $detailReturPenjualan['nomor_akun_inventory'][$i];
-        $detail->debet                = $detailReturPenjualan['cost'][$i];
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_inventory'][$i];
+        $detail->debet = $detailReturPenjualan['cost'][$i];
+        $detail->save();
+
+        //insert Laporan Buku Besar Penyesuaian
+        $detail = new LaporanBukuBesarPenyesuaian();
+        $detail->retur_penjualan_id = $ReturPenjualan->id;
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_inventory'][$i];
+        $detail->debet = $detailReturPenjualan['cost'][$i];
         $detail->save();
     }
 
@@ -275,95 +330,150 @@ public function update(Request $request, $id)
 
     ReturPenjualanDetail::where('retur_penjualan_id', $id)->delete();
     LaporanBukuBesar::where('retur_penjualan_id', $id)->delete();
+    LaporanBukuBesarPenyesuaian::where('retur_penjualan_id', $id)->delete();
 
     for ($a=0; $a < $countKasBank1; $a++) {
-        $detail                     = new ReturPenjualanDetail();
+        $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun2'][$a];
-        $detail->nama_akun          = $detailReturPenjualan['nama_akun2'][$a];
-        $detail->kredit             = $detailReturPenjualan['total'][$a];
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun2'][$a];
+        $detail->nama_akun = $detailReturPenjualan['nama_akun2'][$a];
+        $detail->kredit = $detailReturPenjualan['total'][$a];
         $detail->save();
 
         //insert Laporan Buku Besar
-        $detail                     = new LaporanBukuBesar();
+        $detail = new LaporanBukuBesar();
         $detail->retur_penjualan_id = $id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun2'][$a];
-        $detail->kredit             = $detailReturPenjualan['total'][$a];
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun2'][$a];
+        $detail->kredit = $detailReturPenjualan['total'][$a];
+        $detail->save();
+
+        //insert Laporan Buku Besar Penyesuaian
+        $detail = new LaporanBukuBesarPenyesuaian();
+        $detail->retur_penjualan_id = $id;
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun2'][$a];
+        $detail->kredit = $detailReturPenjualan['total'][$a];
         $detail->save();
     }
     for ($i=0; $i < $countKasBank5; $i++) { 
-        $detail                       = new ReturPenjualanDetail();
-        $detail->retur_penjualan_id   = $id;
-        $detail->nomor_akun           = $detailReturPenjualan['nomor_akun_cost'][$i];
-        $detail->nama_akun            = $detailReturPenjualan['nama_akun2_cost'][$i];
-        $detail->kredit               = $detailReturPenjualan['cost'][$i];
+        $detail = new ReturPenjualanDetail();
+        $detail->retur_penjualan_id = $id;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_cost'][$i];
+        $detail->nama_akun = $detailReturPenjualan['nama_akun2_cost'][$i];
+        $detail->kredit = $detailReturPenjualan['cost'][$i];
         $detail->save();
 
         //insert Laporan Buku Besar
-        $detail                     = new LaporanBukuBesar();
+        $detail = new LaporanBukuBesar();
         $detail->retur_penjualan_id = $id;
-        $detail->nomor_akun           = $detailReturPenjualan['nomor_akun_cost'][$i];
-        $detail->kredit               = $detailReturPenjualan['cost'][$i];
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_cost'][$i];
+        $detail->kredit = $detailReturPenjualan['cost'][$i];
+        $detail->save();
+
+        //insert Laporan Buku Besar Penyesuaian
+        $detail = new LaporanBukuBesarPenyesuaian();
+        $detail->retur_penjualan_id = $id;
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_cost'][$i];
+        $detail->kredit = $detailReturPenjualan['cost'][$i];
         $detail->save();
     }
     for ($i=0; $i < $countKasBank2; $i++) {
-        $detail                     = new ReturPenjualanDetail();
+        $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_sales'][$i];
-        $detail->nama_akun          = $detailReturPenjualan['nama_akun2_sales'][$i];
-        $detail->debet              = $detailReturPenjualan['subtotal'][$i];
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_sales'][$i];
+        $detail->nama_akun = $detailReturPenjualan['nama_akun2_sales'][$i];
+        $detail->debet = $detailReturPenjualan['subtotal'][$i];
         $detail->save();
 
         //insert Laporan Buku Besar
-        $detail                     = new LaporanBukuBesar();
+        $detail = new LaporanBukuBesar();
         $detail->retur_penjualan_id = $id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_sales'][$i];
-        $detail->debet              = $detailReturPenjualan['subtotal'][$i];
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_sales'][$i];
+        $detail->debet = $detailReturPenjualan['subtotal'][$i];
+        $detail->save();
+
+        //insert Laporan Buku Besar Penyesuaian
+        $detail = new LaporanBukuBesarPenyesuaian();
+        $detail->retur_penjualan_id = $id;
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_sales'][$i];
+        $detail->debet = $detailReturPenjualan['subtotal'][$i];
         $detail->save();
     }
     for ($i=0; $i < $countKasBank3; $i++) {
-        $detail                     = new ReturPenjualanDetail();
+        $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_ppn'][$i];
-        $detail->nama_akun          = $detailReturPenjualan['nama_akun2_ppn'][$i];
-        $detail->debet              = $detailReturPenjualan['PPN'][$i];
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_ppn'][$i];
+        $detail->nama_akun = $detailReturPenjualan['nama_akun2_ppn'][$i];
+        $detail->debet = $detailReturPenjualan['PPN'][$i];
         $detail->save();
 
         //insert Laporan Buku Besar
-        $detail                     = new LaporanBukuBesar();
+        $detail = new LaporanBukuBesar();
         $detail->retur_penjualan_id = $id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_ppn'][$i];
-        $detail->debet              = $detailReturPenjualan['PPN'][$i];
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_ppn'][$i];
+        $detail->debet = $detailReturPenjualan['PPN'][$i];
+        $detail->save();
+
+        //insert Laporan Buku Besar Penyesuaian
+        $detail = new LaporanBukuBesarPenyesuaian();
+        $detail->retur_penjualan_id = $id;
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_ppn'][$i];
+        $detail->debet = $detailReturPenjualan['PPN'][$i];
         $detail->save();
     }
     for ($i=0; $i < $countKasBank4; $i++) {
-        $detail                     = new ReturPenjualanDetail();
+        $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_jasa'][$i];
-        $detail->nama_akun          = $detailReturPenjualan['nama_akun2_jasa'][$i];
-        $detail->debet              = $detailReturPenjualan['jasa_pengiriman'][$i];
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_jasa'][$i];
+        $detail->nama_akun = $detailReturPenjualan['nama_akun2_jasa'][$i];
+        $detail->debet = $detailReturPenjualan['jasa_pengiriman'][$i];
         $detail->save();
 
         //insert Laporan Buku Besar
-        $detail                     = new LaporanBukuBesar();
+        $detail = new LaporanBukuBesar();
         $detail->retur_penjualan_id = $id;
-        $detail->nomor_akun         = $detailReturPenjualan['nomor_akun_jasa'][$i];
-        $detail->debet              = $detailReturPenjualan['jasa_pengiriman'][$i];
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_jasa'][$i];
+        $detail->debet = $detailReturPenjualan['jasa_pengiriman'][$i];
+        $detail->save();
+
+        //insert Laporan Buku Besar Penyesuaian
+        $detail = new LaporanBukuBesarPenyesuaian();
+        $detail->retur_penjualan_id = $id;
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_jasa'][$i];
+        $detail->debet = $detailReturPenjualan['jasa_pengiriman'][$i];
         $detail->save();
     }
     for ($i=0; $i < $countKasBank5; $i++) { 
-        $detail                       = new ReturPenjualanDetail();
-        $detail->retur_penjualan_id   = $id;
-        $detail->nomor_akun           = $detailReturPenjualan['nomor_akun_inventory'][$i];
-        $detail->nama_akun            = $detailReturPenjualan['nama_akun2_inventory'][$i];
-        $detail->debet                = $detailReturPenjualan['cost'][$i];
+        $detail = new ReturPenjualanDetail();
+        $detail->retur_penjualan_id = $id;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_inventory'][$i];
+        $detail->nama_akun = $detailReturPenjualan['nama_akun2_inventory'][$i];
+        $detail->debet = $detailReturPenjualan['cost'][$i];
         $detail->save();
 
         //insert Laporan Buku Besar
-        $detail                     = new LaporanBukuBesar();
+        $detail = new LaporanBukuBesar();
         $detail->retur_penjualan_id = $id;
-        $detail->nomor_akun           = $detailReturPenjualan['nomor_akun_inventory'][$i];
-        $detail->debet                = $detailReturPenjualan['cost'][$i];
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_inventory'][$i];
+        $detail->debet = $detailReturPenjualan['cost'][$i];
+        $detail->save();
+
+        //insert Laporan Buku Besar Penyesuaian
+        $detail = new LaporanBukuBesarPenyesuaian();
+        $detail->retur_penjualan_id = $id;
+        $detail->tanggal = $request->tanggal;
+        $detail->nomor_akun = $detailReturPenjualan['nomor_akun_inventory'][$i];
+        $detail->debet = $detailReturPenjualan['cost'][$i];
         $detail->save();
     }
 

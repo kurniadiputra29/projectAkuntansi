@@ -8,6 +8,7 @@ use App\Model\Account;
 use App\Model\PettycashDetail;
 use App\Model\SaldoAwal;
 use App\Model\LaporanBukuBesar;
+use App\Model\LaporanBukuBesarPenyesuaian;
 
 class KasKecilController extends Controller
 {
@@ -86,6 +87,15 @@ class KasKecilController extends Controller
 					//insert Laporan Buku Besar
 		            $detail = new LaporanBukuBesar();
 		            $detail->pettycash_id = $pettycash->id;
+		            $detail->tanggal = $request->tanggal;
+		            $detail->nomor_akun = $detailKasKecil2['nomor_akun2'][$a];
+		            $detail->kredit = $detailKasKecil2['total'][$a];
+		            $detail->save();
+
+		            //insert Laporan Buku Besar Penyesuaian
+		            $detail = new LaporanBukuBesarPenyesuaian();
+		            $detail->pettycash_id = $pettycash->id;
+		            $detail->tanggal = $request->tanggal;
 		            $detail->nomor_akun = $detailKasKecil2['nomor_akun2'][$a];
 		            $detail->kredit = $detailKasKecil2['total'][$a];
 		            $detail->save();
@@ -102,6 +112,15 @@ class KasKecilController extends Controller
 					//insert Laporan Buku Besar
 		            $detail = new LaporanBukuBesar();
 		            $detail->pettycash_id = $pettycash->id;
+		            $detail->tanggal = $request->tanggal;
+		            $detail->nomor_akun = $detailKasKecil2['nomor_akun'][$i];
+		            $detail->debet = $detailKasKecil2['jumlah'][$i];
+		            $detail->save();
+
+		            //insert Laporan Buku Besar Penyesuaian
+		            $detail = new LaporanBukuBesarPenyesuaian();
+		            $detail->pettycash_id = $pettycash->id;
+		            $detail->tanggal = $request->tanggal;
 		            $detail->nomor_akun = $detailKasKecil2['nomor_akun'][$i];
 		            $detail->debet = $detailKasKecil2['jumlah'][$i];
 		            $detail->save();
@@ -170,6 +189,7 @@ class KasKecilController extends Controller
 
 				PettycashDetail::where('pettycash_id', $id)->delete();
 				LaporanBukuBesar::where('pettycash_id', $id)->delete();
+				LaporanBukuBesarPenyesuaian::where('pettycash_id', $id)->delete();
 
 				for ($a=0; $a < $nomorAkun1; $a++) {
 					$detail = new PettycashDetail();
@@ -182,6 +202,15 @@ class KasKecilController extends Controller
 					//insert Laporan Buku Besar
 		            $detail = new LaporanBukuBesar();
 		            $detail->pettycash_id = $id;
+		            $detail->tanggal = $request->tanggal;
+		            $detail->nomor_akun = $detailKasKecil2['nomor_akun2'][$a];
+		            $detail->kredit = $detailKasKecil2['total'][$a];
+		            $detail->save();
+
+		            //insert Laporan Buku Besar Penyesuaian
+		            $detail = new LaporanBukuBesarPenyesuaian();
+		            $detail->pettycash_id = $id;
+		            $detail->tanggal = $request->tanggal;
 		            $detail->nomor_akun = $detailKasKecil2['nomor_akun2'][$a];
 		            $detail->kredit = $detailKasKecil2['total'][$a];
 		            $detail->save();
@@ -198,6 +227,15 @@ class KasKecilController extends Controller
 					//insert Laporan Buku Besar
 		            $detail = new LaporanBukuBesar();
 		            $detail->pettycash_id = $id;
+		            $detail->tanggal = $request->tanggal;
+		            $detail->nomor_akun = $detailKasKecil2['nomor_akun'][$i];
+		            $detail->debet = $detailKasKecil2['jumlah'][$i];
+		            $detail->save();
+
+		            //insert Laporan Buku Besar Penyesuaian
+		            $detail = new LaporanBukuBesarPenyesuaian();
+		            $detail->pettycash_id = $id;
+		            $detail->tanggal = $request->tanggal;
 		            $detail->nomor_akun = $detailKasKecil2['nomor_akun'][$i];
 		            $detail->debet = $detailKasKecil2['jumlah'][$i];
 		            $detail->save();
