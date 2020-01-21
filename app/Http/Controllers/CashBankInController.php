@@ -9,6 +9,7 @@ use App\Model\CashBankInDetails;
 use App\Model\DataCustomer;
 use App\Model\LaporanPiutang;
 use App\Model\LaporanBukuBesar;
+use App\Model\LaporanBukuBesarPenyesuaian;
 
 class CashBankInController extends Controller
 {
@@ -80,6 +81,15 @@ class CashBankInController extends Controller
             //insert Laporan Buku Besar
             $detail = new LaporanBukuBesar();
             $detail->cash_bank_ins_id = $cashinbank->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcashinbank['nomor_akun2'][$a];
+            $detail->debet = $detailcashinbank['total'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cash_bank_ins_id = $cashinbank->id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun = $detailcashinbank['nomor_akun2'][$a];
             $detail->debet = $detailcashinbank['total'][$a];
             $detail->save();
@@ -95,6 +105,15 @@ class CashBankInController extends Controller
             //insert Laporan Buku Besar
             $detail = new LaporanBukuBesar();
             $detail->cash_bank_ins_id = $cashinbank->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
+            $detail->kredit = $detailcashinbank['jumlah'][$i];
+            $detail->save();
+            
+            //insert Laporan Buku Besar Penyesuaian
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cash_bank_ins_id = $cashinbank->id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
             $detail->kredit = $detailcashinbank['jumlah'][$i];
             $detail->save();
@@ -170,6 +189,7 @@ class CashBankInController extends Controller
 
         CashBankInDetails::where('cash_bank_ins_id', $id)->delete();
         LaporanBukuBesar::where('cash_bank_ins_id', $id)->delete();
+        LaporanBukuBesarPenyesuaian::where('cash_bank_ins_id', $id)->delete();
 
         for ($a=0; $a < $countKasBank2; $a++) {
             $detail = new CashBankInDetails();
@@ -182,6 +202,15 @@ class CashBankInController extends Controller
             //insert Laporan Buku Besar
             $detail = new LaporanBukuBesar();
             $detail->cash_bank_ins_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcashinbank['nomor_akun2'][$a];
+            $detail->debet = $detailcashinbank['total'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cash_bank_ins_id = $id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun = $detailcashinbank['nomor_akun2'][$a];
             $detail->debet = $detailcashinbank['total'][$a];
             $detail->save();
@@ -197,6 +226,15 @@ class CashBankInController extends Controller
             //insert Laporan Buku Besar
             $detail = new LaporanBukuBesar();
             $detail->cash_bank_ins_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
+            $detail->kredit = $detailcashinbank['jumlah'][$i];
+            $detail->save();
+            
+            //insert Laporan Buku Besar Penyesuaian
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cash_bank_ins_id = $id;
+            $detail->tanggal = $request->tanggal;
             $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
             $detail->kredit = $detailcashinbank['jumlah'][$i];
             $detail->save();

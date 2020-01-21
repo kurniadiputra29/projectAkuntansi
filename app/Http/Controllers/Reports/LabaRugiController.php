@@ -4,21 +4,21 @@ namespace App\Http\Controllers\Reports;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Model\LaporanBukuBesar;
+use App\Model\Account;
 use Illuminate\Support\Facades\DB;
 
 class LabaRugiController extends Controller
 {
     public function index()
     {
-        $sales            = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '4-%')->get();
-        $costs            = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '5-%')->get();
-        $expenses         = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '6-%')->get();
-        $other_revenues   = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '8-%')->get();
-        $other_expenses   = DB::table('accounts')->join('saldo_awals', 'accounts.id', '=', 'saldo_awals.account_id')->where('nomor', 'like', '9-%')->get();
+        $saless = Account::where('nomor', 'like', '4-%')->get();
+        $costs = Account::where('nomor', 'like', '5-%')->get();
+        $expenses = Account::where('nomor', 'like', '6-%')->get();
+        $other_revenues = Account::where('nomor', 'like', '8-%')->get();
+        $other_expenses = Account::where('nomor', 'like', '9-%')->get();
+        $distinct_laporan = LaporanBukuBesar::distinct('account_id', 'nomor_akun')->select('debet', 'kredit', 'account_id', 'nomor_akun', 'id')->get();
 
-        $debet_total      = $sales->sum('debet')+$costs->sum('debet')+$expenses->sum('debet')+$other_revenues->sum('debet')+$other_expenses->sum('debet');
-        $kredit_total     = $sales->sum('kredit')+$costs->sum('kredit')+$expenses->sum('kredit')+$other_revenues->sum('kredit')+$other_expenses->sum('kredit');
-
-        return view('reports.laba_rugi.index', compact('sales','costs','expenses','other_revenues','other_expenses','debet_total','kredit_total'));
+        return view('reports.laba_rugi.index', compact('saless','costs','expenses','other_revenues','other_expenses', 'distinct_laporan'));
     }
 }

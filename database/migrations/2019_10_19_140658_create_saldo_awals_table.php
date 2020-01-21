@@ -15,6 +15,7 @@ class CreateSaldoAwalsTable extends Migration
     {
         Schema::create('saldo_awals', function (Blueprint $table) {
             $table->Increments('id');
+            $table->date('tanggal');
             $table->unsignedInteger('account_id');
             $table->integer('debet')->nullable();
             $table->integer('kredit')->nullable();

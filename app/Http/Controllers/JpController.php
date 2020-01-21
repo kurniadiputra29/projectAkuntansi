@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Account;
 use App\Model\Jurnalpenyesuaian;
 use App\Model\jurnalpenyesuaiandetail;
+use App\Model\LaporanBukuBesarPenyesuaian;
 
 class JpController extends Controller
 {
@@ -65,12 +66,21 @@ class JpController extends Controller
         $countKasBank = count($detailJurnalpenyesuaian['nomor_akun']);
 
         for ($a=0; $a < $countKasBank; $a++) { 
-            $detail                     = new jurnalpenyesuaiandetail();
-            $detail->jurnalpenyesuaians_id      = $Jurnalpenyesuaian->id;
-            $detail->nomor_akun         = $detailJurnalpenyesuaian['nomor_akun'][$a];
-            $detail->nama_akun               = $detailJurnalpenyesuaian['nama_akun'][$a];
-            $detail->debet              = $detailJurnalpenyesuaian['debet'][$a];
-            $detail->kredit             = $detailJurnalpenyesuaian['kredit'][$a];
+            $detail = new jurnalpenyesuaiandetail();
+            $detail->jurnalpenyesuaians_id = $Jurnalpenyesuaian->id;
+            $detail->nomor_akun = $detailJurnalpenyesuaian['nomor_akun'][$a];
+            $detail->nama_akun = $detailJurnalpenyesuaian['nama_akun'][$a];
+            $detail->debet = $detailJurnalpenyesuaian['debet'][$a];
+            $detail->kredit = $detailJurnalpenyesuaian['kredit'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->jurnalpenyesuaians_id = $Jurnalpenyesuaian->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailJurnalpenyesuaian['nomor_akun'][$a];
+            $detail->debet = $detailJurnalpenyesuaian['debet'][$a];
+            $detail->kredit = $detailJurnalpenyesuaian['kredit'][$a];
             $detail->save();
         }
 
@@ -132,14 +142,24 @@ class JpController extends Controller
         $countKasBank                   = count($detailJurnalpenyesuaian['nomor_akun']);
 
         jurnalpenyesuaiandetail::where('jurnalpenyesuaians_id', $id)->delete();
+        LaporanBukuBesarPenyesuaian::where('jurnalpenyesuaians_id', $id)->delete();
 
         for ($a=0; $a < $countKasBank; $a++) { 
-            $detail                     = new jurnalpenyesuaiandetail();
-            $detail->jurnalpenyesuaians_id      = $id;
-            $detail->nomor_akun         = $detailJurnalpenyesuaian['nomor_akun'][$a];
-            $detail->nama_akun               = $detailJurnalpenyesuaian['nama_akun'][$a];
-            $detail->debet              = $detailJurnalpenyesuaian['debet'][$a];
-            $detail->kredit             = $detailJurnalpenyesuaian['kredit'][$a];
+            $detail = new jurnalpenyesuaiandetail();
+            $detail->jurnalpenyesuaians_id = $id;
+            $detail->nomor_akun = $detailJurnalpenyesuaian['nomor_akun'][$a];
+            $detail->nama_akun = $detailJurnalpenyesuaian['nama_akun'][$a];
+            $detail->debet = $detailJurnalpenyesuaian['debet'][$a];
+            $detail->kredit = $detailJurnalpenyesuaian['kredit'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->jurnalpenyesuaians_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailJurnalpenyesuaian['nomor_akun'][$a];
+            $detail->debet = $detailJurnalpenyesuaian['debet'][$a];
+            $detail->kredit = $detailJurnalpenyesuaian['kredit'][$a];
             $detail->save();
         }
 

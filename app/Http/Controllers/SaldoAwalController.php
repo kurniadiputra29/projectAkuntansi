@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Account;
 use App\Model\SaldoAwal;
 use App\Model\LaporanBukuBesar;
+use App\Model\LaporanBukuBesarPenyesuaian;
 use App\Http\Requests\SaldoAwalRequest;
 
 class SaldoAwalController extends Controller
@@ -49,15 +50,26 @@ class SaldoAwalController extends Controller
         ];
         $this->validate($request,[
                 'account_id'  => 'required',
+                'tanggal'  => 'required',
         ],$messages);
 
         $data                   = new SaldoAwal;
         $data->account_id       = $request->account_id;
+        $data->tanggal = $request->tanggal;
         $data->debet            = $request->debet;
         $data->kredit           = $request->kredit;
         $data->save();
 
         $datas = new LaporanBukuBesar;
+        $datas->tanggal = $request->tanggal;
+        $datas->account_id = $request->account_id;
+        $datas->saldo_awals_id = $data->id;
+        $datas->debet = $request->debet;
+        $datas->kredit = $request->kredit;
+        $datas->save();
+
+        $datas = new LaporanBukuBesarPenyesuaian;
+        $datas->tanggal = $request->tanggal;
         $datas->account_id = $request->account_id;
         $datas->saldo_awals_id = $data->id;
         $datas->debet = $request->debet;
@@ -103,16 +115,28 @@ class SaldoAwalController extends Controller
         ];
         $this->validate($request,[
                 'account_id'  => 'required',
+                'tanggal'  => 'required',
         ],$messages);
 
         $data                   = SaldoAwal::find($id);
         $data->account_id       = $request->account_id;
         $data->debet            = $request->debet;
+        $data->tanggal            = $request->tanggal;
         $data->kredit           = $request->kredit;
         $data->save();
 
         LaporanBukuBesar::where('saldo_awals_id', $id)->delete();
         $datas = new LaporanBukuBesar;
+        $datas->tanggal = $request->tanggal;
+        $datas->account_id = $request->account_id;
+        $datas->saldo_awals_id = $id;
+        $datas->debet = $request->debet;
+        $datas->kredit = $request->kredit;
+        $datas->save();
+
+        LaporanBukuBesarPenyesuaian::where('saldo_awals_id', $id)->delete();
+        $datas = new LaporanBukuBesarPenyesuaian;
+        $datas->tanggal = $request->tanggal;
         $datas->account_id = $request->account_id;
         $datas->saldo_awals_id = $id;
         $datas->debet = $request->debet;
