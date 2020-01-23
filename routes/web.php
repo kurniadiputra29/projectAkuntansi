@@ -91,6 +91,7 @@ Route::post('buku_besar/printF', 'Reports\BukuBesarController@printFilter')->nam
 Route::get('neraca', 'Reports\NeracaController@index')->name('neraca.index');
 Route::get('neraca/print', 'Reports\NeracaController@print')->name('neraca.print');
 Route::get('neraca_lajur', 'Reports\NeracaLajurController@index')->name('neraca_lajur.index');
+Route::get('neraca_lajur/print', 'Reports\NeracaLajurController@print')->name('neraca_lajur.print');
 Route::get('laba_rugi', 'Reports\LabaRugiController@index')->name('laba_rugi.index');
 Route::get('arus_kas', 'Reports\ArusKasController@index')->name('arus_kas.index');
 Route::get('petty_cash_book', 'Reports\PettyCashBookController@index')->name('petty_cash_book.index');
