@@ -75,7 +75,7 @@
                       @foreach ($cbi_details as $cbi_detail)
                         <tr>
                           @if ($cbi_detail->nomor_akun == $account->nomor)
-                            <td class="text-center">{{date('d F Y', strtotime($cbi_detail->tanggal ))}}</td>
+                            <td class="text-center">{{date('d F Y', strtotime($cbi_detail->created_at ))}}</td>
                             <td class="text-center"><span class="badge badge-pill badge-success mb-1">Cash Bank In</span></td>
                             <td class="text-right">Rp {{ number_format($cbi_detail->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($cbi_detail->kredit, 0, " ", ".")}}</td>
@@ -85,7 +85,7 @@
                       @foreach ($cbo_details as $cbo_detail)
                         <tr>
                           @if ($cbo_detail->nomor_akun == $account->nomor)
-                            <td class="text-center">{{date('d F Y', strtotime($cbo_detail->tanggal ))}}</td>
+                            <td class="text-center">{{date('d F Y', strtotime($cbo_detail->created_at ))}}</td>
                             <td class="text-center"><span class="badge badge-pill badge-success mb-1">Cash Bank Out</span></td>
                             <td class="text-right">Rp {{ number_format($cbo_detail->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($cbo_detail->kredit, 0, " ", ".")}}</td>
@@ -95,7 +95,7 @@
                       @foreach ($cpj_details as $cpj_detail)
                         <tr>
                           @if ($cpj_detail->nomor_akun == $account->nomor)
-                            <td class="text-center">{{date('d F Y', strtotime($cpj_detail->tanggal ))}}</td>
+                            <td class="text-center">{{date('d F Y', strtotime($cpj_detail->created_at ))}}</td>
                             <td class="text-center"><span class="badge badge-pill badge-success mb-1">Cash Payment Journal</span></td>
                             <td class="text-right">Rp {{ number_format($cpj_detail->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($cpj_detail->kredit, 0, " ", ".")}}</td>
@@ -105,7 +105,7 @@
                       @foreach ($crj_details as $crj_detail)
                         <tr>
                           @if ($crj_detail->nomor_akun == $account->nomor)
-                            <td class="text-center">{{date('d F Y', strtotime($crj_detail->tanggal ))}}</td>
+                            <td class="text-center">{{date('d F Y', strtotime($crj_detail->created_at ))}}</td>
                             <td class="text-center"><span class="badge badge-pill badge-success mb-1">Cash Receipt Journal</span></td>
                             <td class="text-right">Rp {{ number_format($crj_detail->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($crj_detail->kredit, 0, " ", ".")}}</td>
@@ -115,7 +115,7 @@
                       @foreach ($pj_details as $pj_detail)
                         <tr>
                           @if ($pj_detail->nomor_akun == $account->nomor)
-                            <td class="text-center">{{date('d F Y', strtotime($pj_detail->tanggal ))}}</td>
+                            <td class="text-center">{{date('d F Y', strtotime($pj_detail->created_at ))}}</td>
                             <td class="text-center"><span class="badge badge-pill badge-success mb-1">Purchase Journal</span></td>
                             <td class="text-right">Rp {{ number_format($pj_detail->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($pj_detail->kredit, 0, " ", ".")}}</td>
@@ -125,7 +125,7 @@
                       @foreach ($sj_details as $sj_detail)
                         <tr>
                           @if ($sj_detail->nomor_akun == $account->nomor)
-                            <td class="text-center">{{date('d F Y', strtotime($sj_detail->tanggal ))}}</td>
+                            <td class="text-center">{{date('d F Y', strtotime($sj_detail->created_at ))}}</td>
                             <td class="text-center"><span class="badge badge-pill badge-success mb-1">Sales Journal</span></td>
                             <td class="text-right">Rp {{ number_format($sj_detail->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($sj_detail->kredit, 0, " ", ".")}}</td>
@@ -135,7 +135,7 @@
                       @foreach ($rpb_details as $rpb_detail)
                         <tr>
                           @if ($rpb_detail->nomor_akun == $account->nomor)
-                            <td class="text-center">{{date('d F Y', strtotime($rpb_detail->tanggal ))}}</td>
+                            <td class="text-center">{{date('d F Y', strtotime($rpb_detail->created_at ))}}</td>
                             <td class="text-center"><span class="badge badge-pill badge-success mb-1">Retur Pembelian</span></td>
                             <td class="text-right">Rp {{ number_format($rpb_detail->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($rpb_detail->kredit, 0, " ", ".")}}</td>
@@ -145,7 +145,7 @@
                       @foreach ($rpj_details as $rpj_detail)
                         <tr>
                           @if ($rpj_detail->nomor_akun == $account->nomor)
-                            <td class="text-center">{{date('d F Y', strtotime($rpj_detail->tanggal ))}}</td>
+                            <td class="text-center">{{date('d F Y', strtotime($rpj_detail->created_at ))}}</td>
                             <td class="text-center"><span class="badge badge-pill badge-success mb-1">Retur Penjualan</span></td>
                             <td class="text-right">Rp {{ number_format($rpj_detail->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($rpj_detail->kredit, 0, " ", ".")}}</td>
@@ -155,7 +155,7 @@
                       @foreach ($ju_details as $ju_detail)
                         <tr>
                           @if ($ju_detail->nomor_akun == $account->nomor)
-                            <td class="text-center">{{date('d F Y', strtotime($ju_detail->tanggal ))}}</td>
+                            <td class="text-center">{{date('d F Y', strtotime($ju_detail->created_at ))}}</td>
                             <td class="text-center"><span class="badge badge-pill badge-success mb-1">Jurnal Umum</span></td>
                             <td class="text-right">Rp {{ number_format($ju_detail->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($ju_detail->kredit, 0, " ", ".")}}</td>
@@ -165,7 +165,7 @@
                       @foreach ($pc_details as $pc_detail)
                         <tr>
                           @if ($pc_detail->nomor_akun == $account->nomor)
-                            <td class="text-center">{{date('d F Y', strtotime($pc_detail->tanggal ))}}</td>
+                            <td class="text-center">{{date('d F Y', strtotime($pc_detail->created_at ))}}</td>
                             <td class="text-center"><span class="badge badge-pill badge-success mb-1">Kas Kecil</span></td>
                             <td class="text-right">Rp {{ number_format($pc_detail->debet, 0, " ", ".")}}</td>
                             <td class="text-right">Rp {{ number_format($pc_detail->kredit, 0, " ", ".")}}</td>
