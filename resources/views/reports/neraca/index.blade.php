@@ -73,9 +73,9 @@
                       <tr>
                         <td class="text-center">{{$asset->nomor}}</td>
                         <td class="text-left">{{$asset->nama}}</td>
-                        @if( ($distinct_laporan->where('nomor_akun', $asset->nomor)->sum('debet') + $distinct_laporan->where('account_id', $asset->id)->sum('debet')) - ($distinct_laporan->where('account_id', $asset->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $asset->nomor)->sum('kredit')) > 0)
+                        @if( ($distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('kredit')) > 0)
                         <td class="text-right">
-                            Rp {{number_format(($distinct_laporan->where('nomor_akun', $asset->nomor)->sum('debet') + $distinct_laporan->where('account_id', $asset->id)->sum('debet')) - ($distinct_laporan->where('account_id', $asset->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $asset->nomor)->sum('kredit')), 0, " ", ".")}}
+                            Rp {{number_format(($distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('kredit')), 0, " ", ".")}}
                         </td>
                         <td class="text-right">
                         </td>
@@ -83,7 +83,7 @@
                         <td class="text-right">
                         </td>
                         <td class="text-right">
-                            Rp {{number_format(($distinct_laporan->where('nomor_akun', $asset->nomor)->sum('kredit') + $distinct_laporan->where('account_id', $asset->id)->sum('kredit')) - ($distinct_laporan->where('account_id', $asset->id)->sum('debet')  + $distinct_laporan->where('nomor_akun', $asset->nomor)->sum('debet')), 0, " ", ".")}}
+                            Rp {{number_format(($distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('kredit') + $distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('kredit')) - ($distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('debet')  + $distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('debet')), 0, " ", ".")}}
                         </td>
                         @endif
                       </tr>
@@ -97,9 +97,9 @@
                           $sum_tot_asset_Debet = 0 
                         @endphp
                         @foreach ($assets as $asset)
-                        @if( ($distinct_laporan->where('nomor_akun', $asset->nomor)->sum('debet') + $distinct_laporan->where('account_id', $asset->id)->sum('debet')) - ($distinct_laporan->where('account_id', $asset->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $asset->nomor)->sum('kredit')) > 0)
+                        @if( ($distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('kredit')) > 0)
                           @php 
-                            $sum_tot_asset_Debet += ($distinct_laporan->where('nomor_akun', $asset->nomor)->sum('debet') + $distinct_laporan->where('account_id', $asset->id)->sum('debet')) - ($distinct_laporan->where('account_id', $asset->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $asset->nomor)->sum('kredit')) 
+                            $sum_tot_asset_Debet += ($distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('kredit')) 
                           @endphp
                         @endif
                         @endforeach
@@ -111,9 +111,9 @@
                           $sum_tot_asset_Kredit = 0 
                         @endphp
                         @foreach ($assets as $asset)
-                        @if( ($distinct_laporan->where('nomor_akun', $asset->nomor)->sum('debet') + $distinct_laporan->where('account_id', $asset->id)->sum('debet')) - ($distinct_laporan->where('account_id', $asset->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $asset->nomor)->sum('kredit')) < 0)
+                        @if( ($distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('kredit')) < 0)
                           @php 
-                            $sum_tot_asset_Kredit += ($distinct_laporan->where('nomor_akun', $asset->nomor)->sum('kredit') + $distinct_laporan->where('account_id', $asset->id)->sum('kredit')) - ($distinct_laporan->where('account_id', $asset->id)->sum('debet')  + $distinct_laporan->where('nomor_akun', $asset->nomor)->sum('debet')) 
+                            $sum_tot_asset_Kredit += ($distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('kredit') + $distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('kredit')) - ($distinct_laporan_penyesuaian->where('account_id', $asset->id)->sum('debet')  + $distinct_laporan_penyesuaian->where('nomor_akun', $asset->nomor)->sum('debet')) 
                           @endphp
                         @endif
                         @endforeach
@@ -143,9 +143,9 @@
                       <tr>
                         <td class="text-center">{{$liability->nomor}}</td>
                         <td class="text-left">{{$liability->nama}}</td>
-                        @if( ($distinct_laporan->where('nomor_akun', $liability->nomor)->sum('debet') + $distinct_laporan->where('account_id', $liability->id)->sum('debet')) - ($distinct_laporan->where('account_id', $liability->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $liability->nomor)->sum('kredit')) > 0)
+                        @if( ($distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('kredit')) > 0)
                         <td class="text-right">
-                            Rp {{number_format(($distinct_laporan->where('nomor_akun', $liability->nomor)->sum('debet') + $distinct_laporan->where('account_id', $liability->id)->sum('debet')) - ($distinct_laporan->where('account_id', $liability->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $liability->nomor)->sum('kredit')), 0, " ", ".")}}
+                            Rp {{number_format(($distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('kredit')), 0, " ", ".")}}
                         </td>
                         <td class="text-right">
                         </td>
@@ -153,7 +153,7 @@
                         <td class="text-right">
                         </td>
                         <td class="text-right">
-                            Rp {{number_format(($distinct_laporan->where('nomor_akun', $liability->nomor)->sum('kredit') + $distinct_laporan->where('account_id', $liability->id)->sum('kredit')) - ($distinct_laporan->where('account_id', $liability->id)->sum('debet')  + $distinct_laporan->where('nomor_akun', $liability->nomor)->sum('debet')), 0, " ", ".")}}
+                            Rp {{number_format(($distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('kredit') + $distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('kredit')) - ($distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('debet')  + $distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('debet')), 0, " ", ".")}}
                         </td>
                         @endif
                       </tr>
@@ -167,9 +167,9 @@
                           $sum_tot_liability_Debet = 0 
                         @endphp
                         @foreach ($liabilities as $liability)
-                        @if( ($distinct_laporan->where('nomor_akun', $liability->nomor)->sum('debet') + $distinct_laporan->where('account_id', $liability->id)->sum('debet')) - ($distinct_laporan->where('account_id', $liability->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $liability->nomor)->sum('kredit')) > 0)
+                        @if( ($distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('kredit')) > 0)
                           @php 
-                            $sum_tot_liability_Debet += ($distinct_laporan->where('nomor_akun', $liability->nomor)->sum('debet') + $distinct_laporan->where('account_id', $liability->id)->sum('debet')) - ($distinct_laporan->where('account_id', $liability->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $liability->nomor)->sum('kredit')) 
+                            $sum_tot_liability_Debet += ($distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('kredit')) 
                           @endphp
                         @endif
                         @endforeach
@@ -181,9 +181,9 @@
                           $sum_tot_liability_Kredit = 0 
                         @endphp
                         @foreach ($liabilities as $liability)
-                        @if( ($distinct_laporan->where('nomor_akun', $liability->nomor)->sum('debet') + $distinct_laporan->where('account_id', $liability->id)->sum('debet')) - ($distinct_laporan->where('account_id', $liability->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $liability->nomor)->sum('kredit')) < 0)
+                        @if( ($distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('kredit')) < 0)
                           @php 
-                            $sum_tot_liability_Kredit += ($distinct_laporan->where('nomor_akun', $liability->nomor)->sum('kredit') + $distinct_laporan->where('account_id', $liability->id)->sum('kredit')) - ($distinct_laporan->where('account_id', $liability->id)->sum('debet')  + $distinct_laporan->where('nomor_akun', $liability->nomor)->sum('debet')) 
+                            $sum_tot_liability_Kredit += ($distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('kredit') + $distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('kredit')) - ($distinct_laporan_penyesuaian->where('account_id', $liability->id)->sum('debet')  + $distinct_laporan_penyesuaian->where('nomor_akun', $liability->nomor)->sum('debet')) 
                           @endphp
                         @endif
                         @endforeach
@@ -213,9 +213,9 @@
                       <tr>
                         <td class="text-center">{{$equity->nomor}}</td>
                         <td class="text-left">{{$equity->nama}}</td>
-                        @if( ($distinct_laporan->where('nomor_akun', $equity->nomor)->sum('debet') + $distinct_laporan->where('account_id', $equity->id)->sum('debet')) - ($distinct_laporan->where('account_id', $equity->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $equity->nomor)->sum('kredit')) > 0)
+                        @if( ($distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('kredit')) > 0)
                         <td class="text-right">
-                            Rp {{number_format(($distinct_laporan->where('nomor_akun', $equity->nomor)->sum('debet') + $distinct_laporan->where('account_id', $equity->id)->sum('debet')) - ($distinct_laporan->where('account_id', $equity->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $equity->nomor)->sum('kredit')), 0, " ", ".")}}
+                            Rp {{number_format(($distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('kredit')), 0, " ", ".")}}
                         </td>
                         <td class="text-right">
                         </td>
@@ -223,7 +223,7 @@
                         <td class="text-right">
                         </td>
                         <td class="text-right">
-                            Rp {{number_format(($distinct_laporan->where('nomor_akun', $equity->nomor)->sum('kredit') + $distinct_laporan->where('account_id', $equity->id)->sum('kredit')) - ($distinct_laporan->where('account_id', $equity->id)->sum('debet')  + $distinct_laporan->where('nomor_akun', $equity->nomor)->sum('debet')), 0, " ", ".")}}
+                            Rp {{number_format(($distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('kredit') + $distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('kredit')) - ($distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('debet')  + $distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('debet')), 0, " ", ".")}}
                         </td>
                         @endif
                       </tr>
@@ -237,9 +237,9 @@
                           $sum_tot_equity_Debet = 0 
                         @endphp
                         @foreach ($equities as $equity)
-                        @if( ($distinct_laporan->where('nomor_akun', $equity->nomor)->sum('debet') + $distinct_laporan->where('account_id', $equity->id)->sum('debet')) - ($distinct_laporan->where('account_id', $equity->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $equity->nomor)->sum('kredit')) > 0)
+                        @if( ($distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('kredit')) > 0)
                           @php 
-                            $sum_tot_equity_Debet += ($distinct_laporan->where('nomor_akun', $equity->nomor)->sum('debet') + $distinct_laporan->where('account_id', $equity->id)->sum('debet')) - ($distinct_laporan->where('account_id', $equity->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $equity->nomor)->sum('kredit')) 
+                            $sum_tot_equity_Debet += ($distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('kredit')) 
                           @endphp
                         @endif
                         @endforeach
@@ -251,9 +251,9 @@
                           $sum_tot_equity_Kredit = 0 
                         @endphp
                         @foreach ($equities as $equity)
-                        @if( ($distinct_laporan->where('nomor_akun', $equity->nomor)->sum('debet') + $distinct_laporan->where('account_id', $equity->id)->sum('debet')) - ($distinct_laporan->where('account_id', $equity->id)->sum('kredit')  + $distinct_laporan->where('nomor_akun', $equity->nomor)->sum('kredit')) < 0)
+                        @if( ($distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('kredit')) < 0)
                           @php 
-                            $sum_tot_equity_Kredit += ($distinct_laporan->where('nomor_akun', $equity->nomor)->sum('kredit') + $distinct_laporan->where('account_id', $equity->id)->sum('kredit')) - ($distinct_laporan->where('account_id', $equity->id)->sum('debet')  + $distinct_laporan->where('nomor_akun', $equity->nomor)->sum('debet')) 
+                            $sum_tot_equity_Kredit += ($distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('kredit') + $distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('kredit')) - ($distinct_laporan_penyesuaian->where('account_id', $equity->id)->sum('debet')  + $distinct_laporan_penyesuaian->where('nomor_akun', $equity->nomor)->sum('debet')) 
                           @endphp
                         @endif
                         @endforeach
@@ -293,16 +293,51 @@
                       <td class="text-right">Rp {{number_format($sum_tot_equity_Debet, 0, " ", ".")}}</td>
                       <td class="text-right">Rp {{number_format($sum_tot_equity_Kredit, 0, " ", ".")}}</td>
                     </tr>
+                    <tr>
+                      <td>Provit</td>
+                      @if(($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit) - ($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet) >= 0)
+                        <td class="text-right">
+                          Rp {{number_format(($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit) - ($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet), 0, " ", ".")}}
+                        </td>
+                        <td class="text-right">Rp 0</td>
+                      @else
+                        <td class="text-right">Rp 0</td>
+                        <td class="text-right">
+                          Rp {{number_format(($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet) - ($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit), 0, " ", ".")}}
+                        </td>
+                      @endif
+                    </tr>
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
                       <td class="text-light">Total</td>
-                      <td class="text-light text-right">Rp {{number_format($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet, 0, " ", ".")}}</td>
-                      <td class="text-light text-right">Rp {{number_format($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit, 0, " ", ".")}}</td>
+                      @if(($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit) - ($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet) >= 0)
+                        <td class="text-right text-light">
+                          Rp {{number_format((($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit) - ($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet)) + ($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet), 0, " ", ".")}}
+                        </td>
+                        <td class="text-right text-light">
+                          Rp {{number_format($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit, 0, " ", ".")}}
+                        </td>
+                      @else
+                        <td class="text-right text-light">
+                          Rp {{number_format($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet, 0, " ", ".")}}
+                        </td>
+                        <td class="text-right text-light">
+                          Rp {{number_format((($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet) - ($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit)) + ($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit), 0, " ", ".")}}
+                        </td>
+                      @endif
                     </tr>
                     <tr class="bg-danger font-weight-bold">
                       <td class="text-light">Balance</td>
-                      <td class="text-light text-center" colspan="2">Rp {{number_format(($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet) - ($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit), 0, " ", ".")}}</td>
+                      @if(($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit) - ($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet) >= 0)
+                        <td class="text-center text-light" colspan="2">
+                          Rp {{number_format(((($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit) - ($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet)) + ($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet)) - ($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit), 0, " ", ".")}}
+                        </td>
+                      @else
+                        <td class="text-center text-light" colspan="2">
+                          Rp {{number_format(((($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet) - ($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit)) + ($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit)) - ($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet), 0, " ", ".")}}
+                        </td>
+                      @endif
                     </tr>
                   </tfoot>
                 </table>
