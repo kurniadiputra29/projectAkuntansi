@@ -93,6 +93,7 @@ Route::get('neraca/print', 'Reports\NeracaController@print')->name('neraca.print
 Route::get('neraca_lajur', 'Reports\NeracaLajurController@index')->name('neraca_lajur.index');
 Route::get('neraca_lajur/print', 'Reports\NeracaLajurController@print')->name('neraca_lajur.print');
 Route::get('laba_rugi', 'Reports\LabaRugiController@index')->name('laba_rugi.index');
+Route::get('laba_rugi/print', 'Reports\LabaRugiController@print')->name('laba_rugi.print');
 Route::get('retained_earning', 'Reports\RetainedEarningController@index')->name('retained_earning.index');
 Route::get('arus_kas', 'Reports\ArusKasController@index')->name('arus_kas.index');
 Route::get('petty_cash_book', 'Reports\PettyCashBookController@index')->name('petty_cash_book.index');
