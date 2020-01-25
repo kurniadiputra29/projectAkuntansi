@@ -9,7 +9,7 @@ class CashBankOut extends Model
     protected $table = 'cash_bank_outs';
 
     protected $fillable = [
-      'id','tanggal','kode','suppliers_id', 'description','status', 'created_at','update_at'
+      'id','tanggal','kode', 'dibayar_ke', 'suppliers_id', 'description','status', 'created_at','update_at'
     ];
     public function CashBankOutDetails()
     {

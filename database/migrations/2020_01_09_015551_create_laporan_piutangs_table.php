@@ -15,7 +15,7 @@ class CreateLaporanPiutangsTable extends Migration
     {
         Schema::create('laporan_piutangs', function (Blueprint $table) {
             $table->Increments('id');
-            $table->unsignedInteger('customers_id');
+            $table->unsignedInteger('customers_id')->nullable();
             $table->unsignedInteger('saldo_piutangs_id')->nullable();
             $table->unsignedInteger('salesjournal_id')->nullable();
             $table->unsignedInteger('retur_penjualan_id')->nullable();
