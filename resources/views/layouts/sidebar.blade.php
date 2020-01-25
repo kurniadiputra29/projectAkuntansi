@@ -61,6 +61,13 @@
                   <a href="{{ route('cashbank_out.index') }}" class="menu-item {{ Request::is('cashbank_out') || Request::is('cashbank_out/*') ? 'active':'' }}">Cash & Bank Out</a>
               </div>
           </div>
+          <div class="nav-item has-sub {{ Request::is('pelunasan_hutang') || Request::is('pelunasan_hutang/*') || Request::is('penerimaan_piutang') || Request::is('penerimaan_piutang/*') ? 'active open' : '' }}">
+              <a href="#"><i class="ik ik-credit-card"></i><span>Hutang & Piutang</span></a>
+              <div class="submenu-content">
+                  <a href="{{ route('pelunasan_hutang.index') }}" class="menu-item {{ Request::is('pelunasan_hutang') || Request::is('pelunasan_hutang/*') ? 'active':'' }}">Pelunasan Hutang</a>
+                  <a href="{{ route('penerimaan_piutang.index') }}" class="menu-item {{ Request::is('penerimaan_piutang') || Request::is('penerimaan_piutang/*') ? 'active':'' }}">Penerimaan Piutang</a>
+              </div>
+          </div>
           <div class="nav-item {{ Request::is('kas_kecil') || Request::is('kas_kecil/*') ? 'active' : '' }}">
               <a href="{{ route('kas_kecil.index') }}"><i class="ik ik-briefcase"></i><span>Kas Kecil</span></a>
           </div>
@@ -75,6 +82,9 @@
                   <a href="{{ route('item.index') }}" class="menu-item {{ Request::is('item') || Request::is('item/*') ? 'active':'' }}">Daftar Item</a>
                   <a href="{{ route('saldo_item.index') }}" class="menu-item {{ Request::is('saldo_item') || Request::is('saldo_item/*') ? 'active':'' }}">Saldo Item</a>
               </div>
+          </div>
+          <div class="nav-item {{ Request::is('stock_opname') ? 'active' : '' }}">
+              <a href="{{ route('stock_opname.index') }}"><i class="ik ik-truck"></i><span>Harga Penjualan</span></a>
           </div>
           <div class="nav-item {{ Request::is('stock_opname') ? 'active' : '' }}">
               <a href="{{ route('stock_opname.index') }}"><i class="ik ik-truck"></i><span>Stock Opname</span></a>

@@ -17,6 +17,7 @@ class CreateCashBankInsTable extends Migration
             $table->Increments('id');
             $table->date('tanggal');
             $table->string('kode')->unique();
+            $table->string('diterima_dari')->nullable();
             $table->unsignedInteger('customers_id')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

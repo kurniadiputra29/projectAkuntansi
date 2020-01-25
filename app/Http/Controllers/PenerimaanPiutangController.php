@@ -11,7 +11,7 @@ use App\Model\LaporanPiutang;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
 
-class CashBankInController extends Controller
+class PenerimaanPiutangController extends Controller
 {
     public function __construct()
     {
@@ -24,8 +24,8 @@ class CashBankInController extends Controller
      */
     public function index()
     {
-        $data = CashBankIn::orderBy('created_at', 'desc')->where('customers_id', null)->get();
-        return view('pages.cashbankin.index', compact('data'));
+        $data = CashBankIn::orderBy('created_at', 'desc')->where('diterima_dari', null)->get();
+        return view('pages.penerimaan_piutang.index', compact('data'));
     }
 
     /**
@@ -39,7 +39,7 @@ class CashBankInController extends Controller
         $lastOrder = CashBankIn::orderBy('id', 'desc')->first();
         $customers = DataCustomer::all();
 
-        return view('pages.cashbankin.create', compact('akun', 'lastOrder', 'customers'));
+        return view('pages.penerimaan_piutang.create', compact('akun', 'lastOrder', 'customers'));
     }
 
     /**
@@ -61,7 +61,7 @@ class CashBankInController extends Controller
         ],$messages);
 
         //insert data cashbank
-        $dataCashInBank          = $request->only('id','tanggal', 'kode', 'diterima_dari', 'customers_id', 'description');
+        $dataCashInBank          = $request->only('id','tanggal', 'kode', 'customers_id', 'description');
         $cashinbank              = CashBankIn::create($dataCashInBank);
 
         //insert data cashbank detail
@@ -119,18 +119,15 @@ class CashBankInController extends Controller
         }
 
         //insert data Laporan
-        if ($request->diterima_dari == null) {
-            for ($b=0; $b < $countKasBank2; $b++) {
-                $detail = new LaporanPiutang();
-                $detail->customers_id     = $request->customers_id;
-                $detail->cash_bank_ins_id  = $cashinbank->id;
-                $detail->kredit = $detailcashinbank['total'][$b];
-                $detail->save();
-            }
+        for ($b=0; $b < $countKasBank2; $b++) {
+            $detail = new LaporanPiutang();
+            $detail->customers_id     = $request->customers_id;
+            $detail->cash_bank_ins_id  = $cashinbank->id;
+            $detail->kredit = $detailcashinbank['total'][$b];
+            $detail->save();
         }
-        
 
-        return redirect('/cashbank_in')->with('Success', 'Data anda telah berhasil di Input !');
+        return redirect('/penerimaan_piutang')->with('Success', 'Data anda telah berhasil di Input !');
     }
 
     /**
@@ -142,7 +139,7 @@ class CashBankInController extends Controller
     public function show($id)
     {
         $detail = CashBankInDetails::where('cash_bank_ins_id', $id)->get();
-        return view('pages.cashbankin.show', compact('detail'));
+        return view('pages.penerimaan_piutang.show', compact('detail'));
     }
 
     /**
@@ -158,7 +155,7 @@ class CashBankInController extends Controller
         $debets         = CashBankInDetails::where('cash_bank_ins_id', $id)->where('kredit', null)->get();
         $customers      = DataCustomer::all();
 
-        return view('pages.cashbankin.edit', compact('akun', 'cashbanks', 'debets', 'customers'));
+        return view('pages.penerimaan_piutang.edit', compact('akun', 'cashbanks', 'debets', 'customers'));
     }
 
     /**
@@ -181,7 +178,7 @@ class CashBankInController extends Controller
         ],$messages);
 
         //insert data cashbank
-        $dataCashInBank          = $request->only('id','tanggal', 'kode', 'diterima_dari', 'customers_id', 'description');
+        $dataCashInBank          = $request->only('id','tanggal', 'kode', 'customers_id', 'description');
         $cashinbank              = CashBankIn::find($id)->update($dataCashInBank);
 
         //insert data cashbank detail
@@ -242,19 +239,17 @@ class CashBankInController extends Controller
             $detail->save();
         }
 
-        if ($request->diterima_dari == null) {
-            LaporanPiutang::where('cash_bank_ins_id', $id)->delete();
-            //insert data Laporan
-            for ($b=0; $b < $countKasBank2; $b++) {
-                $detail = new LaporanPiutang();
-                $detail->customers_id     = $request->customers_id;
-                $detail->cash_bank_ins_id  = $id;
-                $detail->kredit = $detailcashinbank['total'][$b];
-                $detail->save();
-            }
+        LaporanPiutang::where('cash_bank_ins_id', $id)->delete();
+        //insert data Laporan
+        for ($b=0; $b < $countKasBank2; $b++) {
+            $detail = new LaporanPiutang();
+            $detail->customers_id     = $request->customers_id;
+            $detail->cash_bank_ins_id  = $id;
+            $detail->kredit = $detailcashinbank['total'][$b];
+            $detail->save();
         }
 
-        return redirect('/cashbank_in')->with('Success', 'Data anda telah berhasil di Edit !');
+        return redirect('/penerimaan_piutang')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 
     /**
@@ -266,6 +261,6 @@ class CashBankInController extends Controller
     public function destroy($id)
     {
         CashBankIn::find($id)->delete();
-        return redirect('/cashbank_in')->with('Success', 'Data anda telah berhasil di Hapus !');
+        return redirect('/penerimaan_piutang')->with('Success', 'Data anda telah berhasil di Hapus !');
     }
 }

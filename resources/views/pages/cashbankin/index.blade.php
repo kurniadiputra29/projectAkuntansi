@@ -79,11 +79,9 @@
                         <tr>
                           <td>{{ $key->kode }}</td>
                           <td>{{ $key->tanggal }}</td>
-                          <td>@if ($key->suppliers_id == null)
-                              <span class="badge badge-pill badge-success mb-1">{{ $key->data_customers->nama }}</span>
-                              @else
-                              <span class="badge badge-pill badge-warning mb-1">{{ $key->data_suppliers->nama }}</span>
-                              @endif
+                          <td>
+                              <span class="badge badge-pill badge-success mb-1">{{ $key->diterima_dari }}</span>
+                          </td>
                           <td>{{ $key->description }}</td>
                           <td class="text-right">
                             <div class="dropdown">

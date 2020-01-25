@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Edit Cash & Bank In')
+@section('title', 'AccountMin - Create Pelunasan Hutang')
 
 @section('content')
 
@@ -12,7 +12,7 @@
           <div class="page-header-title">
             <i class="ik ik-menu bg-blue"></i>
             <div class="d-inline">
-              <h5>Edit Cash & Bank In</h5>
+              <h5>Create Pelunasan Hutang</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
             </div>
           </div>
@@ -24,9 +24,9 @@
                 <a href="/dasbor"><i class="ik ik-home"></i></a>
               </li>
               <li class="breadcrumb-item" aria-current="page">
-                <a href="/cashbank_in">Cash & Bank In</a>
+                <a href="/pelunasan_hutang">Pelunasan Hutang</a>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">Edit</li>
+              <li class="breadcrumb-item active" aria-current="page">Create</li>
             </ol>
           </nav>
         </div>
@@ -44,13 +44,13 @@
             </ul>
           </div>
           @endif
-        <form class="forms-sample" id="a" action="{{route('cashbank_in.update', $cashbanks->id)}}" method="post">
+    <form class="forms-sample" id="b" action="{{route('pelunasan_hutang.store')}}" method="post">
           @csrf
-          @method('PUT')
           <div class="card">
-            <div class="card-header" style="background: #2dce89;"><h3 style="color: white">Pemasukan Cash & Bank</h3>
+            <div class="card-header" style="background: #fb6340;"><h3 style="color: white">Pelunasan Hutang</h3>
             </div>
             <div class="card-body">
+
               <div
                 v-for="(cashbank, index) in cashbanks2"
                 :key="index"
@@ -58,12 +58,10 @@
                 <div class="row input-group-primary">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="setor_ke">Setor Ke</label>
+                      <label for="setor_ke">Di Bayar Dari</label>
                       <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
-                        @foreach($debets as $debet)
                         @foreach ($akun as $key)
-                        <option value="{{$key->nomor}}" {{$debet->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
-                        @endforeach
+                        <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -79,27 +77,41 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="diterima_dari">Diterima Dari</label>
-                    <textarea class="form-control" name="diterima_dari" type="text" id="diterima_dari" rows="2">{{$cashbanks->diterima_dari}}</textarea>
+                    <label for="setor_ke">Suppliers</label>
+                      <select class="form-control" id="setor_ke" name="suppliers_id">
+                        <option value="0"> ~~ Pilih Suppliers ~~ </option>
+                        @foreach ($suppliers as $supplier)
+                        <option value="{{$supplier->id}}">{{$supplier->nama}}</option>
+                        @endforeach
+                      </select>
                   </div>
                 </div>
-                <input class="form-control" type="hidden" id="yang_membayar" name="status" value="0">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="tanggal_transaksi">Tanggal Transaksi</label>
-                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{$cashbanks->tanggal}}">
+                    <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{date("Y-m-d")}}">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="no_transaksi">Nomor Transaksi</label>
-                    <input class="form-control" name="kode" type="text" id="no_transaksi" value="{{$cashbanks->kode}}">
+                    @php
+                      if ( ! $lastOrder ) {
+                        // We get here if there is no order at all
+                        // If there is no number set it to 0, which will be 1 at the end.
+                        $number = 0;
+                      } else {
+                        $number = $lastOrder->id;
+                      }
+                      $hasil = sprintf('%06d', intval($number) + 1);
+                    @endphp
+                    <input class="form-control" type="text" name="kode" id="no_transaksi" value="PH-{{$hasil}}" readonly>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="description">Deskripsi</label>
-                    <textarea class="form-control" name="description" type="text" id="description" rows="3">{{$cashbanks->description}}</textarea>
+                    <textarea class="form-control" name="description" type="text" id="description" rows="3"></textarea>
                   </div>
                 </div>
               </div>
@@ -115,16 +127,15 @@
                     <select class="form-control" id="nomor_akun" v-model="cashbank.id_akun">
                       <option class="col-sm-10" value=""> ~~ Pilih Akun ~~ </option>
                       @foreach ($akun as $key)
-                      <option value="{{$key->nomor}}">{{$key->nomor}} - {{$key->nama}}</option>
+                      <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
                       @endforeach
                     </select>
                   </div>
                 </div>
-                
                 <input type="hidden" name="nomor_akun[]"
                     :value="nomor_akun(cashbank.id_akun, index)"
                   >
-                <input type="hidden" name="nama_akun[]"
+                  <input type="hidden" name="nama_akun[]"
                     :value="nama_akun(cashbank.id_akun, index)"
                 >
                 <div class="col-md-6">
@@ -160,8 +171,8 @@
           </div>
 
           <div class="forms-sample" style="margin-bottom: 10px; margin-top: 10px; justify-content: space-between; display: flex;">
-            <a href="{{route('cashbank_in.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
-            <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Edit</button>
+            <a href="{{route('pelunasan_hutang.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
+            <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Create</button>
           </div>
         </div>
       </div>
@@ -180,10 +191,10 @@
    el: '#app',
    data: {
     cashbanks: [
-    {terima_dari:"", description:"", jumlah: 0},
+    {id_akun:"18", terima_dari:"", description:"", jumlah: 0},
     ],
     cashbanks2: [
-    {id_akun2:"{{$debet->nomor_akun}}", description:"", jumlah: 0},
+    {id_akun2:"1", description:"", jumlah: 0},
     ],
   },
   methods: {
@@ -218,22 +229,6 @@
       },
   },
   computed: {
-    nomor_akuns() {
-      var akun = [];
-      akun[0] = 0;
-      @foreach($akun as $key)
-        akun[ "{{ $key->nomor }}" ] = "{{ $key->nomor }}"
-      @endforeach
-      return akun;
-    },
-    nama_akuns() {
-      var akun = [];
-      akun[0] = 0;
-      @foreach($akun as $key)
-        akun[ "{{ $key->nomor }}" ] = "{{ $key->nama }}"
-      @endforeach
-      return akun;
-    },
     total: function(){
       let sum = 0;
       this.cashbanks.forEach(function(cashbank) {
@@ -241,19 +236,22 @@
       });
       return sum;
     },
-  },
-  created(){
-    var cashbanks = [];
-
-    @foreach($cashbanks->CashBankInDetails as $index => $detail)
-    cashbanks [{{$index-1}}] = {
-      id_akun: "{{$detail->nomor_akun}}",
-      nomor_akun: "{{$detail->nomor_akun}}",
-      nama_akun: "{{$detail->nama_akun}}",
-      jumlah: "{{$detail->kredit}}",
-    };
-    @endforeach
-    this.cashbanks = cashbanks;
+    nomor_akuns() {
+      var akun = [];
+      akun[0] = 0;
+      @foreach($akun as $key)
+        akun[ {{ $key->id }} ] = "{{ $key->nomor }}"
+      @endforeach
+      return akun;
+    },
+    nama_akuns() {
+      var akun = [];
+      akun[0] = 0;
+      @foreach($akun as $key)
+        akun[ {{ $key->id }} ] = "{{ $key->nama }}"
+      @endforeach
+      return akun;
+    },
   },
 });
 </script>

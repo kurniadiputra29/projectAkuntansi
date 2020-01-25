@@ -76,13 +76,8 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="setor_ke">Customers</label>
-                      <select class="form-control" id="setor_ke" name="customers_id">
-                        <option value="0"> ~~ Pilih Customers ~~ </option>
-                        @foreach ($customers as $customer)
-                        <option value="{{$customer->id}}">{{$customer->nama}}</option>
-                        @endforeach
-                      </select>
+                    <label for="diterima_dari">Diterima Dari</label>
+                    <textarea class="form-control" name="diterima_dari" type="text" id="diterima_dari" rows="2"></textarea>
                   </div>
                 </div>
                 <div class="col-md-4">

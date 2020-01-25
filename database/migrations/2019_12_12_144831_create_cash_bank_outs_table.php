@@ -17,6 +17,7 @@ class CreateCashBankOutsTable extends Migration
             $table->Increments('id');
             $table->date('tanggal');
             $table->string('kode')->unique();
+            $table->string('dibayar_ke')->nullable();
             $table->unsignedInteger('suppliers_id')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

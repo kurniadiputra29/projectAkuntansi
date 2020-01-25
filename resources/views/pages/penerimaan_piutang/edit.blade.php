@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AccountMin - Edit Cash & Bank In')
+@section('title', 'AccountMin - Edit Penerimaan Piutang')
 
 @section('content')
 
@@ -12,7 +12,7 @@
           <div class="page-header-title">
             <i class="ik ik-menu bg-blue"></i>
             <div class="d-inline">
-              <h5>Edit Cash & Bank In</h5>
+              <h5>Edit Penerimaan Piutang</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
             </div>
           </div>
@@ -24,7 +24,7 @@
                 <a href="/dasbor"><i class="ik ik-home"></i></a>
               </li>
               <li class="breadcrumb-item" aria-current="page">
-                <a href="/cashbank_in">Cash & Bank In</a>
+                <a href="/penerimaan_piutang">Penerimaan Piutang</a>
               </li>
               <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
@@ -44,11 +44,11 @@
             </ul>
           </div>
           @endif
-        <form class="forms-sample" id="a" action="{{route('cashbank_in.update', $cashbanks->id)}}" method="post">
+        <form class="forms-sample" id="a" action="{{route('penerimaan_piutang.update', $cashbanks->id)}}" method="post">
           @csrf
           @method('PUT')
           <div class="card">
-            <div class="card-header" style="background: #2dce89;"><h3 style="color: white">Pemasukan Cash & Bank</h3>
+            <div class="card-header" style="background: #2dce89;"><h3 style="color: white">Penerimaan Piutang</h3>
             </div>
             <div class="card-body">
               <div
@@ -79,8 +79,13 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="diterima_dari">Diterima Dari</label>
-                    <textarea class="form-control" name="diterima_dari" type="text" id="diterima_dari" rows="2">{{$cashbanks->diterima_dari}}</textarea>
+                    <label for="setor_ke">Customers</label>
+                      <select class="form-control" id="setor_ke" name="customers_id">
+                        <option value="0"> ~~ Pilih Customers ~~ </option>
+                        @foreach ($customers as $customer)
+                        <option value="{{$customer->id}}" {{$cashbanks->customers_id == $customer->id ? 'selected' : ''}}>{{$customer->nama}}</option>
+                        @endforeach
+                      </select>
                   </div>
                 </div>
                 <input class="form-control" type="hidden" id="yang_membayar" name="status" value="0">
@@ -160,7 +165,7 @@
           </div>
 
           <div class="forms-sample" style="margin-bottom: 10px; margin-top: 10px; justify-content: space-between; display: flex;">
-            <a href="{{route('cashbank_in.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
+            <a href="{{route('penerimaan_piutang.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
             <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Edit</button>
           </div>
         </div>

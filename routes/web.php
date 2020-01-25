@@ -60,6 +60,8 @@ Route::resource('retur_penjualan', 'ReturPenjualanController');
 Route::resource('retur_pembelian', 'ReturPembelianController');
 Route::resource('cashbank_in', 'CashBankInController');
 Route::resource('cashbank_out', 'CashBankOutController');
+Route::resource('pelunasan_hutang', 'PelunasanHutangController');
+Route::resource('penerimaan_piutang', 'PenerimaanPiutangController');
 
 Route::resource('profile', 'ProfileController');
 

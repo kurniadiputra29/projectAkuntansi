@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title',  'AccountMin - Cash & Bank Out')
+@section('title',  'AccountMin - Penerimaan Piutang')
 
 @section('content')
 
@@ -12,7 +12,7 @@
             <div class="page-header-title">
               <i class="ik ik-menu bg-blue"></i>
               <div class="d-inline">
-                <h5>Cash & Bank Out</h5>
+                <h5>Penerimaan Piutang</h5>
                 <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
               </div>
             </div>
@@ -23,7 +23,7 @@
                 <li class="breadcrumb-item">
                   <a href="/dasbor"><i class="ik ik-home"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Cash & Bank Out</li>
+                <li class="breadcrumb-item active" aria-current="page">Penerimaan Piutang</li>
               </ol>
             </nav>
           </div>
@@ -35,11 +35,11 @@
           <div class="card">
             <div class="card-header d-flex justify-content-between flex-row">
               <div class="left-container">
-                <h3>Cash & Bank Out</h3>
+                <h3>Penerimaan Piutang</h3>
                 <span>use class <code>table-hover</code> inside table element</span>
               </div>
               <div class="right-container">
-                <a class="btn btn-outline-primary btn-rounded" href="{{ route('cashbank_out.create') }}">Create</a>
+                <a class="btn btn-outline-primary btn-rounded" href="{{ route('penerimaan_piutang.create') }}">Create</a>
               </div>
             </div>
             <div class="card-body">
@@ -69,7 +69,7 @@
                     <tr>
                       <th>Kode</th>
                       <th>Tanggal</th>
-                      <th>Penerima</th>
+                      <th>Diterima Dari</th>
                       <th>Deskripsi</th>
                       <th class="text-right">Aksi</th>
                     </tr>
@@ -80,20 +80,20 @@
                           <td>{{ $key->kode }}</td>
                           <td>{{ $key->tanggal }}</td>
                           <td>
-                              <span class="badge badge-pill badge-warning mb-1">{{ $key->dibayar_ke }}</span>
+                              <span class="badge badge-pill badge-success mb-1">{{ $key->data_customers->nama }}</span>
                           </td>
                           <td>{{ $key->description }}</td>
                           <td class="text-right">
                             <div class="dropdown">
                                 <a class="dropdown-toggle" href="#" id="aksiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-vertical"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="aksiDropdown">
-                                    <a href="{{route('cashbank_out.edit', $key->id)}}" class="dropdown-item"><i class="ik ik-edit-2"> </i>Edit</a>
-                                    <form method="get" action="{{ route('cashbank_out.show', $key->id) }}">
+                                    <a href="{{route('penerimaan_piutang.edit', $key->id)}}" class="dropdown-item"><i class="ik ik-edit-2"> </i>Edit</a>
+                                    <form method="get" action="{{ route('penerimaan_piutang.show', $key->id) }}">
                                       @csrf
                                       @method('GET')
                                       <button class="dropdown-item" type="submit"><i class="ik ik-eye"></i> Journal</button>
                                     </form>
-                                    <form method="post" action="{{ route('cashbank_out.destroy', $key->id) }}">
+                                    <form method="post" action="{{ route('penerimaan_piutang.destroy', $key->id) }}">
                                       @csrf
                                       @method('DELETE')
                                       <button class="dropdown-item" type="submit" onclick='javascript:return confirm("Apakah anda yakin ingin menghapus data ini?")'><i class="ik ik-trash-2"></i> Delete</button>

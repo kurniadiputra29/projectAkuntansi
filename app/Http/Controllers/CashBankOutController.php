@@ -24,7 +24,7 @@ class CashBankOutController extends Controller
      */
     public function index()
     {
-        $data = CashBankOut::orderBy('created_at', 'desc')->get();
+        $data = CashBankOut::orderBy('created_at', 'desc')->where('suppliers_id', null)->get();
         return view('pages.cashbankout.index', compact('data'));
     }
 
@@ -61,7 +61,7 @@ class CashBankOutController extends Controller
         ],$messages);
 
         //insert data cashbank
-        $dataCashInBank          = $request->only('id','tanggal', 'kode', 'suppliers_id', 'description');
+        $dataCashInBank          = $request->only('id','tanggal', 'kode', 'dibayar_ke', 'suppliers_id', 'description');
         $cashinbank              = CashBankOut::create($dataCashInBank);
 
         //insert data cashbank detail
@@ -119,12 +119,14 @@ class CashBankOutController extends Controller
         }
 
         //insert data Laporan
-        for ($b=0; $b < $countKasBank2; $b++) {
-            $detail = new LaporanHutang();
-            $detail->suppliers_id     = $request->suppliers_id;
-            $detail->cash_bank_outs_id  = $cashinbank->id;
-            $detail->debet = $detailcashinbank['total'][$b];
-            $detail->save();
+        if ($request->dibayar_ke == null) {
+            for ($b=0; $b < $countKasBank2; $b++) {
+                $detail = new LaporanHutang();
+                $detail->suppliers_id = $request->suppliers_id;
+                $detail->cash_bank_outs_id = $cashinbank->id;
+                $detail->debet = $detailcashinbank['total'][$b];
+                $detail->save();
+            }
         }
 
         return redirect('/cashbank_out')->with('Success', 'Data anda telah berhasil di Input !');
@@ -178,7 +180,7 @@ class CashBankOutController extends Controller
         ],$messages);
 
         //insert data cashbank
-        $dataCashInBank          = $request->only('id','tanggal', 'kode', 'suppliers_id', 'description');
+        $dataCashInBank          = $request->only('id','tanggal', 'kode', 'dibayar_ke', 'suppliers_id', 'description');
         $cashinbank              = CashBankOut::find($id)->update($dataCashInBank);
 
         //insert data cashbank detail
@@ -239,15 +241,18 @@ class CashBankOutController extends Controller
             $detail->save();
         }
 
-        LaporanHutang::where('cash_bank_outs_id', $id)->delete();
-        //insert data Laporan
-        for ($b=0; $b < $countKasBank2; $b++) {
-            $detail = new LaporanHutang();
-            $detail->suppliers_id     = $request->suppliers_id;
-            $detail->cash_bank_outs_id = $id;
-            $detail->debet = $detailcashinbank['total'][$b];
-            $detail->save();
+        if ($request->dibayar_ke == null) {
+            LaporanHutang::where('cash_bank_outs_id', $id)->delete();
+            //insert data Laporan
+            for ($b=0; $b < $countKasBank2; $b++) {
+                $detail = new LaporanHutang();
+                $detail->suppliers_id     = $request->suppliers_id;
+                $detail->cash_bank_outs_id = $id;
+                $detail->debet = $detailcashinbank['total'][$b];
+                $detail->save();
+            }
         }
+        
         return redirect('/cashbank_out')->with('Success', 'Data anda telah berhasil di Edit !');
     }
 

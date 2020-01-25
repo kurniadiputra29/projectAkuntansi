@@ -80,13 +80,8 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="setor_ke">Suppliers</label>
-                      <select class="form-control" id="setor_ke" name="suppliers_id">
-                        <option value="0"> ~~ Pilih Suppliers ~~ </option>
-                        @foreach ($suppliers as $supplier)
-                        <option value="{{$supplier->id}}" {{$cashbanks->suppliers_id == $supplier->id ? 'selected' : ''}}>{{$supplier->nama}}</option>
-                        @endforeach
-                      </select>
+                    <label for="dibayar_ke">Dibayar Ke</label>
+                    <textarea class="form-control" name="dibayar_ke" type="text" id="dibayar_ke" rows="2">{{$cashbanks->dibayar_ke}}</textarea>
                   </div>
                 </div>
                 <input class="form-control" type="hidden" id="yang_membayar" name="status" value="1">
