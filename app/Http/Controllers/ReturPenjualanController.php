@@ -41,9 +41,8 @@ public function create()
     $akun             = Account::all();
     $customers        = DataCustomer::all();
     $items            = Item::all();
-    $returns          = ReturPenjualan::orderBy('id', 'desc')->paginate(1);
-    $returns_count    = ReturPenjualan::all()->count();
-    return view('pages.retur_penjualan.create', compact('akun', 'customers', 'items', 'returns', 'returns_count'));
+    $lastOrder      = ReturPenjualan::orderBy('id', 'desc')->first();
+    return view('pages.retur_penjualan.create', compact('akun', 'customers', 'items', 'lastOrder'));
 }
 
 /**
@@ -101,7 +100,7 @@ public function store(Request $request)
         $detail->kredit = $detailReturPenjualan['total'][$a];
         $detail->save();
     }
-    for ($i=0; $i < $countKasBank5; $i++) { 
+    for ($i=0; $i < $countKasBank5; $i++) {
         $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
         $detail->nomor_akun = $detailReturPenjualan['nomor_akun_cost'][$i];
@@ -197,7 +196,7 @@ public function store(Request $request)
         $detail->debet = $detailReturPenjualan['jasa_pengiriman'][$i];
         $detail->save();
     }
-    for ($i=0; $i < $countKasBank5; $i++) { 
+    for ($i=0; $i < $countKasBank5; $i++) {
         $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
         $detail->nomor_akun = $detailReturPenjualan['nomor_akun_inventory'][$i];
@@ -223,7 +222,7 @@ public function store(Request $request)
     }
 
     //insert data Laporan
-    for ($b=0; $b < $countKasBank1; $b++) { 
+    for ($b=0; $b < $countKasBank1; $b++) {
         $detail = new LaporanPenjualan();
         $detail->retur_penjualan_id   = $ReturPenjualan->id;
         $detail->total = $detailReturPenjualan['total'][$b];
@@ -232,7 +231,7 @@ public function store(Request $request)
 
     //insert data Laporan
     if (empty($request->crj_id)) {
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
            $detail = new LaporanPiutang();
            $detail->customers_id     = $request->customers_id;
            $detail->retur_penjualan_id   = $ReturPenjualan->id;
@@ -245,7 +244,7 @@ public function store(Request $request)
    $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status', 'sales');
    $countinventory1 = count($inventory['jumlah']);
 
-   for ($x=0; $x < $countinventory1; $x++) { 
+   for ($x=0; $x < $countinventory1; $x++) {
     $detail                     = new Inventory();
     $detail->retur_penjualan_id = $ReturPenjualan->id;
     $detail->items_id           = $inventory['items'][$x];
@@ -356,7 +355,7 @@ public function update(Request $request, $id)
         $detail->kredit = $detailReturPenjualan['total'][$a];
         $detail->save();
     }
-    for ($i=0; $i < $countKasBank5; $i++) { 
+    for ($i=0; $i < $countKasBank5; $i++) {
         $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $id;
         $detail->nomor_akun = $detailReturPenjualan['nomor_akun_cost'][$i];
@@ -452,7 +451,7 @@ public function update(Request $request, $id)
         $detail->debet = $detailReturPenjualan['jasa_pengiriman'][$i];
         $detail->save();
     }
-    for ($i=0; $i < $countKasBank5; $i++) { 
+    for ($i=0; $i < $countKasBank5; $i++) {
         $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $id;
         $detail->nomor_akun = $detailReturPenjualan['nomor_akun_inventory'][$i];
@@ -479,7 +478,7 @@ public function update(Request $request, $id)
 
     LaporanPenjualan::where('retur_penjualan_id', $id)->delete();
 //insert data Laporan
-    for ($b=0; $b < $countKasBank1; $b++) { 
+    for ($b=0; $b < $countKasBank1; $b++) {
         $detail = new LaporanPenjualan();
         $detail->retur_penjualan_id = $id;
         $detail->total = $detailReturPenjualan['total'][$b];
@@ -489,7 +488,7 @@ public function update(Request $request, $id)
     LaporanPiutang::where('retur_penjualan_id', $id)->delete();
 //insert data Laporan
     if (empty($request->crj_id)) {
-        for ($b=0; $b < $countKasBank1; $b++) { 
+        for ($b=0; $b < $countKasBank1; $b++) {
            $detail = new LaporanPiutang();
            $detail->customers_id = $request->customers_id;
            $detail->retur_penjualan_id   = $id;
@@ -504,7 +503,7 @@ public function update(Request $request, $id)
    $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status', 'sales');
    $countinventory1 = count($inventory['jumlah']);
 
-   for ($x=0; $x < $countinventory1; $x++) { 
+   for ($x=0; $x < $countinventory1; $x++) {
     $detail                     = new Inventory();
     $detail->retur_penjualan_id = $id;
     $detail->items_id           = $inventory['items'][$x];
