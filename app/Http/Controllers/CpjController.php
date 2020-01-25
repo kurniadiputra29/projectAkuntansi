@@ -419,13 +419,12 @@ class CpjController extends Controller
         $Item_count         = Item::all()->count();
         $kredits        = cpjdetail::where('cpj_id', $id)->where('debet', null)->first();
         $jasa           = cpjdetail::where('cpj_id', $id)->where('nomor_akun', '5-1300')->first();
-        $returns          = ReturPembelian::orderBy('id', 'desc')->paginate(1);
-        $returns_count    = ReturPembelian::all()->count();
+        $lastOrder      = ReturPembelian::orderBy('id', 'desc')->first();
         $ppn            = cpjdetail::where('cpj_id', $id)
                                     ->where('nomor_akun', '2-1320')
                                     ->where('debet', '>', '0')
                                     ->exists();
 
-        return view('pages.cpj.retur', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'returns', 'returns_count', 'inventoriess', 'Item_count'));
+        return view('pages.cpj.retur', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'lastOrder', 'inventoriess', 'Item_count'));
     }
 }
