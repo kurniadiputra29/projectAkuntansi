@@ -97,7 +97,7 @@ class SalesJournalController extends Controller
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun2'][$a];
             $detail->debet              = $detailsalesjournal['total'][$a];
             $detail->save();
-            
+
             //insert Laporan Buku Besar Penyesuaian
             $detail                     = new LaporanBukuBesarPenyesuaian();
             $detail->salesjournal_id    = $salesjournal->id;
@@ -351,7 +351,7 @@ class SalesJournalController extends Controller
             $detail->nomor_akun         = $detailsalesjournal['nomor_akun2'][$a];
             $detail->debet              = $detailsalesjournal['total'][$a];
             $detail->save();
-            
+
             //insert Laporan Buku Besar Penyesuaian
             $detail                     = new LaporanBukuBesarPenyesuaian();
             $detail->salesjournal_id    = $id;
@@ -543,13 +543,12 @@ class SalesJournalController extends Controller
         $inventoriess   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
         $Item_count     = Item::all()->count();
         $jasa           = salesjournaldetail::where('salesjournal_id', $id)->where('nomor_akun', '4-2200')->first();
-        $returns        = ReturPenjualan::orderBy('id', 'desc')->paginate(1);
-        $returns_count  = ReturPenjualan::all()->count();
+        $lastOrder      = ReturPenjualan::orderBy('id', 'desc')->first();
         $ppn            = salesjournaldetail::where('salesjournal_id', $id)
                                     ->where('nomor_akun', '2-1310')
                                     ->where('kredit', '>', '0')
                                     ->exists();
         // dd($ppn);
-        return view('pages.sales_journal.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'returns', 'returns_count', 'inventoriess', 'Item_count'));
+        return view('pages.sales_journal.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'lastOrder', 'inventoriess', 'Item_count'));
     }
 }

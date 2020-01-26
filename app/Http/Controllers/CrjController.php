@@ -521,8 +521,7 @@ class CrjController extends Controller
         $items          = Item::all();
         $cashbanks      = crj::find($id);
         $crjdetails     = crjdetail::all();
-        $returns        = ReturPenjualan::orderBy('id', 'desc')->paginate(1);
-        $returns_count  = ReturPenjualan::all()->count();
+        $lastOrder      = ReturPenjualan::orderBy('id', 'desc')->first();
         $debets         = crjdetail::where('crj_id', $id)->where('kredit', null)->first();
         $inventories    = Inventory::where('crj_id', $id)->get();
         $inventoriess   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
@@ -533,6 +532,6 @@ class CrjController extends Controller
                                     ->where('kredit', '>', '0')
                                     ->exists();
         // dd($ppn);
-        return view('pages.crj.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'returns_count','returns', 'inventoriess', 'Item_count'));
+        return view('pages.crj.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'lastOrder', 'inventoriess', 'Item_count'));
     }
 }

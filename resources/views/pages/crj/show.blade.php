@@ -58,11 +58,18 @@
                         <tr>
                           <td>{{ $key->nomor_akun }}</td>
                           <td>{{ $key->nama_akun }}</td>
-                          <td>Rp {{ number_format($key->debet, 0, " ", ".")}}</td>
-                          <td>Rp {{ number_format($key->kredit, 0, " ", ".")}}</td>
+                          <td class="text-right">Rp {{ number_format($key->debet, 0, " ", ".")}}</td>
+                          <td class="text-right">Rp {{ number_format($key->kredit, 0, " ", ".")}}</td>
                         </tr>
                       @endforeach
                     </tbody>
+                    <tfoot>
+                      <tr class="bg-success font-weight-bold">
+                        <td class="text-light text-center" colspan="2">Total</td>
+                        <td class="text-light text-right">Rp {{ number_format(($detail->sum('debet')), 0, " ", ".")}}</td>
+                        <td class="text-light text-right">Rp {{ number_format(($detail->sum('kredit')), 0, " ", ".")}}</td>
+                      </tr>
+                    </tfoot>
                   </table>
                 </div>
               </div>
