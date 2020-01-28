@@ -439,6 +439,7 @@ class PurchaseJournalController extends Controller
         $inventories        = Inventory::where('purchasejournal_id', $id)->get();
         $inventoriess       = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
         $Item_count         = Item::all()->count();
+        $lastOrder      = ReturPembelian::orderBy('id', 'desc')->first();
         $kredits            = purchasejournaldetail::where('purchasejournal_id', $id)->where('debet', null)->first();
         $jasa               = purchasejournaldetail::where('purchasejournal_id', $id)->where('nomor_akun', '5-1300')->first();
         $returns          = ReturPembelian::orderBy('id', 'desc')->paginate(1);
@@ -448,6 +449,6 @@ class PurchaseJournalController extends Controller
                                     ->where('debet', '>', '0')
                                     ->exists();
 
-        return view('pages.purchase_journal.retur', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'returns', 'returns_count', 'inventoriess', 'Item_count'));
+        return view('pages.purchase_journal.retur', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'returns', 'returns_count', 'inventoriess', 'Item_count', 'lastOrder'));
     }
 }
