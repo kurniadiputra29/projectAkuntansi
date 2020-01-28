@@ -102,7 +102,7 @@
                       }
                       $hasil = sprintf('%06d', intval($number) + 1);
                     @endphp
-                    <input class="form-control" type="text" name="kode" id="no_transaksi" value="R-{{$hasil}}" readonly>
+                    <input class="form-control" type="text" name="kode" id="no_transaksi" value="RPJ-{{$hasil}}" readonly>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -281,7 +281,7 @@
         var jumlah =  (parseInt(this.items[id_item]) + parseInt(laba))*unit;
         this.cashbanks[index].jumlah = jumlah;
         return jumlah;
-      }, 
+      },
       sales(id_item, unit, laba, index){
         var sales =  this.items[id_item]*unit;
         this.cashbanks[index].sales = sales;

@@ -104,7 +104,7 @@
                       }
                       $hasil = sprintf('%06d', intval($number) + 1);
                     @endphp
-                    <input class="form-control" type="text" name="kode" id="no_transaksi" value="R-{{$hasil}}" readonly>
+                    <input class="form-control" type="text" name="kode" id="no_transaksi" value="RPB-{{$hasil}}" readonly>
                   </div>
                 </div>
                 <div class="col-md-4">

@@ -318,7 +318,7 @@
                       @endforeach
                     </tr>
                     <tr class="bg-danger font-weight-bold">
-                      <td class="text-light">Balance</td>
+                      <td class="text-light">Saldo Normal Cash</td>
                       @foreach ($cashs as $cash)
                         <td class="text-right text-light">
                           Rp {{number_format(($distinct_laporan_penyesuaian->where('nomor_akun', $cash->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $cash->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $cash->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $cash->nomor)->sum('kredit')), 0, " ", ".")}}
