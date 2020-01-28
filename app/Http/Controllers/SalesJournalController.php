@@ -540,6 +540,7 @@ class SalesJournalController extends Controller
         $cashbanks      = SalesJournal::find($id);
         $debets         = salesjournaldetail::where('salesjournal_id', $id)->where('kredit', null)->first();
         $inventories    = Inventory::where('salesjournal_id', $id)->get();
+        $lastOrder      = ReturPenjualan::orderBy('id', 'desc')->first();
         $inventoriess   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
         $Item_count     = Item::all()->count();
         $jasa           = salesjournaldetail::where('salesjournal_id', $id)->where('nomor_akun', '4-2200')->first();
@@ -550,6 +551,6 @@ class SalesJournalController extends Controller
                                     ->where('kredit', '>', '0')
                                     ->exists();
         // dd($ppn);
-        return view('pages.sales_journal.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'returns', 'returns_count', 'inventoriess', 'Item_count'));
+        return view('pages.sales_journal.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'returns', 'returns_count', 'inventoriess', 'Item_count', 'lastOrder'));
     }
 }

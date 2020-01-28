@@ -11,6 +11,10 @@ use PDF;
 
 class LabaRugiController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $saless = Account::where('nomor', 'like', '4-%')->get();

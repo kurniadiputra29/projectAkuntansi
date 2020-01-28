@@ -414,6 +414,7 @@ class CpjController extends Controller
         $suppliers      = DataSupplier::all();
         $items          = Item::all();
         $cashbanks      = cpj::find($id);
+        $lastOrder      = ReturPembelian::orderBy('id', 'desc')->first();
         $inventories    = Inventory::where('cpj_id', $id)->get();
         $inventoriess   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
         $Item_count         = Item::all()->count();
@@ -426,6 +427,6 @@ class CpjController extends Controller
                                     ->where('debet', '>', '0')
                                     ->exists();
 
-        return view('pages.cpj.retur', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'returns', 'returns_count', 'inventoriess', 'Item_count'));
+        return view('pages.cpj.retur', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'returns', 'returns_count', 'inventoriess', 'Item_count', 'lastOrder'));
     }
 }
