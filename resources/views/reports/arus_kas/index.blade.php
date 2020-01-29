@@ -317,7 +317,7 @@
                         </td>
                       @endforeach
                     </tr>
-                    <tr class="bg-danger font-weight-bold">
+                    <tr class="bg-warning font-weight-bold">
                       <td class="text-light">Saldo Normal Cash</td>
                       @foreach ($cashs as $cash)
                         <td class="text-right text-light">

@@ -327,7 +327,7 @@
                         </td>
                       @endif
                     </tr>
-                    <tr class="bg-danger font-weight-bold">
+                    <tr class="bg-warning font-weight-bold">
                       <td class="text-light">Balance</td>
                       @if(($sum_tot_asset_Kredit + $sum_tot_liability_Kredit + $sum_tot_equity_Kredit) - ($sum_tot_asset_Debet + $sum_tot_liability_Debet + $sum_tot_equity_Debet) >= 0)
                         <td class="text-center text-light" colspan="2">

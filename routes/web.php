@@ -62,6 +62,7 @@ Route::resource('cashbank_in', 'CashBankInController');
 Route::resource('cashbank_out', 'CashBankOutController');
 Route::resource('pelunasan_hutang', 'PelunasanHutangController');
 Route::resource('penerimaan_piutang', 'PenerimaanPiutangController');
+Route::resource('harga_jual', 'HargaJualController');
 
 Route::resource('profile', 'ProfileController');
 

@@ -14,6 +14,7 @@ use App\Model\ReturPenjualanDetail;
 use App\Model\LaporanPenjualan;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
+use App\Model\HargaJual;
 
 class CrjController extends Controller
 {
@@ -41,14 +42,14 @@ class CrjController extends Controller
      */
     public function create()
     {
-        $akun           = Account::all();
-        $customers      = DataCustomer::all();
-        $items          = Item::all();
-        $lastOrder      = crj::orderBy('id', 'desc')->first();
+        $akun = Account::all();
+        $customers = DataCustomer::all();
+        $items = Item::all();
+        $hargajuals = HargaJual::all();
+        $lastOrder = crj::orderBy('id', 'desc')->first();
+        $inventories = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
 
-        $inventories   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
-
-        return view('pages.crj.create', compact('akun', 'customers', 'items', 'inventories', 'lastOrder'));
+        return view('pages.crj.create', compact('akun', 'customers', 'items', 'inventories', 'hargajuals', 'lastOrder'));
     }
 
     /**
@@ -236,8 +237,8 @@ class CrjController extends Controller
         }
 
         //insert data Inventory
-        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status', 'sales');
-        $countinventory1 = count($inventory['jumlah']);
+        $inventory                 = $request->only('items', 'unit','harga', 'harga_jual', 'status', 'sales');
+        $countinventory1 = count($inventory['harga_jual']);
 
         for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
@@ -247,7 +248,7 @@ class CrjController extends Controller
             $detail->unit               = $inventory['unit'][$x];
             $detail->price              = $inventory['harga'][$x];
             $detail->total              = $inventory['sales'][$x];
-            $detail->sales              = $inventory['jumlah'][$x];
+            $detail->sales              = $inventory['harga_jual'][$x];
             $detail->save();
         }
         return redirect('/crj')->with('Success', 'Data anda telah berhasil di Input !');
@@ -288,8 +289,9 @@ class CrjController extends Controller
                                     ->where('nomor_akun', '2-1310')
                                     ->where('kredit', '>', '0')
                                     ->exists();
+        $hargajuals = HargaJual::all();
         // dd($ppn);
-        return view('pages.crj.edit', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count'));
+        return view('pages.crj.edit', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'hargajuals'));
     }
 
     /**
@@ -484,8 +486,8 @@ class CrjController extends Controller
 
         Inventory::where('crj_id', $id)->delete();
         //insert data Inventory
-        $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status', 'sales');
-        $countinventory1 = count($inventory['jumlah']);
+        $inventory                 = $request->only('items', 'unit','harga', 'harga_jual', 'status', 'sales');
+        $countinventory1 = count($inventory['harga_jual']);
 
         for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
@@ -495,7 +497,7 @@ class CrjController extends Controller
             $detail->unit               = $inventory['unit'][$x];
             $detail->price              = $inventory['harga'][$x];
             $detail->total              = $inventory['sales'][$x];
-            $detail->sales              = $inventory['jumlah'][$x];
+            $detail->sales              = $inventory['harga_jual'][$x];
             $detail->save();
         }
         return redirect('/crj')->with('Success', 'Data anda telah berhasil di Edit !');
@@ -531,7 +533,8 @@ class CrjController extends Controller
                                     ->where('nomor_akun', '2-1310')
                                     ->where('kredit', '>', '0')
                                     ->exists();
+        $hargajuals = HargaJual::all();
         // dd($ppn);
-        return view('pages.crj.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'lastOrder'));
+        return view('pages.crj.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'lastOrder', 'hargajuals'));
     }
 }

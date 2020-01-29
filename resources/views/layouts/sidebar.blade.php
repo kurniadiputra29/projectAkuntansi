@@ -83,8 +83,8 @@
                   <a href="{{ route('saldo_item.index') }}" class="menu-item {{ Request::is('saldo_item') || Request::is('saldo_item/*') ? 'active':'' }}">Saldo Item</a>
               </div>
           </div>
-          <div class="nav-item {{ Request::is('stock_opname') ? 'active' : '' }}">
-              <a href="{{ route('stock_opname.index') }}"><i class="ik ik-truck"></i><span>Harga Penjualan</span></a>
+          <div class="nav-item {{ Request::is('harga_jual') || Request::is('harga_jual/*') ? 'active' : '' }}">
+              <a href="{{ route('harga_jual.index') }}"><i class="ik ik-clipboard"></i><span>Harga Penjualan</span></a>
           </div>
           <div class="nav-item {{ Request::is('stock_opname') ? 'active' : '' }}">
               <a href="{{ route('stock_opname.index') }}"><i class="ik ik-truck"></i><span>Stock Opname</span></a>

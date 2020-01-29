@@ -13,6 +13,7 @@ use App\Model\LaporanPiutang;
 use App\Model\LaporanPenjualan;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
+use App\Model\HargaJual;
 
 class ReturPenjualanController extends Controller
 {
@@ -241,8 +242,8 @@ public function store(Request $request)
    }
 
 //insert data Inventory
-   $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status', 'sales');
-   $countinventory1 = count($inventory['jumlah']);
+   $inventory                 = $request->only('items', 'unit','harga', 'harga_jual', 'status', 'sales');
+   $countinventory1 = count($inventory['harga_jual']);
 
    for ($x=0; $x < $countinventory1; $x++) {
     $detail                     = new Inventory();
@@ -252,7 +253,7 @@ public function store(Request $request)
     $detail->unit               = $inventory['unit'][$x];
     $detail->price              = $inventory['harga'][$x];
     $detail->total              = $inventory['sales'][$x];
-    $detail->sales              = $inventory['jumlah'][$x];
+    $detail->sales              = $inventory['harga_jual'][$x];
     $detail->save();
 }
 return redirect('/retur_penjualan')->with('Success', 'Data anda telah berhasil di Input !');
@@ -291,8 +292,9 @@ public function edit($id)
     ->where('nomor_akun', '2-1310')
     ->where('debet', '>', '0')
     ->exists();
+    $hargajuals = HargaJual::all();
 
-    return view('pages.retur_penjualan.edit', compact('akun', 'customers', 'items', 'cashbanks', 'kredits', 'inventories', 'jasa', 'ppn', 'inventoriess', 'Item_count'));
+    return view('pages.retur_penjualan.edit', compact('akun', 'customers', 'items', 'cashbanks', 'kredits', 'inventories', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'hargajuals'));
 }
 
 /**
@@ -500,8 +502,8 @@ public function update(Request $request, $id)
    Inventory::where('retur_penjualan_id', $id)->delete();
 
 //insert data Inventory
-   $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status', 'sales');
-   $countinventory1 = count($inventory['jumlah']);
+   $inventory                 = $request->only('items', 'unit','harga', 'harga_jual', 'status', 'sales');
+   $countinventory1 = count($inventory['harga_jual']);
 
    for ($x=0; $x < $countinventory1; $x++) {
     $detail                     = new Inventory();
@@ -511,7 +513,7 @@ public function update(Request $request, $id)
     $detail->unit               = $inventory['unit'][$x];
     $detail->price              = $inventory['harga'][$x];
     $detail->total              = $inventory['sales'][$x];
-    $detail->sales              = $inventory['jumlah'][$x];
+    $detail->sales              = $inventory['harga_jual'][$x];
     $detail->save();
 }
 return redirect('/retur_penjualan')->with('Success', 'Data anda telah berhasil di Edit !');
