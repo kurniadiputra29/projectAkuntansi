@@ -129,23 +129,23 @@
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
-                    <label for="harga">Harga Satuan</label>
+                    <label for="harga">Harga Pokok Penjualan</label>
                     <input class="form-control" type="number" id="harga" name="harga[]" :value="harga(cashbank.id_item, index)" readonly="">
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
-                    <label for="laba">Laba</label>
-                    <input class="form-control" type="number" id="laba" name="laba[]" v-model.number="cashbank.laba">
+                    <label for="harga_jual">Harga Penjualan</label>
+                    <input class="form-control" type="text" id="harga_jual" name="harga_jual[]" :value="harga_jual(cashbank.id_item, index)">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="jumlah">Jumlah</label>
-                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" :value="jumlah(cashbank.id_item, cashbank.unit, cashbank.laba, index)" readonly="">
+                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" :value="jumlah(cashbank.id_item, cashbank.unit, cashbank.harga_jual, index)" readonly="">
                   </div>
                 </div>
-                <input class="form-control" type="hidden" name="sales[]" :value="sales(cashbank.id_item, cashbank.unit, cashbank.laba, index)" readonly="">
+                <input class="form-control" type="hidden" name="sales[]" :value="sales(cashbank.id_item, cashbank.unit, cashbank.harga_jual, index)" readonly="">
                 <div class="col-md-1">
                   <div class="form-group">
                     <label for="jumlah">Delete</label>
@@ -228,14 +228,14 @@
     {id_akun2:"{{$debets->nomor_akun}}", description:"", jumlah: 0},
     ],
     cashbanks: [
-    {id_item:0, harga:0, laba:0, description:"", unit:1, jumlah: 0, sales:0},
+    {id_item:0, harga:0, harga_jual:0, description:"", unit:1, jumlah: 0, sales:0},
     ],
     jasa_pengiriman: null,
     ppn: false,
   },
   methods: {
     add() {
-       var cashbanks = {id_item:0, harga:0, laba:0, description:"", unit:1, jumlah: 0, sales:0};
+       var cashbanks = {id_item:0, harga:0, harga_jual:0, description:"", unit:1, jumlah: 0, sales:0};
        this.cashbanks.push(cashbanks);
      },
      del(index) {
@@ -268,8 +268,13 @@
         this.cashbanks[index].nama_akun = nama_akun;
         return nama_akun;
       },
+      harga_jual(id_item, index) {
+        var nama_akun = this.harga_juals[id_item];
+        this.cashbanks[index].nama_akun = nama_akun;
+        return nama_akun;
+      },
       jumlah(id_item, unit, laba, index){
-        var jumlah =  (parseInt(this.items[id_item]) + parseInt(laba))*unit;
+        var jumlah =  (parseInt(this.harga_juals[id_item]))*unit;
         this.cashbanks[index].jumlah = jumlah;
         return jumlah;
       }, 
@@ -296,6 +301,18 @@
         akun[ "{{ $key->nomor }}" ] = "{{ $key->nama }}"
       @endforeach
       return akun;
+    },
+    harga_juals() {
+      var harga_juals = [];
+      harga_juals[0] = 0;
+      @foreach($items as $key)
+        @if($inventories->where('items_id',$key->id)->where('salesjournal_id', $cashbanks->id)->sum('total') < $Item_count)
+          harga_juals[ {{ $key->id }} ] = '{{$hargajuals->where('items_id', $key->id)->sum('harga_jual')}}'
+        @else
+        harga_juals[ {{ $key->id }} ] = '{{$inventories->where('items_id', $key->id)->where('salesjournal_id', $cashbanks->id)->sum('sales')}}'
+        @endif
+      @endforeach
+      return harga_juals;
     },
     items() {
       var items = [];
@@ -352,7 +369,7 @@
       price: "{{$detail->price}}",
       jumlah: "{{$detail->total}}",
       sales: "{{$detail->total}}",
-      laba: "{{$detail->sales}}"/"{{$detail->unit}}"-"{{$detail->price}}",
+      harga_jual: "{{$detail->sales}}",
     };
     @endforeach
     this.cashbanks = cashbanks;
