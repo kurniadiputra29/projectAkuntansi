@@ -7,7 +7,6 @@ use App\Model\Account;
 use App\Model\CashBankIn;
 use App\Model\CashBankInDetails;
 use App\Model\DataCustomer;
-use App\Model\LaporanPiutang;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
 
@@ -117,18 +116,6 @@ class CashBankInController extends Controller
             $detail->kredit = $detailcashinbank['jumlah'][$i];
             $detail->save();
         }
-
-        //insert data Laporan
-        if ($request->diterima_dari == null) {
-            for ($b=0; $b < $countKasBank2; $b++) {
-                $detail = new LaporanPiutang();
-                $detail->customers_id     = $request->customers_id;
-                $detail->cash_bank_ins_id  = $cashinbank->id;
-                $detail->kredit = $detailcashinbank['total'][$b];
-                $detail->save();
-            }
-        }
-        
 
         return redirect('/cashbank_in')->with('Success', 'Data anda telah berhasil di Input !');
     }
@@ -240,18 +227,6 @@ class CashBankInController extends Controller
             $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
             $detail->kredit = $detailcashinbank['jumlah'][$i];
             $detail->save();
-        }
-
-        if ($request->diterima_dari == null) {
-            LaporanPiutang::where('cash_bank_ins_id', $id)->delete();
-            //insert data Laporan
-            for ($b=0; $b < $countKasBank2; $b++) {
-                $detail = new LaporanPiutang();
-                $detail->customers_id     = $request->customers_id;
-                $detail->cash_bank_ins_id  = $id;
-                $detail->kredit = $detailcashinbank['total'][$b];
-                $detail->save();
-            }
         }
 
         return redirect('/cashbank_in')->with('Success', 'Data anda telah berhasil di Edit !');

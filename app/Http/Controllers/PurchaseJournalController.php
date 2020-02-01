@@ -11,7 +11,6 @@ use App\Model\Item;
 use App\Model\Inventory;
 use App\Model\ReturPembelian;
 use App\Model\ReturPembelianDetail;
-use App\Model\LaporanHutang;
 use App\Model\LaporanPembelian;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
@@ -183,16 +182,6 @@ class PurchaseJournalController extends Controller
             $detail->total = $detailpurchase['total'][$b];
             $detail->save();
         }
-
-        //insert data Laporan
-        for ($b=0; $b < $countKasBank1; $b++) {
-            $detail = new LaporanHutang();
-            $detail->suppliers_id     = $request->suppliers_id;
-            $detail->purchasejournal_id = $PurchaseJournal->id;
-            $detail->kredit = $detailpurchase['total'][$b];
-            $detail->save();
-        }
-
 
         //insert data Inventory
         $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
@@ -387,16 +376,6 @@ class PurchaseJournalController extends Controller
             $detail = new LaporanPembelian();
             $detail->purchasejournal_id = $id;
             $detail->total = $detailpurchase['total'][$b];
-            $detail->save();
-        }
-
-        LaporanHutang::where('purchasejournal_id', $id)->delete();
-        //insert data Laporan
-        for ($b=0; $b < $countKasBank1; $b++) {
-            $detail = new LaporanHutang();
-            $detail->suppliers_id     = $request->suppliers_id;
-            $detail->purchasejournal_id = $id;
-            $detail->kredit = $detailpurchase['total'][$b];
             $detail->save();
         }
 

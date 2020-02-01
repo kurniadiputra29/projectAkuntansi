@@ -130,7 +130,7 @@
                         <td>{{$rekap->kode}}</td>
                         <td>{{$rekap->nama}}</td>
                         <td class="text-right">
-                          {{$distinct_pcc->where('items_id', $rekap->id)->where('status', 1)->sum('unit')-$distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('unit')}}
+                          {{($distinct_pcc->where('items_id', $rekap->id)->where('status', 1)->sum('unit'))-($distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('unit'))}}
                         </td>
                         <td class="text-right">
                           Rp {{number_format(($distinct_pcc->where('items_id', $rekap->id)->where('status', 1)->sum('total') - $distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('total')) / ($distinct_pcc->where('items_id', $rekap->id)->where('status', 1)->sum('unit')-$distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('unit')), 0, " ", ".")}}
@@ -145,7 +145,7 @@
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
                       <td class="text-light text-right" colspan="2">Total</td>
-                      <td class="text-light text-right">
+                      <td class="text-light text-right"> 
                         {{$distinct_pcc->where('status', 1)->sum('unit')-$distinct_pcc->where('status', 0)->sum('unit')}}
                       </td>
                       <td class="text-light text-right">

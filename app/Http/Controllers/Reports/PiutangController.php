@@ -12,7 +12,6 @@ use App\Model\ReturPenjualan;
 use App\Model\ReturPenjualanDetail;
 use App\Model\CashBankIn;
 use App\Model\CashBankInDetails;
-use App\Model\LaporanPiutang;
 use PDF;
 use Carbon\Carbon;
 
@@ -38,14 +37,7 @@ class PiutangController extends Controller
         $CashBankIns                = CashBankIn::all();
         $CashBankInDetails          = CashBankInDetails::where('nomor_akun', '1-1220')->get();
 
-        $sum_debet                  = SaldoPiutang::sum('debet');
-        $sum_kredit                 = SaldoPiutang::sum('kredit');
-        $distinct_pc                = DataCustomer::distinct('kode')->select('id', 'kode', 'nama')->get();
-        $distinct_pcc                = SaldoPiutang::distinct('customers_id')->select('debet', 'kredit', 'customers_id')->get();
-        $distinct_laporan           = LaporanPiutang::distinct('customers_id')->select('debet', 'kredit', 'customers_id')->get();
-        // dd($salesjournaldetails);
-
-        return view('reports.piutang_pelanggan.index', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'sum_debet', 'sum_kredit', 'distinct_pc', 'distinct_pcc', 'distinct_laporan'));
+        return view('reports.piutang_pelanggan.index', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails'));
     }
 
     /**
@@ -53,6 +45,7 @@ class PiutangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function filter(Request $request)
     {
         $tanggal_mulai  = $request->tanggal_mulai;
@@ -68,12 +61,7 @@ class PiutangController extends Controller
         $CashBankIns                = CashBankIn::all();
         $CashBankInDetails          = CashBankInDetails::where('nomor_akun', '1-1220')->get();
 
-        $sum_debet                  = SaldoPiutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('debet');
-        $sum_kredit                 = SaldoPiutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('kredit');
-        $distinct_pc                = DataCustomer::distinct('kode')->select('id', 'kode', 'nama')->get();
-        $distinct_pcc               = SaldoPiutang::distinct('customers_id')->select('debet', 'kredit', 'customers_id')->get();
-        $distinct_laporan           = LaporanPiutang::distinct('customers_id')->select('debet', 'kredit', 'customers_id')->get();
-        return view('reports.piutang_pelanggan.filter', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'sum_debet', 'sum_kredit', 'distinct_pc', 'distinct_pcc', 'distinct_laporan','tanggal_mulai','tanggal_akhir','add_day'));
+        return view('reports.piutang_pelanggan.filter', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'tanggal_mulai','tanggal_akhir','add_day'));
     }
 
     public function printFilter(Request $request)
@@ -90,13 +78,7 @@ class PiutangController extends Controller
         $CashBankIns                = CashBankIn::all();
         $CashBankInDetails          = CashBankInDetails::where('nomor_akun', '1-1220')->get();
 
-        $sum_debet                  = SaldoPiutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('debet');
-        $sum_kredit                 = SaldoPiutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('kredit');
-        $distinct_pc                = DataCustomer::distinct('kode')->select('id', 'kode', 'nama')->get();
-        $distinct_pcc               = SaldoPiutang::distinct('customers_id')->select('debet', 'kredit', 'customers_id')->get();
-        $distinct_laporan           = LaporanPiutang::distinct('customers_id')->select('debet', 'kredit', 'customers_id')->get();
-
-        $pdf = PDF::loadview('reports.piutang_pelanggan.print', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'sum_debet', 'sum_kredit', 'distinct_pc', 'distinct_pcc', 'distinct_laporan','tanggal_mulai','tanggal_akhir','add_day'));
+        $pdf = PDF::loadview('reports.piutang_pelanggan.print', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'tanggal_mulai','tanggal_akhir','add_day'));
         return $pdf->setPaper('a4', 'landscape')->stream('laporan-piutang-pelanggan.pdf');
     }
 
@@ -181,13 +163,7 @@ class PiutangController extends Controller
         $CashBankIns                = CashBankIn::all();
         $CashBankInDetails          = CashBankInDetails::where('nomor_akun', '1-1220')->get();
 
-        $sum_debet                  = SaldoPiutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('debet');
-        $sum_kredit                 = SaldoPiutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->sum('kredit');
-        $distinct_pc                = DataCustomer::distinct('kode')->select('id', 'kode', 'nama')->get();
-        $distinct_pcc               = SaldoPiutang::distinct('customers_id')->select('debet', 'kredit', 'customers_id')->get();
-        $distinct_laporan           = LaporanPiutang::distinct('customers_id')->select('debet', 'kredit', 'customers_id')->get();
-
-        $pdf = PDF::loadview('reports.piutang_pelanggan.print', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'sum_debet', 'sum_kredit', 'distinct_pc', 'distinct_pcc', 'distinct_laporan','tanggal_mulai','tanggal_akhir','add_day'));
+        $pdf = PDF::loadview('reports.piutang_pelanggan.print', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'tanggal_mulai','tanggal_akhir','add_day'));
         return $pdf->setPaper('a4', 'landscape')->stream('laporan-piutang-pelanggan.pdf');
     }
 }

@@ -11,7 +11,6 @@ use App\Model\Item;
 use App\Model\Inventory;
 use App\Model\cpj;
 use App\Model\PurchaseJournal;
-use App\Model\LaporanHutang;
 use App\Model\LaporanPembelian;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
@@ -184,17 +183,6 @@ class ReturPembelianController extends Controller
             $detail->total = $detailReturnPembelian['total'][$b];
             $detail->save();
         }
-
-      //insert data Laporan
-      if (empty($request->cpj_id)) {
-        for ($b=0; $b < $countKasBank1; $b++) { 
-          $detail = new LaporanHutang();
-          $detail->suppliers_id     = $request->suppliers_id;
-          $detail->retur_pembelian_id = $ReturnPembelian->id;
-          $detail->debet = $detailReturnPembelian['total'][$b];
-          $detail->save();
-        }
-      }
       
       //insert data Inventory
       $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
@@ -392,18 +380,6 @@ class ReturPembelianController extends Controller
             $detail->total = $detailReturnPembelian['total'][$b];
             $detail->save();
         }
-
-      LaporanHutang::where('retur_pembelian_id', $id)->delete();
-      //insert data Laporan
-      if (empty($request->cpj_id)) {
-        for ($b=0; $b < $countKasBank1; $b++) { 
-          $detail = new LaporanHutang();
-          $detail->suppliers_id = $request->suppliers_id;
-          $detail->retur_pembelian_id = $id;
-          $detail->debet = $detailReturnPembelian['total'][$b];
-          $detail->save();
-        }
-      }
 
       Inventory::where('retur_pembelian_id', $id)->delete();
       //insert data Inventory
