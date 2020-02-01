@@ -99,11 +99,105 @@
           <tfoot>
             <tr class="bg-success font-weight-bold">
               <td class="text-light text-center" colspan="2">Total</td>
-              <td class="text-light text-right">
-                Rp {{number_format($distinct_laporan->where('customers_id', $DataCustomer->id)->sum('debet'), 0, " ", ".")}}
+              <td class="text-right text-light">
+                @php
+                  $sum_tot_piutang_Debet1 = 0;
+                  $sum_tot_piutang_Debet2 = 0;
+                  $sum_tot_piutang_Debet3 = 0;
+                  $sum_tot_piutang_Debet4 = 0;
+                @endphp
+                @foreach ($SaldoPiutangs as $SaldoPiutang)
+                  @if ($SaldoPiutang->customers_id == $DataCustomer->id)
+                    @php
+                      $sum_tot_piutang_Debet1 += ($SaldoPiutang->where('customers_id', $DataCustomer->id)->sum('debet'));
+                    @endphp
+                  @endif
+                @endforeach
+                @foreach ($SalesJournals as $SalesJournal)
+                  @foreach ($salesjournaldetails as $salesjournaldetail)
+                    @if ($SalesJournal->customers_id == $DataCustomer->id)
+                      @if ($salesjournaldetail->salesjournal_id == $SalesJournal->id)
+                        @php
+                          $sum_tot_piutang_Debet2 += ($salesjournaldetail->debet);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+                @foreach ($ReturPenjualans as $ReturPenjualan)
+                  @foreach ($ReturPenjualanDetails as $ReturPenjualanDetail)
+                    @if ($ReturPenjualan->customers_id == $DataCustomer->id)
+                      @if ($ReturPenjualanDetail->retur_penjualan_id == $ReturPenjualan->id)
+                        @php
+                          $sum_tot_piutang_Debet3 += ($ReturPenjualanDetail->debet);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+                @foreach ($CashBankIns as $CashBankIn)
+                  @foreach ($CashBankInDetails as $CashBankInDetail)
+                    @if ($CashBankIn->customers_id == $DataCustomer->id)
+                      @if ($CashBankInDetail->cash_bank_ins_id == $CashBankIn->id)
+                        @php
+                          $sum_tot_piutang_Debet4 += ($CashBankInDetail->debet);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+
+                Rp {{number_format($sum_tot_piutang_Debet1 + $sum_tot_piutang_Debet2 + $sum_tot_piutang_Debet3 + $sum_tot_piutang_Debet4, 0, " ", ".")}}
               </td>
               <td class="text-light text-right">
-                Rp {{number_format($distinct_laporan->where('customers_id', $DataCustomer->id)->sum('kredit'), 0, " ", ".")}}
+                @php
+                  $sum_tot_piutang_Kredit1 = 0;
+                  $sum_tot_piutang_Kredit2 = 0;
+                  $sum_tot_piutang_Kredit3 = 0;
+                  $sum_tot_piutang_Kredit4 = 0;
+                @endphp
+                @foreach ($SaldoPiutangs as $SaldoPiutang)
+                  @if ($SaldoPiutang->customers_id == $DataCustomer->id)
+                    @php
+                      $sum_tot_piutang_Kredit1 += ($SaldoPiutang->where('customers_id', $DataCustomer->id)->sum('kredit'));
+                    @endphp
+                  @endif
+                @endforeach
+                @foreach ($SalesJournals as $SalesJournal)
+                  @foreach ($salesjournaldetails as $salesjournaldetail)
+                    @if ($SalesJournal->customers_id == $DataCustomer->id)
+                      @if ($salesjournaldetail->salesjournal_id == $SalesJournal->id)
+                        @php
+                          $sum_tot_piutang_Kredit2 += ($salesjournaldetail->kredit);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+                @foreach ($ReturPenjualans as $ReturPenjualan)
+                  @foreach ($ReturPenjualanDetails as $ReturPenjualanDetail)
+                    @if ($ReturPenjualan->customers_id == $DataCustomer->id)
+                      @if ($ReturPenjualanDetail->retur_penjualan_id == $ReturPenjualan->id)
+                        @php
+                          $sum_tot_piutang_Kredit3 += ($ReturPenjualanDetail->kredit);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+                @foreach ($CashBankIns as $CashBankIn)
+                  @foreach ($CashBankInDetails as $CashBankInDetail)
+                    @if ($CashBankIn->customers_id == $DataCustomer->id)
+                      @if ($CashBankInDetail->cash_bank_ins_id == $CashBankIn->id)
+                        @php
+                          $sum_tot_piutang_Kredit4 += ($CashBankInDetail->kredit);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+
+                Rp {{number_format($sum_tot_piutang_Kredit1 + $sum_tot_piutang_Kredit2 + $sum_tot_piutang_Kredit3 + $sum_tot_piutang_Kredit4, 0, " ", ".")}}
               </td>
             </tr>
           </tfoot>
@@ -124,12 +218,106 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($distinct_pc as $rekap)
+          @foreach ($DataCustomers as $DataCustomer)
             <tr>
-              <td>{{$rekap->kode}}</td>
-              <td>{{$rekap->nama}}</td>
+              <td>{{$DataCustomer->kode}}</td>
+              <td>{{$DataCustomer->nama}}</td>
               <td class="text-right">
-                Rp {{number_format($distinct_laporan->where('customers_id', $rekap->id)->sum('debet') - $distinct_laporan->where('customers_id', $rekap->id)->sum('kredit'), 0, " ", ".")}}
+                @php
+                  $sum_tot_piutang_Debet1 = 0;
+                  $sum_tot_piutang_Debet2 = 0;
+                  $sum_tot_piutang_Debet3 = 0;
+                  $sum_tot_piutang_Debet4 = 0;
+                @endphp
+                @foreach ($SaldoPiutangs as $SaldoPiutang)
+                  @if ($SaldoPiutang->customers_id == $DataCustomer->id)
+                    @php
+                      $sum_tot_piutang_Debet1 += ($SaldoPiutang->where('customers_id', $DataCustomer->id)->sum('debet'));
+                    @endphp
+                  @endif
+                @endforeach
+                @foreach ($SalesJournals as $SalesJournal)
+                  @foreach ($salesjournaldetails as $salesjournaldetail)
+                    @if ($SalesJournal->customers_id == $DataCustomer->id)
+                      @if ($salesjournaldetail->salesjournal_id == $SalesJournal->id)
+                        @php
+                          $sum_tot_piutang_Debet2 += ($salesjournaldetail->debet);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+                @foreach ($ReturPenjualans as $ReturPenjualan)
+                  @foreach ($ReturPenjualanDetails as $ReturPenjualanDetail)
+                    @if ($ReturPenjualan->customers_id == $DataCustomer->id)
+                      @if ($ReturPenjualanDetail->retur_penjualan_id == $ReturPenjualan->id)
+                        @php
+                          $sum_tot_piutang_Debet3 += ($ReturPenjualanDetail->debet);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+                @foreach ($CashBankIns as $CashBankIn)
+                  @foreach ($CashBankInDetails as $CashBankInDetail)
+                    @if ($CashBankIn->customers_id == $DataCustomer->id)
+                      @if ($CashBankInDetail->cash_bank_ins_id == $CashBankIn->id)
+                        @php
+                          $sum_tot_piutang_Debet4 += ($CashBankInDetail->debet);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+
+                @php
+                  $sum_tot_piutang_Kredit1 = 0;
+                  $sum_tot_piutang_Kredit2 = 0;
+                  $sum_tot_piutang_Kredit3 = 0;
+                  $sum_tot_piutang_Kredit4 = 0;
+                @endphp
+                @foreach ($SaldoPiutangs as $SaldoPiutang)
+                  @if ($SaldoPiutang->customers_id == $DataCustomer->id)
+                    @php
+                      $sum_tot_piutang_Kredit1 += ($SaldoPiutang->where('customers_id', $DataCustomer->id)->sum('kredit'));
+                    @endphp
+                  @endif
+                @endforeach
+                @foreach ($SalesJournals as $SalesJournal)
+                  @foreach ($salesjournaldetails as $salesjournaldetail)
+                    @if ($SalesJournal->customers_id == $DataCustomer->id)
+                      @if ($salesjournaldetail->salesjournal_id == $SalesJournal->id)
+                        @php
+                          $sum_tot_piutang_Kredit2 += ($salesjournaldetail->kredit);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+                @foreach ($ReturPenjualans as $ReturPenjualan)
+                  @foreach ($ReturPenjualanDetails as $ReturPenjualanDetail)
+                    @if ($ReturPenjualan->customers_id == $DataCustomer->id)
+                      @if ($ReturPenjualanDetail->retur_penjualan_id == $ReturPenjualan->id)
+                        @php
+                          $sum_tot_piutang_Kredit3 += ($ReturPenjualanDetail->kredit);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+                @foreach ($CashBankIns as $CashBankIn)
+                  @foreach ($CashBankInDetails as $CashBankInDetail)
+                    @if ($CashBankIn->customers_id == $DataCustomer->id)
+                      @if ($CashBankInDetail->cash_bank_ins_id == $CashBankIn->id)
+                        @php
+                          $sum_tot_piutang_Kredit4 += ($CashBankInDetail->kredit);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+
+                Rp {{number_format(($sum_tot_piutang_Debet1 + $sum_tot_piutang_Debet2 + $sum_tot_piutang_Debet3 + $sum_tot_piutang_Debet4) - ($sum_tot_piutang_Kredit1 + $sum_tot_piutang_Kredit2 + $sum_tot_piutang_Kredit3 + $sum_tot_piutang_Kredit4), 0, " ", ".")}}
               </td>
             </tr>
           @endforeach
@@ -138,8 +326,67 @@
           <tr class="bg-success font-weight-bold">
             <td class="text-light text-center" colspan="2">Total</td>
             <td class="text-light text-right">
-              Rp {{number_format($distinct_laporan->sum('debet') - $distinct_laporan->sum('kredit'), 0, " ", ".")}}
-            </td>
+              @php
+                $sum_tot_piutang_Debet_sum1 = 0;
+                $sum_tot_piutang_Debet_sum2 = 0;
+                $sum_tot_piutang_Debet_sum3 = 0;
+                $sum_tot_piutang_Debet_sum4 = 0;
+
+                $sum_tot_piutang_Kredit_sum1 = 0;
+                $sum_tot_piutang_Kredit_sum2 = 0;
+                $sum_tot_piutang_Kredit_sum3 = 0;
+                $sum_tot_piutang_Kredit_sum4 = 0;
+              @endphp
+              @foreach ($DataCustomers as $DataCustomer)
+                @foreach ($SaldoPiutangs as $SaldoPiutang)
+                  @if ($SaldoPiutang->customers_id == $DataCustomer->id)
+                    @php
+                      $sum_tot_piutang_Debet_sum1 += ($SaldoPiutang->where('customers_id', $DataCustomer->id)->sum('debet'));
+                      $sum_tot_piutang_Kredit_sum1 += ($SaldoPiutang->where('customers_id', $DataCustomer->id)->sum('kredit'));
+                    @endphp
+                  @endif
+                @endforeach
+
+                @foreach ($SalesJournals as $SalesJournal)
+                  @foreach ($salesjournaldetails as $salesjournaldetail)
+                    @if ($SalesJournal->customers_id == $DataCustomer->id)
+                      @if ($salesjournaldetail->salesjournal_id == $SalesJournal->id)
+                        @php
+                          $sum_tot_piutang_Debet_sum2 += ($salesjournaldetail->debet);
+                          $sum_tot_piutang_Kredit_sum2 += ($salesjournaldetail->kredit);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+                @foreach ($ReturPenjualans as $ReturPenjualan)
+                  @foreach ($ReturPenjualanDetails as $ReturPenjualanDetail)
+                    @if ($ReturPenjualan->customers_id == $DataCustomer->id)
+                      @if ($ReturPenjualanDetail->retur_penjualan_id == $ReturPenjualan->id)
+                        @php
+                          $sum_tot_piutang_Debet_sum3 += ($ReturPenjualanDetail->debet);
+                          $sum_tot_piutang_Kredit_sum3 += ($ReturPenjualanDetail->kredit);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+                @foreach ($CashBankIns as $CashBankIn)
+                  @foreach ($CashBankInDetails as $CashBankInDetail)
+                    @if ($CashBankIn->customers_id == $DataCustomer->id)
+                      @if ($CashBankInDetail->cash_bank_ins_id == $CashBankIn->id)
+                        @php
+                          $sum_tot_piutang_Debet_sum4 += ($CashBankInDetail->debet);
+                          $sum_tot_piutang_Kredit_sum4 += ($CashBankInDetail->kredit);
+                        @endphp
+                      @endif
+                    @endif
+                  @endforeach
+                @endforeach
+              @endforeach
+
+              Rp {{number_format(($sum_tot_piutang_Debet_sum1 + $sum_tot_piutang_Debet_sum2 + $sum_tot_piutang_Debet_sum3 + $sum_tot_piutang_Debet_sum4) - ($sum_tot_piutang_Kredit_sum1 + $sum_tot_piutang_Kredit_sum2 + $sum_tot_piutang_Kredit_sum3 + $sum_tot_piutang_Kredit_sum4), 0, " ", ".")}}
+          </td>
           </tr>
         </tfoot>
       </table>

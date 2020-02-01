@@ -118,15 +118,68 @@
                     </tbody>
                     <tfoot>
                       <tr class="bg-success font-weight-bold">
+                        <td class="text-light text-center" colspan="2">Total</td>
+                          @php
+                            $sum_tot_hutang_Debet1 = 0;
+                            $sum_tot_hutang_Debet2 = 0;
+                            $sum_tot_hutang_Debet3 = 0;
+                            $sum_tot_hutang_Debet4 = 0;
 
-                          <td class="text-light text-center" colspan="2">Total</td>
-                          <td class="text-light text-right">
-                            Rp {{number_format($distinct_laporan->where('suppliers_id', $DataSupplier->id)->sum('debet'), 0, " ", ".")}}
-                          </td>
-                          <td class="text-light text-right">
-                            Rp {{number_format($distinct_laporan->where('suppliers_id', $DataSupplier->id)->sum('kredit'), 0, " ", ".")}}
-                          </td>
-
+                            $sum_tot_hutang_Kredit1 = 0;
+                            $sum_tot_hutang_Kredit2 = 0;
+                            $sum_tot_hutang_Kredit3 = 0;
+                            $sum_tot_hutang_Kredit4 = 0;
+                          @endphp
+                          @foreach ($SaldoHutangs as $SaldoHutang)
+                            @if ($SaldoHutang->suppliers_id == $DataSupplier->id)
+                              @php
+                                $sum_tot_hutang_Debet1 += ($SaldoHutang->where('suppliers_id', $DataSupplier->id)->sum('debet'));
+                                $sum_tot_hutang_Kredit1 += ($SaldoHutang->where('suppliers_id', $DataSupplier->id)->sum('kredit'));
+                              @endphp
+                            @endif
+                          @endforeach
+                          @foreach ($PurchaseJournals as $PurchaseJournal)
+                            @foreach ($purchasejournaldetails as $purchasejournaldetail)
+                              @if ($PurchaseJournal->suppliers_id == $DataSupplier->id)
+                                @if ($purchasejournaldetail->purchasejournal_id == $PurchaseJournal->id)
+                                  @php
+                                    $sum_tot_hutang_Debet2 += ($purchasejournaldetail->debet);
+                                    $sum_tot_hutang_Kredit2 += ($purchasejournaldetail->kredit);
+                                  @endphp
+                                @endif
+                              @endif
+                            @endforeach
+                          @endforeach
+                          @foreach ($ReturPembelians as $ReturPembelian)
+                            @foreach ($ReturPembelianDetails as $ReturPembelianDetail)
+                              @if ($ReturPembelian->suppliers_id == $DataSupplier->id)
+                                @if ($ReturPembelianDetail->retur_pembelian_id == $ReturPembelian->id)
+                                  @php
+                                    $sum_tot_hutang_Debet3 += ($ReturPembelianDetail->debet);
+                                    $sum_tot_hutang_Kredit3 += ($ReturPembelianDetail->kredit);
+                                  @endphp
+                                @endif
+                              @endif
+                            @endforeach
+                          @endforeach
+                          @foreach ($CashBankOuts as $CashBankOut)
+                            @foreach ($CashBankOutDetails as $CashBankOutDetail)
+                              @if ($CashBankOut->suppliers_id == $DataSupplier->id)
+                                @if ($CashBankOutDetail->cash_bank_outs_id == $CashBankOut->id)
+                                  @php
+                                    $sum_tot_hutang_Debet4 += ($CashBankOutDetail->debet);
+                                    $sum_tot_hutang_Kredit4 += ($CashBankOutDetail->kredit);
+                                  @endphp
+                                @endif
+                              @endif
+                            @endforeach
+                          @endforeach
+                        <td class="text-right text-light">
+                          Rp {{number_format($sum_tot_hutang_Debet1 + $sum_tot_hutang_Debet2 + $sum_tot_hutang_Debet3 + $sum_tot_hutang_Debet4, 0, " ", ".")}}
+                        </td>
+                        <td class="text-light text-right">
+                          Rp {{number_format($sum_tot_hutang_Kredit1 + $sum_tot_hutang_Kredit2 + $sum_tot_hutang_Kredit3 + $sum_tot_hutang_Kredit4, 0, " ", ".")}}
+                        </td>
                       </tr>
                     </tfoot>
                   </table>
@@ -145,12 +198,67 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($distinct_pc as $rekap)
+                    @foreach ($DataSuppliers as $DataSupplier)
                       <tr>
-                        <td>{{$rekap->kode}}</td>
-                        <td>{{$rekap->nama}}</td>
+                        <td>{{$DataSupplier->kode}}</td>
+                        <td>{{$DataSupplier->nama}}</td>
+                          @php
+                            $sum_tot_hutang_Debet1 = 0;
+                            $sum_tot_hutang_Debet2 = 0;
+                            $sum_tot_hutang_Debet3 = 0;
+                            $sum_tot_hutang_Debet4 = 0;
+
+                            $sum_tot_hutang_Kredit1 = 0;
+                            $sum_tot_hutang_Kredit2 = 0;
+                            $sum_tot_hutang_Kredit3 = 0;
+                            $sum_tot_hutang_Kredit4 = 0;
+                          @endphp
+                          @foreach ($SaldoHutangs as $SaldoHutang)
+                            @if ($SaldoHutang->suppliers_id == $DataSupplier->id)
+                              @php
+                                $sum_tot_hutang_Debet1 += ($SaldoHutang->where('suppliers_id', $DataSupplier->id)->sum('debet'));
+                                $sum_tot_hutang_Kredit1 += ($SaldoHutang->where('suppliers_id', $DataSupplier->id)->sum('kredit'));
+                              @endphp
+                            @endif
+                          @endforeach
+                          @foreach ($PurchaseJournals as $PurchaseJournal)
+                            @foreach ($purchasejournaldetails as $purchasejournaldetail)
+                              @if ($PurchaseJournal->suppliers_id == $DataSupplier->id)
+                                @if ($purchasejournaldetail->purchasejournal_id == $PurchaseJournal->id)
+                                  @php
+                                    $sum_tot_hutang_Debet2 += ($purchasejournaldetail->debet);
+                                    $sum_tot_hutang_Kredit2 += ($purchasejournaldetail->kredit);
+                                  @endphp
+                                @endif
+                              @endif
+                            @endforeach
+                          @endforeach
+                          @foreach ($ReturPembelians as $ReturPembelian)
+                            @foreach ($ReturPembelianDetails as $ReturPembelianDetail)
+                              @if ($ReturPembelian->suppliers_id == $DataSupplier->id)
+                                @if ($ReturPembelianDetail->retur_pembelian_id == $ReturPembelian->id)
+                                  @php
+                                    $sum_tot_hutang_Debet3 += ($ReturPembelianDetail->debet);
+                                    $sum_tot_hutang_Kredit3 += ($ReturPembelianDetail->kredit);
+                                  @endphp
+                                @endif
+                              @endif
+                            @endforeach
+                          @endforeach
+                          @foreach ($CashBankOuts as $CashBankOut)
+                            @foreach ($CashBankOutDetails as $CashBankOutDetail)
+                              @if ($CashBankOut->suppliers_id == $DataSupplier->id)
+                                @if ($CashBankOutDetail->cash_bank_outs_id == $CashBankOut->id)
+                                  @php
+                                    $sum_tot_hutang_Debet4 += ($CashBankOutDetail->debet);
+                                    $sum_tot_hutang_Kredit4 += ($CashBankOutDetail->kredit);
+                                  @endphp
+                                @endif
+                              @endif
+                            @endforeach
+                          @endforeach
                         <td class="text-right">
-                          Rp {{number_format($distinct_laporan->where('suppliers_id', $rekap->id)->sum('kredit') - $distinct_laporan->where('suppliers_id', $rekap->id)->sum('debet'), 0, " ", ".")}}
+                          Rp {{number_format(($sum_tot_hutang_Kredit1 + $sum_tot_hutang_Kredit2 + $sum_tot_hutang_Kredit3 + $sum_tot_hutang_Kredit4) - ($sum_tot_hutang_Debet1 + $sum_tot_hutang_Debet2 + $sum_tot_hutang_Debet3 + $sum_tot_hutang_Debet4), 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach
@@ -158,8 +266,65 @@
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
                       <td class="text-light text-center" colspan="2">Total</td>
+                          @php
+                            $sum_tot_hutang_Debet1 = 0;
+                            $sum_tot_hutang_Debet2 = 0;
+                            $sum_tot_hutang_Debet3 = 0;
+                            $sum_tot_hutang_Debet4 = 0;
+
+                            $sum_tot_hutang_Kredit1 = 0;
+                            $sum_tot_hutang_Kredit2 = 0;
+                            $sum_tot_hutang_Kredit3 = 0;
+                            $sum_tot_hutang_Kredit4 = 0;
+                          @endphp
+                          @foreach ($DataSuppliers as $DataSupplier)
+                            @foreach ($SaldoHutangs as $SaldoHutang)
+                              @if ($SaldoHutang->suppliers_id == $DataSupplier->id)
+                                @php
+                                  $sum_tot_hutang_Debet1 += ($SaldoHutang->where('suppliers_id', $DataSupplier->id)->sum('debet'));
+                                  $sum_tot_hutang_Kredit1 += ($SaldoHutang->where('suppliers_id', $DataSupplier->id)->sum('kredit'));
+                                @endphp
+                              @endif
+                            @endforeach
+                            @foreach ($PurchaseJournals as $PurchaseJournal)
+                              @foreach ($purchasejournaldetails as $purchasejournaldetail)
+                                @if ($PurchaseJournal->suppliers_id == $DataSupplier->id)
+                                  @if ($purchasejournaldetail->purchasejournal_id == $PurchaseJournal->id)
+                                    @php
+                                      $sum_tot_hutang_Debet2 += ($purchasejournaldetail->debet);
+                                      $sum_tot_hutang_Kredit2 += ($purchasejournaldetail->kredit);
+                                    @endphp
+                                  @endif
+                                @endif
+                              @endforeach
+                            @endforeach
+                            @foreach ($ReturPembelians as $ReturPembelian)
+                              @foreach ($ReturPembelianDetails as $ReturPembelianDetail)
+                                @if ($ReturPembelian->suppliers_id == $DataSupplier->id)
+                                  @if ($ReturPembelianDetail->retur_pembelian_id == $ReturPembelian->id)
+                                    @php
+                                      $sum_tot_hutang_Debet3 += ($ReturPembelianDetail->debet);
+                                      $sum_tot_hutang_Kredit3 += ($ReturPembelianDetail->kredit);
+                                    @endphp
+                                  @endif
+                                @endif
+                              @endforeach
+                            @endforeach
+                            @foreach ($CashBankOuts as $CashBankOut)
+                              @foreach ($CashBankOutDetails as $CashBankOutDetail)
+                                @if ($CashBankOut->suppliers_id == $DataSupplier->id)
+                                  @if ($CashBankOutDetail->cash_bank_outs_id == $CashBankOut->id)
+                                    @php
+                                      $sum_tot_hutang_Debet4 += ($CashBankOutDetail->debet);
+                                      $sum_tot_hutang_Kredit4 += ($CashBankOutDetail->kredit);
+                                    @endphp
+                                  @endif
+                                @endif
+                              @endforeach
+                            @endforeach
+                          @endforeach
                       <td class="text-light text-right">
-                        Rp {{number_format($distinct_laporan->sum('kredit') - $distinct_laporan->sum('debet'), 0, " ", ".")}}
+                        Rp {{number_format(($sum_tot_hutang_Kredit1 + $sum_tot_hutang_Kredit2 + $sum_tot_hutang_Kredit3 + $sum_tot_hutang_Kredit4) - ($sum_tot_hutang_Debet1 + $sum_tot_hutang_Debet2 + $sum_tot_hutang_Debet3 + $sum_tot_hutang_Debet4), 0, " ", ".")}}
                       </td>
                     </tr>
                   </tfoot>

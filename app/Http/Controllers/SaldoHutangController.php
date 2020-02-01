@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\SaldoHutang;
 use App\Model\DataSupplier;
-use App\Model\LaporanHutang;
 use App\Http\Requests\SaldoHutangRequest;
 
 class SaldoHutangController extends Controller
@@ -59,13 +58,6 @@ class SaldoHutangController extends Controller
         $data->kredit           = $request->kredit;
         $data->save();
 
-        $datas                   = new LaporanHutang;
-        $datas->suppliers_id     = $request->suppliers_id;
-        $datas->saldo_hutangs_id = $data->id;
-        $datas->debet            = $request->debet;
-        $datas->kredit           = $request->kredit;
-        $datas->save();
-
         return redirect('saldo_hutang')->with('Success', 'Data anda telah berhasil di input !');
     }
 
@@ -114,14 +106,6 @@ class SaldoHutangController extends Controller
         $data->debet            = $request->debet;
         $data->kredit           = $request->kredit;
         $data->save();
-
-        LaporanHutang::where('saldo_hutangs_id', $id)->delete();
-        $datas                   = new LaporanHutang;
-        $datas->suppliers_id     = $request->suppliers_id;
-        $datas->saldo_hutangs_id = $id;
-        $datas->debet            = $request->debet;
-        $datas->kredit           = $request->kredit;
-        $datas->save();
 
         return redirect('saldo_hutang')->with('Success', 'Data anda telah berhasil di Edit !');
     }

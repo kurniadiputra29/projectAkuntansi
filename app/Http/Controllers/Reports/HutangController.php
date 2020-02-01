@@ -12,7 +12,6 @@ use App\Model\ReturPembelian;
 use App\Model\ReturPembelianDetail;
 use App\Model\CashBankOut;
 use App\Model\CashBankOutDetails;
-use App\Model\LaporanHutang;
 use PDF;
 use Carbon\Carbon;
 
@@ -32,16 +31,13 @@ class HutangController extends Controller
         $DataSuppliers              = DataSupplier::all();
         $SaldoHutangs               = SaldoHutang::all();
         $PurchaseJournals           = PurchaseJournal::all();
-        $distinct_laporan           = LaporanHutang::distinct('suppliers_id')->select('debet', 'kredit', 'suppliers_id')->get();
         $purchasejournaldetails     = purchasejournaldetail::where('nomor_akun', '2-1210')->get();
         $ReturPembelians            = ReturPembelian::all();
         $ReturPembelianDetails      = ReturPembelianDetail::where('nomor_akun', '2-1210')->get();
         $CashBankOuts               = CashBankOut::all();
         $CashBankOutDetails         = CashBankOutDetails::where('nomor_akun', '2-1210')->get();
 
-        $distinct_pc                = DataSupplier::distinct('kode')->select('id', 'kode', 'nama')->get();
-
-        return view('reports.hutang_supplier.index', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails', 'sum_debet', 'sum_kredit', 'distinct_pc', 'distinct_laporan'));
+        return view('reports.hutang_supplier.index', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails'));
     }
 
     /**
@@ -58,14 +54,12 @@ class HutangController extends Controller
         $DataSuppliers              = DataSupplier::all();
         $SaldoHutangs               = SaldoHutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
         $PurchaseJournals           = PurchaseJournal::all();
-        $distinct_laporan           = LaporanHutang::distinct('suppliers_id')->select('debet', 'kredit', 'suppliers_id')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
         $purchasejournaldetails     = purchasejournaldetail::where('nomor_akun', '2-1210')->get();
         $ReturPembelians            = ReturPembelian::all();
         $ReturPembelianDetails      = ReturPembelianDetail::where('nomor_akun', '2-1210')->get();
         $CashBankOuts               = CashBankOut::all();
         $CashBankOutDetails         = CashBankOutDetails::where('nomor_akun', '2-1210')->get();
-        $distinct_pc                = DataSupplier::distinct('kode')->select('id', 'kode', 'nama')->get();
-        return view('reports.hutang_supplier.filter', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails','distinct_pc', 'distinct_laporan','tanggal_mulai','tanggal_akhir','add_day'));
+        return view('reports.hutang_supplier.filter', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails', 'tanggal_mulai','tanggal_akhir','add_day'));
     }
 
     public function printFilter(Request $request)
@@ -76,15 +70,13 @@ class HutangController extends Controller
         $DataSuppliers              = DataSupplier::all();
         $SaldoHutangs               = SaldoHutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
         $PurchaseJournals           = PurchaseJournal::all();
-        $distinct_laporan           = LaporanHutang::distinct('suppliers_id')->select('debet', 'kredit', 'suppliers_id')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
         $purchasejournaldetails     = purchasejournaldetail::where('nomor_akun', '2-1210')->get();
         $ReturPembelians            = ReturPembelian::all();
         $ReturPembelianDetails      = ReturPembelianDetail::where('nomor_akun', '2-1210')->get();
         $CashBankOuts               = CashBankOut::all();
         $CashBankOutDetails         = CashBankOutDetails::where('nomor_akun', '2-1210')->get();
-        $distinct_pc                = DataSupplier::distinct('kode')->select('id', 'kode', 'nama')->get();
 
-        $pdf = PDF::loadview('reports.hutang_supplier.print', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails','distinct_pc', 'distinct_laporan','tanggal_mulai','tanggal_akhir','add_day'));
+        $pdf = PDF::loadview('reports.hutang_supplier.print', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails', 'tanggal_mulai','tanggal_akhir','add_day'));
         return $pdf->setPaper('a4', 'landscape')->stream('laporan-hutang-supplier.pdf');
     }
 
@@ -163,13 +155,11 @@ class HutangController extends Controller
         $DataSuppliers              = DataSupplier::all();
         $SaldoHutangs               = SaldoHutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
         $PurchaseJournals           = PurchaseJournal::all();
-        $distinct_laporan           = LaporanHutang::distinct('suppliers_id')->select('debet', 'kredit', 'suppliers_id')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
         $purchasejournaldetails     = purchasejournaldetail::where('nomor_akun', '2-1210')->get();
         $ReturPembelians            = ReturPembelian::all();
         $ReturPembelianDetails      = ReturPembelianDetail::where('nomor_akun', '2-1210')->get();
         $CashBankOuts               = CashBankOut::all();
         $CashBankOutDetails         = CashBankOutDetails::where('nomor_akun', '2-1210')->get();
-        $distinct_pc                = DataSupplier::distinct('kode')->select('id', 'kode', 'nama')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
 
         $pdf = PDF::loadview('reports.hutang_supplier.print', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails','distinct_pc', 'distinct_laporan','tanggal_mulai','tanggal_akhir','add_day'));
         return $pdf->setPaper('a4', 'landscape')->stream('laporan-hutang-supplier.pdf');
