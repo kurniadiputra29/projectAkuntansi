@@ -189,6 +189,7 @@ class CpjController extends Controller
 
         for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
+            $detail->tanggal = $request->tanggal;
             $detail->cpj_id             = $cpj->id;
             $detail->items_id           = $inventory['items'][$x];
             $detail->status             = $inventory['status'][$x];
@@ -385,6 +386,7 @@ class CpjController extends Controller
 
         for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
+            $detail->tanggal = $request->tanggal;
             $detail->cpj_id             = $id;
             $detail->items_id           = $inventory['items'][$x];
             $detail->status             = $inventory['status'][$x];

@@ -5,14 +5,7 @@ namespace App\Http\Controllers\Reports;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Item;
-use App\Model\SaldoItem;
 use App\Model\Inventory;
-use App\Model\cpj;
-use App\Model\crj;
-use App\Model\PurchaseJournal;
-use App\Model\SalesJournal;
-use App\Model\ReturPenjualan;
-use App\Model\ReturPembelian;
 use Carbon\Carbon;
 use PDF;
 
@@ -30,18 +23,9 @@ class InventoryController extends Controller
     public function index()
     {
         $items                  = Item::all();
-        $SaldoItems             = SaldoItem::all();
         $inventories            = Inventory::all();
-        $cpjs                   = cpj::all();
-        $crjs                   = crj::all();
-        $PurchaseJournals       = PurchaseJournal::all();
-        $SalesJournals          = SalesJournal::all();
-        $ReturPembelians        = ReturPembelian::all();
-        $ReturPenjualans        = ReturPenjualan::all();
 
-        $distinct_pc            = Item::distinct('id')->select('id', 'kode', 'nama')->get();
-        $distinct_pcc           = Inventory::distinct('items_id')->select('unit', 'price', 'total', 'items_id', 'status')->get();
-        return view('reports.inventory_card.index', compact('items', 'inventories', 'cpjs', 'crjs', 'PurchaseJournals', 'SalesJournals', 'ReturPembelians', 'ReturPenjualans', 'distinct_pc', 'distinct_pcc', 'SaldoItems'));
+        return view('reports.inventory_card.index', compact('items', 'inventories'));
     }
 
     /**
@@ -53,26 +37,24 @@ class InventoryController extends Controller
     {
         $tanggal_mulai  = $request->tanggal_mulai;
         $tanggal_akhir  = $request->tanggal_akhir;
-        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
+        $add_day        = Carbon::parse($tanggal_akhir);
 
         $items = Item::all();
-        $inventories = Inventory::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        $distinct_pc = Item::distinct('id')->select('id', 'kode', 'nama')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        $distinct_pcc = Inventory::distinct('items_id')->select('unit', 'price', 'total', 'items_id', 'status')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        return view('reports.inventory_card.filter', compact('items','inventories','distinct_pc','distinct_pcc','tanggal_mulai','tanggal_akhir','add_day'));
+        $inventories = Inventory::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
+
+        return view('reports.inventory_card.filter', compact('items', 'inventories', 'tanggal_mulai','tanggal_akhir','add_day'));
     }
 
     public function printFilter(Request $request)
     {
         $tanggal_mulai  = $request->tanggal_mulai;
         $tanggal_akhir  = $request->tanggal_akhir;
-        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
-        $items = Item::all();
-        $inventories = Inventory::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        $distinct_pc = Item::distinct('id')->select('id', 'kode', 'nama')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        $distinct_pcc = Inventory::distinct('items_id')->select('unit', 'price', 'total', 'items_id', 'status')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        $add_day        = Carbon::parse($tanggal_akhir);
 
-        $pdf = PDF::loadview('reports.inventory_card.print', compact('items','inventories','distinct_pc','distinct_pcc','tanggal_mulai','tanggal_akhir','add_day'));
+        $items = Item::all();
+        $inventories = Inventory::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
+
+        $pdf = PDF::loadview('reports.inventory_card.print', compact('items','inventories', 'tanggal_mulai','tanggal_akhir','add_day'));
         return $pdf->setPaper('a4', 'landscape')->stream('inventory_card.pdf');
     }
 
@@ -151,17 +133,12 @@ class InventoryController extends Controller
     {
         $tanggal_mulai  = $request->tanggal_mulai;
         $tanggal_akhir  = $request->tanggal_akhir;
-        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
+        $add_day        = Carbon::parse($tanggal_akhir);
 
         $items = Item::get();
-        $inventories = Inventory::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        $distinct_pc = Item::distinct('id')->select('id', 'kode', 'nama')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        $distinct_pcc = Inventory::distinct('items_id')->select('unit', 'price', 'total', 'items_id', 'status')->whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
+        $inventories = Inventory::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
 
-        // return response()->json($distinct_pcc);
-
-        $pdf = PDF::loadview('reports.inventory_card.print', compact('inv','items','inventories','distinct_pc','distinct_pcc','tanggal_mulai','tanggal_akhir','add_day'));
+        $pdf = PDF::loadview('reports.inventory_card.print', compact('items','inventories', 'tanggal_mulai','tanggal_akhir','add_day'));
         return $pdf->setPaper('a4', 'landscape')->stream('inventory_card.pdf');
-        // return view('reports.inventory_card.print', compact('inv','items','inventories','distinct_pc','distinct_pcc','tanggal_mulai','tanggal_akhir','add_day'));
     }
 }

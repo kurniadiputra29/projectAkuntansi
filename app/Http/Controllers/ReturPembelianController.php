@@ -190,7 +190,8 @@ class ReturPembelianController extends Controller
 
       for ($x=0; $x < $countinventory1; $x++) { 
           $detail                     = new Inventory();
-          $detail->retur_pembelian_id             = $ReturnPembelian->id;
+          $detail->tanggal = $request->tanggal;
+          $detail->retur_pembelian_id = $ReturnPembelian->id;
           $detail->items_id           = $inventory['items'][$x];
           $detail->status             = $inventory['status'][$x];
           $detail->unit               = $inventory['unit'][$x];
@@ -388,6 +389,7 @@ class ReturPembelianController extends Controller
 
       for ($x=0; $x < $countinventory1; $x++) { 
           $detail                     = new Inventory();
+          $detail->tanggal = $request->tanggal;
           $detail->retur_pembelian_id = $id;
           $detail->items_id           = $inventory['items'][$x];
           $detail->status             = $inventory['status'][$x];

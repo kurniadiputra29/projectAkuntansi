@@ -51,11 +51,12 @@ class SaldoHutangController extends Controller
                 'keterangan'    => 'required',
         ],$messages);
 
-        $data                   = new SaldoHutang;
-        $data->suppliers_id     = $request->suppliers_id;
-        $data->keterangan       = $request->keterangan;
-        $data->debet            = $request->debet;
-        $data->kredit           = $request->kredit;
+        $data = new SaldoHutang;
+        $data->tanggal = $request->tanggal;
+        $data->suppliers_id = $request->suppliers_id;
+        $data->keterangan = $request->keterangan;
+        $data->debet = $request->debet;
+        $data->kredit = $request->kredit;
         $data->save();
 
         return redirect('saldo_hutang')->with('Success', 'Data anda telah berhasil di input !');
@@ -100,11 +101,12 @@ class SaldoHutangController extends Controller
                 'keterangan'    => 'required',
         ],$messages);
 
-        $data                   = SaldoHutang::find($id);
-        $data->suppliers_id     = $request->suppliers_id;
-        $data->keterangan       = $request->keterangan;
-        $data->debet            = $request->debet;
-        $data->kredit           = $request->kredit;
+        $data = SaldoHutang::find($id);
+        $data->tanggal = $request->tanggal;
+        $data->suppliers_id = $request->suppliers_id;
+        $data->keterangan = $request->keterangan;
+        $data->debet = $request->debet;
+        $data->kredit = $request->kredit;
         $data->save();
 
         return redirect('saldo_hutang')->with('Success', 'Data anda telah berhasil di Edit !');

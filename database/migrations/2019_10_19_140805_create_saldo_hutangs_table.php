@@ -15,6 +15,7 @@ class CreateSaldoHutangsTable extends Migration
     {
         Schema::create('saldo_hutangs', function (Blueprint $table) {
             $table->Increments('id');
+            $table->date('tanggal');
             $table->unsignedInteger('suppliers_id');
             $table->string('keterangan');
             $table->integer('debet')->nullable();

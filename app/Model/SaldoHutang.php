@@ -9,7 +9,7 @@ class SaldoHutang extends Model
     protected $table = 'saldo_hutangs';
 
     protected $fillable = [
-      'id', 'suppliers_id', 'keterangan', 'debet', 'kredit'
+      'id', 'tanggal', 'suppliers_id', 'keterangan', 'debet', 'kredit'
     ];
 
     public function supplier()

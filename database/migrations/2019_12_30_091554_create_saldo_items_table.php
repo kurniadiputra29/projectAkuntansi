@@ -15,6 +15,7 @@ class CreateSaldoItemsTable extends Migration
     {
         Schema::create('saldo_items', function (Blueprint $table) {
             $table->Increments('id');
+            $table->date('tanggal');
             $table->unsignedInteger('items_id');
             $table->integer('unit');
             $table->integer('price');

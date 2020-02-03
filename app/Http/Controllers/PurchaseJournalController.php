@@ -189,7 +189,8 @@ class PurchaseJournalController extends Controller
 
         for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
-            $detail->purchasejournal_id             = $PurchaseJournal->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->purchasejournal_id = $PurchaseJournal->id;
             $detail->items_id           = $inventory['items'][$x];
             $detail->status             = $inventory['status'][$x];
             $detail->unit               = $inventory['unit'][$x];
@@ -380,13 +381,13 @@ class PurchaseJournalController extends Controller
         }
 
         Inventory::where('purchasejournal_id', $id)->delete();
-
         //insert data Inventory
         $inventory                 = $request->only('items', 'unit','harga', 'jumlah', 'status');
         $countinventory1 = count($inventory['jumlah']);
 
         for ($x=0; $x < $countinventory1; $x++) {
             $detail                         = new Inventory();
+            $detail->tanggal = $request->tanggal;
             $detail->purchasejournal_id     = $id;
             $detail->items_id               = $inventory['items'][$x];
             $detail->status                 = $inventory['status'][$x];

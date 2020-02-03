@@ -78,7 +78,7 @@
                     @foreach ($data as $key)
                         <tr>
                           <td>{{ $key->kode }}</td>
-                          <td>{{ $key->tanggal }}</td>
+                          <td>{{date('d F Y', strtotime($key->tanggal))}}</td>
                           <td>
                               <span class="badge badge-pill badge-success mb-1">{{ $key->data_customers->nama }}</span>
                           </td>

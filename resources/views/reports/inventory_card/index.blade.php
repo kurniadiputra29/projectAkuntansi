@@ -68,28 +68,27 @@
                           </tr>
                         </thead>
                         <tbody>
-
                           @foreach ($inventories as $inventory)
                             <tr>
                               @if ($inventory->items_id == $item->id)
-                                <td class="text-center">{{date('d F Y', strtotime($inventory->created_at ))}}</td>
+                                <td class="text-center">{{date('d F Y', strtotime($inventory->tanggal ))}}</td>
                                 <td class="text-center">{{ $inventory->Items->kode }}</td>
                                 <td class="text-center">
-                                @if ($inventory->crj_id != null)
-                                  <span class="badge badge-pill badge-warning mb-1">CRJ</span>
-                                @elseif($inventory->salesjournal_id != null)
-                                  <span class="badge badge-pill badge-warning mb-1">Sales Journal</span>
-                                @elseif($inventory->retur_penjualan_id != null)
-                                  <span class="badge badge-pill badge-success mb-1">Retur Penjualan</span>
-                                @elseif($inventory->cpj_id != null)
-                                  <span class="badge badge-pill badge-success mb-1">CPJ</span>
-                                @elseif($inventory->purchasejournal_id != null)
-                                  <span class="badge badge-pill badge-success mb-1">Purchase Journal</span>
-                                @elseif($inventory->retur_pembelian_id != null)
-                                  <span class="badge badge-pill badge-warning mb-1">Retur Pembelian</span>
-                                @elseif($inventory->saldo_items_id != null)
-                                  <span class="badge badge-pill badge-primary mb-1">Saldo Awal</span>
-                                @endif
+                                  @if ($inventory->crj_id != null)
+                                    <span class="badge badge-pill badge-warning mb-1">CRJ</span>
+                                  @elseif($inventory->salesjournal_id != null)
+                                    <span class="badge badge-pill badge-warning mb-1">Sales Journal</span>
+                                  @elseif($inventory->retur_penjualan_id != null)
+                                    <span class="badge badge-pill badge-success mb-1">Retur Penjualan</span>
+                                  @elseif($inventory->cpj_id != null)
+                                    <span class="badge badge-pill badge-success mb-1">CPJ</span>
+                                  @elseif($inventory->purchasejournal_id != null)
+                                    <span class="badge badge-pill badge-success mb-1">Purchase Journal</span>
+                                  @elseif($inventory->retur_pembelian_id != null)
+                                    <span class="badge badge-pill badge-warning mb-1">Retur Pembelian</span>
+                                  @elseif($inventory->saldo_items_id != null)
+                                    <span class="badge badge-pill badge-primary mb-1">Saldo Awal</span>
+                                  @endif
                                 </td>
                                 <td class="text-center">
                                   @if ($inventory->saldo_items_id !== null)
@@ -125,19 +124,39 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($distinct_pc as $rekap)
+                    @foreach ($items as $item)
                       <tr>
-                        <td>{{$rekap->kode}}</td>
-                        <td>{{$rekap->nama}}</td>
+                        <td>{{$item->kode}}</td>
+                        <td>{{$item->nama}}</td>
+                        @php
+                          $sum_tot_inventory_unit_in = 0;
+                          $sum_tot_inventory_unit_out = 0;
+                          $sum_tot_inventory_total_in = 0;
+                          $sum_tot_inventory_total_out = 0;
+                        @endphp
+                        @foreach ($inventories as $inventory)
+                          @if ($inventory->items_id == $item->id)
+                            @if ($inventory->status == 1)
+                              @php
+                                $sum_tot_inventory_unit_in += $inventory->unit;
+                                $sum_tot_inventory_total_in += $inventory->total;
+                              @endphp
+                            @else
+                              @php
+                                $sum_tot_inventory_unit_out += $inventory->unit;
+                                $sum_tot_inventory_total_out += $inventory->total;
+                              @endphp
+                            @endif
+                          @endif
+                        @endforeach
                         <td class="text-right">
-                          {{($distinct_pcc->where('items_id', $rekap->id)->where('status', 1)->sum('unit'))-($distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('unit'))}}
+                          {{$sum_tot_inventory_unit_in - $sum_tot_inventory_unit_out}}
                         </td>
                         <td class="text-right">
-                          Rp {{number_format(($distinct_pcc->where('items_id', $rekap->id)->where('status', 1)->sum('total') - $distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('total')) / ($distinct_pcc->where('items_id', $rekap->id)->where('status', 1)->sum('unit')-$distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('unit')), 0, " ", ".")}}
+                          Rp {{number_format(($sum_tot_inventory_total_in - $sum_tot_inventory_total_out) / ($sum_tot_inventory_unit_in - $sum_tot_inventory_unit_out), 0, " ", ".")}}
                         </td>
-
                         <td class="text-right">
-                          Rp {{number_format($distinct_pcc->where('items_id', $rekap->id)->where('status', 1)->sum('total') - $distinct_pcc->where('items_id', $rekap->id)->where('status', 0)->sum('total'), 0, " ", ".")}}
+                          Rp {{number_format($sum_tot_inventory_total_in - $sum_tot_inventory_total_out, 0, " ", ".")}}
                         </td>
                       </tr>
                     @endforeach
@@ -145,14 +164,37 @@
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
                       <td class="text-light text-right" colspan="2">Total</td>
+                        @php
+                          $sum_total_inventory_unit_in = 0;
+                          $sum_total_inventory_unit_out = 0;
+                          $sum_total_inventory_total_in = 0;
+                          $sum_total_inventory_total_out = 0;
+                        @endphp
+                        @foreach ($items as $item)
+                          @foreach ($inventories as $inventory)
+                            @if ($inventory->items_id == $item->id)
+                              @if ($inventory->status == 1)
+                                @php
+                                  $sum_total_inventory_unit_in += $inventory->unit;
+                                  $sum_total_inventory_total_in += $inventory->total;
+                                @endphp
+                              @else
+                                @php
+                                  $sum_total_inventory_unit_out += $inventory->unit;
+                                  $sum_total_inventory_total_out += $inventory->total;
+                                @endphp
+                              @endif
+                            @endif
+                          @endforeach
+                        @endforeach
                       <td class="text-light text-right"> 
-                        {{$distinct_pcc->where('status', 1)->sum('unit')-$distinct_pcc->where('status', 0)->sum('unit')}}
+                        {{$sum_total_inventory_unit_in - $sum_total_inventory_unit_out}}
                       </td>
                       <td class="text-light text-right">
-                        Rp {{number_format(($distinct_pcc->where('status', 1)->sum('total') - $distinct_pcc->where('status', 0)->sum('total')) / ($distinct_pcc->where('status', 1)->sum('unit')-$distinct_pcc->where('status', 0)->sum('unit')), 0, " ", ".")}}
+                        Rp {{number_format(($sum_total_inventory_total_in - $sum_total_inventory_total_out) / ($sum_total_inventory_unit_in - $sum_total_inventory_unit_out), 0, " ", ".")}}
                       </td>
                       <td class="text-light text-right">
-                        Rp {{number_format($distinct_pcc->where('status', 1)->sum('total') - $distinct_pcc->where('status', 0)->sum('total'), 0, " ", ".")}}
+                        Rp {{number_format($sum_total_inventory_total_in - $sum_total_inventory_total_out, 0, " ", ".")}}
                       </td>
                     </tr>
                   </tfoot>

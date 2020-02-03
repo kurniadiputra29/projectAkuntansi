@@ -235,6 +235,7 @@ public function store(Request $request)
 
    for ($x=0; $x < $countinventory1; $x++) {
     $detail                     = new Inventory();
+    $detail->tanggal = $request->tanggal;
     $detail->retur_penjualan_id = $ReturPenjualan->id;
     $detail->items_id           = $inventory['items'][$x];
     $detail->status             = $inventory['status'][$x];
@@ -483,6 +484,7 @@ public function update(Request $request, $id)
 
    for ($x=0; $x < $countinventory1; $x++) {
     $detail                     = new Inventory();
+    $detail->tanggal = $request->tanggal;
     $detail->retur_penjualan_id = $id;
     $detail->items_id           = $inventory['items'][$x];
     $detail->status             = $inventory['status'][$x];

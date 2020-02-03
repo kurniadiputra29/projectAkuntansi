@@ -13,6 +13,7 @@ class SaldoItemsTableSeeder extends Seeder
 		{
 				$data = [
 					[
+						'tanggal' => now(),
 						'items_id' 			=> 1,
 						'unit' 					=> 40,
 						'price' 				=> 2000000,
@@ -21,6 +22,7 @@ class SaldoItemsTableSeeder extends Seeder
 						'updated_at' 		=> now(),
 					],
 					[
+						'tanggal' => now(),
 						'items_id' 			=> 2,
 						'unit' 					=> 40,
 						'price' 				=> 2500000,

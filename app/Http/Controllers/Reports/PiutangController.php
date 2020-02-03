@@ -50,15 +50,15 @@ class PiutangController extends Controller
     {
         $tanggal_mulai  = $request->tanggal_mulai;
         $tanggal_akhir  = $request->tanggal_akhir;
-        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
+        $add_day        = Carbon::parse($tanggal_akhir);
 
         $DataCustomers              = DataCustomer::all();
-        $SaldoPiutangs              = SaldoPiutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        $SalesJournals              = SalesJournal::all();
+        $SaldoPiutangs              = SaldoPiutang::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
+        $SalesJournals              = SalesJournal::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $salesjournaldetails        = salesjournaldetail::where('nomor_akun', '1-1220')->get();
-        $ReturPenjualans            = ReturPenjualan::all();
+        $ReturPenjualans            = ReturPenjualan::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $ReturPenjualanDetails      = ReturPenjualanDetail::where('nomor_akun', '1-1220')->get();
-        $CashBankIns                = CashBankIn::all();
+        $CashBankIns                = CashBankIn::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $CashBankInDetails          = CashBankInDetails::where('nomor_akun', '1-1220')->get();
 
         return view('reports.piutang_pelanggan.filter', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'tanggal_mulai','tanggal_akhir','add_day'));
@@ -68,14 +68,14 @@ class PiutangController extends Controller
     {
         $tanggal_mulai  = $request->tanggal_mulai;
         $tanggal_akhir  = $request->tanggal_akhir;
-        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
+        $add_day        = Carbon::parse($tanggal_akhir);
         $DataCustomers              = DataCustomer::all();
-        $SaldoPiutangs              = SaldoPiutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        $SalesJournals              = SalesJournal::all();
+        $SaldoPiutangs              = SaldoPiutang::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
+        $SalesJournals              = SalesJournal::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $salesjournaldetails        = salesjournaldetail::where('nomor_akun', '1-1220')->get();
-        $ReturPenjualans            = ReturPenjualan::all();
+        $ReturPenjualans            = ReturPenjualan::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $ReturPenjualanDetails      = ReturPenjualanDetail::where('nomor_akun', '1-1220')->get();
-        $CashBankIns                = CashBankIn::all();
+        $CashBankIns                = CashBankIn::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $CashBankInDetails          = CashBankInDetails::where('nomor_akun', '1-1220')->get();
 
         $pdf = PDF::loadview('reports.piutang_pelanggan.print', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'tanggal_mulai','tanggal_akhir','add_day'));
@@ -152,15 +152,15 @@ class PiutangController extends Controller
     {
         $tanggal_mulai  = $request->tanggal_mulai;
         $tanggal_akhir  = $request->tanggal_akhir;
-        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
+        $add_day        = Carbon::parse($tanggal_akhir);
 
         $DataCustomers              = DataCustomer::all();
-        $SaldoPiutangs              = SaldoPiutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        $SalesJournals              = SalesJournal::all();
+        $SaldoPiutangs              = SaldoPiutang::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
+        $SalesJournals              = SalesJournal::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $salesjournaldetails        = salesjournaldetail::where('nomor_akun', '1-1220')->get();
-        $ReturPenjualans            = ReturPenjualan::all();
+        $ReturPenjualans            = ReturPenjualan::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $ReturPenjualanDetails      = ReturPenjualanDetail::where('nomor_akun', '1-1220')->get();
-        $CashBankIns                = CashBankIn::all();
+        $CashBankIns                = CashBankIn::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $CashBankInDetails          = CashBankInDetails::where('nomor_akun', '1-1220')->get();
 
         $pdf = PDF::loadview('reports.piutang_pelanggan.print', compact('DataCustomers', 'SaldoPiutangs', 'salesjournaldetails', 'SalesJournals', 'ReturPenjualans', 'ReturPenjualanDetails', 'CashBankIns', 'CashBankInDetails', 'tanggal_mulai','tanggal_akhir','add_day'));

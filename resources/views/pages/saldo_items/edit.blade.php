@@ -68,6 +68,10 @@
               </select>
             </div>
             <div class="form-group">
+              <label for="tanggal_transaksi">Tanggal Transaksi</label>
+              <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{ $SaldoItems->tanggal }}" >
+            </div>
+            <div class="form-group">
                   <label for="unit">Unit</label>
                   <input type="number" class="form-control" name="unit" id="unit" v-model="unit"  >
               </div>

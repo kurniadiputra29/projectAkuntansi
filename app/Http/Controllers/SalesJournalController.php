@@ -242,6 +242,7 @@ class SalesJournalController extends Controller
 
         for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
+            $detail->tanggal = $request->tanggal;
             $detail->salesjournal_id    = $salesjournal->id;
             $detail->items_id           = $inventory['items'][$x];
             $detail->status             = $inventory['status'][$x];
@@ -490,6 +491,7 @@ class SalesJournalController extends Controller
 
         for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
+            $detail->tanggal = $request->tanggal;
             $detail->salesjournal_id    = $id;
             $detail->items_id           = $inventory['items'][$x];
             $detail->status             = $inventory['status'][$x];
