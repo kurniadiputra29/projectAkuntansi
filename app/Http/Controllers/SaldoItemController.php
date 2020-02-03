@@ -53,20 +53,22 @@ class SaldoItemController extends Controller
             'total'      => 'required',
         ],$messages);
         
-        $datas               = new SaldoItem;
-        $datas->items_id     = $request->items_id;
-        $datas->unit         = $request->unit;
-        $datas->price        = $request->price;
-        $datas->total        = $request->total;
+        $datas = new SaldoItem;
+        $datas->tanggal = $request->tanggal;
+        $datas->items_id = $request->items_id;
+        $datas->unit = $request->unit;
+        $datas->price = $request->price;
+        $datas->total = $request->total;
         $datas->save();
 
-        $data                   = new Inventory;
-        $data->items_id         = $request->items_id;
-        $data->saldo_items_id   = $datas->id;
-        $data->status            = $request->status;
-        $data->unit             = $request->unit;
-        $data->price            = $request->price;
-        $data->total            = $request->total;
+        $data = new Inventory;
+        $data->tanggal = $request->tanggal;
+        $data->items_id = $request->items_id;
+        $data->saldo_items_id = $datas->id;
+        $data->status = $request->status;
+        $data->unit = $request->unit;
+        $data->price = $request->price;
+        $data->total = $request->total;
         $data->save();
 
         return redirect('saldo_item')->with('Success', 'Data anda telah berhasil di input !');
@@ -115,22 +117,24 @@ class SaldoItemController extends Controller
             'total'      => 'required',
         ],$messages);
         
-        $datas               = SaldoItem::find($id);
-        $datas->items_id     = $request->items_id;
-        $datas->unit         = $request->unit;
-        $datas->price        = $request->price;
-        $datas->total        = $request->total;
+        $datas = SaldoItem::find($id);
+        $datas->tanggal = $request->tanggal;
+        $datas->items_id = $request->items_id;
+        $datas->unit = $request->unit;
+        $datas->price = $request->price;
+        $datas->total = $request->total;
         $datas->save();
 
         Inventory::where('saldo_items_id', $id)->delete();
 
-        $data                   = new Inventory;
-        $data->items_id         = $request->items_id;
-        $data->saldo_items_id   = $id;
-        $data->status            = $request->status;
-        $data->unit             = $request->unit;
-        $data->price            = $request->price;
-        $data->total            = $request->total;
+        $data = new Inventory;
+        $data->tanggal = $request->tanggal;
+        $data->items_id = $request->items_id;
+        $data->saldo_items_id = $id;
+        $data->status = $request->status;
+        $data->unit = $request->unit;
+        $data->price = $request->price;
+        $data->total = $request->total;
         $data->save();
 
         return redirect('saldo_item')->with('Success', 'Data anda telah berhasil di Edit !');

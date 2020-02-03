@@ -20,6 +20,10 @@
                   </select>
               </div>
               <div class="form-group">
+                <label for="tanggal_transaksi">Tanggal Transaksi</label>
+                <input class="form-control" name="tanggal" type="date" id="tanggal_transaksi" value="{{date("Y-m-d")}}" >
+              </div>
+              <div class="form-group">
                   <label for="keterangan">Keterangan</label>
                   <input type="text" class="form-control" name="keterangan" id="keterangan">
               </div>

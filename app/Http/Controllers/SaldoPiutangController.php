@@ -52,6 +52,7 @@ class SaldoPiutangController extends Controller
         ],$messages);
 
         $data = new SaldoPiutang;
+        $data->tanggal = $request->tanggal;
         $data->customers_id = $request->customers_id;
         $data->keterangan = $request->keterangan;
         $data->debet = $request->debet;
@@ -100,11 +101,12 @@ class SaldoPiutangController extends Controller
                 'keterangan' => 'required',
         ],$messages);
 
-        $data                   = SaldoPiutang::find($id);
-        $data->customers_id     = $request->customers_id;
-        $data->keterangan       = $request->keterangan;
-        $data->debet            = $request->debet;
-        $data->kredit           = $request->kredit;
+        $data = SaldoPiutang::find($id);
+        $data->tanggal = $request->tanggal;
+        $data->customers_id = $request->customers_id;
+        $data->keterangan = $request->keterangan;
+        $data->debet = $request->debet;
+        $data->kredit = $request->kredit;
         $data->save();
 
         return redirect('saldo_piutang')->with('Success', 'Data anda telah berhasil di Edit !');

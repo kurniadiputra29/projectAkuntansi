@@ -118,11 +118,11 @@ class SaldoAwalController extends Controller
                 'tanggal'  => 'required',
         ],$messages);
 
-        $data                   = SaldoAwal::find($id);
-        $data->account_id       = $request->account_id;
-        $data->debet            = $request->debet;
-        $data->tanggal            = $request->tanggal;
-        $data->kredit           = $request->kredit;
+        $data = SaldoAwal::find($id);
+        $data->account_id = $request->account_id;
+        $data->debet = $request->debet;
+        $data->tanggal = $request->tanggal;
+        $data->kredit = $request->kredit;
         $data->save();
 
         LaporanBukuBesar::where('saldo_awals_id', $id)->delete();

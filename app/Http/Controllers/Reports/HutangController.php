@@ -49,15 +49,15 @@ class HutangController extends Controller
     {
         $tanggal_mulai  = $request->tanggal_mulai;
         $tanggal_akhir  = $request->tanggal_akhir;
-        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
+        $add_day        = Carbon::parse($tanggal_akhir);
 
         $DataSuppliers              = DataSupplier::all();
-        $SaldoHutangs               = SaldoHutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        $PurchaseJournals           = PurchaseJournal::all();
+        $SaldoHutangs               = SaldoHutang::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
+        $PurchaseJournals           = PurchaseJournal::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $purchasejournaldetails     = purchasejournaldetail::where('nomor_akun', '2-1210')->get();
-        $ReturPembelians            = ReturPembelian::all();
+        $ReturPembelians            = ReturPembelian::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $ReturPembelianDetails      = ReturPembelianDetail::where('nomor_akun', '2-1210')->get();
-        $CashBankOuts               = CashBankOut::all();
+        $CashBankOuts               = CashBankOut::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $CashBankOutDetails         = CashBankOutDetails::where('nomor_akun', '2-1210')->get();
         return view('reports.hutang_supplier.filter', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails', 'tanggal_mulai','tanggal_akhir','add_day'));
     }
@@ -66,14 +66,14 @@ class HutangController extends Controller
     {
         $tanggal_mulai  = $request->tanggal_mulai;
         $tanggal_akhir  = $request->tanggal_akhir;
-        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
+        $add_day        = Carbon::parse($tanggal_akhir);
         $DataSuppliers              = DataSupplier::all();
-        $SaldoHutangs               = SaldoHutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        $PurchaseJournals           = PurchaseJournal::all();
+        $SaldoHutangs               = SaldoHutang::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
+        $PurchaseJournals           = PurchaseJournal::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $purchasejournaldetails     = purchasejournaldetail::where('nomor_akun', '2-1210')->get();
-        $ReturPembelians            = ReturPembelian::all();
+        $ReturPembelians            = ReturPembelian::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $ReturPembelianDetails      = ReturPembelianDetail::where('nomor_akun', '2-1210')->get();
-        $CashBankOuts               = CashBankOut::all();
+        $CashBankOuts               = CashBankOut::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $CashBankOutDetails         = CashBankOutDetails::where('nomor_akun', '2-1210')->get();
 
         $pdf = PDF::loadview('reports.hutang_supplier.print', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails', 'tanggal_mulai','tanggal_akhir','add_day'));
@@ -150,15 +150,15 @@ class HutangController extends Controller
     {
         $tanggal_mulai  = $request->tanggal_mulai;
         $tanggal_akhir  = $request->tanggal_akhir;
-        $add_day        = Carbon::parse($tanggal_akhir)->addDay();
+        $add_day        = Carbon::parse($tanggal_akhir);
 
         $DataSuppliers              = DataSupplier::all();
-        $SaldoHutangs               = SaldoHutang::whereBetween('created_at', [$tanggal_mulai,$add_day])->get();
-        $PurchaseJournals           = PurchaseJournal::all();
+        $SaldoHutangs               = SaldoHutang::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
+        $PurchaseJournals           = PurchaseJournal::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $purchasejournaldetails     = purchasejournaldetail::where('nomor_akun', '2-1210')->get();
-        $ReturPembelians            = ReturPembelian::all();
+        $ReturPembelians            = ReturPembelian::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $ReturPembelianDetails      = ReturPembelianDetail::where('nomor_akun', '2-1210')->get();
-        $CashBankOuts               = CashBankOut::all();
+        $CashBankOuts               = CashBankOut::whereBetween('tanggal', [$tanggal_mulai,$add_day])->get();
         $CashBankOutDetails         = CashBankOutDetails::where('nomor_akun', '2-1210')->get();
 
         $pdf = PDF::loadview('reports.hutang_supplier.print', compact('DataSuppliers', 'SaldoHutangs', 'PurchaseJournals', 'purchasejournaldetails', 'ReturPembelians', 'ReturPembelianDetails', 'CashBankOuts', 'CashBankOutDetails','distinct_pc', 'distinct_laporan','tanggal_mulai','tanggal_akhir','add_day'));

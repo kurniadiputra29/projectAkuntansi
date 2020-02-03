@@ -74,7 +74,7 @@
                       @foreach ($data as $key)
                         <tr>
                           <td>{{ $key->kode }}</td>
-                          <td>{{ $key->tanggal }}</td>
+                          <td>{{date('d F Y', strtotime($key->tanggal))}}</td>
                           <td>{{ $key->data_customers->nama }}</td>
                           <td>{{ $key->description }}</td>
                           <td class="text-right">

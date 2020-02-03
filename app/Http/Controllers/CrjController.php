@@ -243,6 +243,7 @@ class CrjController extends Controller
         for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
             $detail->crj_id             = $crj->id;
+            $detail->tanggal = $request->tanggal;
             $detail->items_id           = $inventory['items'][$x];
             $detail->status             = $inventory['status'][$x];
             $detail->unit               = $inventory['unit'][$x];
@@ -491,6 +492,7 @@ class CrjController extends Controller
 
         for ($x=0; $x < $countinventory1; $x++) {
             $detail                     = new Inventory();
+            $detail->tanggal = $request->tanggal;
             $detail->crj_id             = $id;
             $detail->items_id           = $inventory['items'][$x];
             $detail->status             = $inventory['status'][$x];

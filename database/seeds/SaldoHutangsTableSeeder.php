@@ -13,6 +13,7 @@ class SaldoHutangsTableSeeder extends Seeder
     {
         $data = [
           [
+            'tanggal' => now(),
           	'suppliers_id' 	=> 1,
           	'keterangan' 		=> 'Saldo Awal Hutang',
           	'debet' 				=> 0,
@@ -21,6 +22,7 @@ class SaldoHutangsTableSeeder extends Seeder
           	'updated_at' 		=> now(),
       		],
           [
+            'tanggal' => now(),
           	'suppliers_id' 	=> 2,
           	'keterangan' 		=> 'Saldo Awal Hutang',
           	'debet' 				=> 0,
@@ -29,6 +31,7 @@ class SaldoHutangsTableSeeder extends Seeder
           	'updated_at' 		=> now(),
           ],
           [
+            'tanggal' => now(),
           	'suppliers_id' 	=> 3,
           	'keterangan' 		=> 'Saldo Awal Hutang',
           	'debet' 				=> 0,

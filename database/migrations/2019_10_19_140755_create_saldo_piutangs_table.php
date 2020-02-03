@@ -15,6 +15,7 @@ class CreateSaldoPiutangsTable extends Migration
     {
         Schema::create('saldo_piutangs', function (Blueprint $table) {
             $table->Increments('id');
+            $table->date('tanggal');
             $table->unsignedInteger('customers_id');
             $table->string('keterangan');
             $table->integer('debet')->nullable();

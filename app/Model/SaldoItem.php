@@ -9,7 +9,7 @@ class SaldoItem extends Model
     protected $table = 'saldo_items';
 
     protected $fillable = [
-      'id', 'items_id', 'unit', 'price', 'total'
+      'id', 'tanggal', 'items_id', 'unit', 'price', 'total'
     ];
 
     public function saldo_items()
