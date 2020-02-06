@@ -207,6 +207,14 @@
             </div>
           </div>
           <div class="form-group row justify-content-end">
+            <label for="diskon" class="col-sm-2 col-form-label">Diskon Penjualan : Rp</label>
+            <div class="col-sm-4">
+              <input type="number" class="form-control" id="diskon" name="diskon[]" v-model.number="diskon">
+              <input type="hidden" name="nomor_akun_diskon[]" value="4-2400">
+              <input type="hidden" name="nama_akun2_diskon[]" value="Sales Discount">
+            </div>
+          </div>
+          <div class="form-group row justify-content-end">
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Total : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="total[]" :value="totals"  readonly>
@@ -240,6 +248,7 @@
     {id_item:0, harga:0, harga_jual:0, description:"", unit:1, jumlah: 0, sales:0},
     ],
     jasa_pengiriman: null,
+    diskon: 0,
     ppn: [],
   },
   methods: {
@@ -338,27 +347,27 @@
       .reduce( (prev, next) => prev + next );
     },
     ppns() {
-        if (this.ppn == '') {
-          var ppns =  0;
-          this.ppn = this.ppn;
-          return ppns;
-        } else
-        var ppns = this.subtotal*10/100;
+      if (this.ppn == '') {
+        var ppns =  0;
+        this.ppn = this.ppn;
         return ppns;
-      },
-      jasas() {
-        var jasas = this.jasa_pengiriman;
-        return jasas;
-      },
+      } else
+      var ppns = this.subtotal*10/100;
+      return ppns;
+    },
+    jasas() {
+      var jasas = this.jasa_pengiriman;
+      return jasas;
+    },
     totals() {
-        if (this.subtotal == '') {
-          var totals =  0;
-          this.jasa_pengiriman = this.subtotal;
-          return totals;
-        } else
-        var totals = this.subtotal + this.ppns + this.jasa_pengiriman;
+      if (this.subtotal == '') {
+        var totals =  0;
+        this.jasa_pengiriman = this.subtotal;
         return totals;
-      },
+      } else
+      var totals = (this.subtotal + this.ppns + this.jasa_pengiriman) - this.diskon;
+      return totals;
+    },
   },
 });
 </script>

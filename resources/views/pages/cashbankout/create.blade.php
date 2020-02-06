@@ -50,30 +50,6 @@
             <div class="card-header" style="background: #fb6340;"><h3 style="color: white">Pengeluaran Cash & Bank</h3>
             </div>
             <div class="card-body">
-
-              <div
-                v-for="(cashbank, index) in cashbanks2"
-                :key="index"
-                >
-                <div class="row input-group-primary">
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="setor_ke">Di Bayar Dari</label>
-                      <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
-                        @foreach ($akun as $key)
-                        <option value="{{$key->id}}">{{$key->nomor}} - {{$key->nama}}</option>
-                        @endforeach
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <input type="hidden" name="nomor_akun2[]"
-                    :value="nomor_akun(cashbank.id_akun2, index)"
-                  >
-                <input type="hidden" name="nama_akun2[]"
-                    :value="nama_akun(cashbank.id_akun2, index)"
-                >
-              </div>
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
@@ -133,11 +109,16 @@
                   <input type="hidden" name="nama_akun[]"
                     :value="nama_akun(cashbank.id_akun, index)"
                 >
-                <div class="col-md-6">
+                <div class="col-md-3">
                   <div class="form-group">
-                    <label for="jumlah">Jumlah</label>
-                    <input class="form-control" type="number" id="jumlah" name="jumlah[]" v-model="cashbank.jumlah">
-                    <!-- <input class="form-control" type="hidden" id="yang_membayar" name="index" :value=" index + 1"> -->
+                    <label for="debet">Debet</label>
+                    <input class="form-control" type="number" id="debet" name="debet[]" v-model="cashbank.debet">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="kredit">Kredit</label>
+                    <input class="form-control" type="number" id="kredit" name="kredit[]" v-model="cashbank.kredit">
                   </div>
                 </div>
                 <div class="col-md-1">
@@ -156,12 +137,22 @@
               </div>
             </div>
 
-          <div class="row d-flex justify-content-end">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label>Total : Rp</label>
-                <input class="form-control" type="number" name="total[]" :value="total" readonly>
-              </div>
+          <div class="form-group row justify-content-end">
+            <label for="totaldebet" class="col-sm-2 col-form-label">Total Debet: Rp</label>
+            <div class="col-sm-4">
+              <input class="form-control" type="number" id="totaldebet" name="totaldebet[]" :value="totaldebet" readonly>
+            </div>
+          </div>
+          <div class="form-group row justify-content-end">
+            <label for="totalkredit" class="col-sm-2 col-form-label">Total Kredit: Rp</label>
+            <div class="col-sm-4">
+              <input class="form-control" type="number" id="totalkredit" name="totalkredit[]" :value="totalkredit" readonly>
+            </div>
+          </div>
+          <div class="form-group row justify-content-end">
+            <label for="selisih" class="col-sm-2 col-form-label">Selisih : Rp</label>
+            <div class="col-sm-4">
+              <input type="number" class="form-control" id="selisih" name="selisih[]" :value="selisih" readonly style="color: red">
             </div>
           </div>
 
@@ -186,15 +177,12 @@
    el: '#app',
    data: {
     cashbanks: [
-    {terima_dari:"", description:"", jumlah: 0},
-    ],
-    cashbanks2: [
-    {id_akun2:"1", description:"", jumlah: 0},
+    {id_akun:"1", debet: 0, kredit: 0},
     ],
   },
   methods: {
     add() {
-       var cashbanks = {terima_dari:"", description:"", jumlah: 0};
+       var cashbanks = {id_akun:"1", debet: 0, kredit: 0};
        this.cashbanks.push(cashbanks);
      },
      del(index) {
@@ -212,24 +200,25 @@
         this.cashbanks[index].nama_akun = nama_akun;
         return nama_akun;
       },
-      nomor_akun2(id_akun2, index) {
-        var nomor_akun = this.nomor_akuns[id_akun2];
-        this.cashbanks2[index].nomor_akun = nomor_akun;
-        return nomor_akun;
-      },
-      nama_akun2(id_akun2, index) {
-        var nama_akun = this.nama_akuns[id_akun2];
-        this.cashbanks2[index].nama_akun = nama_akun;
-        return nama_akun;
-      },
   },
   computed: {
-    total: function(){
+    totaldebet: function(){
       let sum = 0;
       this.cashbanks.forEach(function(cashbank) {
-        sum += (parseFloat(cashbank.jumlah));
+        sum += (parseFloat(cashbank.debet));
       });
       return sum;
+    },
+    totalkredit: function(){
+      let sum = 0;
+      this.cashbanks.forEach(function(cashbank) {
+        sum += (parseFloat(cashbank.kredit));
+      });
+      return sum;
+    },
+    selisih: function(){
+      var selisih = this.totaldebet - this.totalkredit;
+      return selisih;
     },
     nomor_akuns() {
       var akun = [];

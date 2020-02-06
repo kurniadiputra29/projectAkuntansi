@@ -64,56 +64,34 @@ class CashBankOutController extends Controller
         $cashinbank              = CashBankOut::create($dataCashInBank);
 
         //insert data cashbank detail
-        $detailcashinbank                 = $request->only('nomor_akun', 'nama_akun','nomor_akun2', 'nama_akun2', 'jumlah', 'total');
+        $detailcashinbank                 = $request->only('nomor_akun', 'nama_akun', 'debet', 'kredit');
         $countKasBank = count($detailcashinbank['nomor_akun']);
-        $countKasBank2 = count($detailcashinbank['total']);
 
-        for ($a=0; $a < $countKasBank2; $a++) {
-            $detail                     = new CashBankOutDetails();
-            $detail->cash_bank_outs_id  = $cashinbank->id;
-            $detail->nomor_akun         = $detailcashinbank['nomor_akun2'][$a];
-            $detail->nama_akun          = $detailcashinbank['nama_akun2'][$a];
-            $detail->kredit             = $detailcashinbank['total'][$a];
-            $detail->save();
-
-            //insert Laporan Buku Besar
-            $detail = new LaporanBukuBesar();
-            $detail->cash_bank_outs_id = $cashinbank->id;
-            $detail->tanggal = $request->tanggal;
-            $detail->nomor_akun = $detailcashinbank['nomor_akun2'][$a];
-            $detail->kredit = $detailcashinbank['total'][$a];
-            $detail->save();
-
-            //insert Laporan Buku Besar Penyesuaian
-            $detail = new LaporanBukuBesarPenyesuaian();
-            $detail->cash_bank_outs_id = $cashinbank->id;
-            $detail->tanggal = $request->tanggal;
-            $detail->nomor_akun = $detailcashinbank['nomor_akun2'][$a];
-            $detail->kredit = $detailcashinbank['total'][$a];
-            $detail->save();
-        }
-        for ($i=0; $i < $countKasBank; $i++) {
+        for ($a=0; $a < $countKasBank; $a++) {
             $detail = new CashBankOutDetails();
             $detail->cash_bank_outs_id = $cashinbank->id;
-            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
-            $detail->nama_akun = $detailcashinbank['nama_akun'][$i];
-            $detail->debet = $detailcashinbank['jumlah'][$i];
+            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$a];
+            $detail->nama_akun = $detailcashinbank['nama_akun'][$a];
+            $detail->debet = $detailcashinbank['debet'][$a];
+            $detail->kredit = $detailcashinbank['kredit'][$a];
             $detail->save();
 
             //insert Laporan Buku Besar
             $detail = new LaporanBukuBesar();
-            $detail->cash_bank_outs_id  = $cashinbank->id;
+            $detail->cash_bank_outs_id = $cashinbank->id;
             $detail->tanggal = $request->tanggal;
-            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
-            $detail->debet = $detailcashinbank['jumlah'][$i];
+            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$a];
+            $detail->debet = $detailcashinbank['debet'][$a];
+            $detail->kredit = $detailcashinbank['kredit'][$a];
             $detail->save();
 
             //insert Laporan Buku Besar Penyesuaian
             $detail = new LaporanBukuBesarPenyesuaian();
-            $detail->cash_bank_outs_id  = $cashinbank->id;
+            $detail->cash_bank_outs_id = $cashinbank->id;
             $detail->tanggal = $request->tanggal;
-            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
-            $detail->debet = $detailcashinbank['jumlah'][$i];
+            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$a];
+            $detail->debet = $detailcashinbank['debet'][$a];
+            $detail->kredit = $detailcashinbank['kredit'][$a];
             $detail->save();
         }
 
@@ -142,7 +120,7 @@ class CashBankOutController extends Controller
     {
         $akun           = Account::all();
         $cashbanks      = CashBankOut::find($id);
-        $kredits        = CashBankOutDetails::where('cash_bank_outs_id', $id)->where('debet', null)->get();
+        // $kredits        = CashBankOutDetails::where('cash_bank_outs_id', $id)->where('debet', null)->get();
         $suppliers      = DataSupplier::all();
 
         return view('pages.cashbankout.edit', compact('akun', 'cashbanks', 'kredits', 'suppliers'));
@@ -172,60 +150,38 @@ class CashBankOutController extends Controller
         $cashinbank              = CashBankOut::find($id)->update($dataCashInBank);
 
         //insert data cashbank detail
-        $detailcashinbank                 = $request->only('nomor_akun', 'nama_akun','nomor_akun2', 'nama_akun2', 'jumlah', 'total');
+        $detailcashinbank                 = $request->only('nomor_akun', 'nama_akun', 'debet', 'kredit');
         $countKasBank = count($detailcashinbank['nomor_akun']);
-        $countKasBank2 = count($detailcashinbank['total']);
 
         CashBankOutDetails::where('cash_bank_outs_id', $id)->delete();
         LaporanBukuBesar::where('cash_bank_outs_id', $id)->delete();
         LaporanBukuBesarPenyesuaian::where('cash_bank_outs_id', $id)->delete();
 
-        for ($a=0; $a < $countKasBank2; $a++) {
-            $detail                     = new CashBankOutDetails();
-            $detail->cash_bank_outs_id  = $id;
-            $detail->nomor_akun         = $detailcashinbank['nomor_akun2'][$a];
-            $detail->nama_akun          = $detailcashinbank['nama_akun2'][$a];
-            $detail->kredit             = $detailcashinbank['total'][$a];
-            $detail->save();
-
-            //insert Laporan Buku Besar
-            $detail = new LaporanBukuBesar();
-            $detail->cash_bank_outs_id = $id;
-            $detail->tanggal = $request->tanggal;
-            $detail->nomor_akun = $detailcashinbank['nomor_akun2'][$a];
-            $detail->kredit = $detailcashinbank['total'][$a];
-            $detail->save();
-
-            //insert Laporan Buku Besar Penyesuaian
-            $detail = new LaporanBukuBesarPenyesuaian();
-            $detail->cash_bank_outs_id = $id;
-            $detail->tanggal = $request->tanggal;
-            $detail->nomor_akun = $detailcashinbank['nomor_akun2'][$a];
-            $detail->kredit = $detailcashinbank['total'][$a];
-            $detail->save();
-        }
-        for ($i=0; $i < $countKasBank; $i++) {
+        for ($a=0; $a < $countKasBank; $a++) {
             $detail = new CashBankOutDetails();
             $detail->cash_bank_outs_id = $id;
-            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
-            $detail->nama_akun = $detailcashinbank['nama_akun'][$i];
-            $detail->debet = $detailcashinbank['jumlah'][$i];
+            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$a];
+            $detail->nama_akun = $detailcashinbank['nama_akun'][$a];
+            $detail->debet = $detailcashinbank['debet'][$a];
+            $detail->kredit = $detailcashinbank['kredit'][$a];
             $detail->save();
 
             //insert Laporan Buku Besar
             $detail = new LaporanBukuBesar();
-            $detail->cash_bank_outs_id  = $id;
+            $detail->cash_bank_outs_id = $id;
             $detail->tanggal = $request->tanggal;
-            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
-            $detail->debet = $detailcashinbank['jumlah'][$i];
+            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$a];
+            $detail->debet = $detailcashinbank['debet'][$a];
+            $detail->kredit = $detailcashinbank['kredit'][$a];
             $detail->save();
 
             //insert Laporan Buku Besar Penyesuaian
             $detail = new LaporanBukuBesarPenyesuaian();
-            $detail->cash_bank_outs_id  = $id;
+            $detail->cash_bank_outs_id = $id;
             $detail->tanggal = $request->tanggal;
-            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$i];
-            $detail->debet = $detailcashinbank['jumlah'][$i];
+            $detail->nomor_akun = $detailcashinbank['nomor_akun'][$a];
+            $detail->debet = $detailcashinbank['debet'][$a];
+            $detail->kredit = $detailcashinbank['kredit'][$a];
             $detail->save();
         }
         

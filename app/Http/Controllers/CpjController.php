@@ -72,106 +72,131 @@ class CpjController extends Controller
         $cpj              = cpj::create($dataCPJ);
 
         //insert data cpj detail
-        $detailcpj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+        $detailcpj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'nomor_akun_diskon', 'nama_akun2_diskon', 'jasa_pengiriman', 'PPN', 'subtotal', 'total', 'diskon');
         $countKasBank1 = count($detailcpj['total']);
         $countKasBank2 = count($detailcpj['subtotal']);
         $countKasBank3 = count($detailcpj['PPN']);
         $countKasBank4 = count($detailcpj['jasa_pengiriman']);
+        $countKasBank5 = count($detailcpj['diskon']);
 
         for ($a=0; $a < $countKasBank1; $a++) {
-            $detail                     = new cpjdetail();
-            $detail->cpj_id             = $cpj->id;
-            $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
-            $detail->nama_akun          = $detailcpj['nama_akun2'][$a];
-            $detail->kredit             = $detailcpj['total'][$a];
+            $detail = new cpjdetail();
+            $detail->cpj_id = $cpj->id;
+            $detail->nomor_akun = $detailcpj['nomor_akun2'][$a];
+            $detail->nama_akun  = $detailcpj['nama_akun2'][$a];
+            $detail->kredit = $detailcpj['total'][$a];
             $detail->save();
 
             //insert Laporan Buku Besar
-            $detail                     = new LaporanBukuBesar();
-            $detail->cpj_id             = $cpj->id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
-            $detail->kredit             = $detailcpj['total'][$a];
+            $detail = new LaporanBukuBesar();
+            $detail->cpj_id = $cpj->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun2'][$a];
+            $detail->kredit = $detailcpj['total'][$a];
             $detail->save();
 
             //insert Laporan Buku Besar Penyesuaian
-            $detail                     = new LaporanBukuBesarPenyesuaian();
-            $detail->cpj_id             = $cpj->id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
-            $detail->kredit             = $detailcpj['total'][$a];
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id = $cpj->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun2'][$a];
+            $detail->kredit = $detailcpj['total'][$a];
+            $detail->save();
+        }
+        for ($a=0; $a < $countKasBank5; $a++) {
+            $detail = new cpjdetail();
+            $detail->cpj_id = $cpj->id;
+            $detail->nomor_akun = $detailcpj['nomor_akun_diskon'][$a];
+            $detail->nama_akun = $detailcpj['nama_akun2_diskon'][$a];
+            $detail->kredit = $detailcpj['diskon'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->cpj_id = $cpj->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_diskon'][$a];
+            $detail->kredit = $detailcpj['diskon'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id = $cpj->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_diskon'][$a];
+            $detail->kredit = $detailcpj['diskon'][$a];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank2; $i++) {
-            $detail                     = new cpjdetail();
-            $detail->cpj_id             = $cpj->id;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
-            $detail->nama_akun          = $detailcpj['nama_akun2_sales'][$i];
-            $detail->debet              = $detailcpj['subtotal'][$i];
+            $detail = new cpjdetail();
+            $detail->cpj_id = $cpj->id;
+            $detail->nomor_akun = $detailcpj['nomor_akun_sales'][$i];
+            $detail->nama_akun = $detailcpj['nama_akun2_sales'][$i];
+            $detail->debet = $detailcpj['subtotal'][$i];
             $detail->save();
 
             //insert Laporan Buku Besar
-            $detail                     = new LaporanBukuBesar();
-            $detail->cpj_id             = $cpj->id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
-            $detail->debet             = $detailcpj['subtotal'][$i];
+            $detail = new LaporanBukuBesar();
+            $detail->cpj_id = $cpj->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_sales'][$i];
+            $detail->debet = $detailcpj['subtotal'][$i];
             $detail->save();
 
             //insert Laporan Buku Besar Penyesuaian
-            $detail                     = new LaporanBukuBesarPenyesuaian();
-            $detail->cpj_id             = $cpj->id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
-            $detail->debet             = $detailcpj['subtotal'][$i];
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id = $cpj->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_sales'][$i];
+            $detail->debet = $detailcpj['subtotal'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank3; $i++) {
-            $detail                     = new cpjdetail();
-            $detail->cpj_id             = $cpj->id;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
-            $detail->nama_akun          = $detailcpj['nama_akun2_ppn'][$i];
-            $detail->debet              = $detailcpj['PPN'][$i];
+            $detail = new cpjdetail();
+            $detail->cpj_id = $cpj->id;
+            $detail->nomor_akun = $detailcpj['nomor_akun_ppn'][$i];
+            $detail->nama_akun = $detailcpj['nama_akun2_ppn'][$i];
+            $detail->debet = $detailcpj['PPN'][$i];
             $detail->save();
 
             //insert Laporan Buku Besar
-            $detail                     = new LaporanBukuBesar();
-            $detail->cpj_id             = $cpj->id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
-            $detail->debet             = $detailcpj['PPN'][$i];
+            $detail = new LaporanBukuBesar();
+            $detail->cpj_id = $cpj->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_ppn'][$i];
+            $detail->debet = $detailcpj['PPN'][$i];
             $detail->save();
 
             //insert Laporan Buku Besar Penyesuaian
-            $detail                     = new LaporanBukuBesarPenyesuaian();
-            $detail->cpj_id             = $cpj->id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
-            $detail->debet             = $detailcpj['PPN'][$i];
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id = $cpj->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_ppn'][$i];
+            $detail->debet = $detailcpj['PPN'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank4; $i++) {
-            $detail                     = new cpjdetail();
-            $detail->cpj_id             = $cpj->id;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
-            $detail->nama_akun          = $detailcpj['nama_akun2_jasa'][$i];
-            $detail->debet              = $detailcpj['jasa_pengiriman'][$i];
+            $detail = new cpjdetail();
+            $detail->cpj_id = $cpj->id;
+            $detail->nomor_akun = $detailcpj['nomor_akun_jasa'][$i];
+            $detail->nama_akun = $detailcpj['nama_akun2_jasa'][$i];
+            $detail->debet = $detailcpj['jasa_pengiriman'][$i];
             $detail->save();
 
             //insert Laporan Buku Besar
-            $detail                     = new LaporanBukuBesar();
-            $detail->cpj_id             = $cpj->id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
-            $detail->debet             = $detailcpj['jasa_pengiriman'][$i];
+            $detail = new LaporanBukuBesar();
+            $detail->cpj_id = $cpj->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_jasa'][$i];
+            $detail->debet = $detailcpj['jasa_pengiriman'][$i];
             $detail->save();
 
             //insert Laporan Buku Besar Penyesuaian
-            $detail                     = new LaporanBukuBesarPenyesuaian();
-            $detail->cpj_id             = $cpj->id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
-            $detail->debet             = $detailcpj['jasa_pengiriman'][$i];
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id = $cpj->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_jasa'][$i];
+            $detail->debet = $detailcpj['jasa_pengiriman'][$i];
             $detail->save();
         }
 
@@ -221,21 +246,22 @@ class CpjController extends Controller
      */
     public function edit($id)
     {
-        $akun           = Account::all();
-        $suppliers      = DataSupplier::all();
-        $items          = Item::all();
-        $cashbanks      = cpj::find($id);
-        $inventories    = Inventory::where('cpj_id', $id)->get();
-        $inventoriess   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
-        $Item_count         = Item::all()->count();
-        $kredits        = cpjdetail::where('cpj_id', $id)->where('debet', null)->get();
-        $jasa           = cpjdetail::where('cpj_id', $id)->where('nomor_akun', '5-1300')->first();
-        $ppn            = cpjdetail::where('cpj_id', $id)
-                                    ->where('nomor_akun', '2-1320')
-                                    ->where('debet', '>', '0')
-                                    ->exists();
+        $akun = Account::all();
+        $suppliers = DataSupplier::all();
+        $items = Item::all();
+        $cashbanks = cpj::find($id);
+        $inventories = Inventory::where('cpj_id', $id)->get();
+        $inventoriess = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
+        $Item_count = Item::all()->count();
+        $kredits = cpjdetail::where('cpj_id', $id)->where('debet', null)->first();
+        $jasa = cpjdetail::where('cpj_id', $id)->where('nomor_akun', '5-1300')->first();
+        $diskon = cpjdetail::where('cpj_id', $id)->where('nomor_akun', '5-3000')->first();
+        $ppn = cpjdetail::where('cpj_id', $id)
+                        ->where('nomor_akun', '2-1320')
+                        ->where('debet', '>', '0')
+                        ->exists();
 
-        return view('pages.cpj.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count'));
+        return view('pages.cpj.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'diskon'));
     }
 
     /**
@@ -263,110 +289,135 @@ class CpjController extends Controller
         $cpj              = cpj::find($id)->update($dataCPJ);
 
         //insert data cpj detail
-        $detailcpj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+        $detailcpj                 = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'nomor_akun_diskon', 'nama_akun2_diskon', 'jasa_pengiriman', 'PPN', 'subtotal', 'total', 'diskon');
         $countKasBank1 = count($detailcpj['total']);
         $countKasBank2 = count($detailcpj['subtotal']);
         $countKasBank3 = count($detailcpj['PPN']);
         $countKasBank4 = count($detailcpj['jasa_pengiriman']);
+        $countKasBank5 = count($detailcpj['diskon']);
 
         cpjdetail::where('cpj_id', $id)->delete();
         LaporanBukuBesar::where('cpj_id', $id)->delete();
         LaporanBukuBesarPenyesuaian::where('cpj_id', $id)->delete();
 
         for ($a=0; $a < $countKasBank1; $a++) {
-            $detail                     = new cpjdetail();
-            $detail->cpj_id             = $id;
-            $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
-            $detail->nama_akun          = $detailcpj['nama_akun2'][$a];
-            $detail->kredit             = $detailcpj['total'][$a];
+            $detail = new cpjdetail();
+            $detail->cpj_id = $id;
+            $detail->nomor_akun = $detailcpj['nomor_akun2'][$a];
+            $detail->nama_akun  = $detailcpj['nama_akun2'][$a];
+            $detail->kredit = $detailcpj['total'][$a];
             $detail->save();
 
             //insert Laporan Buku Besar
-            $detail                     = new LaporanBukuBesar();
-            $detail->cpj_id             = $id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
-            $detail->kredit             = $detailcpj['total'][$a];
+            $detail = new LaporanBukuBesar();
+            $detail->cpj_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun2'][$a];
+            $detail->kredit = $detailcpj['total'][$a];
             $detail->save();
 
             //insert Laporan Buku Besar Penyesuaian
-            $detail                     = new LaporanBukuBesarPenyesuaian();
-            $detail->cpj_id             = $id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun2'][$a];
-            $detail->kredit             = $detailcpj['total'][$a];
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun2'][$a];
+            $detail->kredit = $detailcpj['total'][$a];
+            $detail->save();
+        }
+        for ($a=0; $a < $countKasBank5; $a++) {
+            $detail = new cpjdetail();
+            $detail->cpj_id = $id;
+            $detail->nomor_akun = $detailcpj['nomor_akun_diskon'][$a];
+            $detail->nama_akun = $detailcpj['nama_akun2_diskon'][$a];
+            $detail->kredit = $detailcpj['diskon'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->cpj_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_diskon'][$a];
+            $detail->kredit = $detailcpj['diskon'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_diskon'][$a];
+            $detail->kredit = $detailcpj['diskon'][$a];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank2; $i++) {
-            $detail                     = new cpjdetail();
-            $detail->cpj_id             = $id;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
-            $detail->nama_akun          = $detailcpj['nama_akun2_sales'][$i];
-            $detail->debet              = $detailcpj['subtotal'][$i];
+            $detail = new cpjdetail();
+            $detail->cpj_id = $id;
+            $detail->nomor_akun = $detailcpj['nomor_akun_sales'][$i];
+            $detail->nama_akun = $detailcpj['nama_akun2_sales'][$i];
+            $detail->debet = $detailcpj['subtotal'][$i];
             $detail->save();
 
             //insert Laporan Buku Besar
-            $detail                     = new LaporanBukuBesar();
-            $detail->cpj_id             = $id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
-            $detail->debet             = $detailcpj['subtotal'][$i];
+            $detail = new LaporanBukuBesar();
+            $detail->cpj_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_sales'][$i];
+            $detail->debet = $detailcpj['subtotal'][$i];
             $detail->save();
 
             //insert Laporan Buku Besar Penyesuaian
-            $detail                     = new LaporanBukuBesarPenyesuaian();
-            $detail->cpj_id             = $id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_sales'][$i];
-            $detail->debet             = $detailcpj['subtotal'][$i];
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_sales'][$i];
+            $detail->debet = $detailcpj['subtotal'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank3; $i++) {
-            $detail                     = new cpjdetail();
-            $detail->cpj_id             = $id;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
-            $detail->nama_akun          = $detailcpj['nama_akun2_ppn'][$i];
-            $detail->debet              = $detailcpj['PPN'][$i];
+            $detail = new cpjdetail();
+            $detail->cpj_id = $id;
+            $detail->nomor_akun = $detailcpj['nomor_akun_ppn'][$i];
+            $detail->nama_akun = $detailcpj['nama_akun2_ppn'][$i];
+            $detail->debet = $detailcpj['PPN'][$i];
             $detail->save();
 
             //insert Laporan Buku Besar
-            $detail                     = new LaporanBukuBesar();
-            $detail->cpj_id             = $id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
-            $detail->debet             = $detailcpj['PPN'][$i];
+            $detail = new LaporanBukuBesar();
+            $detail->cpj_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_ppn'][$i];
+            $detail->debet = $detailcpj['PPN'][$i];
             $detail->save();
 
             //insert Laporan Buku Besar Penyesuaian
-            $detail                     = new LaporanBukuBesarPenyesuaian();
-            $detail->cpj_id             = $id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_ppn'][$i];
-            $detail->debet             = $detailcpj['PPN'][$i];
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_ppn'][$i];
+            $detail->debet = $detailcpj['PPN'][$i];
             $detail->save();
         }
         for ($i=0; $i < $countKasBank4; $i++) {
-            $detail                     = new cpjdetail();
-            $detail->cpj_id             = $id;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
-            $detail->nama_akun          = $detailcpj['nama_akun2_jasa'][$i];
-            $detail->debet              = $detailcpj['jasa_pengiriman'][$i];
+            $detail = new cpjdetail();
+            $detail->cpj_id = $id;
+            $detail->nomor_akun = $detailcpj['nomor_akun_jasa'][$i];
+            $detail->nama_akun = $detailcpj['nama_akun2_jasa'][$i];
+            $detail->debet = $detailcpj['jasa_pengiriman'][$i];
             $detail->save();
 
             //insert Laporan Buku Besar
-            $detail                     = new LaporanBukuBesar();
-            $detail->cpj_id             = $id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
-            $detail->debet             = $detailcpj['jasa_pengiriman'][$i];
+            $detail = new LaporanBukuBesar();
+            $detail->cpj_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_jasa'][$i];
+            $detail->debet = $detailcpj['jasa_pengiriman'][$i];
             $detail->save();
 
             //insert Laporan Buku Besar Penyesuaian
-            $detail                     = new LaporanBukuBesarPenyesuaian();
-            $detail->cpj_id             = $id;
-            $detail->tanggal             = $request->tanggal;
-            $detail->nomor_akun         = $detailcpj['nomor_akun_jasa'][$i];
-            $detail->debet             = $detailcpj['jasa_pengiriman'][$i];
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->cpj_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailcpj['nomor_akun_jasa'][$i];
+            $detail->debet = $detailcpj['jasa_pengiriman'][$i];
             $detail->save();
         }
 
@@ -422,12 +473,13 @@ class CpjController extends Controller
         $Item_count         = Item::all()->count();
         $kredits        = cpjdetail::where('cpj_id', $id)->where('debet', null)->first();
         $jasa           = cpjdetail::where('cpj_id', $id)->where('nomor_akun', '5-1300')->first();
+        $diskon = cpjdetail::where('cpj_id', $id)->where('nomor_akun', '5-3000')->first();
         $lastOrder      = ReturPembelian::orderBy('id', 'desc')->first();
         $ppn            = cpjdetail::where('cpj_id', $id)
                                     ->where('nomor_akun', '2-1320')
                                     ->where('debet', '>', '0')
                                     ->exists();
 
-        return view('pages.cpj.retur', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'lastOrder'));
+        return view('pages.cpj.retur', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'lastOrder', 'diskon'));
     }
 }

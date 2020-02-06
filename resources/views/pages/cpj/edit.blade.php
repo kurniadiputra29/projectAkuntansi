@@ -58,10 +58,8 @@
                     <div class="form-group">
                       <label for="setor_ke">Di Bayar Dari</label>
                       <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
-                        @foreach($kredits as $kredit)
                         @foreach ($akun as $key)
-                        <option value="{{$key->nomor}}" {{$kredit->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
-                        @endforeach
+                        <option value="{{$key->nomor}}" {{$kredits->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -194,6 +192,14 @@
             </div>
           </div>
           <div class="form-group row justify-content-end">
+            <label for="diskon" class="col-sm-2 col-form-label">Diskon Pembelian : Rp</label>
+            <div class="col-sm-4">
+              <input type="number" class="form-control" id="diskon" name="diskon[]" v-model.number="diskon">
+              <input type="hidden" name="nomor_akun_diskon[]" value="5-3000">
+              <input type="hidden" name="nama_akun2_diskon[]" value="Purchase Discount">
+            </div>
+          </div>
+          <div class="form-group row justify-content-end">
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Total : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="total[]" :value="totals"  readonly>
@@ -221,7 +227,7 @@
    el: '#app',
    data: {
     cashbanks2: [
-    {id_akun2:"{{$kredit->nomor_akun}}", description:"", jumlah: 0},
+    {id_akun2:"{{$kredits->nomor_akun}}"},
     ],
     cashbanks: [
     {id_item:0, harga_beli:0, harga:0, description:"", unit:1, jumlah: 0},
@@ -229,6 +235,7 @@
     jasa_pengiriman: [
       {jasa_pengiriman:0, subtotal:0}
     ],
+    diskon: 0,
     ppn: [],
   },
   methods: {
@@ -326,7 +333,7 @@
           this.jasa_pengiriman = this.subtotal;
           return totals;
         } else
-        var totals = this.subtotal + this.ppns + this.jasa_pengiriman;
+        var totals = (this.subtotal + this.ppns + this.jasa_pengiriman) - this.diskon;
         return totals;
       },
   },
@@ -345,6 +352,10 @@
 
     @if(isset($jasa))
       this.jasa_pengiriman = parseInt('{{ $jasa->debet }}');
+    @endif
+
+    @if(isset($diskon))
+      this.diskon = parseInt('{{ $diskon->kredit }}');
     @endif
 
     @if(isset($ppn) && $ppn == true)

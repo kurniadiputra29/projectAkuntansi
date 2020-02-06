@@ -51,9 +51,6 @@
                   <a href="{{ route('retur_pembelian.index') }}" class="menu-item {{Request::is('retur_pembelian') || Request::is('retur_pembelian/create') || Request::is('retur_pembelian/*') ?'active':''}}">Retur Pembelian</a>
               </div>
           </div>
-          <div class="nav-item {{ Request::is('ju') || Request::is('ju/*') ? 'active' : '' }}">
-              <a href="{{ route('ju.index') }}"><i class="ik ik-book"></i><span>Jurnal Umum</span></a>
-          </div>
           <div class="nav-item has-sub {{ Request::is('cashbank_in') || Request::is('cashbank_in/*') || Request::is('cashbank_out') || Request::is('cashbank_out/*') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-credit-card"></i><span>Cash & Bank</span></a>
               <div class="submenu-content">
@@ -74,8 +71,10 @@
           <div class="nav-item {{ Request::is('jp') || Request::is('jp/*') ? 'active' : '' }}">
               <a href="{{ route('jp.index') }}"><i class="ik ik-activity"></i><span>Jurnal Penyesuaian</span></a>
           </div>
+          <div class="nav-item {{ Request::is('ju') || Request::is('ju/*') ? 'active' : '' }}">
+              <a href="{{ route('ju.index') }}"><i class="ik ik-book"></i><span>Jurnal Umum</span></a>
+          </div>
           <div class="nav-lavel">Inventory</div>
-
           <div class="nav-item has-sub {{ Request::is('item') || Request::is('item/*') || Request::is('saldo_item') || Request::is('saldo_item/*') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-box"></i><span>Item</span></a>
               <div class="submenu-content">

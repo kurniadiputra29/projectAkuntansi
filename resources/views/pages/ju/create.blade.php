@@ -108,7 +108,8 @@
                     <label for="debet">Debet</label>
                     <input class="form-control" type="number" id="debet" name="debet[]" v-model="cashbank.debet">
                   </div>
-                </div><div class="col-md-3">
+                </div>
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="kredit">Kredit</label>
                     <input class="form-control" type="number" id="kredit" name="kredit[]" v-model="cashbank.kredit">

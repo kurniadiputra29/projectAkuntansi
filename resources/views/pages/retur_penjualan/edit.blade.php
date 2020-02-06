@@ -207,13 +207,29 @@
               <input type="hidden" name="nama_akun2_jasa[]" value="Freight Colected">
             </div>
           </div>
+          @if($cashbanks->crj_id !== null)
+          <div class="form-group row justify-content-end">
+            <label for="diskon" class="col-sm-2 col-form-label">Diskon Penjualan : Rp</label>
+            <div class="col-sm-4">
+              <input type="number" class="form-control" id="diskon" name="diskon[]" v-model.number="diskon">
+              <input type="hidden" name="nomor_akun_diskon[]" value="4-2400">
+              <input type="hidden" name="nama_akun2_diskon[]" value="Sales Discount">
+            </div>
+          </div>
+          <div class="form-group row justify-content-end">
+            <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Total : Rp</label>
+            <div class="col-sm-4">
+              <input type="number" class="form-control" id="exampleInputUsername2" name="total[]" :value="totalss"  readonly>
+            </div>
+          </div>
+          @else
           <div class="form-group row justify-content-end">
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Total : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="total[]" :value="totals"  readonly>
             </div>
           </div>
-
+          @endif
           <div class="forms-sample" style="margin-bottom: 10px; margin-top: 30px; justify-content: space-between; display: flex;">
             <a href="{{route('retur_penjualan.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
             <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Edit</button>
@@ -243,6 +259,7 @@
     jasa_pengiriman: [
       {jasa_pengiriman:0, subtotal:0}
     ],
+    diskon: 0,
     ppn: [],
   },
   methods: {
@@ -369,6 +386,15 @@
         var totals = this.subtotal + this.ppns + this.jasa_pengiriman;
         return totals;
       },
+    totalss() {
+      if (this.subtotal == '') {
+        var totals =  0;
+        this.jasa_pengiriman = this.subtotal;
+        return totals;
+      } else
+      var totals = (this.subtotal + this.ppns + this.jasa_pengiriman) - this.diskon;
+        return totals;
+    },
   },
   created(){
     var cashbanks = [];
@@ -386,6 +412,11 @@
     @if(isset($jasa))
       this.jasa_pengiriman = parseInt('{{ $jasa->debet }}');
     @endif
+
+    @if(isset($diskon))
+      this.diskon = parseInt('{{ $diskon->kredit }}');
+    @endif
+
     @if(isset($ppn) && $ppn == true)
       this.ppn = true;
     @endif

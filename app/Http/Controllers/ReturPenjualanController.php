@@ -69,13 +69,15 @@ public function store(Request $request)
     $ReturPenjualan              = ReturPenjualan::create($dataReturPenjualan);
 
 //insert data retur_penjualan detail
-    $detailReturPenjualan        = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'nomor_akun_inventory', 'nama_akun2_inventory', 'nomor_akun_cost', 'nama_akun2_cost', 'cost', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+    $detailReturPenjualan        = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'nomor_akun_inventory', 'nama_akun2_inventory', 'nomor_akun_cost', 'nama_akun2_cost', 'nomor_akun_diskon', 'nama_akun2_diskon', 'cost', 'jasa_pengiriman', 'PPN', 'subtotal', 'total', 'diskon');
     $countKasBank1 = count($detailReturPenjualan['total']);
     $countKasBank2 = count($detailReturPenjualan['subtotal']);
     $countKasBank3 = count($detailReturPenjualan['PPN']);
     $countKasBank4 = count($detailReturPenjualan['jasa_pengiriman']);
     $countKasBank5 = count($detailReturPenjualan['cost']);
-
+    if ($request->diskon !== null) {
+    $countKasBank6 = count($detailReturPenjualan['diskon']);
+    }
     for ($a=0; $a < $countKasBank1; $a++) {
         $detail = new ReturPenjualanDetail();
         $detail->retur_penjualan_id = $ReturPenjualan->id;
@@ -99,6 +101,32 @@ public function store(Request $request)
         $detail->nomor_akun = $detailReturPenjualan['nomor_akun2'][$a];
         $detail->kredit = $detailReturPenjualan['total'][$a];
         $detail->save();
+    }
+    if ($request->diskon !== null) {
+        for ($a=0; $a < $countKasBank6; $a++) {
+            $detail = new ReturPenjualanDetail();
+            $detail->retur_penjualan_id = $ReturPenjualan->id;
+            $detail->nomor_akun = $detailReturPenjualan['nomor_akun_diskon'][$a];
+            $detail->nama_akun = $detailReturPenjualan['nama_akun2_diskon'][$a];
+            $detail->kredit = $detailReturPenjualan['diskon'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->retur_penjualan_id = $ReturPenjualan->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailReturPenjualan['nomor_akun_diskon'][$a];
+            $detail->kredit = $detailReturPenjualan['diskon'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->retur_penjualan_id = $ReturPenjualan->id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailReturPenjualan['nomor_akun_diskon'][$a];
+            $detail->kredit = $detailReturPenjualan['diskon'][$a];
+            $detail->save();
+        }
     }
     for ($i=0; $i < $countKasBank5; $i++) {
         $detail = new ReturPenjualanDetail();
@@ -277,13 +305,16 @@ public function edit($id)
     $inventoriess   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
     $Item_count         = Item::all()->count();
     $jasa           = ReturPenjualanDetail::where('retur_penjualan_id', $id)->where('nomor_akun', '4-2200')->first();
+    if (ReturPenjualanDetail::where('retur_penjualan_id', $id)->where('nomor_akun', '4-2400')->first() !== null) {
+        $diskon = ReturPenjualanDetail::where('retur_penjualan_id', $id)->where('nomor_akun', '4-2400')->first();
+    }
     $ppn            = ReturPenjualanDetail::where('retur_penjualan_id', $id)
     ->where('nomor_akun', '2-1310')
     ->where('debet', '>', '0')
     ->exists();
     $hargajuals = HargaJual::all();
 
-    return view('pages.retur_penjualan.edit', compact('akun', 'customers', 'items', 'cashbanks', 'kredits', 'inventories', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'hargajuals'));
+    return view('pages.retur_penjualan.edit', compact('akun', 'customers', 'items', 'cashbanks', 'kredits', 'inventories', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'hargajuals', 'diskon'));
 }
 
 /**
@@ -311,12 +342,15 @@ public function update(Request $request, $id)
     $ReturPenjualan              = ReturPenjualan::find($id)->update($dataReturPenjualan);
 
 //insert data retur_penjualan detail
-    $detailReturPenjualan        = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'nomor_akun_inventory', 'nama_akun2_inventory', 'nomor_akun_cost', 'nama_akun2_cost', 'cost', 'jasa_pengiriman', 'PPN', 'subtotal', 'total');
+    $detailReturPenjualan        = $request->only('nomor_akun2', 'nama_akun2','nomor_akun_sales', 'nama_akun2_sales', 'nomor_akun_jasa', 'nama_akun2_jasa',  'nomor_akun_ppn', 'nama_akun2_ppn', 'nomor_akun_inventory', 'nama_akun2_inventory', 'nomor_akun_cost', 'nama_akun2_cost', 'nomor_akun_diskon', 'nama_akun2_diskon', 'cost', 'jasa_pengiriman', 'PPN', 'subtotal', 'total', 'diskon');
     $countKasBank1 = count($detailReturPenjualan['total']);
     $countKasBank2 = count($detailReturPenjualan['subtotal']);
     $countKasBank3 = count($detailReturPenjualan['PPN']);
     $countKasBank4 = count($detailReturPenjualan['jasa_pengiriman']);
     $countKasBank5 = count($detailReturPenjualan['cost']);
+    if ($request->diskon !== null) {
+    $countKasBank6 = count($detailReturPenjualan['diskon']);
+    }
 
     ReturPenjualanDetail::where('retur_penjualan_id', $id)->delete();
     LaporanBukuBesar::where('retur_penjualan_id', $id)->delete();
@@ -345,6 +379,32 @@ public function update(Request $request, $id)
         $detail->nomor_akun = $detailReturPenjualan['nomor_akun2'][$a];
         $detail->kredit = $detailReturPenjualan['total'][$a];
         $detail->save();
+    }
+    if ($request->diskon !== null) {
+        for ($a=0; $a < $countKasBank6; $a++) {
+            $detail = new ReturPenjualanDetail();
+            $detail->retur_penjualan_id = $id;
+            $detail->nomor_akun = $detailReturPenjualan['nomor_akun_diskon'][$a];
+            $detail->nama_akun = $detailReturPenjualan['nama_akun2_diskon'][$a];
+            $detail->kredit = $detailReturPenjualan['diskon'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar
+            $detail = new LaporanBukuBesar();
+            $detail->retur_penjualan_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailReturPenjualan['nomor_akun_diskon'][$a];
+            $detail->kredit = $detailReturPenjualan['diskon'][$a];
+            $detail->save();
+
+            //insert Laporan Buku Besar Penyesuaian
+            $detail = new LaporanBukuBesarPenyesuaian();
+            $detail->retur_penjualan_id = $id;
+            $detail->tanggal = $request->tanggal;
+            $detail->nomor_akun = $detailReturPenjualan['nomor_akun_diskon'][$a];
+            $detail->kredit = $detailReturPenjualan['diskon'][$a];
+            $detail->save();
+        }
     }
     for ($i=0; $i < $countKasBank5; $i++) {
         $detail = new ReturPenjualanDetail();

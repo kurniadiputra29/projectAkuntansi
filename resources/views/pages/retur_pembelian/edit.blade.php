@@ -60,10 +60,8 @@
                     <div class="form-group">
                       <label for="setor_ke">Setor Ke</label>
                       <select class="form-control" id="setor_ke" v-model="cashbank.id_akun2">
-                        @foreach($debets as $debet)
                         @foreach ($akun as $key)
-                        <option value="{{$key->nomor}}" {{$debet->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
-                        @endforeach
+                        <option value="{{$key->nomor}}" {{$debets->nomor_akun == $key->nomor ? 'selected' : ''}}>{{$key->nomor}} - {{$key->nama}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -196,13 +194,29 @@
               <input type="hidden" name="nama_akun2_jasa[]" value="Freight Paid">
             </div>
           </div>
+          @if($cashbanks->cpj_id !== null)
+          <div class="form-group row justify-content-end">
+            <label for="diskon" class="col-sm-2 col-form-label">Diskon Pembelian : Rp</label>
+            <div class="col-sm-4">
+              <input type="number" class="form-control" id="diskon" name="diskon[]" v-model.number="diskon">
+              <input type="hidden" name="nomor_akun_diskon[]" value="5-3000">
+              <input type="hidden" name="nama_akun2_diskon[]" value="Purchase Discount">
+            </div>
+          </div>
+          <div class="form-group row justify-content-end">
+            <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Total : Rp</label>
+            <div class="col-sm-4">
+              <input type="number" class="form-control" id="exampleInputUsername2" name="total[]" :value="totalss"  readonly>
+            </div>
+          </div>
+          @else
           <div class="form-group row justify-content-end">
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Total : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="total[]" :value="totals"  readonly>
             </div>
           </div>
-
+          @endif
           <div class="forms-sample" style="margin-bottom: 10px; margin-top: 30px; justify-content: space-between; display: flex;">
             <a href="{{route('retur_pembelian.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
             <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Edit</button>
@@ -224,12 +238,13 @@
    el: '#app',
    data: {
     cashbanks2: [
-    {id_akun2:"{{$debet->nomor_akun}}", description:"", jumlah: 0},
+    {id_akun2:"{{$debets->nomor_akun}}", description:"", jumlah: 0},
     ],
     cashbanks: [
     {id_item:0, harga:0, description:"", unit:1, jumlah: 0},
     ],
     jasa_pengiriman: null,
+    diskon: 0,
     ppn: false,
   },
   methods: {
@@ -330,6 +345,15 @@
         var totals = this.subtotal + this.ppns + this.jasa_pengiriman;
         return totals;
       },
+    totalss() {
+      if (this.subtotal == '') {
+        var totals =  0;
+        this.jasa_pengiriman = this.subtotal;
+        return totals;
+      } else
+      var totals = (this.subtotal + this.ppns + this.jasa_pengiriman) - this.diskon;
+        return totals;
+    },
   },
   created(){
     var cashbanks = [];
@@ -346,6 +370,10 @@
 
     @if(isset($jasa))
       this.jasa_pengiriman = parseInt('{{ $jasa->kredit }}');
+    @endif
+
+    @if(isset($diskon))
+      this.diskon = parseInt('{{ $diskon->debet }}');
     @endif
 
     @if(isset($ppn) && $ppn == true)

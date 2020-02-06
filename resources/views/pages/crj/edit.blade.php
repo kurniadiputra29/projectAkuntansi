@@ -198,6 +198,14 @@
             </div>
           </div>
           <div class="form-group row justify-content-end">
+            <label for="diskon" class="col-sm-2 col-form-label">Diskon Penjualan : Rp</label>
+            <div class="col-sm-4">
+              <input type="number" class="form-control" id="diskon" name="diskon[]" v-model.number="diskon">
+              <input type="hidden" name="nomor_akun_diskon[]" value="4-2400">
+              <input type="hidden" name="nama_akun2_diskon[]" value="Sales Discount">
+            </div>
+          </div>
+          <div class="form-group row justify-content-end">
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Total : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="total[]" :value="totals"  readonly>
@@ -231,6 +239,7 @@
     {id_item:0, harga:0, harga_jual:0, description:"", unit:1, jumlah: 0, sales: 0},
     ],
     jasa_pengiriman: null,
+    diskon: 0,
     ppn: false,
   },
   methods: {
@@ -361,10 +370,10 @@
           this.jasa_pengiriman = this.subtotal;
           return totals;
         } else if (this.jasa_pengiriman == 0){
-          var totals = this.subtotal + this.ppns + this.jasa_pengiriman;
+          var totals = (this.subtotal + this.ppns + this.jasa_pengiriman) - this.diskon;
           return totals;
         } else {
-          var totals = this.subtotal + this.ppns + this.jasa_pengiriman;
+          var totals = (this.subtotal + this.ppns + this.jasa_pengiriman) - this.diskon;
           return totals;
         }
         
@@ -389,6 +398,10 @@
 
     @if(isset($jasa))
       this.jasa_pengiriman = parseInt('{{ $jasa->kredit }}');
+    @endif
+
+    @if(isset($diskon))
+      this.diskon = parseInt('{{ $diskon->debet }}');
     @endif
 
     @if(isset($ppn) && $ppn == true)
