@@ -141,22 +141,14 @@
                     </tr>
                     <tr>
                       <td class="text-left">Pengeluaran operasional</td>
-                      @php
-                        $sum_tot_operasional = 0;
-                      @endphp
-                      @foreach ($pettycashs as $pettycash)
-                        @php
-                          $sum_tot_operasional += ($PettycashDetails->where('nomor_akun', $pettycash->nomor)->sum('kredit')) - ($PettycashDetails->where('nomor_akun', $pettycash->nomor)->sum('debet'));
-                        @endphp
-                      @endforeach
                       <td class="text-right">
-                        Rp {{number_format($sum_tot_operasional, 0, " ", ".")}}
+                        Rp 0
                       </td>
                     </tr>
                     <tr class="bg-light font-weight-bold">
                       <td class="text-center" >Total Cash Out</td>
                       <td class="text-right">
-                        Rp {{number_format($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan + $sum_tot_operasional, 0, " ", ".")}}
+                        Rp {{number_format($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan, 0, " ", ".")}}
                       </td>
                     </tr>
                   </tbody>
@@ -164,7 +156,7 @@
                     <tr class="bg-success font-weight-bold">
                       <td class="text-light text-center">Total Arus kas dari Aktivitas Operasional</td>
                       <td class="text-light text-right">
-                        Rp {{number_format(($sum_tot_crjdetails_Kredit + $sum_tot_cashin + $sum_tot_return_pembelian) - (($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan + $sum_tot_operasional)), 0, " ", ".")}}
+                        Rp {{number_format(($sum_tot_crjdetails_Kredit + $sum_tot_cashin + $sum_tot_return_pembelian) - (($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan)), 0, " ", ".")}}
                       </td>
                     </tr>
                   </tfoot>
@@ -304,7 +296,7 @@
                     <tr>
                       <td>Kenaikan (penurunan) kas</td>
                       <td class="text-right">
-                        Rp {{number_format(($sum_tot_crjdetails_Kredit + $sum_tot_cashin + $sum_tot_return_pembelian) - (($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan + $sum_tot_operasional)) + ($sum_tot_cashin_2) + (0 - $sum_tot_cashout_2), 0, " ", ".")}}
+                        Rp {{number_format(($sum_tot_crjdetails_Kredit + $sum_tot_cashin + $sum_tot_return_pembelian) - (($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan)) + ($sum_tot_cashin_2) + (0 - $sum_tot_cashout_2), 0, " ", ".")}}
                       </td>
                     </tr>
                     <tr>
@@ -332,7 +324,7 @@
                     <tr class="bg-success font-weight-bold">
                       <td class="text-light">Saldo kas akhir</td>
                       <td class="text-right text-light">
-                        Rp {{number_format((($sum_tot_crjdetails_Kredit + $sum_tot_cashin + $sum_tot_return_pembelian) - (($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan + $sum_tot_operasional)) + ($sum_tot_cashin_2) + (0 - $sum_tot_cashout_2)) + ($sum_tot_cash + $sum_tot_pettycash), 0, " ", ".")}}
+                        Rp {{number_format((($sum_tot_crjdetails_Kredit + $sum_tot_cashin + $sum_tot_return_pembelian) - (($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan)) + ($sum_tot_cashin_2) + (0 - $sum_tot_cashout_2)) + ($sum_tot_cash + $sum_tot_pettycash), 0, " ", ".")}}
                       </td>
                     </tr>
                     <tr class="bg-warning font-weight-bold">
