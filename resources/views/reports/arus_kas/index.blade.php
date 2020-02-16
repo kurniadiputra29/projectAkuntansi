@@ -141,14 +141,22 @@
                     </tr>
                     <tr>
                       <td class="text-left">Pengeluaran operasional</td>
+                      @php
+                        $sum_tot_operasional = 0;
+                      @endphp
+                      @foreach ($pettycashs as $pettycash)
+                        @php
+                          $sum_tot_operasional += ($PettycashDetails->where('nomor_akun', $pettycash->nomor)->sum('kredit')) - ($PettycashDetails->where('nomor_akun', $pettycash->nomor)->sum('debet'));
+                        @endphp
+                      @endforeach
                       <td class="text-right">
-                        Rp 0
+                        Rp {{number_format($sum_tot_operasional, 0, " ", ".")}}
                       </td>
                     </tr>
                     <tr class="bg-light font-weight-bold">
                       <td class="text-center" >Total Cash Out</td>
                       <td class="text-right">
-                        Rp {{number_format($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan, 0, " ", ".")}}
+                        Rp {{number_format($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan + $sum_tot_operasional, 0, " ", ".")}}
                       </td>
                     </tr>
                   </tbody>
@@ -156,7 +164,7 @@
                     <tr class="bg-success font-weight-bold">
                       <td class="text-light text-center">Total Arus kas dari Aktivitas Operasional</td>
                       <td class="text-light text-right">
-                        Rp {{number_format(($sum_tot_crjdetails_Kredit + $sum_tot_cashin + $sum_tot_return_pembelian) - (($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan)), 0, " ", ".")}}
+                        Rp {{number_format(($sum_tot_crjdetails_Kredit + $sum_tot_cashin + $sum_tot_return_pembelian) - (($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan + $sum_tot_operasional)), 0, " ", ".")}}
                       </td>
                     </tr>
                   </tfoot>
@@ -296,34 +304,56 @@
                     <tr>
                       <td>Kenaikan (penurunan) kas</td>
                       <td class="text-right">
-                        Rp {{number_format(($sum_tot_crjdetails_Kredit + $sum_tot_cashin + $sum_tot_return_pembelian) - (($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan)) + ($sum_tot_cashin_2) + (0 - $sum_tot_cashout_2), 0, " ", ".")}}
+                        Rp {{number_format(($sum_tot_crjdetails_Kredit + $sum_tot_cashin + $sum_tot_return_pembelian) - (($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan + $sum_tot_operasional)) + ($sum_tot_cashin_2) + (0 - $sum_tot_cashout_2), 0, " ", ".")}}
                       </td>
                     </tr>
                     <tr>
                       <td>Saldo kas awal</td>
+                      @php
+                        $sum_tot_cash = 0;
+                        $sum_tot_pettycash = 0;
+                      @endphp
                       @foreach ($cashs as $cash)
-                        <td class="text-right">
-                          Rp {{number_format(($saldo_awals->where('account_id', $cash->id)->sum('debet')) - ($saldo_awals->where('account_id', $cash->id)->sum('kredit')) , 0, " ", ".")}}
-                        </td>
+                        @php
+                          $sum_tot_cash += ($saldo_awals->where('account_id', $cash->id)->sum('debet')) - ($saldo_awals->where('account_id', $cash->id)->sum('kredit'));
+                        @endphp
                       @endforeach
+                      @foreach ($pettycashs as $pettycash)
+                        @php
+                          $sum_tot_pettycash += ($saldo_awals->where('account_id', $pettycash->id)->sum('debet')) - ($saldo_awals->where('account_id', $pettycash->id)->sum('kredit'));
+                        @endphp
+                      @endforeach
+                      <td class="text-right">
+                        Rp {{number_format($sum_tot_cash + $sum_tot_pettycash, 0, " ", ".")}}
+                      </td>
                     </tr>
                   </tbody>
                   <tfoot>
                     <tr class="bg-success font-weight-bold">
                       <td class="text-light">Saldo kas akhir</td>
-                      @foreach ($cashs as $cash)
-                        <td class="text-right text-light">
-                          Rp {{number_format(($saldo_awals->where('account_id', $cash->id)->sum('debet')) - ($saldo_awals->where('account_id', $cash->id)->sum('kredit')) + (($sum_tot_crjdetails_Kredit + $sum_tot_cashin + $sum_tot_return_pembelian) - (($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan)) + ($sum_tot_cashin_2) + (0 - $sum_tot_cashout_2)), 0, " ", ".")}}
-                        </td>
-                      @endforeach
+                      <td class="text-right text-light">
+                        Rp {{number_format((($sum_tot_crjdetails_Kredit + $sum_tot_cashin + $sum_tot_return_pembelian) - (($sum_tot_cashout + $sum_tot_cpj_Kredit + $sum_tot_return_penjualan + $sum_tot_operasional)) + ($sum_tot_cashin_2) + (0 - $sum_tot_cashout_2)) + ($sum_tot_cash + $sum_tot_pettycash), 0, " ", ".")}}
+                      </td>
                     </tr>
                     <tr class="bg-warning font-weight-bold">
                       <td class="text-light">Saldo Normal Cash</td>
+                      @php
+                        $sum_tot_cash_akhir = 0;
+                        $sum_tot_pettycash_akhir = 0;
+                      @endphp
                       @foreach ($cashs as $cash)
-                        <td class="text-right text-light">
-                          Rp {{number_format(($distinct_laporan_penyesuaian->where('nomor_akun', $cash->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $cash->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $cash->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $cash->nomor)->sum('kredit')), 0, " ", ".")}}
-                        </td>
+                        @php
+                          $sum_tot_cash_akhir += ($distinct_laporan_penyesuaian->where('nomor_akun', $cash->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $cash->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $cash->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $cash->nomor)->sum('kredit'));
+                        @endphp
                       @endforeach
+                      @foreach ($pettycashs as $pettycash)
+                        @php
+                          $sum_tot_pettycash_akhir += ($distinct_laporan_penyesuaian->where('nomor_akun', $pettycash->nomor)->sum('debet') + $distinct_laporan_penyesuaian->where('account_id', $pettycash->id)->sum('debet')) - ($distinct_laporan_penyesuaian->where('account_id', $pettycash->id)->sum('kredit')  + $distinct_laporan_penyesuaian->where('nomor_akun', $pettycash->nomor)->sum('kredit'));
+                        @endphp
+                      @endforeach
+                      <td class="text-right text-light">
+                        Rp {{number_format($sum_tot_cash_akhir + $sum_tot_pettycash_akhir, 0, " ", ".")}}
+                      </td>
                     </tr>
                   </tfoot>
                 </table>

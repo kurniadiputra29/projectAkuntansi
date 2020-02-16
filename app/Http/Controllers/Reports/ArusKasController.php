@@ -28,7 +28,9 @@ class ArusKasController extends Controller
     public function index()
     {
         $cashs = Account::where('nomor', '1-1110')->get();
-        $saldo_awals = SaldoAwal::all();	
+        $pettycashs = Account::where('nomor', '1-1120')->get();
+        $saldo_awals = SaldoAwal::all();    
+        $PettycashDetails = PettycashDetail::all();	
         $CashBankOutDetails = CashBankOutDetails::all();
         $CashBankOuts = CashBankOut::all();
         $CashBankInDetails = CashBankInDetails::all();
@@ -41,6 +43,6 @@ class ArusKasController extends Controller
         $ReturPenjualanDetails = ReturPenjualanDetail::all();
         $distinct_laporan_penyesuaian = LaporanBukuBesarPenyesuaian::distinct('account_id', 'nomor_akun')->select('debet', 'kredit', 'account_id', 'nomor_akun', 'id')->get();
 
-        return view('reports.arus_kas.index', compact( 'distinct_laporan_penyesuaian', 'cashs',   'saldo_awals', 'CashBankOutDetails', 'cpjdetails', 'crjdetails', 'CashBankInDetails', 'CashBankIns', 'CashBankOuts', 'ReturPembelians', 'ReturPembelianDetails', 'ReturPenjualans', 'ReturPenjualanDetails'));
+        return view('reports.arus_kas.index', compact( 'distinct_laporan_penyesuaian', 'cashs', 'pettycashs',  'saldo_awals', 'PettycashDetails', 'CashBankOutDetails', 'cpjdetails', 'crjdetails', 'CashBankInDetails', 'CashBankIns', 'CashBankOuts', 'ReturPembelians', 'ReturPembelianDetails', 'ReturPenjualans', 'ReturPenjualanDetails'));
     }
 }
