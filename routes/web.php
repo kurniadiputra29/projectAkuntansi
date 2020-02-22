@@ -63,11 +63,13 @@ Route::resource('cashbank_out', 'CashBankOutController');
 Route::resource('pelunasan_hutang', 'PelunasanHutangController');
 Route::resource('penerimaan_piutang', 'PenerimaanPiutangController');
 Route::resource('harga_jual', 'HargaJualController');
+Route::resource('pemetaan_akun', 'PemetaanAkunController');
 
 Route::resource('profile', 'ProfileController');
 
 Route::resource('users', 'UserController');
 Route::resource('role', 'RoleController');
+
 
 // index Laporan
 Route::get('/print/neraca', 'PrintController@neraca')->name('laporan.neraca');

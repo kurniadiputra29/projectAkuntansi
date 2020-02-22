@@ -10,7 +10,7 @@
         <div class="row align-items-end">
           <div class="col-lg-8">
             <div class="page-header-title">
-              <i class="ik ik-menu bg-blue"></i>
+              <i class="ik ik-briefcase bg-blue"></i>
               <div class="d-inline">
                 <h5>Create Kas Kecil</h5>
                 <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
@@ -171,10 +171,10 @@
     el: '#app',
     data: {
       pettycashs: [
-        {id_akun: 0, nomor_akun:"", nama_akun:"", description:"", jumlah: 0},
+        {id_akun: "", nomor_akun:"", nama_akun:"", description:"", jumlah: 0},
       ],
       pettycashs2: [
-        {id_akun2:"2", description:"", jumlah: 0},
+        {id_akun2:"{{$pemetaan_akuns->kas_kecil}}", description:"", jumlah: 0},
       ],
     },
     methods: {

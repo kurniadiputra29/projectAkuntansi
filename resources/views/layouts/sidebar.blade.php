@@ -11,29 +11,6 @@
           <div class="nav-item {{ Request::is('laporan') || Request::is('print/*') ? 'active' : '' }}">
               <a href="{{ route('laporan.index') }}"><i class="ik ik-trending-up"></i><span>Laporan</span></a>
           </div>
-          <div class="nav-lavel">Master Data</div>
-          <div class="nav-item has-sub {{ Request::is('akun') || Request::is('akun/create') ? 'active open' : '' }}">
-              <a href="#"><i class="ik ik-menu"></i><span>Akun</span></a>
-              <div class="submenu-content">
-                  <a href="{{ route('akun.index') }}" class="menu-item {{ Request::is('akun') ? 'active' : '' }}">Daftar Akun</a>
-                  <a href="{{ route('akun.create') }}" class="menu-item {{ Request::is('akun/create') ? 'active' : '' }}">Create Akun</a>
-              </div>
-          </div>
-          <div class="nav-item has-sub {{ Request::is('customer') || Request::is('supplier') ? 'active open' : '' }}">
-              <a href="#"><i class="ik ik-phone"></i><span>Kontak</span></a>
-              <div class="submenu-content">
-                  <a href="{{ route('customer.index') }}" class="menu-item {{ Request::is('customer') ? 'active' : '' }}">Customer</a>
-                  <a href="{{ route('supplier.index') }}" class="menu-item {{ Request::is('supplier') ? 'active' : '' }}">Supplier</a>
-              </div>
-          </div>
-          <div class="nav-item has-sub {{ Request::is('saldo_awal') || Request::is('saldo_hutang') || Request::is('saldo_piutang') ?'active open':'' }}">
-              <a href="#"><i class="ik ik-database"></i><span>Saldo Awal</span></a>
-              <div class="submenu-content">
-                  <a href="{{route('saldo_awal.index')}}" class="menu-item {{ Request::is('saldo_awal')?'active':'' }}">Saldo Awal</a>
-                  <a href="{{route('saldo_hutang.index')}}" class="menu-item {{ Request::is('saldo_hutang')?'active':'' }}">Saldo Hutang</a>
-                  <a href="{{route('saldo_piutang.index')}}" class="menu-item {{Request::is('saldo_piutang')?'active':''}}">Saldo Piutang</a>
-              </div>
-          </div>
           <div class="nav-lavel">Transaksi</div>
           <div class="nav-item has-sub {{ Request::is('crj') || Request::is('sales_journal') || Request::is('crj/create') || Request::is('crj/*') || Request::is('sales_journal/create') || Request::is('sales_journal/*') || Request::is('retur_penjualan') || Request::is('retur_penjualan/*') || Request::is('retur_penjualan/create') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-package"></i><span>Penjualan</span></a>
@@ -74,6 +51,29 @@
           <div class="nav-item {{ Request::is('ju') || Request::is('ju/*') ? 'active' : '' }}">
               <a href="{{ route('ju.index') }}"><i class="ik ik-book"></i><span>Jurnal Umum</span></a>
           </div>
+          <div class="nav-lavel">Master Data</div>
+          <div class="nav-item has-sub {{ Request::is('akun') || Request::is('akun/create') ? 'active open' : '' }}">
+              <a href="#"><i class="ik ik-menu"></i><span>Akun</span></a>
+              <div class="submenu-content">
+                  <a href="{{ route('akun.index') }}" class="menu-item {{ Request::is('akun') ? 'active' : '' }}">Daftar Akun</a>
+                  <a href="{{ route('akun.create') }}" class="menu-item {{ Request::is('akun/create') ? 'active' : '' }}">Create Akun</a>
+              </div>
+          </div>
+          <div class="nav-item has-sub {{ Request::is('customer') || Request::is('supplier') ? 'active open' : '' }}">
+              <a href="#"><i class="ik ik-phone"></i><span>Kontak</span></a>
+              <div class="submenu-content">
+                  <a href="{{ route('customer.index') }}" class="menu-item {{ Request::is('customer') ? 'active' : '' }}">Customer</a>
+                  <a href="{{ route('supplier.index') }}" class="menu-item {{ Request::is('supplier') ? 'active' : '' }}">Supplier</a>
+              </div>
+          </div>
+          <div class="nav-item has-sub {{ Request::is('saldo_awal') || Request::is('saldo_hutang') || Request::is('saldo_piutang') ?'active open':'' }}">
+              <a href="#"><i class="ik ik-database"></i><span>Saldo Awal</span></a>
+              <div class="submenu-content">
+                  <a href="{{route('saldo_awal.index')}}" class="menu-item {{ Request::is('saldo_awal')?'active':'' }}">Saldo Awal</a>
+                  <a href="{{route('saldo_hutang.index')}}" class="menu-item {{ Request::is('saldo_hutang')?'active':'' }}">Saldo Hutang</a>
+                  <a href="{{route('saldo_piutang.index')}}" class="menu-item {{Request::is('saldo_piutang')?'active':''}}">Saldo Piutang</a>
+              </div>
+          </div>
           <div class="nav-lavel">Inventory</div>
           <div class="nav-item has-sub {{ Request::is('item') || Request::is('item/*') || Request::is('saldo_item') || Request::is('saldo_item/*') ? 'active open' : '' }}">
               <a href="#"><i class="ik ik-box"></i><span>Item</span></a>
@@ -87,6 +87,10 @@
           </div>
           <div class="nav-item {{ Request::is('stock_opname') ? 'active' : '' }}">
               <a href="{{ route('stock_opname.index') }}"><i class="ik ik-truck"></i><span>Stock Opname</span></a>
+          </div>
+          <div class="nav-lavel">Settings</div>
+          <div class="nav-item {{ Request::is('pemetaan_akun') || Request::is('pemetaan_akun/*') ? 'active' : '' }}">
+              <a href="{{ route('pemetaan_akun.index') }}"><i class="ik ik-settings"></i><span>Pemetaan Akun</span></a>
           </div>
 
           @if( auth()->user()->role_id  == 1)

@@ -15,6 +15,7 @@ use App\Model\LaporanPenjualan;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
 use App\Model\HargaJual;
+use App\Model\PemetaanAkun;
 
 class CrjController extends Controller
 {
@@ -46,10 +47,11 @@ class CrjController extends Controller
         $customers = DataCustomer::all();
         $items = Item::all();
         $hargajuals = HargaJual::all();
+        $pemetaan_akuns = PemetaanAkun::first();
         $lastOrder = crj::orderBy('id', 'desc')->first();
         $inventories = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
 
-        return view('pages.crj.create', compact('akun', 'customers', 'items', 'inventories', 'hargajuals', 'lastOrder'));
+        return view('pages.crj.create', compact('akun', 'customers', 'items', 'inventories', 'hargajuals', 'pemetaan_akuns', 'lastOrder'));
     }
 
     /**
@@ -317,8 +319,9 @@ class CrjController extends Controller
                                     ->where('kredit', '>', '0')
                                     ->exists();
         $hargajuals = HargaJual::all();
+        $pemetaan_akuns = PemetaanAkun::first();
         // dd($ppn);
-        return view('pages.crj.edit', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'hargajuals', 'diskon'));
+        return view('pages.crj.edit', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'hargajuals', 'diskon', 'pemetaan_akuns'));
     }
 
     /**
@@ -588,7 +591,8 @@ class CrjController extends Controller
                                     ->where('kredit', '>', '0')
                                     ->exists();
         $hargajuals = HargaJual::all();
+        $pemetaan_akuns = PemetaanAkun::first();
         // dd($ppn);
-        return view('pages.crj.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'lastOrder', 'hargajuals', 'diskon'));
+        return view('pages.crj.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'lastOrder', 'hargajuals', 'diskon', 'pemetaan_akuns'));
     }
 }

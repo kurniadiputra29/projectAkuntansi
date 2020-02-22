@@ -9,6 +9,7 @@ use App\Model\CashBankOutDetails;
 use App\Model\DataSupplier;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
+use App\Model\PemetaanAkun;
 
 class CashBankOutController extends Controller
 {
@@ -37,8 +38,9 @@ class CashBankOutController extends Controller
         $akun      = Account::all();
         $lastOrder = CashBankOut::orderBy('id', 'desc')->first();
         $suppliers = DataSupplier::all();
+        $pemetaan_akuns = PemetaanAkun::first();
 
-        return view('pages.cashbankout.create', compact('akun', 'lastOrder', 'suppliers'));
+        return view('pages.cashbankout.create', compact('akun', 'lastOrder', 'suppliers', 'pemetaan_akuns'));
     }
 
     /**

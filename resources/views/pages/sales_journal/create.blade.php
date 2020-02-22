@@ -10,7 +10,7 @@
       <div class="row align-items-end">
         <div class="col-lg-8">
           <div class="page-header-title">
-            <i class="ik ik-menu bg-blue"></i>
+            <i class="ik ik-package bg-blue"></i>
             <div class="d-inline">
               <h5>Create Sales Journal</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
@@ -139,7 +139,7 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label for="harga">Harga Pokok Penjualan</label>
-                    <input class="form-control" type="text" id="harga" name="harga[]" :value="harga(cashbank.id_item, index)">
+                    <input class="form-control" type="text" id="harga" name="harga[]" :value="harga(cashbank.id_item, index)" readonly="">
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -175,15 +175,15 @@
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Sub Total : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="subtotal[]" :value="subtotal" readonly>
-              <input type="hidden" name="nomor_akun_sales[]" value="4-2100">
-              <input type="hidden" name="nama_akun2_sales[]" value="Sales of Installment">
+              <input type="hidden" name="nomor_akun_sales[]" value="{{$pemetaan_akuns->penjualan_credits->nomor}}">
+              <input type="hidden" name="nama_akun2_sales[]" value="{{$pemetaan_akuns->penjualan_credits->nama}}">
             </div>
           </div>
           <input type="hidden" class="form-control" id="exampleInputUsername2" name="cost[]" :value="cost" readonly>
-          <input type="hidden" name="nomor_akun_inventory[]" value="1-1310">
-          <input type="hidden" name="nama_akun2_inventory[]" value="Merchandise Inventory">
-          <input type="hidden" name="nomor_akun_cost[]" value="5-1200">
-          <input type="hidden" name="nama_akun2_cost[]" value="Coft of Goods Sold of Instalment">
+          <input type="hidden" name="nomor_akun_inventory[]" value="{{$pemetaan_akuns->inventories->nomor}}">
+          <input type="hidden" name="nama_akun2_inventory[]" value="{{$pemetaan_akuns->inventories->nama}}">
+          <input type="hidden" name="nomor_akun_cost[]" value="{{$pemetaan_akuns->hpp_penjualan_credits->nomor}}">
+          <input type="hidden" name="nama_akun2_cost[]" value="{{$pemetaan_akuns->hpp_penjualan_credits->nama}}">
           <div class="form-group row justify-content-end" >
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">PPN 10% : Rp</label>
             <div class="col-sm-4">
@@ -192,8 +192,8 @@
                   <label for="checkbox18">
                   PPN 10%
                   </label>
-                  <input type="hidden" name="nomor_akun_ppn[]" value="2-1310">
-                  <input type="hidden" name="nama_akun2_ppn[]" value="PPN Outcome">
+                  <input type="hidden" name="nomor_akun_ppn[]" value="{{$pemetaan_akuns->ppn_penjualans->nomor}}">
+                  <input type="hidden" name="nama_akun2_ppn[]" value="{{$pemetaan_akuns->ppn_penjualans->nama}}">
                   <input type="hidden" class="form-control" id="exampleInputUsername2" name="PPN[]" :value="ppns"  readonly>
               </div>
             </div>
@@ -202,8 +202,8 @@
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Jasa Pengiriman : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="jasa_pengiriman[]" v-model.number="jasa_pengiriman">
-              <input type="hidden" name="nomor_akun_jasa[]" value="4-2200">
-              <input type="hidden" name="nama_akun2_jasa[]" value="Freight Colected">
+              <input type="hidden" name="nomor_akun_jasa[]" value="{{$pemetaan_akuns->pengiriman_penjualans->nomor}}">
+              <input type="hidden" name="nama_akun2_jasa[]" value="{{$pemetaan_akuns->pengiriman_penjualans->nama}}">
             </div>
           </div>
           <div class="form-group row justify-content-end">
@@ -234,19 +234,17 @@
    el: '#app',
    data: {
     cashbanks2: [
-    {id_akun2:"4", description:"", jumlah: 0},
+    {id_akun2:"{{$pemetaan_akuns->piutang}}", description:"", jumlah: 0},
     ],
     cashbanks: [
-    {id_item:0, harga:0, laba:0, description:"", unit:1, jumlah: 0, sales:0},
+    {id_item:"", harga:0, laba:0, unit:1, jumlah: 0, sales:0},
     ],
-    jasa_pengiriman: [
-      {jasa_pengiriman:0, subtotal:0}
-    ],
+    jasa_pengiriman: [0],
     ppn: [],
   },
   methods: {
     add() {
-       var cashbanks = {id_item:0, harga:0, laba:0, description:"", unit:1, jumlah: 0, sales:0};
+       var cashbanks = {id_item:"", harga:0, laba:0, unit:1, jumlah: 0, sales:0};
        this.cashbanks.push(cashbanks);
      },
      del(index) {

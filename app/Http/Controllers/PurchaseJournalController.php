@@ -14,6 +14,7 @@ use App\Model\ReturPembelianDetail;
 use App\Model\LaporanPembelian;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
+use App\Model\PemetaanAkun;
 
 class PurchaseJournalController extends Controller
 {
@@ -43,9 +44,9 @@ class PurchaseJournalController extends Controller
         $suppliers = DataSupplier::all();
         $items = Item::all();
         $lastOrder = PurchaseJournal::orderBy('id', 'desc')->first();
-
+        $pemetaan_akuns = PemetaanAkun::first();
         $inventories   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
-        return view('pages.purchase_journal.create', compact('akun', 'suppliers', 'items', 'lastOrder', 'inventories'));
+        return view('pages.purchase_journal.create', compact('akun', 'suppliers', 'items', 'lastOrder', 'pemetaan_akuns', 'inventories'));
     }
 
     /**
@@ -235,8 +236,9 @@ class PurchaseJournalController extends Controller
                                     ->where('nomor_akun', '2-1320')
                                     ->where('debet', '>', '0')
                                     ->exists();
+        $pemetaan_akuns = PemetaanAkun::first();
 
-        return view('pages.purchase_journal.edit', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count'));
+        return view('pages.purchase_journal.edit', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'pemetaan_akuns'));
     }
 
     /**
@@ -427,7 +429,8 @@ class PurchaseJournalController extends Controller
                                     ->where('nomor_akun', '2-1320')
                                     ->where('debet', '>', '0')
                                     ->exists();
+        $pemetaan_akuns = PemetaanAkun::first();
 
-        return view('pages.purchase_journal.retur', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'lastOrder'));
+        return view('pages.purchase_journal.retur', compact('akun', 'suppliers', 'items','cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'lastOrder', 'pemetaan_akuns'));
     }
 }

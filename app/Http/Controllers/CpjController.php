@@ -14,6 +14,7 @@ use App\Model\ReturPembelianDetail;
 use App\Model\LaporanPembelian;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
+use App\Model\PemetaanAkun;
 
 class CpjController extends Controller
 {
@@ -43,9 +44,9 @@ class CpjController extends Controller
         $suppliers      = DataSupplier::all();
         $items          = Item::all();
         $lastOrder      = cpj::orderBy('id', 'desc')->first();
-
+        $pemetaan_akuns = PemetaanAkun::first();
         $inventories   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
-        return view('pages.cpj.create', compact('akun', 'suppliers', 'items', 'lastOrder', 'inventories'));
+        return view('pages.cpj.create', compact('akun', 'suppliers', 'items', 'lastOrder', 'inventories', 'pemetaan_akuns'));
     }
 
     /**
@@ -260,8 +261,9 @@ class CpjController extends Controller
                         ->where('nomor_akun', '2-1320')
                         ->where('debet', '>', '0')
                         ->exists();
+        $pemetaan_akuns = PemetaanAkun::first();
 
-        return view('pages.cpj.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'diskon'));
+        return view('pages.cpj.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'diskon', 'pemetaan_akuns'));
     }
 
     /**
@@ -479,7 +481,8 @@ class CpjController extends Controller
                                     ->where('nomor_akun', '2-1320')
                                     ->where('debet', '>', '0')
                                     ->exists();
+        $pemetaan_akuns = PemetaanAkun::first();
 
-        return view('pages.cpj.retur', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'lastOrder', 'diskon'));
+        return view('pages.cpj.retur', compact('akun', 'suppliers', 'items', 'cashbanks', 'inventories', 'kredits', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'lastOrder', 'diskon', 'pemetaan_akuns'));
     }
 }

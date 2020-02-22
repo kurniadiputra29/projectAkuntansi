@@ -10,7 +10,7 @@
       <div class="row align-items-end">
         <div class="col-lg-8">
           <div class="page-header-title">
-            <i class="ik ik-menu bg-blue"></i>
+            <i class="ik ik-activity bg-blue"></i>
             <div class="d-inline">
               <h5>Create Journal Penyesuaian</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
@@ -149,7 +149,7 @@
           </div>
 
           <div class="forms-sample" style="margin-bottom: 10px; margin-top: 10px; justify-content: space-between; display: flex;">
-            <a href="{{route('ju.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
+            <a href="{{route('jp.index')}}" class="btn btn-secondary btn-rounded"><i class="ik ik-arrow-left"></i>Back</a>
             <button class="btn btn-success btn-rounded"><i class="ik ik-plus-circle"></i> Create</button>
           </div>
         </div>
@@ -169,12 +169,12 @@
    el: '#app',
    data: {
     cashbanks: [
-    {terima_dari:"", description:"", debet: 0, kredit: 0},
+    {id_akun:"", description:"", debet: 0, kredit: 0},
     ],
   },
   methods: {
     add() {
-       var cashbanks = {terima_dari:"", description:"", debet: 0, kredit: 0};
+       var cashbanks = {id_akun:"", description:"", debet: 0, kredit: 0};
        this.cashbanks.push(cashbanks);
      },
      del(index) {
