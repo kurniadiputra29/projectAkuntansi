@@ -10,7 +10,7 @@
       <div class="row align-items-end">
         <div class="col-lg-8">
           <div class="page-header-title">
-            <i class="ik ik-menu bg-blue"></i>
+            <i class="ik ik-shopping-cart bg-blue"></i>
             <div class="d-inline">
               <h5>Create Cash Payment Journal</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
@@ -174,8 +174,8 @@
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Sub Total : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="subtotal[]" :value="subtotal" readonly>
-              <input type="hidden" name="nomor_akun_sales[]" value="1-1310">
-              <input type="hidden" name="nama_akun2_sales[]" value="Merchandise Inventory">
+              <input type="hidden" name="nomor_akun_sales[]" value="{{$pemetaan_akuns->inventories->nomor}}">
+              <input type="hidden" name="nama_akun2_sales[]" value="{{$pemetaan_akuns->inventories->nama}}">
             </div>
           </div>
           <div class="form-group row justify-content-end" >
@@ -186,8 +186,8 @@
                   <label for="checkbox18">
                   PPN 10%
                   </label>
-                  <input type="hidden" name="nomor_akun_ppn[]" value="2-1320">
-                  <input type="hidden" name="nama_akun2_ppn[]" value="PPN Income">
+                  <input type="hidden" name="nomor_akun_ppn[]" value="{{$pemetaan_akuns->ppn_pembelians->nomor}}">
+                  <input type="hidden" name="nama_akun2_ppn[]" value="{{$pemetaan_akuns->ppn_pembelians->nama}}">
                   <input type="hidden" class="form-control" id="exampleInputUsername2" name="PPN[]" :value="ppns"  readonly>
               </div>
             </div>
@@ -196,16 +196,16 @@
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Jasa Pengiriman : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="jasa_pengiriman[]" v-model.number="jasa_pengiriman">
-              <input type="hidden" name="nomor_akun_jasa[]" value="5-1300">
-              <input type="hidden" name="nama_akun2_jasa[]" value="Freight Paid">
+              <input type="hidden" name="nomor_akun_jasa[]" value="{{$pemetaan_akuns->pengiriman_pembelians->nomor}}">
+              <input type="hidden" name="nama_akun2_jasa[]" value="{{$pemetaan_akuns->pengiriman_pembelians->nama}}">
             </div>
           </div>
           <div class="form-group row justify-content-end">
             <label for="diskon" class="col-sm-2 col-form-label">Diskon Pembelian : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="diskon" name="diskon[]" v-model.number="diskon">
-              <input type="hidden" name="nomor_akun_diskon[]" value="5-3000">
-              <input type="hidden" name="nama_akun2_diskon[]" value="Purchase Discount">
+              <input type="hidden" name="nomor_akun_diskon[]" value="{{$pemetaan_akuns->diskon_pembelians->nomor}}">
+              <input type="hidden" name="nama_akun2_diskon[]" value="{{$pemetaan_akuns->diskon_pembelians->nama}}">
             </div>
           </div>
           <div class="form-group row justify-content-end">
@@ -236,10 +236,10 @@
    el: '#app',
    data: {
     cashbanks2: [
-    {id_akun2:"1"},
+    {id_akun2:"{{$pemetaan_akuns->cash}}"},
     ],
     cashbanks: [
-    {id_item:0, harga_beli:0, harga:0, description:"", unit:1, jumlah: 0},
+    {id_item:"", harga_beli:0, harga:0, description:"", unit:1, jumlah: 0},
     ],
     jasa_pengiriman: [
       {jasa_pengiriman:0, subtotal:0}
@@ -249,7 +249,7 @@
   },
   methods: {
     add() {
-       var cashbanks = {id_item:0, harga_beli:0, harga:0, description:"", unit:1, jumlah: 0};
+       var cashbanks = {id_item:"", harga_beli:0, harga:0, description:"", unit:1, jumlah: 0};
        this.cashbanks.push(cashbanks);
      },
      del(index) {

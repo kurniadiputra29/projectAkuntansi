@@ -15,6 +15,7 @@ use App\Model\LaporanPenjualan;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
 use App\Model\HargaJual;
+use App\Model\PemetaanAkun;
 
 class SalesJournalController extends Controller
 {
@@ -41,15 +42,15 @@ class SalesJournalController extends Controller
      */
     public function create()
     {
-        $akun           = Account::all();
-        $customers      = DataCustomer::all();
-        $items          = Item::all();
+        $akun = Account::all();
+        $customers = DataCustomer::all();
+        $items = Item::all();
         $hargajuals = HargaJual::all();
-        $lastOrder      = SalesJournal::orderBy('id', 'desc')->first();
+        $lastOrder = SalesJournal::orderBy('id', 'desc')->first();
+        $pemetaan_akuns = PemetaanAkun::first();
+        $inventories = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
 
-        $inventories   = Inventory::distinct('items_id')->select('id', 'items_id', 'price', 'total', 'unit')->get();
-
-        return view('pages.sales_journal.create', compact('akun', 'customers', 'items', 'inventories', 'hargajuals','lastOrder'));
+        return view('pages.sales_journal.create', compact('akun', 'customers', 'items', 'inventories', 'hargajuals','lastOrder', 'pemetaan_akuns'));
     }
 
     /**
@@ -290,8 +291,9 @@ class SalesJournalController extends Controller
                                     ->where('kredit', '>', '0')
                                     ->exists();
         $hargajuals = HargaJual::all();
+        $pemetaan_akuns = PemetaanAkun::first();
         // dd($ppn);
-        return view('pages.sales_journal.edit', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'hargajuals'));
+        return view('pages.sales_journal.edit', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'hargajuals', 'pemetaan_akuns'));
     }
 
     /**
@@ -535,7 +537,8 @@ class SalesJournalController extends Controller
                                     ->where('kredit', '>', '0')
                                     ->exists();
         $hargajuals = HargaJual::all();
+        $pemetaan_akuns = PemetaanAkun::first();
         // dd($ppn);
-        return view('pages.sales_journal.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'lastOrder', 'hargajuals'));
+        return view('pages.sales_journal.retur', compact('akun', 'customers', 'items', 'cashbanks', 'debets', 'inventories', 'crjdetails', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'lastOrder', 'hargajuals', 'pemetaan_akuns'));
     }
 }

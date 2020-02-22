@@ -10,7 +10,7 @@
             <div class="row align-items-end">
                 <div class="col-lg-8">
                     <div class="page-header-title">
-                        <i class="ik ik-phone bg-blue"></i>
+                        <i class="ik ik-user-plus bg-blue"></i>
                         <div class="d-inline">
                             <h5>Role</h5>
                             <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>

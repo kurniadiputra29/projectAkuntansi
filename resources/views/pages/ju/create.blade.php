@@ -10,7 +10,7 @@
       <div class="row align-items-end">
         <div class="col-lg-8">
           <div class="page-header-title">
-            <i class="ik ik-menu bg-blue"></i>
+            <i class="ik ik-book bg-blue"></i>
             <div class="d-inline">
               <h5>Create Journal Umum</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
@@ -170,12 +170,12 @@
    el: '#app',
    data: {
     cashbanks: [
-    {terima_dari:"", description:"", debet: 0, kredit: 0},
+    {id_akun:"", description:"", debet: 0, kredit: 0},
     ],
   },
   methods: {
     add() {
-       var cashbanks = {terima_dari:"", description:"", debet: 0, kredit: 0};
+       var cashbanks = {id_akun:"", description:"", debet: 0, kredit: 0};
        this.cashbanks.push(cashbanks);
      },
      del(index) {

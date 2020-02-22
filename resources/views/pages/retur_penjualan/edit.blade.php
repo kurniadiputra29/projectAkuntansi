@@ -10,7 +10,7 @@
       <div class="row align-items-end">
         <div class="col-lg-8">
           <div class="page-header-title">
-            <i class="ik ik-menu bg-blue"></i>
+            <i class="ik ik-package bg-blue"></i>
             <div class="d-inline">
               <h5>Edit Retur Penjualan</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
@@ -163,27 +163,34 @@
                 </div>
               </div>
             </div>
-
+          @if ($cashbanks->crj_id == null)
           <div class="form-group row justify-content-end">
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Sub Total : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="subtotal[]" :value="subtotal" readonly>
-              <input type="hidden" name="nomor_akun_sales[]" value="4-1100">
-              <input type="hidden" name="nama_akun2_sales[]" value="Sales Of Merchandise">
+              <input type="hidden" name="nomor_akun_sales[]" value="{{$pemetaan_akuns->penjualan_credits->nomor}}">
+              <input type="hidden" name="nama_akun2_sales[]" value="{{$pemetaan_akuns->penjualan_credits->nama}}">
             </div>
           </div>
-          @if ($cashbanks->crj_id == null)
             <input type="hidden" class="form-control" id="exampleInputUsername2" name="cost[]" :value="cost" readonly>
-            <input type="hidden" name="nomor_akun_inventory[]" value="1-1310">
-            <input type="hidden" name="nama_akun2_inventory[]" value="Merchandise Inventory">
-            <input type="hidden" name="nomor_akun_cost[]" value="5-1200">
-            <input type="hidden" name="nama_akun2_cost[]" value="Coft of Goods Sold of Instalment">
+            <input type="hidden" name="nomor_akun_inventory[]" value="{{$pemetaan_akuns->inventories->nomor}}">
+            <input type="hidden" name="nama_akun2_inventory[]" value="{{$pemetaan_akuns->inventories->nama}}">
+            <input type="hidden" name="nomor_akun_cost[]" value="{{$pemetaan_akuns->hpp_penjualan_credits->nomor}}">
+            <input type="hidden" name="nama_akun2_cost[]" value="{{$pemetaan_akuns->hpp_penjualan_credits->nama}}">
           @else
+          <div class="form-group row justify-content-end">
+            <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Sub Total : Rp</label>
+            <div class="col-sm-4">
+              <input type="number" class="form-control" id="exampleInputUsername2" name="subtotal[]" :value="subtotal" readonly>
+              <input type="hidden" name="nomor_akun_sales[]" value="{{$pemetaan_akuns->penjualan_cashs->nomor}}">
+              <input type="hidden" name="nama_akun2_sales[]" value="{{$pemetaan_akuns->penjualan_cashs->nama}}">
+            </div>
+          </div>
             <input type="hidden" class="form-control" id="exampleInputUsername2" name="cost[]" :value="cost" readonly>
-            <input type="hidden" name="nomor_akun_inventory[]" value="1-1310">
-            <input type="hidden" name="nama_akun2_inventory[]" value="Merchandise Inventory">
-            <input type="hidden" name="nomor_akun_cost[]" value="5-1100">
-            <input type="hidden" name="nama_akun2_cost[]" value="Coft of Goods Sold">
+            <input type="hidden" name="nomor_akun_inventory[]" value="{{$pemetaan_akuns->inventories->nomor}}">
+            <input type="hidden" name="nama_akun2_inventory[]" value="{{$pemetaan_akuns->inventories->nama}}">
+            <input type="hidden" name="nomor_akun_cost[]" value="{{$pemetaan_akuns->hpp_penjualan_cashs->nomor}}">
+            <input type="hidden" name="nama_akun2_cost[]" value="{{$pemetaan_akuns->hpp_penjualan_cashs->nama}}">
           @endif
           <div class="form-group row justify-content-end" >
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">PPN 10% : Rp</label>
@@ -193,8 +200,8 @@
                   <label for="checkbox18">
                   PPN 10%
                   </label>
-                  <input type="hidden" name="nomor_akun_ppn[]" value="2-1310">
-                  <input type="hidden" name="nama_akun2_ppn[]" value="PPN Outcome">
+                  <input type="hidden" name="nomor_akun_ppn[]" value="{{$pemetaan_akuns->ppn_penjualans->nomor}}">
+                  <input type="hidden" name="nama_akun2_ppn[]" value="{{$pemetaan_akuns->ppn_penjualans->nama}}">
                   <input type="hidden" class="form-control" id="exampleInputUsername2" name="PPN[]" :value="ppns"  readonly>
               </div>
             </div>
@@ -203,8 +210,8 @@
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Jasa Pengiriman : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="jasa_pengiriman[]" v-model.number="jasa_pengiriman">
-              <input type="hidden" name="nomor_akun_jasa[]" value="4-2200">
-              <input type="hidden" name="nama_akun2_jasa[]" value="Freight Colected">
+              <input type="hidden" name="nomor_akun_jasa[]" value="{{$pemetaan_akuns->pengiriman_penjualans->nomor}}">
+              <input type="hidden" name="nama_akun2_jasa[]" value="{{$pemetaan_akuns->pengiriman_penjualans->nama}}">
             </div>
           </div>
           @if($cashbanks->crj_id !== null)
@@ -212,8 +219,8 @@
             <label for="diskon" class="col-sm-2 col-form-label">Diskon Penjualan : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="diskon" name="diskon[]" v-model.number="diskon">
-              <input type="hidden" name="nomor_akun_diskon[]" value="4-2400">
-              <input type="hidden" name="nama_akun2_diskon[]" value="Sales Discount">
+              <input type="hidden" name="nomor_akun_diskon[]" value="{{$pemetaan_akuns->diskon_penjualans->nomor}}">
+              <input type="hidden" name="nama_akun2_diskon[]" value="{{$pemetaan_akuns->diskon_penjualans->nama}}">
             </div>
           </div>
           <div class="form-group row justify-content-end">

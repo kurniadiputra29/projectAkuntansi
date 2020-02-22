@@ -13,6 +13,7 @@ use App\Model\LaporanPenjualan;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
 use App\Model\HargaJual;
+use App\Model\PemetaanAkun;
 
 class ReturPenjualanController extends Controller
 {
@@ -38,11 +39,7 @@ public function index()
 */
 public function create()
 {
-    $akun             = Account::all();
-    $customers        = DataCustomer::all();
-    $items            = Item::all();
-    $lastOrder      = ReturPenjualan::orderBy('id', 'desc')->first();
-    return view('pages.retur_penjualan.create', compact('akun', 'customers', 'items', 'lastOrder'));
+    //
 }
 
 /**
@@ -313,8 +310,9 @@ public function edit($id)
     ->where('debet', '>', '0')
     ->exists();
     $hargajuals = HargaJual::all();
+    $pemetaan_akuns = PemetaanAkun::first();
 
-    return view('pages.retur_penjualan.edit', compact('akun', 'customers', 'items', 'cashbanks', 'kredits', 'inventories', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'hargajuals', 'diskon'));
+    return view('pages.retur_penjualan.edit', compact('akun', 'customers', 'items', 'cashbanks', 'kredits', 'inventories', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'hargajuals', 'diskon', 'pemetaan_akuns'));
 }
 
 /**

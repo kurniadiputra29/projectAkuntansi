@@ -9,6 +9,7 @@ use App\Model\CashBankInDetails;
 use App\Model\DataCustomer;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
+use App\Model\PemetaanAkun;
 
 class CashBankInController extends Controller
 {
@@ -37,8 +38,9 @@ class CashBankInController extends Controller
         $akun      = Account::all();
         $lastOrder = CashBankIn::orderBy('id', 'desc')->first();
         $customers = DataCustomer::all();
+        $pemetaan_akuns = PemetaanAkun::first();
 
-        return view('pages.cashbankin.create', compact('akun', 'lastOrder', 'customers'));
+        return view('pages.cashbankin.create', compact('akun', 'lastOrder', 'customers', 'pemetaan_akuns'));
     }
 
     /**

@@ -14,6 +14,7 @@ use App\Model\PurchaseJournal;
 use App\Model\LaporanPembelian;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
+use App\Model\PemetaanAkun;
 
 class ReturPembelianController extends Controller
 {
@@ -39,14 +40,7 @@ class ReturPembelianController extends Controller
      */
     public function create()
     {
-        $akun             = Account::all();
-        $suppliers        = DataSupplier::all();
-        $items            = Item::all();
-        $returns          = ReturPembelian::orderBy('id', 'desc')->paginate(1);
-        $returns_count    = ReturPembelian::all()->count();
-        $cpjs             = cpj::all();
-        $PurchaseJournals = PurchaseJournal::all();
-        return view('pages.retur_pembelian.create', compact('akun', 'suppliers', 'items', 'returns', 'returns_count', 'cpjs', 'PurchaseJournals'));
+        //
     }
 
     /**
@@ -269,8 +263,9 @@ class ReturPembelianController extends Controller
                                     ->where('nomor_akun', '2-1320')
                                     ->where('kredit', '>', '0')
                                     ->exists();
+        $pemetaan_akuns = PemetaanAkun::first();
         
-        return view('pages.retur_pembelian.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'returndetails', 'debets', 'inventories', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'diskon'));
+        return view('pages.retur_pembelian.edit', compact('akun', 'suppliers', 'items', 'cashbanks', 'returndetails', 'debets', 'inventories', 'jasa', 'ppn', 'inventoriess', 'Item_count', 'diskon', 'pemetaan_akuns'));
     }
 
     /**

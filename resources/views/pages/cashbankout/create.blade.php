@@ -10,7 +10,7 @@
       <div class="row align-items-end">
         <div class="col-lg-8">
           <div class="page-header-title">
-            <i class="ik ik-menu bg-blue"></i>
+            <i class="ik ik-credit-card bg-blue"></i>
             <div class="d-inline">
               <h5>Create Cash & Bank Out</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
@@ -177,12 +177,12 @@
    el: '#app',
    data: {
     cashbanks: [
-    {id_akun:"1", debet: 0, kredit: 0},
+    {id_akun:"{{$pemetaan_akuns->cash}}", debet: 0, kredit: 0},
     ],
   },
   methods: {
     add() {
-       var cashbanks = {id_akun:"1", debet: 0, kredit: 0};
+       var cashbanks = {id_akun:"", debet: 0, kredit: 0};
        this.cashbanks.push(cashbanks);
      },
      del(index) {

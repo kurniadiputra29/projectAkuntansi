@@ -10,7 +10,7 @@
       <div class="row align-items-end">
         <div class="col-lg-8">
           <div class="page-header-title">
-            <i class="ik ik-menu bg-blue"></i>
+            <i class="ik ik-shopping-cart bg-blue"></i>
             <div class="d-inline">
               <h5>Create Retur Pembelian</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
@@ -176,8 +176,8 @@
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Sub Total : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="subtotal[]" :value="subtotal" readonly>
-              <input type="hidden" name="nomor_akun_sales[]" value="1-1310">
-              <input type="hidden" name="nama_akun2_sales[]" value="Merchandise Inventory">
+              <input type="hidden" name="nomor_akun_sales[]" value="{{$pemetaan_akuns->inventories->nomor}}">
+              <input type="hidden" name="nama_akun2_sales[]" value="{{$pemetaan_akuns->inventories->nama}}">
             </div>
           </div>
           <div class="form-group row justify-content-end" >
@@ -188,8 +188,8 @@
                   <label for="checkbox18">
                   PPN 10%
                   </label>
-                  <input type="hidden" name="nomor_akun_ppn[]" value="2-1320">
-                  <input type="hidden" name="nama_akun2_ppn[]" value="PPN Income">
+                  <input type="hidden" name="nomor_akun_ppn[]" value="{{$pemetaan_akuns->ppn_pembelians->nomor}}">
+                  <input type="hidden" name="nama_akun2_ppn[]" value="{{$pemetaan_akuns->ppn_pembelians->nama}}">
                   <input type="hidden" class="form-control" id="exampleInputUsername2" name="PPN[]" :value="ppns"  readonly>
               </div>
             </div>
@@ -198,8 +198,8 @@
             <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Jasa Pengiriman : Rp</label>
             <div class="col-sm-4">
               <input type="number" class="form-control" id="exampleInputUsername2" name="jasa_pengiriman[]" v-model.number="jasa_pengiriman">
-              <input type="hidden" name="nomor_akun_jasa[]" value="5-1300">
-              <input type="hidden" name="nama_akun2_jasa[]" value="Freight Paid">
+              <input type="hidden" name="nomor_akun_jasa[]" value="{{$pemetaan_akuns->pengiriman_pembelians->nomor}}">
+              <input type="hidden" name="nama_akun2_jasa[]" value="{{$pemetaan_akuns->pengiriman_pembelians->nama}}">
             </div>
           </div>
           <div class="form-group row justify-content-end">

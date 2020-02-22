@@ -9,6 +9,7 @@ use App\Model\PettycashDetail;
 use App\Model\SaldoAwal;
 use App\Model\LaporanBukuBesar;
 use App\Model\LaporanBukuBesarPenyesuaian;
+use App\Model\PemetaanAkun;
 
 class KasKecilController extends Controller
 {
@@ -36,10 +37,11 @@ class KasKecilController extends Controller
 		{
 			$akun 			= Account::all();
 			// Get the last created order
-    	$lastOrder = Pettycash::orderBy('id', 'desc')->first();
+    		$lastOrder = Pettycash::orderBy('id', 'desc')->first();
 			// return response()->json($lastOrder->id);
+    		$pemetaan_akuns = PemetaanAkun::first();
 
-			return view('pages.kas_kecil.create', compact('akun','lastOrder'));
+			return view('pages.kas_kecil.create', compact('akun','lastOrder', 'pemetaan_akuns'));
 		}
 
 		/**

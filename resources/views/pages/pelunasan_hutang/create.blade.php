@@ -10,7 +10,7 @@
       <div class="row align-items-end">
         <div class="col-lg-8">
           <div class="page-header-title">
-            <i class="ik ik-menu bg-blue"></i>
+            <i class="ik ik-credit-card bg-blue"></i>
             <div class="d-inline">
               <h5>Create Pelunasan Hutang</h5>
               <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
@@ -191,15 +191,15 @@
    el: '#app',
    data: {
     cashbanks: [
-    {id_akun:"18", terima_dari:"", description:"", jumlah: 0},
+    {id_akun:"{{$pemetaan_akuns->hutang}}", terima_dari:"", description:"", jumlah: 0},
     ],
     cashbanks2: [
-    {id_akun2:"1", description:"", jumlah: 0},
+    {id_akun2:"{{$pemetaan_akuns->cash}}", description:"", jumlah: 0},
     ],
   },
   methods: {
     add() {
-       var cashbanks = {terima_dari:"", description:"", jumlah: 0};
+       var cashbanks = {id_akun:"", description:"", jumlah: 0};
        this.cashbanks.push(cashbanks);
      },
      del(index) {
